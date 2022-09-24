@@ -1,9 +1,9 @@
 import styled from "styled-components"
 import Link from "next/link"
-import {useState,useEffect} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "axios"
 
-const SForm = styled.form`
+const SForm = styled.div`
     display: grid;
     grid-template: auto / 100%;
     gap: 30px;
@@ -31,41 +31,47 @@ const SFormInput = styled.input`
     }
 `;
 
+const SButton = styled.button`
+
+`;
+
 export const Newaccount = ()=>{
-    const [name,setName] = useState("");
-    const [pass,setPass] = useState("");
-    const [pass2,setPass2] = useState("");
+    const [username,setUsername] = useState("");
+    const [password,setPassword] = useState("");
+    const [passwordConfirmation,setPasswordConfirmation] = useState("");
 
     const doName = (event:{target:HTMLInputElement})=>{
-        setName(event.target.value);
+        setUsername(event.target.value);
     }
 
     const doPass = (event:{target:HTMLInputElement})=>{
-        setPass(event.target.value);
+        setPassword(event.target.value);
     }
 
     const doPass2 = (event:{target:HTMLInputElement})=>{
-        setPass2(event.target.value);
+        setPasswordConfirmation(event.target.value);
     }
 
-    const doSubmit = (event:any)=>{
-        event.prevent.default();
-        if(pass===pass2) {
-            try {
-                axios.post(process.env.NEXT_PUBLIC_ADDRESS as string,{
-                    username:name,
-                    password_digest:pass
-                },{headers:{"Content-Type":"application/json"}})
-                .then((res)=>{
-                    return res.data;
-                })}catch(error) {
-                    console.log(error);
+    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
+        event.preventDefault();
+        axios.post(process.env.NEXT_PUBLIC_ADDRESS+"/signup" as string,
+            {
+                user: {
+                    username:username,
+                    password:password,
+                    password_confirmation:passwordConfirmation
                 }
-            }
+            },
+            {withCredentials:true}
+        ).then(res => {
+            console.log("registration res",res)
+        }).catch(error => {
+            console.log("registration error",error)
+        })
         }
 
     return (
-        <SForm onSubmit={doSubmit}>
+        <SForm>
             <div>
                 <SFormHead>ユーザ名</SFormHead>
                 <SFormInput type={"text"} onChange={doName} />
@@ -78,7 +84,7 @@ export const Newaccount = ()=>{
                 <SFormHead>パスワード再入力</SFormHead>
                 <SFormInput type={"text"} onChange={doPass2} />
             </div>
-                <input type="submit" value="アカウント作成" />
+                <SButton type={"submit"} onClick={doSubmit}>登録</SButton>
         </SForm>
     )
 }

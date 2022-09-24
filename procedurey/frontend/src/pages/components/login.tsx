@@ -1,22 +1,22 @@
 import styled from "styled-components"
 import Link from "next/link"
 
-const Login = ()=>{
-
-    const Container = styled.div`
+const Container = styled.div`
     position:absolute;
     top: 50%;
-left: 50%;
--ms-transform: translate(-50%,-50%);
--webkit-transform: translate(-50%,-50%);
-transform: translate(-50%,-50%);
-margin:0;
-padding:0;
+    left: 50%;
+    -ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    margin:0;
+    padding:0;
 
-a {
-    color:blue;
-}
-    `
+    a {
+        color:blue;
+    }
+`
+
+const Login = ()=>{
 
     return (
         <div>
