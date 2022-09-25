@@ -4,7 +4,6 @@ class RegistrationsController < ApplicationController
         @user = User.new(registrations_params)
 
         if @user.save
-            login!
             render json: {status: :created, user: @user}
         else
             render json: {status:500}

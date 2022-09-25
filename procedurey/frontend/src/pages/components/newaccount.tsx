@@ -2,6 +2,7 @@ import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
 import axios from "axios"
+import Router, {useRouter} from "next/router"
 
 const SForm = styled.div`
     display: grid;
@@ -39,6 +40,7 @@ export const Newaccount = ()=>{
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [passwordConfirmation,setPasswordConfirmation] = useState("");
+    const router = useRouter();
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -64,7 +66,9 @@ export const Newaccount = ()=>{
             },
             {withCredentials:true}
         ).then(res => {
-            console.log("registration res",res)
+            if(res.data.status==="created") {
+                router.push("/components/login");
+            }
         }).catch(error => {
             console.log("registration error",error)
         })
