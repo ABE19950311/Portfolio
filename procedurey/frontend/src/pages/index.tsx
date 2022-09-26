@@ -1,11 +1,11 @@
 import {TopPage} from "./components/toppage"
-import {Header} from "./components/header"
+import {TitleHead} from "./components/head"
 
 
 const Home = () => {
 return (
     <div>
-      <Header />
+      <TitleHead />
       <TopPage />
     </div>
   )
