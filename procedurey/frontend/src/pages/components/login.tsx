@@ -44,7 +44,7 @@ const Login = ()=>{
 
     useEffect(()=>{
         checkLoginStatus();
-    });
+    },[]);
 
     const checkLoginStatus = ()=>{
         axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/logged_in" as string,
