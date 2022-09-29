@@ -141,6 +141,18 @@ const SItem = styled.li`
 
 
 export const Header = (props:{title:string})=>{
+    const router = useRouter();
+
+    const logout = ()=>{
+        axios.delete(process.env.NEXT_PUBLIC_ADDRESS+"/logout" as string,
+        {withCredentials:true})
+        .then(res=> {
+            router.push("/components/login");
+        }).catch(error=>{
+            console.log("logouterror",error);
+        })
+    }
+
     return (
         <Body>
         <Container>
@@ -154,7 +166,7 @@ export const Header = (props:{title:string})=>{
                 <SItem><a href="#">テキストテキ</a></SItem>
                 <SItem><a href="#">テキスト</a></SItem>
             </SNav>
-            <Sbtn><a href="#">CONTACT</a></Sbtn>
+            <Sbtn onClick={logout}>ログアウト</Sbtn>
             </SMenu>
         </SHeader>
         </Container>

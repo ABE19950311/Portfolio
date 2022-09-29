@@ -5,6 +5,7 @@ import axios from "axios"
 import {useRouter} from "next/router"
 import {MainPage} from "./mainpage"
 
+
 const Body = styled.div`
 html,
 pre,
@@ -154,6 +155,15 @@ box-shadow: inset 1px 1px 1px #fff;
 
 
 export const Procedure = ()=>{
+    const router=useRouter();
+
+    const Router = (state:string) =>{
+    router.push({
+        pathname:"/components/detail",
+        query:{state:state}
+        })
+    }
+
     return (       
     <Body>
     <Container>
@@ -161,37 +171,27 @@ export const Procedure = ()=>{
         <SItem>
             <p>戸籍・住民登録</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Link href="/components/detail">
-            <Sbtn><span>MORE</span></Sbtn>
-            </Link>
+            <Sbtn onClick={()=>Router("koseki")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
             <p>保険年金</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Link href="/components/detail">
-            <Sbtn><span>MORE</span></Sbtn>
-            </Link>
+            <Sbtn onClick={()=>Router("hoken")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
             <p>福祉</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Link href="/components/detail">
-            <Sbtn><span>MORE</span></Sbtn>
-            </Link>
+            <Sbtn onClick={()=>Router("fukushi")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
             <p>税務</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Link href="/components/detail">
-            <Sbtn><span>MORE</span></Sbtn>
-            </Link>
+            <Sbtn onClick={()=>Router("zeimu")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
             <p>タイトル</p>
             <Stxt>テキストテキストテキストテキストテキスト</Stxt>
-            <Link href="/components/detail">
             <Sbtn><span>MORE</span></Sbtn>
-            </Link>
         </SItem>
     </SCard>
     </Container>
