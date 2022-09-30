@@ -48,6 +48,10 @@ ul {
     padding: 0;
 }
 
+h2{
+    border-top: double 4px #27acd9;
+	border-bottom: double 4px #27acd9;
+	padding: 0.5rem 0;
 `
 
 const SForm = styled.form`
@@ -130,6 +134,7 @@ export const Todo = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
+        if(list!==""&&procedure!=="") {
         axios.post(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string,
             {
                 todos: {
@@ -144,7 +149,9 @@ export const Todo = ()=>{
         }).catch(error=> {
             console.log("response error",error);
         })
+    }
     } 
+
 
     const doDelete = (id:number)=>{
         axios.delete(process.env.NEXT_PUBLIC_ADDRESS+`/todos/${id}` as string,

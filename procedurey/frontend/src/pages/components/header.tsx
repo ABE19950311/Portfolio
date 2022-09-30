@@ -5,34 +5,8 @@ import axios from "axios"
 import {useRouter} from "next/router"
 
 const Body = styled.div`
-html,
-pre,
-code,
-button {
-font-family: "游ゴシック体", YuGothic, "游ゴシック", "Yu Gothic", "メイリオ", Meiryo, sans-serif;
-}
-
-html {
-    color: #333;
-    font-size: 14px;
-    line-height: 1.6;
-}
-
 body {
     margin: 0;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-img {
-    border: 0;
-    margin: 0;
-    max-width: 100%;
-    vertical-align: top;
 }
 
 p {
@@ -44,57 +18,17 @@ a {
     text-decoration: none;
 }
 
-table {
-    border-collapse: collapse;
-}
-
 ul {
     list-style: none;
     margin: 0;
     padding: 0;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-size: 14px;
-    font-weight: normal;
-    margin: 0;
-    padding: 0;
-}
-
-#wrapper {
-    position: relative;
-}
-
-.outer-block {
-    min-width: 800px;
-}
-
-.inner-block {
-    margin: 0 auto;
-    padding: 0 15px;
-    position: relative;
-    width: 100%;
-    max-width: 1400px;
-}
-
-.parent {
-    color: orangered;
-}
-.child {
-    color: olivedrab;
-}
 `
 
 const Container = styled.div`
 border: 1px solid #ddd;
 border-radius: 0 0 5px 5px;
-padding: 20px;
-margin-bottom: 30px;
 `
 
 const SHeader = styled.div`

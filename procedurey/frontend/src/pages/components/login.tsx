@@ -4,12 +4,42 @@ import React, {useState,useEffect} from "react"
 import axios from "axios"
 import {useRouter} from "next/router"
 
+const SBody = styled.div`
+text-align:center;
+width:70%
+
+body {
+    margin: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+p {
+    margin: 0;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+`
+
 const SForm = styled.div`
-    display: grid;
-    grid-template: auto / 100%;
-    gap: 30px;
-    border-radius: 8px;
-    margin: auto;
+
 `;
 
 const SFormHead = styled.div`
@@ -18,22 +48,37 @@ const SFormHead = styled.div`
 `;
 
 const SFormInput = styled.input`
-    border: none;
-    width: 100%;
-    background-color: #f1f1f1;
-    padding: 10px;
-    border-radius: 4px;
-    transition: 0.3s;
-
-    &:focus {
-    outline: none;
-    background: #e7e7e7;
-    transition: 0.3s;
-    }
+width: 30%; /*親要素いっぱい広げる*/
+padding: 10px 15px; /*ボックスを大きくする*/
+font-size: 16px;
+border-radius: 3px; /*ボックス角の丸み*/
+border: 2px solid #ddd; /*枠線*/
+box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
 `;
 
 const SButton = styled.button`
+font-weight: 700;
+padding: 0.5rem 1.5rem;
+cursor: pointer;
 
+text-align: center;
+vertical-align: middle;
+text-decoration: none;
+letter-spacing: 0.1em;
+border-radius: 0.5rem;
+
+border: 1px solid #ccc;
+background: #f1e767;
+background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
+background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
+background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
+-webkit-box-shadow: inset 1px 1px 1px #fff;
+box-shadow: inset 1px 1px 1px #fff;
+    &:hover {
+    background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
+    background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
+    background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
+    }
 `;
 
 const Login = ()=>{
@@ -89,29 +134,15 @@ const Login = ()=>{
         })
         }
 
-    const doLogout = ()=>{
-        axios.delete(process.env.NEXT_PUBLIC_ADDRESS+"/logout" as string,
-        {withCredentials:true})
-        .then(res => {
-            setLoginStatus("未ログイン");
-        }).catch(error => {
-            console.log("ログアウトエラー",error);
-        })
-    }
-
     return (
+        <SBody>
         <SForm>
             <h3>ログイン状態:{loginStatus}</h3>
-            <div>
                 <SFormHead>ユーザ名</SFormHead>
                 <SFormInput type={"text"} onChange={doName} />
-            </div>
-            <div>
                 <SFormHead>パスワード</SFormHead>
-                <SFormInput type={"text"} onChange={doPass} />
-            </div>
-                <SButton type={"submit"} onClick={doSubmit}>ログイン</SButton>
-                <SButton onClick={doLogout}>ログアウト</SButton>
+                <SFormInput type={"text"} onChange={doPass} /><br></br>
+                <SButton type={"submit"} onClick={doSubmit}>ログイン</SButton><br></br>
 
                 <Link href="/components/mainpage">
                     <a>ゲストユーザの方はこちら</a>
@@ -121,6 +152,7 @@ const Login = ()=>{
                     <a>新しくアカウントを作成する</a>
                 </Link>
         </SForm>
+        </SBody>
     )
 }
 
