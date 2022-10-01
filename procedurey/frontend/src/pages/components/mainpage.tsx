@@ -12,13 +12,13 @@ export const MainPage = ()=>{
     return (
         <div>
             <div>
-            <Header title="Headerだよ！！"/>
+            <Header />
             </div>
             <div>
             <Procedure />
             </div>
             <div>
-            <Footer title="Footerだよ！！"/>
+            <Footer />
             </div>
         </div>
     )

@@ -168,7 +168,7 @@ export const Todo = ()=>{
 
     return (
         <>
-        <Header title=""/>
+        <Header />
         <Body>
         <h2>TODOリスト作成</h2>
         <SForm onSubmit={doSubmit}>
@@ -189,7 +189,7 @@ export const Todo = ()=>{
                 </Body>
                 )
             })}
-        <Footer title="Foooter" />
+        <Footer />
         </>
     )
 }

@@ -32,7 +32,7 @@ border-radius: 0 0 5px 5px;
 `
 
 const SHeader = styled.div`
-    background: #fef3ed;
+    background: #00FFFF;
     padding: 15px 30px;
     display: flex;
     align-items: center;
@@ -74,7 +74,7 @@ const SItem = styled.li`
 `
 
 
-export const Header = (props:{title:string})=>{
+export const Header = ()=>{
     const router = useRouter();
 
     const logout = ()=>{
@@ -97,7 +97,7 @@ export const Header = (props:{title:string})=>{
             <SMenu>
             <SNav>
                 <Link href="/components/todo"><SItem><a href="#">Todoリスト</a></SItem></Link>
-                <SItem><a href="#">テキストテキ</a></SItem>
+                <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <SItem><a href="#">テキスト</a></SItem>
             </SNav>
             <Sbtn onClick={logout}>ログアウト</Sbtn>
