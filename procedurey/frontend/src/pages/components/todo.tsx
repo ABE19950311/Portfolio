@@ -182,6 +182,8 @@ export const Todo = ()=>{
                 <Body key={key}>
                 <SUl>
                 <SCheck type={"checkbox"}></SCheck>
+                <li>開始日:{todo.startdate}</li>
+                <li>終了日:{todo.duedate}</li>
                 <li>手続き内容:{todo.procedure}</li>
                 <li>TODO:{todo.list}</li>
                 <SButton onClick={()=>doDelete(todo.id)}>削除</SButton>
