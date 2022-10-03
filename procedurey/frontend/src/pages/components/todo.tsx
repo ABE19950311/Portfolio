@@ -17,8 +17,8 @@ type Todo = {
     id:number,
     list:string,
     procedure:string,
-    startdate:Date,
-    duedate:Date
+    startdate:String,
+    duedate:String
 }
 
 const Body = styled.div`
@@ -154,8 +154,8 @@ export const Todo = ()=>{
             {
                 todos: {
                     list:list,
-                    startDate:startDate,
-                    dueDate:endDate,
+                    startdate:startDate,
+                    duedate:endDate,
                     procedure:procedure,
                 },
             },
@@ -204,11 +204,11 @@ const handleChangeEnd = (selectedDate:Date) => {
    * @param {moment.Moment} momentInstance
    * @returns {string}
    */
-    const toUtcIso8601str = (momentInstance:any) => {
+    const toUtcIso8601str = (momentInstance:any):Date => {
     return momentInstance
         .clone()
         .utc()
-        .format('YYYYMMDD')
+        .format('YYYY-MM-DD')
     }
 
     const [startDate, setStartDate] = useState(toUtcIso8601str(moment()))
@@ -253,7 +253,8 @@ const handleChangeEnd = (selectedDate:Date) => {
                 <Body key={key}>
                 <SUl>
                 <SCheck type={"checkbox"}></SCheck>
-                <li>日付:{todo.startdate}</li>
+                <li>開始日:{todo.startdate}</li>
+                <li>終了日:{todo.duedate}</li>
                 <li>手続き内容:{todo.procedure}</li>
                 <li>TODO:{todo.list}</li>
                 <SButton onClick={()=>doDelete(todo.id)}>削除</SButton>
