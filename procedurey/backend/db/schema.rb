@@ -13,8 +13,8 @@
 ActiveRecord::Schema[7.0].define(version: 2022_10_02_084715) do
   create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "todo_id"
-    t.date "startdate", null: false
-    t.date "duedate", null: false
+    t.string "startdate", null: false
+    t.string "duedate", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["todo_id"], name: "index_schedules_on_todo_id"
@@ -22,8 +22,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_084715) do
 
   create_table "todos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "list", null: false
-    t.date "startdate"
-    t.date "duedate"
+    t.string "startdate"
+    t.string "duedate"
     t.string "procedure"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

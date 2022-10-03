@@ -6,6 +6,12 @@ import {useRouter} from "next/router"
 import {Header} from "./header"
 import {Footer} from "./footer"
 import {Procedure} from "./procedure"
+import DatePicker,{registerLocale} from "react-datepicker"
+import ja from "date-fns/locale/ja"
+import "react-datepicker/dist/react-datepicker.css"
+import moment from "moment"
+
+registerLocale("ja",ja);
 
 type Todo = {
     id:number,
@@ -52,10 +58,19 @@ h2{
     border-top: double 4px #27acd9;
 	border-bottom: double 4px #27acd9;
 	padding: 0.5rem 0;
+
+    .test {
+        width: 30%; /*親要素いっぱい広げる*/
+padding: 10px 15px; /*ボックスを大きくする*/
+border-radius: 3px; /*ボックス角の丸み*/
+border: 2px solid #ddd; /*枠線*/
+box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    }
 `
 
 const SForm = styled.form`
     margin-bottom:20px;
+
 `
 
 const SInput = styled.input`
@@ -139,10 +154,13 @@ export const Todo = ()=>{
             {
                 todos: {
                     list:list,
-                    procedure:procedure
-                }
+                    startDate:startDate,
+                    dueDate:endDate,
+                    procedure:procedure,
+                },
             },
-            {withCredentials:true}
+            {withCredentials:true},
+         //   {headers:{"Content-Type":"application/json"}}
         ).then(res=> {
             console.log(res.data);
             setFlag(res.data);
@@ -151,7 +169,6 @@ export const Todo = ()=>{
         })
     }
     } 
-
 
     const doDelete = (id:number)=>{
         axios.delete(process.env.NEXT_PUBLIC_ADDRESS+`/todos/${id}` as string,
@@ -163,8 +180,45 @@ export const Todo = ()=>{
             console.log("response error",error);
         })
     }
-    
-    console.log(todos);
+
+//DatePicker関数
+
+const handleChangeStart = (selectedDate:Date) => {
+    setStartDate(toUtcIso8601str(moment(selectedDate)))
+    }
+
+const handleChangeEnd = (selectedDate:Date) => {
+    setEndDate(toUtcIso8601str(moment(selectedDate)))
+    }
+/**
+ * JST基準に変換して返す
+ * @param {string} dateTimeStr YYYY-MM-DDTHH:mm:00Z
+ * @returns {moment.Moment}
+ */
+    const parseAsMoment = (dateTimeStr:Date) => {
+    return moment.utc(dateTimeStr, 'YYYY-MM-DDTHH:mm:00Z', 'ja').utcOffset(9)
+    }
+
+    /**
+   * 日付形式に変換して返す
+   * @param {moment.Moment} momentInstance
+   * @returns {string}
+   */
+    const toUtcIso8601str = (momentInstance:any) => {
+    return momentInstance
+        .clone()
+        .utc()
+        .format('YYYYMMDD')
+    }
+
+    const [startDate, setStartDate] = useState(toUtcIso8601str(moment()))
+    const [endDate, setEndDate] = useState(toUtcIso8601str(moment()))
+
+    console.log(todos)
+    console.log(list)
+    console.log(startDate)
+    console.log(endDate)
+    console.log(procedure)
 
     return (
         <>
@@ -172,6 +226,23 @@ export const Todo = ()=>{
         <Body>
         <h2>TODOリスト作成</h2>
         <SForm onSubmit={doSubmit}>
+            <DatePicker
+                className="test"
+                dateFormat="yyyy-MM-dd"
+                locale="ja"
+                selected={moment(startDate).toDate()}
+                selectsStart
+                startDate={moment(startDate).toDate()}
+                onChange={handleChangeStart}
+            />
+            <DatePicker
+                dateFormat="yyyy-MM-dd"
+                locale="ja"
+                selected={moment(endDate).toDate()}
+                selectsEnd
+                endDate={moment(endDate).toDate()}
+                onChange={handleChangeEnd}
+            />
             <SInput type={"text"} placeholder={"やること"} onChange={doList}/><br></br>
             <SInput type={"text"} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
             <SButton type={"submit"}>リスト作成</SButton>
@@ -182,8 +253,7 @@ export const Todo = ()=>{
                 <Body key={key}>
                 <SUl>
                 <SCheck type={"checkbox"}></SCheck>
-                <li>開始日:{todo.startdate}</li>
-                <li>終了日:{todo.duedate}</li>
+                <li>日付:{todo.startdate}</li>
                 <li>手続き内容:{todo.procedure}</li>
                 <li>TODO:{todo.list}</li>
                 <SButton onClick={()=>doDelete(todo.id)}>削除</SButton>
