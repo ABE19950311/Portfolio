@@ -12,7 +12,39 @@ import interactionPlugin from "@fullcalendar/interaction"
 import listPlugin from "@fullcalendar/list"
 import jaLocale from "@fullcalendar/core/locales/ja"
 
+type Todo = {
+    id:number,
+    list:string,
+    procedure:string,
+    startdate:String,
+    duedate:String
+}
+
 export const Calendar = ()=>{
+    const [event,setEvent] = useState([]);
+    const [eventlist,setEventlist] = useState({});
+
+    
+    useEffect(()=>{
+        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string,
+            {withCredentials:true})
+            .then(res => {
+                setEvent(res.data);
+            }).catch(error=> {
+                console.log("response error",error);
+            })
+    },[])
+
+    useEffect(()=>{
+        const schedule = ()=>{
+            return event.map((events:Todo)=>{
+                return {title:`${events.list}`,start:`${events.startdate}`,end:`${events.duedate}`}
+            })
+        }
+        setEventlist(schedule);
+    },[event])
+
+    console.log(event);
 
     const handleSelect = ()=>{
         
@@ -31,10 +63,10 @@ export const Calendar = ()=>{
           initialView="dayGridMonth" // 初期表示のモードを設定する
             locales={[jaLocale]}
             locale="ja"
-            events={[
-                {title:'eventを', start: '2022-10-14'},
-                {title:'こんな感じで追加できます', start: '2022-10-17', end: '2022-10-24'}
-            ]}　//eventsでカレンダーにイベんとついかできる jsonでいける
+            events={eventlist}
+            //{[
+             //   {title:`test`, start: '2022-10-17', end: '2022-10-24'}
+            //]} //eventsでカレンダーにイベんとついかできる jsonでいける
             selectable={true}
             select={handleSelect}
         />

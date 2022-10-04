@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get "/logged_in", to: "sessions#logged_in?"
 
   resources :todos
+  resources :schedules
 end

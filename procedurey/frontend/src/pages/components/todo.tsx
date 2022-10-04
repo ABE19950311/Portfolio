@@ -22,6 +22,8 @@ type Todo = {
 }
 
 const Body = styled.div`
+font-family: "Open Sans", sans-serif;
+line-height: 1.25;
 text-align:center;
 width:70%
 
@@ -107,16 +109,86 @@ box-shadow: inset 1px 1px 1px #fff;
 
 `
 
-const SUl = styled.ul`
-    display: flex;
+const STable = styled.table`
+border-collapse: collapse;
+margin: 0 auto;
+padding: 0;
+width: 650px;
+table-layout: fixed;
 
-li {
-    color: #333;
-    border-left: solid 8px #f4a006;
-    background: rgba(244, 160, 6, 0.1);
-    margin-bottom: 5px;
-    padding: 0.5rem;
-    width: 25%;
+tr {
+background-color: #fff;
+border: 1px solid #bbb;
+padding: .35em;
+}
+
+th,td {
+padding: 1em 10px 1em 1em;
+border-right: 1px solid #bbb;
+}
+
+th {
+font-size: .85em;
+}
+
+thead tr{
+background-color: #eee;
+}
+
+.txt{
+    text-align: left;
+    font-size: .85em;
+}
+
+tbody tr:hover{
+    background-color: #fffae9;
+}
+
+@media screen and (max-width: 600px) {
+table {
+    border: 0;
+    width:100%
+}
+table th{
+    background-color: #eee;
+    display: block;
+    border-right: none;
+}
+table thead {
+    border: none;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+}
+
+table tr {
+    display: block;
+    margin-bottom: .625em;
+}
+
+table td {
+    border-bottom: 1px solid #bbb;
+    display: block;
+    font-size: .8em;
+    text-align: right;
+    position: relative;
+    padding: .625em .625em .625em 4em;
+    border-right: none;
+}
+
+table td::before {
+    content: attr(data-label);
+    font-weight: bold;
+    position: absolute;
+    left: 10px;
+}
+
+table td:last-child {
+    border-bottom: 0;
 }
 `
 const SCheck = styled.input`
@@ -214,12 +286,6 @@ const handleChangeEnd = (selectedDate:Date) => {
     const [startDate, setStartDate] = useState(toUtcIso8601str(moment()))
     const [endDate, setEndDate] = useState(toUtcIso8601str(moment()))
 
-    console.log(todos)
-    console.log(list)
-    console.log(startDate)
-    console.log(endDate)
-    console.log(procedure)
-
     return (
         <>
         <Header />
@@ -248,17 +314,33 @@ const handleChangeEnd = (selectedDate:Date) => {
             <SButton type={"submit"}>リスト作成</SButton>
         </SForm>
         </Body>
+                    <STable>
+                    <thead className="thead">
+                        <tr className="tr">
+                        <td className="non"></td>
+                        <td className="td" scope="col">開始日</td>
+                        <td className="td" scope="col">期日</td>
+                        <td className="td" scope="col">TODO</td>
+                        <td className="td" scope="col">手続き内容</td>
+                        <td className="non"></td>
+                        </tr>
+                    </thead>
+                    </STable>
             {todos.map((todo:Todo,key:number)=>{
                 return (
                 <Body key={key}>
-                <SUl>
-                <SCheck type={"checkbox"}></SCheck>
-                <li>開始日:{todo.startdate}</li>
-                <li>終了日:{todo.duedate}</li>
-                <li>手続き内容:{todo.procedure}</li>
-                <li>TODO:{todo.list}</li>
-                <SButton onClick={()=>doDelete(todo.id)}>削除</SButton>
-                </SUl>
+                <STable>
+                    <tbody className="tbody">
+                        <tr className="tr">
+                            <th className="th"> <SCheck type={"checkbox"}></SCheck></th>
+                            <td data-label="開始日" className="txt">{todo.startdate}</td>
+                            <td data-label="期日" className="txt">{todo.duedate}</td>
+                            <td data-label="TODO" className="txt">{todo.list}</td>
+                            <td data-label="手続き内容" className="txt">{todo.procedure}</td>
+                            <td><SButton onClick={()=>doDelete(todo.id)}>削除</SButton></td>
+                        </tr>
+                    </tbody>
+                </STable>
                 </Body>
                 )
             })}

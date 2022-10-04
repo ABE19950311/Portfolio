@@ -23,7 +23,6 @@ ul {
     margin: 0;
     padding: 0;
 }
-
 `
 
 const Container = styled.div`
@@ -98,9 +97,9 @@ export const Header = ()=>{
             <SNav>
                 <Link href="/components/todo"><SItem><a href="#">Todoリスト</a></SItem></Link>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
-                <SItem><a href="#">テキスト</a></SItem>
+                <Link href="/components/mainpage"><SItem><a href="#">手続きリストへ戻る</a></SItem></Link>
             </SNav>
-            <Sbtn onClick={logout}>ログアウト</Sbtn>
+            <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>
         </SHeader>
         </Container>
