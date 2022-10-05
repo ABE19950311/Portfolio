@@ -46,8 +46,8 @@ export const Calendar = ()=>{
 
     console.log(event);
 
-    const handleSelect = ()=>{
-        
+    const handleSelect = ()=>{   
+        console.log("test");
     }
 
     return (
