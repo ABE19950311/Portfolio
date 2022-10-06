@@ -32,26 +32,23 @@ border-radius: 0 0 5px 5px;
 
 const SHeader = styled.div`
     background: #00FFFF;
-    padding: 15px 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     `
 
 const SLogo = styled.div`
-    a {
-        display: flex;
-        align-items: center;
-    }
-
+    padding:5px 0 0 5px;
     img {
-        margin-right: 10px;
+        height:auto;
+        width:100px;
     }
 `
 
 const SMenu = styled.div`
+    padding: 15px 30px;
     display: flex;
-    align-items: center;
+    padding-left:5px;
 `
 
 const SNav = styled.ul`
@@ -91,7 +88,7 @@ export const Header = ()=>{
         <Container>
         <SHeader>
             <SLogo>
-            <a href="#">Imgyotei+SAMPLE inc.</a>
+                <img src="/logo.png" />
             </SLogo>
             <SMenu>
             <SNav>
