@@ -5,18 +5,10 @@ import axios from "axios"
 import {useRouter} from "next/router"
 
 const SBody = styled.div`
-text-align:center;
-width:70%
-
 body {
     margin: 0;
 }
 
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
 
 p {
     margin: 0;
@@ -27,10 +19,6 @@ a {
     text-decoration: none;
 }
 
-table {
-    border-collapse: collapse;
-}
-
 ul {
     list-style: none;
     margin: 0;
@@ -39,7 +27,11 @@ ul {
 `
 
 const SForm = styled.div`
-
+position: absolute;
+top: 50%; /*親要素を起点に上から50%*/
+left: 50%;  /*親要素を起点に左から50%*/
+transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
+-webkit-transform: translateY(-50%) translateX(-50%);
 `;
 
 const SFormHead = styled.div`
@@ -48,7 +40,7 @@ const SFormHead = styled.div`
 `;
 
 const SFormInput = styled.input`
-width: 30%; /*親要素いっぱい広げる*/
+width: 120%; /*親要素いっぱい広げる*/
 padding: 10px 15px; /*ボックスを大きくする*/
 font-size: 16px;
 border-radius: 3px; /*ボックス角の丸み*/

@@ -198,6 +198,7 @@ const SCheck = styled.input`
 export const Todo = ()=>{
     const [list,setList] = useState("");
     const [procedure,setProcedure] = useState("");
+    const [search,setSearch] = useState("");
     const [todos,setTodos] = useState([]);
     const [flag,setFlag] = useState("");
 
@@ -219,6 +220,10 @@ export const Todo = ()=>{
         setProcedure(event.target.value);
     }
 
+    const doSearch = (event:{target:HTMLInputElement}) => {
+        setSearch(event.target.value);
+    }
+
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         if(list!==""&&procedure!=="") {
@@ -236,12 +241,14 @@ export const Todo = ()=>{
         ).then(res=> {
             console.log(res.data);
             setFlag(res.data);
+            setList("");
+            setProcedure("");
         }).catch(error=> {
             console.log("response error",error);
         })
     }
-    } 
-
+    }
+    
     const doDelete = (id:number)=>{
         axios.delete(process.env.NEXT_PUBLIC_ADDRESS+`/todos/${id}` as string,
         {withCredentials:true}
@@ -309,9 +316,10 @@ const handleChangeEnd = (selectedDate:Date) => {
                 endDate={moment(endDate).toDate()}
                 onChange={handleChangeEnd}
             />
-            <SInput type={"text"} placeholder={"やること"} onChange={doList}/><br></br>
-            <SInput type={"text"} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
-            <SButton type={"submit"}>リスト作成</SButton>
+            <SInput type={"text"} value={list} placeholder={"やること"} onChange={doList}/><br></br>
+            <SInput type={"text"} value={procedure} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
+            <SButton type={"submit"}>リスト作成</SButton><br></br>
+            <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/>
         </SForm>
         </Body>
                     <STable>
@@ -326,7 +334,13 @@ const handleChangeEnd = (selectedDate:Date) => {
                         </tr>
                     </thead>
                     </STable>
-            {todos.map((todo:Todo,key:number)=>{
+            {todos.filter((todos:Todo)=>{
+                if(todos.list.includes(search)) {
+                    return todos;
+                }else if(search===""){
+                    return todos;
+                }
+            }).map((todo:Todo,key:number)=>{
                 return (
                 <Body key={key}>
                 <STable>

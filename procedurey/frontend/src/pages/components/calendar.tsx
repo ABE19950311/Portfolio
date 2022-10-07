@@ -5,7 +5,7 @@ import axios from "axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
 import {Footer} from "./footer"
-import FullCalendar from "@fullcalendar/react"
+import FullCalendar, { DateSelectArg,EventApi } from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin from "@fullcalendar/interaction"
@@ -21,8 +21,11 @@ type Todo = {
 }
 
 export const Calendar = ()=>{
+    let eventGuid = 0;
     const [event,setEvent] = useState([]);
     const [eventlist,setEventlist] = useState({});
+    const [getevent,setGetevent] = useState({});
+    const createEventId = () => String(eventGuid++);
 
     
     useEffect(()=>{
@@ -44,11 +47,22 @@ export const Calendar = ()=>{
         setEventlist(schedule);
     },[event])
 
-    console.log(event);
-
-    const handleSelect = ()=>{   
-        console.log("test");
+    const handleSelect = (selectInfo:DateSelectArg)=>{   
+        let title = prompt("イベント内容を入力して下さい")?.trim();
+        let calendar = selectInfo.view.calendar;
+        calendar.unselect();
+        if(title) {
+            calendar.addEvent({
+                id:createEventId(),
+                title,
+                start: selectInfo.startStr,
+                end: selectInfo.endStr,
+                allDay: selectInfo.allDay,
+            })
+        }
     }
+
+    console.log(handleSelect);
 
     return (
         <div>

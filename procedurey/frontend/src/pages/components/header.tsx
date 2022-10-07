@@ -4,37 +4,30 @@ import React, {useState,useEffect} from "react"
 import axios from "axios"
 import {useRouter} from "next/router"
 
-const Body = styled.div`
-body {
-    margin: 0;
-}
-
-p {
-    margin: 0;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-`
-
-const Container = styled.div`
-border: 1px solid #ddd;
-border-radius: 0 0 5px 5px;
-`
 
 const SHeader = styled.div`
-    background: #00FFFF;
+    background: #f8f8ff;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 0;
+    padding: 0;
+    line-height: 0;
+
+    p {
+        margin: 0;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
     `
 
 const SLogo = styled.div`
@@ -57,15 +50,23 @@ display: flex;
 
 const Sbtn = styled.div`
 margin-left: 30px;
+&:hover{
+    color:#ffa500;
+}
 `
 
 const SItem = styled.li`
     a {
         display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    height: 100%;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: 100%;
+        padding-left:40px;
+    }
+
+    &:hover{
+        color:#ffa500;
     }
 `
 
@@ -84,12 +85,8 @@ export const Header = ()=>{
     }
 
     return (
-        <Body>
-        <Container>
         <SHeader>
-            <SLogo>
-                <img src="/logo.png" />
-            </SLogo>
+            <SLogo><img src="/logo.png"/></SLogo>
             <SMenu>
             <SNav>
                 <Link href="/components/todo"><SItem><a href="#">Todoリスト</a></SItem></Link>
@@ -99,7 +96,5 @@ export const Header = ()=>{
             <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>
         </SHeader>
-        </Container>
-        </Body>
     )
 }
