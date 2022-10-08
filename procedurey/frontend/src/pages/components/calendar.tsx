@@ -12,6 +12,13 @@ import interactionPlugin from "@fullcalendar/interaction"
 import listPlugin from "@fullcalendar/list"
 import jaLocale from "@fullcalendar/core/locales/ja"
 
+const Container = styled.div`
+min-height: 100vh;
+position: relative;/*←相対位置*/
+padding-bottom: 120px;/*←footerの高さ*/
+box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+`
+
 type Todo = {
     id:number,
     list:string,
@@ -84,7 +91,9 @@ export const Calendar = ()=>{
             selectable={true}
             select={handleSelect}
         />
+            <Container>
             <Footer />
+            </Container>
         </div>
     )
 }

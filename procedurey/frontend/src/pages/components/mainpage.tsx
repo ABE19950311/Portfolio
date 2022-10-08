@@ -7,20 +7,23 @@ import {Header} from "./header"
 import {Footer} from "./footer"
 import {Procedure} from "./procedure"
 
+const Container = styled.div`
+min-height: 100vh;
+position: relative;/*←相対位置*/
+padding-bottom: 120px;/*←footerの高さ*/
+box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+`
+
 export const MainPage = ()=>{
     
     return (
-        <div>
-            <div>
-            <Header />
-            </div>
-            <div>
-            <Procedure />
-            </div>
-            <div>
-            <Footer />
-            </div>
-        </div>
+        <>
+        <Header />
+        <Procedure />
+        <Container>
+        <Footer />
+        </Container>
+        </>
     )
 }
 

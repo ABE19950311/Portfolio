@@ -49,7 +49,6 @@ export const TopPage = ()=>{
         
         <div>
         <Body>
-    
             <Main>
             <div>
                 <Image src="/main.png" layout="fill" alt="logo"/>   
@@ -60,7 +59,6 @@ export const TopPage = ()=>{
                 </Link>
             </div>
             </Main>
-
         </Body>
         </div>
     )

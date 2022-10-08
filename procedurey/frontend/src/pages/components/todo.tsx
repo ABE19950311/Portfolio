@@ -21,6 +21,13 @@ type Todo = {
     duedate:String
 }
 
+const Container = styled.div`
+min-height: 100vh;
+position: relative;/*←相対位置*/
+padding-bottom: 120px;/*←footerの高さ*/
+box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
+`
+
 const Body = styled.div`
 font-family: "Open Sans", sans-serif;
 line-height: 1.25;
@@ -358,7 +365,9 @@ const handleChangeEnd = (selectedDate:Date) => {
                 </Body>
                 )
             })}
+        <Container>
         <Footer />
+        </Container>
         </>
     )
 }

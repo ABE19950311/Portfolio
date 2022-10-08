@@ -169,29 +169,24 @@ export const Procedure = ()=>{
     <Container>
     <SCard>
         <SItem>
-            <p>戸籍・住民登録</p>
+            <p>部屋探し・入居</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("koseki")}><span>MORE</span></Sbtn>
+            <Sbtn onClick={()=>Router("heya")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
-            <p>保険年金</p>
+            <p>入居後手続き</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("hoken")}><span>MORE</span></Sbtn>
+            <Sbtn onClick={()=>Router("hikkoshi")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
-            <p>福祉</p>
+            <p>防犯・防災</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("fukushi")}><span>MORE</span></Sbtn>
+            <Sbtn onClick={()=>Router("bouhan")}><span>MORE</span></Sbtn>
         </SItem>
         <SItem>
-            <p>税務</p>
+            <p>掃除</p>
             <Stxt>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("zeimu")}><span>MORE</span></Sbtn>
-        </SItem>
-        <SItem>
-            <p>タイトル</p>
-            <Stxt>テキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn><span>MORE</span></Sbtn>
+            <Sbtn onClick={()=>Router("souzi")}><span>MORE</span></Sbtn>
         </SItem>
     </SCard>
     </Container>
