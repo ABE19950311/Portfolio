@@ -16,16 +16,17 @@ jobs:
   rspec:
     docker:
       - image: cimg/ruby:3.1.2-node
+        environment: 
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+          DB_USERNAME: "root"
+          DB_PASSWORD: ""
       - image: cimg/mysql:8.0
         command: [--default-authentication-plugin=mysql_native_password]
         environment:
-          MYSQL_ROOT_PASSWORD: password
-          RAILS_ENV: test
-    environment:
-      BUNDLE_JOBS: "3"
-      BUNDLE_RETRY: "3"
-      APP_DATABASE_HOST: "127.0.0.1"
-      RAILS_ENV: test
+          MYSQL_ROOT_HOST: "%"
+          MYSQL_ALLOW_EMPTY_PASSWORD: "true"
+    
     working_directory: ~/Portfolio/backend
         
     steps:

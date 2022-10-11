@@ -25,8 +25,11 @@ development:
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
-  host: <%= ENV['DB_HOST'] || 'db' %>
+  adapter: mysql2
+  encoding: utf8
+  pool: 5
+  username: "root"
+  host: '127.0.0.1'
   database: backapp_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
