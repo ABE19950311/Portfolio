@@ -26,7 +26,7 @@ jobs:
       BUNDLE_RETRY: "3"
       APP_DATABASE_HOST: "127.0.0.1"
       RAILS_ENV: test
-    working_directory: ~/Portfolio/db
+    working_directory: ~/Portfolio/backend
         
     steps:
       - checkout:
@@ -57,10 +57,10 @@ jobs:
       # Database setup
       - run:
           command: bundle exec rails db:create
-          working_directory: ~/Portfolio/db
+          working_directory: ~/Portfolio/backend
       - run:
           command: bundle exec rails db:migrate
-          working_directory: ~/Portfolio/db
+          working_directory: ~/Portfolio/backend
 
       - run:
           name: create directory to store test results
