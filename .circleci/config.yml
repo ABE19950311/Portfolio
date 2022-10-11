@@ -1,25 +1,45 @@
 version: 2.1
 
+orbs:
+  ruby: circleci/ruby@1.8.0
+
 jobs:
+  build:
+    docker:
+      - image: cimg/ruby:3.1.2-node
+    working_directory: ~/Portfolio/backend
+    steps:
+      - checkout:
+          path: ~/Portfolio
+      - ruby/install-deps
+
   rspec:
     docker:
-      - image: cimg/ruby:3.1.2
-        environment:
-          RAILS_ENV: test
-          DB_HOST: 127.0.0.1
+      - image: cimg/ruby:3.1.2-node
       - image: cimg/mysql:8.0
-
-    working_directory: ~/repo
-
+        environment:
+          MYSQL_ROOT_PASSWORD: password
+          MYSQL_DATABASE: backapp_test
+          MYSQL_USER: root
+          RAILS_ENV: test
+    environment:
+      BUNDLE_JOBS: "3"
+      BUNDLE_RETRY: "3"
+      APP_DATABASE_HOST: "127.0.0.1"
+      RAILS_ENV: test
+    working_directory: ~/Portfolio/backend
+        
     steps:
-      - checkout
+      - checkout:
+          path: ~/Portfolio
+      - ruby/install-deps
 
       # restore gem from cache
       - restore_cache:
           keys:
-            - gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
+            - gem-cache-v1-{{ checksum "~/Portfolio/backend/Gemfile.lock" }}
             - gem-cache-v1-
-          working_directory: ~/repo/backend
+          working_directory: ~/Portfolio/backend
 
       # gem install
       - run:
@@ -27,26 +47,26 @@ jobs:
             gem install bundler
             bundle config set path 'vendor/bundle'
             bundle install --jobs=4 --retry=3
-          working_directory: ~/repo/backend
+          working_directory: ~/Portfolio/backend
 
       - save_cache:
-          key: gem-cache-v1-{{ checksum "~/repo/backend/Gemfile.lock" }}
+          key: gem-cache-v1-{{ checksum "~/Portfolio/backend/Gemfile.lock" }}
           paths:
-            - ~/repo/backend/vendor/bundle
-          working_directory: ~/repo/backend
+            - ~/Portfolio/backend/vendor/bundle
+          working_directory: ~/Portfolio/backend
 
       # Database setup
       - run:
           command: bundle exec rails db:create
-          working_directory: ~/repo/backend
+          working_directory: ~/Portfolio/backend
       - run:
           command: bundle exec rails db:migrate
-          working_directory: ~/repo/backend
+          working_directory: ~/Portfolio/backend
 
       - run:
           name: create directory to store test results
           command: mkdir /tmp/test-results
-          working_directory: ~/repo/backend
+          working_directory: ~/Portfolio/backend
 
       # run tests
       - run:
@@ -54,7 +74,7 @@ jobs:
           command: |
             bundle exec rspec $(circleci tests glob "spec/**/*_spec.rb" | circleci tests split --split-by=timings) \
               || (printf "====== RETRYING...\n\n\n"; bundle exec rspec --only-failures)
-          working_directory: ~/repo/backend
+          working_directory: ~/Portfolio/backend
 
       # collect reports
       - store_test_results:
@@ -63,45 +83,43 @@ jobs:
           path: /tmp/test-results
           destination: test-results
       - store_artifacts:
-          path: /home/circleci/repo/tmp/screenshots
+          path: /home/circleci/Portfolio/tmp/screenshots
 
   jest:
     docker:
-      - image: cimg/node:14.3
+      - image: cimg/node:18.0.0
         environment:
           NODE_ENV: test
 
-    working_directory: ~/repo
+    working_directory: ~/Portfolio
 
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "~/repo/frontend/package.json" }}
-          working_directory: ~/repo/frontend
+            - v1-dependencies-{{ checksum "~/Portfolio/frontend/package.json" }}
+          working_directory: ~/Portfolio/frontend
       - run:
           name: install-packages
           command: npm install
-          working_directory: ~/repo/frontend
+          no_output_timeout: 30m
+          working_directory: ~/Portfolio/frontend
       - save_cache:
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "~/repo/frontend/package.json" }}
-          working_directory: ~/repo/frontend
+          key: v1-dependencies-{{ checksum "~/Portfolio/frontend/package.json" }}
+          working_directory: ~/Portfolio/frontend
       - run:
           name: test
           command: npm run test
-          working_directory: ~/repo/frontend
+          working_directory: ~/Portfolio/frontend
 
 workflows:
   version: 2
-  test:
+  rspec_and_jest:
     jobs:
+      - build
       - rspec:
-          filters:
-            branches:
-              ignore: main
-      - jest:
-          filters:
-            branches:
-              ignore: main
+          requires:
+            - build
+      - jest
