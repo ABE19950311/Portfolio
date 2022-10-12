@@ -15,6 +15,7 @@ registerLocale("ja",ja);
 
 type Todo = {
     id:number,
+    user_id:number,
     list:string,
     procedure:string,
     startdate:String,
@@ -365,9 +366,6 @@ const handleChangeEnd = (selectedDate:Date) => {
                 </Body>
                 )
             })}
-        <Container>
-        <Footer />
-        </Container>
         </>
     )
 }

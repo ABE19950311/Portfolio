@@ -1,11 +1,14 @@
 class TodosController < ApplicationController
+
     def index
-        @todo = Todo.all
+        @user_id = User.find_by(username: session[:user_name]).id
+        @todo = Todo.where(user_id: @user_id)
         render json:@todo
     end
 
     def create
-        @todo = Todo.create(todo_params)
+        @user_id = User.find_by(username: session[:user_name]).id
+        @todo = Todo.create(todo_params.merge(user_id: @user_id))
         render json:@todo
     end
 

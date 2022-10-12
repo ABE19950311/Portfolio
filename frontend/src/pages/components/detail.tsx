@@ -21,6 +21,9 @@ h1 {
     background: #ffe0b2;
     color: #f57c00;
 }
+p {
+    line-height:0.5;
+}
 .steps {
 /* 連番カウンター名の定義 */
 counter-reset: step-counter;
@@ -78,8 +81,6 @@ export const Detail = ()=>{
     const [item,setItem] = useState("");
     const router=useRouter();
     const query = router.query.state as unknown as string;
-    console.log(query);
-
 
     const Heya = ()=>{
         console.log("test")
@@ -88,8 +89,13 @@ export const Detail = ()=>{
             <h1>部屋選びから入居までの流れ</h1>
             <div className="steps">
                 <h2>情報収集</h2>
-                <p>いい感じの大きさに野菜と肉を切ります。</p>
-
+                <p>街の雰囲気/通勤・通学時間等を基に住むエリアを絞り</p>
+                <p>不動産情報サイトで相場を確認する。</p>
+                <h3>TODO</h3>
+                <ul>
+                    <li>住みたい街の目星をつける</li>
+                    <li>家賃相場を確認する</li>
+                </ul>
                 <h2>不動産会社へ</h2>
                 <p>切った具材を鍋に入れて煮込みます。</p>
 

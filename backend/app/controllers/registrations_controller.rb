@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-
+    
     def signup
         @user = User.new(registrations_params)
 
