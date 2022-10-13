@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/getuser", to:"registrations#index"
   post "/signup", to: "registrations#signup"
   post "/login", to: "sessions#login"
   delete "/logout", to: "sessions#logout"

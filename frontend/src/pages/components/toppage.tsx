@@ -2,7 +2,7 @@ import Image from 'next/image'
 import styled from "styled-components"
 import Link from "next/link"
 
-const Body = styled.div`
+const Body = styled.body`
     margin: 0px;
     padding: 0px;
 `
@@ -43,11 +43,10 @@ const Button = styled.button`
     padding:0;
 `
 
+
 export const TopPage = ()=>{
 
     return (
-        
-        <div>
         <Body>
             <Main>
             <div>
@@ -60,6 +59,5 @@ export const TopPage = ()=>{
             </div>
             </Main>
         </Body>
-        </div>
     )
 }

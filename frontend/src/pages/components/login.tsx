@@ -4,7 +4,7 @@ import React, {useState,useEffect} from "react"
 import axios from "axios"
 import {useRouter} from "next/router"
 
-const SBody = styled.div`
+const SBody = styled.body`
 body {
     margin: 0;
 }
@@ -71,7 +71,7 @@ box-shadow: inset 1px 1px 1px #fff;
     background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
     background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
     }
-`;
+`
 
 const Login = ()=>{
     const [loginStatus,setLoginStatus] = useState("未ログイン");

@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-describe "GET /todos" do
+describe "GET /getuser" do
     before do
-        create_list(:todo, 10)
+        create_list(:user, 10)
     end
     it 'ユーザー一覧が表示されること' do
-        get "/todos"
+        get "/getuser"
         expect(response.status).to eq(200)
     end
 end

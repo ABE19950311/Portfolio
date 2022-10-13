@@ -13,6 +13,7 @@ const SHeader = styled.div`
     margin: 0;
     padding: 0;
     line-height: 0;
+    
 
     p {
         margin: 0;

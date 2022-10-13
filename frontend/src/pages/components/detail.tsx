@@ -15,6 +15,9 @@ box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
 `
 
 const Steps = styled.div`
+width:800px;
+margin-left:250px;
+
 h1 {
     padding: 1rem 1rem;
     border-left: 5px solid #ff9800;
@@ -24,6 +27,31 @@ h1 {
 p {
     line-height:0.5;
 }
+ul {
+    position: relative;
+    padding: 15px 40px 15px 30px;
+    font: 14px/1.6 'arial narrow', sans-serif;
+    border: solid 2px #adcce8;
+    border-radius:8px;
+    color: #448ccb;
+    width:400px;
+    background: #fff;
+}
+ul:before{
+    content: "TODO";  /* 好きな文字を記述 */
+    position: absolute;
+    display: block;
+    top: -15px;
+    left: 20px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+ul li{
+    font-weight: bold;
+}
+
 .steps {
 /* 連番カウンター名の定義 */
 counter-reset: step-counter;
@@ -83,28 +111,45 @@ export const Detail = ()=>{
     const query = router.query.state as unknown as string;
 
     const Heya = ()=>{
-        console.log("test")
         return (
             <Steps>
             <h1>部屋選びから入居までの流れ</h1>
             <div className="steps">
                 <h2>情報収集</h2>
-                <p>街の雰囲気/通勤・通学時間等を基に住むエリアを絞り</p>
-                <p>不動産情報サイトで相場を確認する。</p>
-                <h3>TODO</h3>
-                <ul>
-                    <li>住みたい街の目星をつける</li>
-                    <li>家賃相場を確認する</li>
-                </ul>
+                    <p>街の雰囲気/通勤・通学時間等を基に住むエリアを絞り、不動産情報サイトで相場を確認する。</p>
+                    <p>住む上で譲れないポイントを割り出す。数が多い場合は優先順位を付けた方が良い。</p>
+                    <ul>
+                        <li>住みたい街の目星をつける</li>
+                        <li>家賃相場を確認する</li>
+                        <li>居住ポイントを割り出す</li>
+                    </ul>
                 <h2>不動産会社へ</h2>
-                <p>切った具材を鍋に入れて煮込みます。</p>
-
+                    <p>ネット未掲載の物件も存在するため、実際に不動産会社に足を運んで相談をした方が良い。</p>
+                    <p>物件数を求めるなら大手不動産会社、掘り出し物件を期待する場合地域密着型不動産会社へ。</p>
                 <h2>内見</h2>
-                <p>カレールーなど調味料を入れて完成です。</p>
-
+                    <p>水回りの状態、日当たり、ポスト/ゴミ捨て場の状態等を入念にチェック</p>
+                    <p>見るだけでなく、実際に水が流れるかも重要</p>
                 <h2>申し込み・入居審査</h2>
+                    <p>物件に問題がなければ申し込み。審査を受け、通過すれば契約へ</p>
                 <h2>引っ越しに向けて各種手続き</h2>
+                    <p>トラブル発生の基になるため、必ず賃貸借契約書をよく読んでから契約へ。</p>
+                    <ul>
+                        <li>契約に必要な物の用意(印鑑、本人確認書類等)</li>
+                    </ul>
+                <h2>入居手配/荷造り</h2>
+                    <p>引越し業者を利用する場合、数社から見積もりを取り比較検討すること。</p>
+                    <p>見積もりサイトの利用を行えば楽</p>
+                    <p>電気/ガス/水道/インターネット/郵便局の移行手続きを忘れずに</p>
+                    <ul>
+                        <li>引越し業者手配</li>
+                        <li>各種移行手続き(電気/ガス/水道/インターネット/郵便局等)</li>
+                    </ul>
                 <h2>入居</h2>
+                    <p>荷物を運び入れる前に壁/床の状況を写真に撮っておくと良い。(退去時のトラブル回避)</p>
+                    <ul>
+                        <li>荷ほどき</li>
+                        <li>電気/ガス等が問題なく使用できるか確認</li>
+                    </ul>
             </div>
             </Steps>
         )

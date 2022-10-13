@@ -14,15 +14,22 @@ padding-bottom: 120px;/*←footerの高さ*/
 box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
 `
 
+const SBody = styled.body`
+    *{margin:0,padding:0}
+`
+
+
 export const MainPage = ()=>{
     
     return (
         <>
+        <SBody>
         <Header />
         <Procedure />
         <Container>
         <Footer />
         </Container>
+        </SBody>
         </>
     )
 }
