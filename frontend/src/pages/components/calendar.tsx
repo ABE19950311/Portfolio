@@ -1,10 +1,7 @@
 import styled from "styled-components"
-import Link from "next/link"
 import React, {useState,useEffect} from "react"
 import axios from "axios"
-import {useRouter} from "next/router"
-import {Header} from "./header"
-import {Footer} from "./footer"
+import {Layout} from "./layout"
 import FullCalendar, { DateSelectArg,EventApi } from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import dayGridPlugin from "@fullcalendar/daygrid"
@@ -72,8 +69,8 @@ export const Calendar = ()=>{
     console.log(handleSelect);
 
     return (
-        <div>
-            <Header />
+        <>
+        <Layout>
             <FullCalendar
           plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]} // pluginsにdayGridPluginを設定する
           headerToolbar={{                          // 追加
@@ -91,10 +88,8 @@ export const Calendar = ()=>{
             selectable={true}
             select={handleSelect}
         />
-            <Container>
-            <Footer />
-            </Container>
-        </div>
+        </Layout>
+        </>
     )
 }
 

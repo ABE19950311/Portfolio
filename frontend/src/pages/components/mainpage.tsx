@@ -1,10 +1,5 @@
 import styled from "styled-components"
-import Link from "next/link"
-import React, {useState,useEffect} from "react"
-import axios from "axios"
-import {useRouter} from "next/router"
-import {Header} from "./header"
-import {Footer} from "./footer"
+import {Layout} from "./layout"
 import {Procedure} from "./procedure"
 
 const Container = styled.div`
@@ -14,22 +9,16 @@ padding-bottom: 120px;/*←footerの高さ*/
 box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
 `
 
-const SBody = styled.body`
-    *{margin:0,padding:0}
-`
+
 
 
 export const MainPage = ()=>{
     
     return (
         <>
-        <SBody>
-        <Header />
+        <Layout>
         <Procedure />
-        <Container>
-        <Footer />
-        </Container>
-        </SBody>
+        </Layout>
         </>
     )
 }

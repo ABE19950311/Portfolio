@@ -1,11 +1,7 @@
 import styled from "styled-components"
-import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "axios"
 import {useRouter} from "next/router"
-import {Header} from "./header"
-import {Footer} from "./footer"
-import {Procedure} from "./procedure"
+import {Layout} from "./layout"
 
 const Container = styled.div`
 min-height: 100vh;
@@ -193,8 +189,8 @@ export const Detail = ()=>{
     }
 
     return (
-        <div>
-            <Header />
+            <>
+            <Layout>
             {(()=>{
                 if(query==="heya") {
                     return <Heya />
@@ -208,10 +204,8 @@ export const Detail = ()=>{
                     console.log("error");
                 }
             })()}
-            <Container>
-            <Footer />
-            </Container>
-        </div>
+            </Layout>
+            </>
     )
 }
 
