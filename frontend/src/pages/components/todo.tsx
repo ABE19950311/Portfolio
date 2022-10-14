@@ -123,6 +123,7 @@ margin: 0 auto;
 padding: 0;
 width: 650px;
 table-layout: fixed;
+overflow-wrap: break-word;
 
 tr {
 background-color: #fff;

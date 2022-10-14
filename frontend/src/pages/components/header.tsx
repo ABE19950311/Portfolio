@@ -6,13 +6,14 @@ import {useRouter} from "next/router"
 
 
 const SHeader = styled.div`
-    background: #f8f8ff;
+    background: #f0ffff;
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 0;
     padding: 0;
     line-height: 0;
+    width:100%
     
 
     p {
@@ -39,18 +40,12 @@ const SLogo = styled.div`
     }
 `
 
-const SMenu = styled.div`
-    padding: 15px 30px;
+const SMenu = styled.ul`
     display: flex;
-    padding-left:5px;
-`
-
-const SNav = styled.ul`
-display: flex;
 `
 
 const Sbtn = styled.div`
-margin-left: 30px;
+margin: 0 30px;
 &:hover{
     color:#ffa500;
 }
@@ -89,11 +84,9 @@ export const Header = ()=>{
         <SHeader>
             <SLogo><img src="/logo.png"/></SLogo>
             <SMenu>
-            <SNav>
                 <Link href="/components/todo"><SItem><a href="#">Todoリスト</a></SItem></Link>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Link href="/components/mainpage"><SItem><a href="#">手続きリストへ戻る</a></SItem></Link>
-            </SNav>
             <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>
         </SHeader>
