@@ -20,3 +20,5 @@ export const Footer = ()=>{
         </SFooter>
     )
 }
+
+export default Footer

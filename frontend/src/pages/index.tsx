@@ -42,17 +42,17 @@ const Button = styled.button`
 
 const Home = () => {
 return (
-      <>
-      <Main>
-          <Image src="/main.png" layout="fill" alt="logo"/>   
-          <h1>Procedurey</h1>
-          <h3>様々な手続きが、一目で分かる</h3>
-          <Link href="/components/login">
-              <Button>利用する</Button>
-          </Link>
-      </Main>
-  </>
-  )
+        <>
+        <Main>
+            <Image src="/main.png" layout="fill" alt="logo"/>   
+            <h1>Procedurey</h1>
+            <h3>様々な手続きが、一目で分かる</h3>
+            <Link href="/components/login">
+                <Button>利用する</Button>
+            </Link>
+        </Main>
+    </>
+    )
 }
 
 export default Home

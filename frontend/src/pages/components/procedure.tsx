@@ -194,3 +194,4 @@ export const Procedure = ()=>{
     )
 }
 
+export default Procedure
