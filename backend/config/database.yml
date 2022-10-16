@@ -57,5 +57,6 @@ test:
 production:
   <<: *default
   database: backapp_production
-  username: backapp
-  password: <%= ENV["BACKAPP_DATABASE_PASSWORD"] %>
+  #username: backapp
+  #password: <%= ENV["BACKAPP_DATABASE_PASSWORD"] %>
+  url: <%= ENV['DATABASE_URL'] %>
