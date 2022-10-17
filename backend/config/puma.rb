@@ -44,4 +44,3 @@ plugin :tmp_restart
 
 backapp_root = File.expand_path('..', __dir__)
 bind "unix://#{backapp_root}/tmp/sockets/puma.sock"
-stdout_redirect "#{backapp_root}/log/puma.stdout.log", "#{backapp_root}/log/puma.stderr.log", true

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 services:
   db:
@@ -9,7 +9,7 @@ services:
     environment: 
       MYSQL_ROOT_PASSWORD: password
     ports: 
-    - 3307:3306
+    - 3306:3306
   
   web:
     build:
@@ -17,8 +17,10 @@ services:
       dockerfile: Dockerfile.nginx
     volumes:
     - ./backend/nginx/nginx.conf:/etc/nginx/conf.d/backapp.conf
+    - public-data:/backapp/public
+    - tmp-data:/backapp/tmp
     ports:
-      - "80:80"
+      - 80:80
     depends_on:
       - backend
 
@@ -32,6 +34,10 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
     - ./backend:/backapp
+    - public-data:/backapp/public
+    - tmp-data:/backapp/tmp
+    - log-data:/backapp/log
+    - /backapp/node_modules
     command: bundle exec puma -C config/puma.rb
   
   frontend:
@@ -42,4 +48,9 @@ services:
     - ./frontend:/frontapp
     command: 'npm run dev'
     ports:
-    - "3000:3000"
+    - 3000:3000
+
+volumes:
+  public-data:
+  tmp-data:
+  log-data:
