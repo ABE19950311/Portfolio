@@ -79,9 +79,12 @@ const Login = ()=>{
     const [password,setPassword] = useState("");
     const router = useRouter();
 
+    console.log(process.env.NEXT_PUBLIC_ADDRESS)
+    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+
     useEffect(()=>{
         checkLoginStatus();
-    },[]);
+    });
 
     const checkLoginStatus = ()=>{
         axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/logged_in" as string,
