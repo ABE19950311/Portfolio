@@ -5,8 +5,12 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#logout"
   get "/logged_in", to: "sessions#logged_in?"
 
-  get :health_check, to: "health_check#index"
-
   resources :todos
   resources :schedules
+
+  namespace :api do
+    namespace :v1 do
+      get :health_check, to: 'health_check#index'
+    end
+  end
 end
