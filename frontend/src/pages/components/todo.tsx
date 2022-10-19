@@ -210,15 +210,19 @@ export const Todo = ()=>{
     const [search,setSearch] = useState("");
     const [todos,setTodos] = useState([]);
     const [flag,setFlag] = useState("");
+    const router=useRouter();
+
+    const getenv = router.query.state as unknown as string;
 
     useEffect(()=>{
-        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string,
+        axios.get(getenv+"/todos" as string,
         {withCredentials:true}
         ).then(res=> {
             setTodos(res.data);
         }).catch(error=> {
             console.log("response error",error);
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     },[flag]);
 
     const doList = (event:{target:HTMLInputElement}) => {
@@ -236,7 +240,7 @@ export const Todo = ()=>{
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         if(list!==""&&procedure!=="") {
-        axios.post(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string,
+        axios.post(getenv+"/todos" as string,
             {
                 todos: {
                     list:list,
@@ -259,7 +263,7 @@ export const Todo = ()=>{
     }
     
     const doDelete = (id:number)=>{
-        axios.delete(process.env.NEXT_PUBLIC_ADDRESS+`/todos/${id}` as string,
+        axios.delete(getenv+`/todos/${id}` as string,
         {withCredentials:true}
         )
         .then(res => {

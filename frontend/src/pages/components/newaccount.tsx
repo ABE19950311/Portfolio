@@ -40,7 +40,16 @@ export const Newaccount = ()=>{
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [passwordConfirmation,setPasswordConfirmation] = useState("");
+    const [getenv,setGetenv] = useState("");
     const router = useRouter();
+
+    useEffect(()=>{
+        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
+            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
+        }else{
+            setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+        }
+    },[])
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -56,7 +65,7 @@ export const Newaccount = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault();
-        axios.post(process.env.NEXT_PUBLIC_ADDRESS+"/signup" as string,
+        axios.post(getenv+"/signup" as string,
             {
                 user: {
                     username:username,

@@ -1,9 +1,5 @@
-module Api
-    module V1
-        class HealthCheckController < ApplicationController
-            def index
-                head 200
-            end
-        end
+class HealthCheckController < ApplicationController
+    def health_check
+        render json: {result: 'ok'}
     end
 end

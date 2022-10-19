@@ -69,9 +69,18 @@ const SItem = styled.li`
 
 export const Header = ()=>{
     const router = useRouter();
+    const [getenv,setGetenv] = useState("");
+
+    useEffect(()=>{
+        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
+            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
+        }else{
+            setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+        }
+    },[])
 
     const logout = ()=>{
-        axios.delete(process.env.NEXT_PUBLIC_ADDRESS+"/logout" as string,
+        axios.delete(getenv+"/logout" as string,
         {withCredentials:true})
         .then(res=> {
             router.push("/components/login");
@@ -80,14 +89,21 @@ export const Header = ()=>{
         })
     }
 
+    const todo = ()=>{
+        router.push({
+            pathname:"/components/todo",
+            query:{state:getenv}
+            })
+    }
+
     return (
         <SHeader>
             <SLogo><img src="/logo.png"/></SLogo>
             <SMenu>
-                <Link href="/components/todo"><SItem><a href="#">Todoリスト</a></SItem></Link>
+                <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Link href="/components/mainpage"><SItem><a href="#">手続きリストへ戻る</a></SItem></Link>
-            <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
+                <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>
         </SHeader>
     )

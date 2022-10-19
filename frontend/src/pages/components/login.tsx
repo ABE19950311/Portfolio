@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Link from "next/link"
-import React, {useState,useEffect} from "react"
+import React, {useState,useEffect,useContext} from "react"
 import axios from "axios"
 import {useRouter} from "next/router"
 
@@ -73,32 +73,41 @@ box-shadow: inset 1px 1px 1px #fff;
     }
 `
 
+
+
 const Login = ()=>{
     const [loginStatus,setLoginStatus] = useState("未ログイン");
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
+    const [getenv,setGetenv] = useState("");
     const router = useRouter();
 
     console.log(process.env.NEXT_PUBLIC_ADDRESS)
     console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+    console.log(getenv)
 
     useEffect(()=>{
-        checkLoginStatus();
-    });
+        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
+            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
+        }else{
+            setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+        }
+    },[])
 
-    const checkLoginStatus = ()=>{
-        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/logged_in" as string,
-        {withCredentials:true})
-        .then(res => {
-            if(res.data.logged_in&&loginStatus==="未ログイン") {
-                setLoginStatus("ログイン済み");
-            }else if (!res.data.logged_in&&loginStatus==="ログイン済み") {
-                setLoginStatus("未ログイン");
-            }
-        }).catch(error => {
-            console.log("ログインエラー",error)
-        })
-    }
+   // useEffect(()=>{
+   //     axios.get(getenv+"/logged_in" as string,
+   //     {withCredentials:true})
+   //     .then(res => {
+   //         if(res.data.logged_in&&loginStatus==="未ログイン") {
+   //             setLoginStatus("ログイン済み");
+   //         }else if (!res.data.logged_in&&loginStatus==="ログイン済み") {
+   //            setLoginStatus("未ログイン");
+   //         }
+   //     }).catch(error => {
+   //         console.log("ログインエラー",error)
+   //     })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+   // },[getenv]);
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -110,7 +119,7 @@ const Login = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault();
-        axios.post(process.env.NEXT_PUBLIC_ADDRESS+"/login" as string,
+        axios.post(getenv+"/login" as string,
             {
                 user: {
                     username:username,
@@ -121,7 +130,10 @@ const Login = ()=>{
         ).then(res => {
             console.log("login response: ", res.data.logged_in)
             if(res.data.logged_in) {
-                router.push("/components/mainpage");
+                router.push({
+                    pathname:"/components/mainpage",
+                    query:{state:getenv}
+                    });
                 setLoginStatus("ログイン済み");
             }
         }).catch(error => {

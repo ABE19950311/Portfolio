@@ -8,9 +8,5 @@ Rails.application.routes.draw do
   resources :todos
   resources :schedules
 
-  namespace :api do
-    namespace :v1 do
-      get :health_check, to: 'health_check#index'
-    end
-  end
+  get "/health_check", to: "health_check#health_check"
 end
