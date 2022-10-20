@@ -51,6 +51,11 @@ export const Newaccount = ()=>{
         }
     },[])
 
+    console.log(getenv)
+    console.log(username)
+    console.log(password)
+    console.log(passwordConfirmation)
+
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
     }

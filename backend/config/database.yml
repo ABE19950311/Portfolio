@@ -20,6 +20,12 @@ default: &default
 development:
   <<: *default
   database: backapp_development
+  username: backapp
+  password: <%= ENV["BACKAPP_DATABASE_PASSWORD"] %>
+
+  #<<: *default
+  #database: backapp_production
+  #url: <%= ENV['DATABASE_URL'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -56,7 +62,13 @@ test:
 #
 production:
   <<: *default
-  database: backapp_production
-  #username: backapp
-  #password: <%= ENV["BACKAPP_DATABASE_PASSWORD"] %>
-  url: <%= ENV['DATABASE_URL'] %>
+  #database: <%= ENV['DB_DATABASE'] %>
+  database: backapp
+  adapter: mysql2
+  encoding: utf8mb4
+  host: database-2.csjtsoda41gn.us-west-1.rds.amazonaws.com
+  username: admin
+  password: password
+  #host: <%= ENV['DB_HOST'] %>
+  #username: <%= ENV['DB_USERNAME'] %>
+  #password: <%= ENV['DB_PASSWORD'] %>
