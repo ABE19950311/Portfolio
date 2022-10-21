@@ -177,7 +177,6 @@ workflows:
           region: '${AWS_REGION}'
           registry-id: AWS_ACCOUNT_ID
           repo: "portfolio-web"
-          region: AWS_REGION
           tag: "latest"
           path: ./backend/nginx/
 
