@@ -142,7 +142,7 @@ workflows:
           aws-secret-access-key: AWS_SECRET_ACCESS_KEY
           create-repo: false
           push-image: true
-          region: AWS_DEFAULT_REGION
+          region: '${AWS_REGION}'
           registry-id: AWS_ACCOUNT_ID
           repo: "portfolio-backend"
           tag: "latest"
