@@ -51,6 +51,17 @@ export const Newaccount = ()=>{
         }
     },[])
 
+    useEffect(()=>{
+        axios.get(getenv+"/health_check" as string,
+        {withCredentials:true}
+        ).then(res=> {
+            console.log(res.data);
+        }).catch(error=> {
+            console.log("response error",error);
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
+
     console.log(getenv)
     console.log(username)
     console.log(password)

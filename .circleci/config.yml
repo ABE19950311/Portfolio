@@ -120,6 +120,12 @@ workflows:
     jobs:
       - build
       - rspec:
+          filters:
+            branches:
+              only: main
           requires:
             - build
-      - jest
+      - jest:
+          filters:
+            branches:
+              only: main
