@@ -115,41 +115,29 @@ jobs:
           command: npm run test
           working_directory: ~/Portfolio/frontend
   
-  push_image_backend:
-    machine:
-      image: ubuntu-2204:2022.04.1
-    steps:
-      - checkout
-      - aws-ecr/push-image:
-          account-url: AWS_ACCOUNT_URL
-          repo: "portfolio-backend"
-          region: AWS_REGION
-          tag: "${CIRCLE_SHA1}"
-          path: ./backend/
+  #push_image_frontend:
+  ##  machine:
+   #   image: ubuntu-2204:2022.04.1
+   # steps:
+    #  - checkout
+    #  - aws-ecr/build-and-push-image:
+    #      account-url: AWS_ACCOUNT_URL
+    #      repo: "portfolio-frontend"
+    #      region: AWS_REGION
+    ##      tag: "${CIRCLE_SHA1}"
+      #    path: ./frontend/
   
-  push_image_frontend:
-    machine:
-      image: ubuntu-2204:2022.04.1
-    steps:
-      - checkout
-      - aws-ecr/push-image:
-          account-url: AWS_ACCOUNT_URL
-          repo: "portfolio-frontend"
-          region: AWS_REGION
-          tag: "${CIRCLE_SHA1}"
-          path: ./frontend/
-  
-  push_image_web:
-    machine:
-      image: ubuntu-2204:2022.04.1
-    steps:
-      - checkout
-      - aws-ecr/push-image:
-          account-url: AWS_ACCOUNT_URL
-          repo: "portfolio-web"
-          region: AWS_REGION
-          tag: "${CIRCLE_SHA1}"
-          path: ./backend/nginx/
+ # push_image_web:
+ #   machine:
+  #    image: ubuntu-2204:2022.04.1
+   # steps:
+   #   - checkout
+    #  - aws-ecr/build-and-push-image:
+     ##     account-url: AWS_ACCOUNT_URL
+      #    repo: "portfolio-web"
+      #    region: AWS_REGION
+      #    tag: "${CIRCLE_SHA1}"
+      #    path: ./backend/nginx/
 
 workflows:
   version: 2
@@ -166,24 +154,48 @@ workflows:
           filters:
             branches:
               only: main
-      - push_image_backend:
+      - aws-ecr/build-and-push-image:
           requires:
             - rspec
             - jest
           filters:
             branches:
               only: main
-      - push_image_frontend:
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: "portfolio-backend"
+          region: AWS_REGION
+          tag: "${CIRCLE_SHA1}"
+          path: ./backend/
+      - aws-ecr/build-and-push-image:
           requires:
             - rspec
             - jest
           filters:
             branches:
               only: main
-      - push_image_web:
-          requires:
-            - rspec
-            - jest
-          filters:
-            branches:
-              only: main
+          account-url: AWS_ECR_ACCOUNT_URL
+          repo: "portfolio-frontend"
+          region: AWS_REGION
+          tag: "${CIRCLE_SHA1}"
+          path: ./frontend/
+          
+
+
+
+
+
+
+      #- push_image_frontend:
+      ##    requires:
+      #      - rspec
+      ##      - jest
+       #   filters:
+        #    branches:
+        #      only: main
+      #- push_image_web:
+       #   requires:
+        #    - rspec
+         #   - jest
+         # filters:
+         #   branches:
+         #     only: main
