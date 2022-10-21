@@ -114,13 +114,6 @@ jobs:
           name: test
           command: npm run test
           working_directory: ~/Portfolio/frontend
-      - run:
-          name: set_production
-          command: npm run lint
-          environment:
-            NODE_ENV: production
-          working_directory: ~/Portfolio/frontend
-  
 
 workflows:
   version: 2
