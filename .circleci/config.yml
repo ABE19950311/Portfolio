@@ -138,34 +138,38 @@ workflows:
           filters:
             branches:
               only: main
-          #account-url: AWS_ECR_ACCOUNT_URL
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          create-repo: false
+          push-image: true
+          region: AWS_DEFAULT_REGION
+          registry-id: AWS_ACCOUNT_ID
           repo: "portfolio-backend"
-          region: AWS_REGION
-          tag: "${CIRCLE_SHA1}"
+          tag: "latest"
           path: ./backend/
-      - aws-ecr/build-and-push-image:
-          requires:
-            - rspec
-            - jest
-          filters:
-            branches:
-              only: main
+    #  - aws-ecr/build-and-push-image:
+       #   requires:
+       #     - rspec
+       #     - jest
+       #   filters:
+        #    branches:
+       #       only: main
           #account-url: AWS_ECR_ACCOUNT_URL
-          repo: "portfolio-frontend"
-          region: AWS_REGION
-          tag: "${CIRCLE_SHA1}"
-          path: ./frontend/
-      - aws-ecr/build-and-push-image:
-          requires:
-            - rspec
-            - jest
-          filters:
-            branches:
-              only: main
-          repo: "portfolio-web"
-          region: AWS_REGION
-          tag: "${CIRCLE_SHA1}"
-          path: ./backend/nginx/
+      #    repo: "portfolio-frontend"
+      #    region: AWS_REGION
+      #    tag: "${CIRCLE_SHA1}"
+      #    path: ./frontend/
+     # - aws-ecr/build-and-push-image:
+        #  requires:
+       #     - rspec
+       #     - jest
+       #   filters:
+       #     branches:
+       #       only: main
+       #   repo: "portfolio-web"
+       #   region: AWS_REGION
+      #    tag: "${CIRCLE_SHA1}"
+      #    path: ./backend/nginx/
 
 
 
