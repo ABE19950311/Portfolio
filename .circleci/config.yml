@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   ruby: circleci/ruby@1.8.0
+  aws-ecr: circleci/aws-ecr@8.1.3
 
 jobs:
   build:
@@ -113,10 +114,46 @@ jobs:
           name: test
           command: npm run test
           working_directory: ~/Portfolio/frontend
+  
+  push_image_backend:
+    machine:
+      image: ubuntu-2204:2022.04.1
+    steps:
+      - checkout
+      - aws-ecr/push-image:
+          account-url: AWS_ACCOUNT_URL
+          repo: "portfolio-backend"
+          region: AWS_REGION
+          tag: "${CIRCLE_SHA1}"
+          path: ./backend/
+  
+  push_image_frontend:
+    machine:
+      image: ubuntu-2204:2022.04.1
+    steps:
+      - checkout
+      - aws-ecr/push-image:
+          account-url: AWS_ACCOUNT_URL
+          repo: "portfolio-frontend"
+          region: AWS_REGION
+          tag: "${CIRCLE_SHA1}"
+          path: ./frontend/
+  
+  push_image_web:
+    machine:
+      image: ubuntu-2204:2022.04.1
+    steps:
+      - checkout
+      - aws-ecr/push-image:
+          account-url: AWS_ACCOUNT_URL
+          repo: "portfolio-web"
+          region: AWS_REGION
+          tag: "${CIRCLE_SHA1}"
+          path: ./backend/nginx/
 
 workflows:
   version: 2
-  rspec_and_jest:
+  test_and_deploy:
     jobs:
       - build
       - rspec:
@@ -126,6 +163,27 @@ workflows:
           requires:
             - build
       - jest:
+          filters:
+            branches:
+              only: main
+      - push_image_backend:
+          requires:
+            - rspec
+            - jest
+          filters:
+            branches:
+              only: main
+      - push_image_frontend:
+          requires:
+            - rspec
+            - jest
+          filters:
+            branches:
+              only: main
+      - push_image_web:
+          requires:
+            - rspec
+            - jest
           filters:
             branches:
               only: main
