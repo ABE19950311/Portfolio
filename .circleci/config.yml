@@ -3,6 +3,7 @@ version: 2.1
 orbs:
   ruby: circleci/ruby@1.8.0
   aws-ecr: circleci/aws-ecr@8.1.3
+  aws-ecs: circleci/aws-ecs@3.2.0
 
 jobs:
   build:
@@ -131,6 +132,7 @@ workflows:
             branches:
               only: main
       - aws-ecr/build-and-push-image:
+          name: "ecr-push-rails"
           requires:
             - rspec
             - jest
@@ -147,6 +149,7 @@ workflows:
           tag: "latest"
           path: ./backend/
       - aws-ecr/build-and-push-image:
+          name: "ecr-push-react"
           requires:
             - rspec
             - jest
@@ -163,6 +166,7 @@ workflows:
           tag: "latest"
           path: ./frontend/
       - aws-ecr/build-and-push-image:
+          name: "ecr-push-nginx"
           requires:
             - rspec
             - jest
@@ -178,6 +182,29 @@ workflows:
           repo: "portfolio-web"
           tag: "latest"
           path: ./backend/nginx/
-
+      - aws-ecs/deploy-service-update:
+          name: "ecs-deploy-rails"
+          requires:
+            - ecr-push-rails
+          family: "portfolio-backend"
+          service-name: "portfolio-backend-service"
+          cluster: "portfolio-cluster"
+          container-image-name-updates: "container=rails,tag=latest"
+      - aws-ecs/deploy-service-update:
+          name: "ecs-deploy-react"
+          requires:
+            - ecr-push-react
+          family: "portfolio-frontend"
+          service-name: "portfolio-frontend-service"
+          cluster: "portfolio-cluster"
+          container-image-name-updates: "container=portfolio-frontend-container,tag=latest"
+      - aws-ecs/deploy-service-update:
+          name: "ecs-deploy-nginx"
+          requires:
+            - ecr-push-nginx
+          family: "portfolio-web"
+          service-name: "portfolio-backend-service"
+          cluster: "portfolio-cluster"
+          container-image-name-updates: "container=nginx,tag=latest"
 
 

@@ -38,8 +38,8 @@ services:
     - tmp-data:/backapp/tmp
     - log-data:/backapp/log
     - /backapp/node_modules
-    #command: bundle exec puma -C config/puma.rb
-    command: bundle exec puma -C config/puma.rb -e production
+    command: bundle exec puma -C config/puma.rb
+    #command: bundle exec puma -C config/puma.rb -e production
   
   frontend:
     build:
