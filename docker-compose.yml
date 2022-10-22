@@ -25,6 +25,8 @@ services:
       - backend
 
   backend:
+    environment:
+      - EDITOR=vim
     tty: true
     stdin_open: true
     depends_on:
