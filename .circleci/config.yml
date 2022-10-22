@@ -202,6 +202,7 @@ workflows:
           name: "ecs-deploy-nginx"
           requires:
             - ecr-push-nginx
+            - ecs-deploy-rails
           family: "portfolio-web"
           service-name: "portfolio-backend-service"
           cluster: "portfolio-cluster"
