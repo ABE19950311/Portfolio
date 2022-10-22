@@ -203,7 +203,7 @@ workflows:
           requires:
             - ecr-push-nginx
             - ecs-deploy-rails
-          family: "portfolio-web"
+          family: "portfolio-backend"
           service-name: "portfolio-backend-service"
           cluster: "portfolio-cluster"
           container-image-name-updates: "container=nginx,tag=latest"
