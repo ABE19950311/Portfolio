@@ -213,6 +213,7 @@ export const Todo = ()=>{
     const router=useRouter();
 
     const getenv = router.query.state as unknown as string;
+    console.log(getenv)
 
     useEffect(()=>{
         axios.get(getenv+"/todos" as string,
