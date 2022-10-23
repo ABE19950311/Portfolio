@@ -144,6 +144,7 @@ const Login = ()=>{
     return (
         <SBody>
         <SForm>
+            <h1>dep</h1>
             <h3>ログイン状態:{loginStatus}</h3>
                 <SFormHead>ユーザ名</SFormHead>
                 <SFormInput type={"text"} onChange={doName} />
