@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "../csrf_axios"
+import axios from "../../../lib/csrf_axios"
 import Router, {useRouter} from "next/router"
 
 const SForm = styled.div`

@@ -1,9 +1,8 @@
 class SessionsController < ApplicationController
-    before_action :authenticate
 
     def show
         set_csrf_token
-        render json: {message:"csrfok"}, status: :ok
+        render json:{message:"ok"}, status: :ok
     end
 
     def login

@@ -6,7 +6,7 @@ class ApplicationController < ActionController::API
 
     def set_csrf_token
         cookies['CSRF-TOKEN'] = {
-            domain: 'amazonaws.com',
+            domain: 'amazonaws.com', #親ドメイン
             value: form_authenticity_token
         }
     end
