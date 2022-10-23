@@ -1,4 +1,11 @@
 class SessionsController < ApplicationController
+    before_action :authenticate
+
+    def show
+        set_csrf_token
+        render json: {message:"csrfok"}, status: :ok
+    end
+
     def login
         @user = User.find_by(username: session_params[:username])
 

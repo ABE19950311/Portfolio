@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios, { AxiosRequestConfig } from "axios"
+import axios from "../csrf_axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
 import {Footer} from "./footer"
@@ -216,6 +216,7 @@ export const Todo = ()=>{
     console.log(getenv)
 
     useEffect(()=>{
+        axios.get(getenv+"/sessions")
         axios.get(getenv+"/todos" as string,
         {withCredentials:true}
         ).then(res=> {

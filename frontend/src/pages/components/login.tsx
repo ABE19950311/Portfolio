@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect,useContext} from "react"
-import axios from "axios"
+import axios from "../csrf_axios"
 import {useRouter} from "next/router"
 
 const SBody = styled.div`
@@ -89,8 +89,10 @@ const Login = ()=>{
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string+"/sessions")
         }
     },[])
 
@@ -144,7 +146,7 @@ const Login = ()=>{
     return (
         <SBody>
         <SForm>
-            <h1>dep</h1>
+            <h1>depp</h1>
             <h3>ログイン状態:{loginStatus}</h3>
                 <SFormHead>ユーザ名</SFormHead>
                 <SFormInput type={"text"} onChange={doName} />

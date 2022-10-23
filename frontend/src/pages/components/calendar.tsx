@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
-import axios from "axios"
+import axios from "../csrf_axios"
 import {Layout} from "./layout"
 import FullCalendar, { DateSelectArg,EventApi } from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"

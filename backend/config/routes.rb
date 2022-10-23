@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#login"
   delete "/logout", to: "sessions#logout"
   get "/logged_in", to: "sessions#logged_in?"
+  get "/sessions", to: "sessions#show"
 
   resources :todos
   resources :schedules

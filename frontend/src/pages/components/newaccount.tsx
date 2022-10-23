@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "axios"
+import axios from "../csrf_axios"
 import Router, {useRouter} from "next/router"
 
 const SForm = styled.div`
@@ -46,8 +46,10 @@ export const Newaccount = ()=>{
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string+"/sessions")
         }
     },[])
 
