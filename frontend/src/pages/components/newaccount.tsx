@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "../../../lib/csrf_axios"
+import axios from "../../csrf-axios"
 import Router, {useRouter} from "next/router"
 
 const SForm = styled.div`
@@ -36,6 +36,7 @@ const SButton = styled.button`
 
 `;
 
+
 export const Newaccount = ()=>{
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
@@ -47,16 +48,19 @@ export const Newaccount = ()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
+        .then(res=>{
+            console.log(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string+"/sessions")
         }
     },[])
 
     useEffect(()=>{
-        axios.get(getenv+"/health_check" as string,
-        {withCredentials:true}
-        ).then(res=> {
+        axios.get(getenv+"/health_check" as string)
+        .then(res=> {
             console.log(res.data);
         }).catch(error=> {
             console.log("response error",error);
@@ -91,7 +95,6 @@ export const Newaccount = ()=>{
                     password_confirmation:passwordConfirmation
                 }
             },
-            {withCredentials:true}
         ).then(res => {
             if(res.data.status==="created") {
                 router.push("/components/login");

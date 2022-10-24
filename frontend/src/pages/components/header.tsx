@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "../../../lib/csrf_axios"
+import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 
 
@@ -66,7 +66,6 @@ const SItem = styled.li`
     }
 `
 
-
 export const Header = ()=>{
     const router = useRouter();
     const [getenv,setGetenv] = useState("");
@@ -75,17 +74,20 @@ export const Header = ()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
+            .then(res=>{
+                console.log(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string+"/sessions")
         }
     },[])
 
     console.log(getenv)
 
     const logout = ()=>{
-        axios.delete(getenv+"/logout" as string,
-        {withCredentials:true})
+        axios.delete(getenv+"/logout" as string)
         .then(res=> {
             router.push("/components/login");
         }).catch(error=>{

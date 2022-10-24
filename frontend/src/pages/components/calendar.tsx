@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
-import axios from "../../../lib/csrf_axios"
+import axios from "../../csrf-axios"
 import {Layout} from "./layout"
 import FullCalendar, { DateSelectArg,EventApi } from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
@@ -33,8 +33,13 @@ export const Calendar = ()=>{
 
     
     useEffect(()=>{
-        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string,
-            {withCredentials:true})
+        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
+        .then(res=>{
+            console.log(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string)
             .then(res => {
                 setEvent(res.data);
             }).catch(error=> {

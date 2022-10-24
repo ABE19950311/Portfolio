@@ -1,8 +1,9 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect,useContext} from "react"
-import axios from "../../../lib/csrf_axios"
+import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
+import { error } from "console"
 
 const SBody = styled.div`
 body {
@@ -73,9 +74,7 @@ box-shadow: inset 1px 1px 1px #fff;
     }
 `
 
-
-
-const Login = ()=>{
+export const Login = ()=>{
     const [loginStatus,setLoginStatus] = useState("未ログイン");
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
@@ -90,9 +89,13 @@ const Login = ()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
+            .then(res=>{
+                console.log(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string+"/sessions")
         }
     },[])
 
@@ -128,7 +131,6 @@ const Login = ()=>{
                     password:password
                 }
             },
-            {withCredentials:true}
         ).then(res => {
             console.log("login response: ", res.data.logged_in)
             if(res.data.logged_in) {

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "../../../lib/csrf_axios"
+import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
 import {Footer} from "./footer"
@@ -203,7 +203,6 @@ table td:last-child {
 const SCheck = styled.input`
 `
 
-
 export const Todo = ()=>{
     const [list,setList] = useState("");
     const [procedure,setProcedure] = useState("");
@@ -217,8 +216,12 @@ export const Todo = ()=>{
 
     useEffect(()=>{
         axios.get(getenv+"/sessions")
-        axios.get(getenv+"/todos" as string,
-        {withCredentials:true}
+        .then(res=>{
+            console.log(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+        axios.get(getenv+"/todos" as string
         ).then(res=> {
             setTodos(res.data);
         }).catch(error=> {
@@ -251,8 +254,6 @@ export const Todo = ()=>{
                     procedure:procedure,
                 },
             },
-            {withCredentials:true},
-         //   {headers:{"Content-Type":"application/json"}}
         ).then(res=> {
             console.log(res.data);
             setFlag(res.data);
@@ -265,9 +266,7 @@ export const Todo = ()=>{
     }
     
     const doDelete = (id:number)=>{
-        axios.delete(getenv+`/todos/${id}` as string,
-        {withCredentials:true}
-        )
+        axios.delete(getenv+`/todos/${id}` as string)
         .then(res => {
             setFlag(res.data);
         }).catch(error=> {

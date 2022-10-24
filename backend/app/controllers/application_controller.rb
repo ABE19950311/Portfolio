@@ -1,15 +1,16 @@
 class ApplicationController < ActionController::API
     include ActionController::Cookies
     include ActionController::RequestForgeryProtection
-
     protect_from_forgery with: :exception
 
+    #def set_csrf_token_header
+    #    response.set_header('CSRF-TOKEN', form_authenticity_token)
+    #end
+
     def set_csrf_token
-        cookies['CSRF-TOKEN'] = {
-            domain: 'amazonaws.com', #親ドメイン
-            value: form_authenticity_token
-        }
+        cookies['CSRF-TOKEN'] = [value: form_authenticity_token]
     end
+
     #before_action :check_xhr_header
     #skip_before_action :verify_authenticity_token
     #helper_method :login!, :current_user
