@@ -17,7 +17,7 @@
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
 
-    origins ['http://portfolio-frontend-alb-922660147.us-west-1.elb.amazonaws.com', 'http://localhost:3000']
+    origins ['http://portfolio-frontend-alb-922660147.us-west-1.elb.amazonaws.com', 'http://localhost:3000', 'http://dailylifey.com']
 
     resource '*',
         headers: :any,
