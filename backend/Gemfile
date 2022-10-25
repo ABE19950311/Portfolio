@@ -45,6 +45,8 @@ group :development do
   # gem "spring"
 end
 
+gem 'rails_same_site_cookie'
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_bot_rails'
