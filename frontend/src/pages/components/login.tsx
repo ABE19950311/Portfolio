@@ -88,7 +88,9 @@ export const Login = ()=>{
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions",
+            {withCredentials: true}
+            )
             .then(res=>{
                 console.log(res.data)
             }).catch(error=>{
@@ -96,7 +98,8 @@ export const Login = ()=>{
             })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions",
+            {withCredentials: true})
             .then(res=>{
                 console.log(res.data)
             }).catch(error=>{
@@ -137,6 +140,7 @@ export const Login = ()=>{
                     password:password
                 }
             },
+            {withCredentials: true}
         ).then(res => {
             console.log("login response: ", res.data.logged_in)
             if(res.data.logged_in) {
