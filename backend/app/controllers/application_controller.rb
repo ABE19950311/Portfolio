@@ -8,7 +8,7 @@ class ApplicationController < ActionController::API
     #end
 
     def set_csrf_token
-        cookies['CSRF-TOKEN'] = [value: form_authenticity_token]
+        cookies['CSRF-TOKEN'] = {value: form_authenticity_token}
     end
 
     #before_action :check_xhr_header

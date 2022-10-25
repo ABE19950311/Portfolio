@@ -81,6 +81,12 @@ export const Header = ()=>{
             })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
+            .then(res=>{
+                console.log(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
         }
     },[])
 

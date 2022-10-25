@@ -1,6 +1,8 @@
 require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
+  config.action_controller.forgery_protection_origin_check = false
+
   config.hosts << "backapp"
   # Settings specified here will take precedence over those in config/application.rb.
 

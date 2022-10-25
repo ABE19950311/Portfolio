@@ -1,7 +1,5 @@
 FROM ruby:3.1.2
 
-ENV RAILS_ENV=development
-
 WORKDIR /backapp
 # リポジトリを更新し依存モジュールをインストール
 RUN apt-get update -qq && \
