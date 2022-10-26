@@ -29,16 +29,10 @@ export const Calendar = ()=>{
     const [event,setEvent] = useState([]);
     const [eventlist,setEventlist] = useState({});
     const [getevent,setGetevent] = useState({});
+    const [getenv,setGetenv] = useState("");
     const createEventId = () => String(eventGuid++);
 
-    
     useEffect(()=>{
-        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
-        .then(res=>{
-            console.log(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
         axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string)
             .then(res => {
                 setEvent(res.data);

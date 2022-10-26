@@ -47,37 +47,10 @@ export const Newaccount = ()=>{
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
-        .then(res=>{
-            console.log(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
-            .then(res=>{
-                console.log(res.data)
-            }).catch(error=>{
-                console.log(error)
-            })
         }
     },[])
-
-    useEffect(()=>{
-        axios.get(getenv+"/health_check" as string)
-        .then(res=> {
-            console.log(res.data);
-        }).catch(error=> {
-            console.log("response error",error);
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
-
-    console.log(getenv)
-    console.log(username)
-    console.log(password)
-    console.log(passwordConfirmation)
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);

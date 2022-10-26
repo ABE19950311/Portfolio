@@ -215,12 +215,6 @@ export const Todo = ()=>{
     console.log(getenv)
 
     useEffect(()=>{
-        axios.get(getenv+"/sessions")
-        .then(res=>{
-            console.log(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
         axios.get(getenv+"/todos" as string
         ).then(res=> {
             setTodos(res.data);

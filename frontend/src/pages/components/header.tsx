@@ -72,21 +72,9 @@ export const Header = ()=>{
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
-            .then(res=>{
-                console.log(res.data)
-            }).catch(error=>{
-                console.log(error)
-            })
+            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)    
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
-            .then(res=>{
-                console.log(res.data)
-            }).catch(error=>{
-                console.log(error)
-            })
         }
     },[])
 

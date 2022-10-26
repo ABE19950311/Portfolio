@@ -3,7 +3,7 @@ import Link from "next/link"
 import React, {useState,useEffect,useContext} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
-import { error } from "console"
+
 
 const SBody = styled.div`
 body {
@@ -79,7 +79,6 @@ export const Login = ()=>{
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [getenv,setGetenv] = useState("");
-    const [cok,setCok] = useState("");
     const router = useRouter();
 
     console.log(process.env.NEXT_PUBLIC_ADDRESS)
@@ -89,22 +88,16 @@ export const Login = ()=>{
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions",
-            {withCredentials: true})
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
             .then(res=>{
-                console.log(res.headers['set-cookie'])
-                setCok(res.headers['set-cookie'] as any)
                 axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
             }).catch(error=>{
                 console.log(error)
             })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions",
-            {withCredentials: true})
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
             .then(res=>{
-                console.log(res.headers['set-cookie'])
-                setCok(res.headers['set-cookie'] as any)
                 axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
             }).catch(error=>{
                 console.log(error)
@@ -112,7 +105,6 @@ export const Login = ()=>{
         }
     },[])
 
-    console.log(cok)
 
    // useEffect(()=>{
    //     axios.get(getenv+"/logged_in" as string,
@@ -149,7 +141,6 @@ export const Login = ()=>{
             {withCredentials: true}
         ).then(res => {
             console.log("login response: ", res.data.logged_in)
-            axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
             if(res.data.logged_in) {
                 router.push({
                     pathname:"/components/mainpage",
@@ -161,20 +152,6 @@ export const Login = ()=>{
             console.log("registration error",error)
         })
         }
-
-        const doTest = (event:React.MouseEvent<HTMLButtonElement>)=>{
-            event.preventDefault();
-            axios.get(getenv+"/sessions" as string,
-                {
-                    withCredentials: true,
-                }
-            ).then(res => {
-                console.log(res.data)
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-        }).catch(error=>{
-            console.log(error)
-        })
-    }
 
     return (
         <SBody>
