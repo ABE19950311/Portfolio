@@ -1,5 +1,5 @@
 class SchedulesController < ApplicationController
-
+    before_action :set_csrf_token_header
     def index
         @schedule = Schedule.all
         render json:@schedule 

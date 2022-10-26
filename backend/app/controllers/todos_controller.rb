@@ -1,5 +1,5 @@
 class TodosController < ApplicationController
-    
+    before_action :set_csrf_token_header
     def index
         @user_id = User.find_by(username: session[:user_name]).id
         @todo = Todo.where(user_id: @user_id)

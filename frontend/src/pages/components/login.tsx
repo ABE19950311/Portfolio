@@ -89,21 +89,23 @@ export const Login = ()=>{
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-        //    axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions",
-         //   {withCredentials: true}
-         //   )
-         //   .then(res=>{
-          //      console.log(res.data)
-         //   }).catch(error=>{
-         //       console.log(error)
-         //   })
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions",
+            {withCredentials: true})
+            .then(res=>{
+                console.log(res.headers['set-cookie'])
+                setCok(res.headers['set-cookie'] as any)
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
+            }).catch(error=>{
+                console.log(error)
+            })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions",
             {withCredentials: true})
             .then(res=>{
-                console.log(res.headers['set-cookie'] as unknown as string)
-                setCok(res.headers['set-cookie'] as unknown as string)
+                console.log(res.headers['set-cookie'])
+                setCok(res.headers['set-cookie'] as any)
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
             }).catch(error=>{
                 console.log(error)
             })
@@ -147,6 +149,7 @@ export const Login = ()=>{
             {withCredentials: true}
         ).then(res => {
             console.log("login response: ", res.data.logged_in)
+            axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
             if(res.data.logged_in) {
                 router.push({
                     pathname:"/components/mainpage",
@@ -164,10 +167,10 @@ export const Login = ()=>{
             axios.get(getenv+"/sessions" as string,
                 {
                     withCredentials: true,
-                    headers:{"X-CSRF-Token":cok,withCredentials: true}
                 }
             ).then(res => {
                 console.log(res.data)
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
         }).catch(error=>{
             console.log(error)
         })
@@ -182,7 +185,7 @@ export const Login = ()=>{
                 <SFormInput type={"text"} onChange={doName} />
                 <SFormHead>パスワード</SFormHead>
                 <SFormInput type={"text"} onChange={doPass} /><br></br>
-                <SButton type={"submit"} onClick={doTest}>ログイン</SButton><br></br>
+                <SButton type={"submit"} onClick={doSubmit}>ログイン</SButton><br></br>
 
                 <Link href="/components/mainpage">
                     <a>ゲストユーザの方はこちら</a>

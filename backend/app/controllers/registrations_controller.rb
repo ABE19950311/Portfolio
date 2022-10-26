@@ -1,5 +1,5 @@
 class RegistrationsController < ApplicationController
-
+    before_action :set_csrf_token_header
     def index
         @user = User.all
         render json:@user

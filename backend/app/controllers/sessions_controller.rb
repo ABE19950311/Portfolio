@@ -1,11 +1,12 @@
 class SessionsController < ApplicationController
 
     def show
-        set_csrf_token
+        set_csrf_token_header
         render json:{message:"ok"}, status: :ok
     end
 
     def login
+        set_csrf_token_header
         @user = User.find_by(username: session_params[:username])
 
         if @user && @user.authenticate(session_params[:password])
