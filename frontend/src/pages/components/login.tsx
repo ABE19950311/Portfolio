@@ -79,6 +79,7 @@ export const Login = ()=>{
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [getenv,setGetenv] = useState("");
+    const [cok,setCok] = useState("");
     const router = useRouter();
 
     console.log(process.env.NEXT_PUBLIC_ADDRESS)
@@ -98,15 +99,18 @@ export const Login = ()=>{
          //   })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-         //   axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions",
-          //  {withCredentials: true})
-          //  .then(res=>{
-           //     console.log(res.data)
-          //  }).catch(error=>{
-           //     console.log(error)
-           // })
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions",
+            {withCredentials: true})
+            .then(res=>{
+                console.log(res.headers['set-cookie'] as unknown as string)
+                setCok(res.headers['set-cookie'] as unknown as string)
+            }).catch(error=>{
+                console.log(error)
+            })
         }
     },[])
+
+    console.log(cok)
 
    // useEffect(()=>{
    //     axios.get(getenv+"/logged_in" as string,
@@ -158,7 +162,10 @@ export const Login = ()=>{
         const doTest = (event:React.MouseEvent<HTMLButtonElement>)=>{
             event.preventDefault();
             axios.get(getenv+"/sessions" as string,
-                {withCredentials: true}
+                {
+                    withCredentials: true,
+                    headers:{"X-CSRF-Token":cok,withCredentials: true}
+                }
             ).then(res => {
                 console.log(res.data)
         }).catch(error=>{
