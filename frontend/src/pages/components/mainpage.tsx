@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {Layout} from "./layout"
-import {Procedure} from "./procedure"
+import {Procedure} from "./dailylifey"
 
 
 const Container = styled.div`

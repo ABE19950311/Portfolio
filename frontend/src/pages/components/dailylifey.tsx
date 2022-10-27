@@ -1,9 +1,7 @@
 import styled from "styled-components"
-import Link from "next/link"
 import React, {useState,useEffect} from "react"
-import axios from "axios"
 import {useRouter} from "next/router"
-import {MainPage} from "./mainpage"
+import Image from 'next/image'
 
 
 const Body = styled.div`
@@ -99,12 +97,12 @@ padding: 20px;
 margin-bottom: 30px;
 `
 
-const SCard = styled.ul`
+const SCard = styled.div`
 display: flex;
 flex-wrap: wrap;
 `
 
-const SItem = styled.li`
+const SItem = styled.div`
 width: 32%;
 text-align: center;
 `
@@ -169,24 +167,24 @@ export const Procedure = ()=>{
     <Container>
     <SCard>
         <SItem>
-            <p>部屋探し・入居</p>
-            <Stxt>テキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("heya")}><span>MORE</span></Sbtn>
+            <p><strong>部屋探し・入居</strong></p>
+            <Image src="/heya.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Sbtn onClick={()=>Router("heya")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
-            <p>入居後手続き</p>
-            <Stxt>テキストテキストテキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("hikkoshi")}><span>MORE</span></Sbtn>
+            <p><strong>入居後手続き</strong></p>
+            <Image src="/nyukyo.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Sbtn onClick={()=>Router("hikkoshi")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
-            <p>防犯・防災</p>
-            <Stxt>テキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("bouhan")}><span>MORE</span></Sbtn>
+            <p><strong>防犯・防災</strong></p>
+            <Image src="/bousai.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Sbtn onClick={()=>Router("bouhan")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
-            <p>掃除</p>
-            <Stxt>テキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキストテキスト</Stxt>
-            <Sbtn onClick={()=>Router("souzi")}><span>MORE</span></Sbtn>
+            <p><strong>掃除</strong></p>
+            <Image src="/souzi.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Sbtn onClick={()=>Router("souzi")}><span>確認する</span></Sbtn>
         </SItem>
     </SCard>
     </Container>
