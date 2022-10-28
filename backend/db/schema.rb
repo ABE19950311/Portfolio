@@ -10,14 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_02_084715) do
-  create_table "schedules", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "todo_id"
-    t.string "startdate", null: false
-    t.string "duedate", null: false
+ActiveRecord::Schema[7.0].define(version: 2022_10_28_112758) do
+  create_table "board_postcontents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "board_id"
+    t.bigint "postcontent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["todo_id"], name: "index_schedules_on_todo_id"
+    t.index ["board_id"], name: "index_board_postcontents_on_board_id"
+    t.index ["postcontent_id"], name: "index_board_postcontents_on_postcontent_id"
+  end
+
+  create_table "boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.time "postdate", null: false
+    t.string "posttitle", null: false
+    t.string "postcontent", null: false
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "postcontents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.time "postdate", null: false
+    t.string "postcontent", null: false
+    t.string "username"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "todos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -25,20 +42,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_02_084715) do
     t.string "list", null: false
     t.string "startdate"
     t.string "duedate"
-    t.string "procedure"
+    t.string "life"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_todos_on_user_id"
   end
 
+  create_table "user_boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "board_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_user_boards_on_board_id"
+    t.index ["user_id"], name: "index_user_boards_on_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "username", null: false
     t.string "password_digest", null: false
-    t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "schedules", "todos"
+  add_foreign_key "board_postcontents", "boards"
+  add_foreign_key "board_postcontents", "postcontents"
   add_foreign_key "todos", "users"
+  add_foreign_key "user_boards", "boards"
+  add_foreign_key "user_boards", "users"
 end

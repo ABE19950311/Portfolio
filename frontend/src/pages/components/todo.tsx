@@ -17,7 +17,7 @@ type Todo = {
     id:number,
     user_id:number,
     list:string,
-    procedure:string,
+    life:string,
     startdate:String,
     duedate:String
 }
@@ -205,7 +205,7 @@ const SCheck = styled.input`
 
 export const Todo = ()=>{
     const [list,setList] = useState("");
-    const [procedure,setProcedure] = useState("");
+    const [life,setLife] = useState("");
     const [search,setSearch] = useState("");
     const [todos,setTodos] = useState([]);
     const [flag,setFlag] = useState("");
@@ -229,7 +229,7 @@ export const Todo = ()=>{
     }
 
     const doProcedure = (event:{target:HTMLInputElement}) => {
-        setProcedure(event.target.value);
+        setLife(event.target.value);
     }
 
     const doSearch = (event:{target:HTMLInputElement}) => {
@@ -238,21 +238,21 @@ export const Todo = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(list!==""&&procedure!=="") {
+        if(list!==""&&life!=="") {
         axios.post(getenv+"/todos" as string,
             {
                 todos: {
                     list:list,
                     startdate:startDate,
                     duedate:endDate,
-                    procedure:procedure,
+                    life:life,
                 },
             },
         ).then(res=> {
             console.log(res.data);
             setFlag(res.data);
             setList("");
-            setProcedure("");
+            setLife("");
         }).catch(error=> {
             console.log("response error",error);
         })
@@ -325,7 +325,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                 onChange={handleChangeEnd}
             />
             <SInput type={"text"} value={list} placeholder={"やること"} onChange={doList}/><br></br>
-            <SInput type={"text"} value={procedure} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
+            <SInput type={"text"} value={life} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
             <SButton type={"submit"}>リスト作成</SButton><br></br>
             <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/>
         </SForm>
@@ -358,7 +358,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                             <td data-label="開始日" className="txt">{todo.startdate}</td>
                             <td data-label="期日" className="txt">{todo.duedate}</td>
                             <td data-label="TODO" className="txt">{todo.list}</td>
-                            <td data-label="手続き内容" className="txt">{todo.procedure}</td>
+                            <td data-label="手続き内容" className="txt">{todo.life}</td>
                             <td><SButton onClick={()=>doDelete(todo.id)}>削除</SButton></td>
                         </tr>
                     </tbody>

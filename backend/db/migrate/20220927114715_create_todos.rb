@@ -5,7 +5,7 @@ class CreateTodos < ActiveRecord::Migration[7.0]
       t.string :list, null:false
       t.string :startdate
       t.string :duedate
-      t.string :procedure
+      t.string :life
 
       t.timestamps
     end

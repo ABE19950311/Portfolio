@@ -26,6 +26,6 @@ class TodosController < ApplicationController
     private
 
     def todo_params
-        params.require(:todos).permit(:list,:startdate,:duedate,:procedure)
+        params.require(:todos).permit(:list,:startdate,:duedate,:life)
     end
 end

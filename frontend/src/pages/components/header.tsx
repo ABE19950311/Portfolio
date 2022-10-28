@@ -3,6 +3,7 @@ import Link from "next/link"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
+import Image from 'next/image'
 
 
 const SHeader = styled.div`
@@ -34,10 +35,6 @@ const SHeader = styled.div`
 
 const SLogo = styled.div`
     padding:5px 0 0 5px;
-    img {
-        height:auto;
-        width:100px;
-    }
 `
 
 const SMenu = styled.ul`
@@ -45,7 +42,7 @@ const SMenu = styled.ul`
 `
 
 const Sbtn = styled.div`
-margin: 0 30px;
+margin-right:20px;
 &:hover{
     color:#ffa500;
 }
@@ -58,7 +55,7 @@ const SItem = styled.li`
         justify-content: center;
         text-align: center;
         height: 100%;
-        padding-left:40px;
+        margin-right:20px
     }
 
     &:hover{
@@ -96,13 +93,21 @@ export const Header = ()=>{
             })
     }
 
+    const board = ()=>{
+        router.push({
+            pathname:"/components/board",
+            query:{state:getenv}
+            })
+    }
+
     return (
         <SHeader>
-            <SLogo><img src="/logo.png"/></SLogo>
+            <SLogo><Image src="/logo.png" height="100px" width="100px" alt="logo"/></SLogo>
             <SMenu>
-                <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
-                <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Link href="/components/mainpage"><SItem><a href="#">手続きリストへ戻る</a></SItem></Link>
+                <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
+                <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
+                <Sbtn onClick={board}><a href="#">掲示板</a></Sbtn>
                 <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>
         </SHeader>
