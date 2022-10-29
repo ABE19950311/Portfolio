@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Link from "next/link"
-import React, {useState,useEffect} from "react"
+import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
@@ -10,6 +10,7 @@ import DatePicker,{registerLocale} from "react-datepicker"
 import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
+import { identity } from "@fullcalendar/react"
 
 registerLocale("ja",ja);
 
@@ -20,6 +21,11 @@ type Todo = {
     life:string,
     startdate:String,
     duedate:String
+}
+
+type Check = {
+    id:string,
+    check:boolean
 }
 
 const Container = styled.div`
@@ -121,7 +127,7 @@ const STable = styled.table`
 border-collapse: collapse;
 margin: 0 auto;
 padding: 0;
-width: 650px;
+width: 1000px;
 table-layout: fixed;
 overflow-wrap: break-word;
 
@@ -144,9 +150,48 @@ thead tr{
 background-color: #eee;
 }
 
-.txt{
+.check {
+    width:100px;
+}
+
+.start {
+    width:150px;
+}
+
+.due {
+    width:150px;
+}
+
+.todo {
+    width:350px
+}
+
+.life {
+    width:170px;
+}
+
+.txt_check{
+    width:100px;
+}
+
+.txt_start{
     text-align: left;
-    font-size: .85em;
+    width:150px;
+}
+
+.txt_due{
+    text-align: left;
+    width:150px;
+}
+
+.txt_todo{
+    text-align: left;
+    width:350px
+}
+
+.txt_life{
+    text-align: left;
+    width:170px;
 }
 
 tbody tr:hover{
@@ -209,7 +254,10 @@ export const Todo = ()=>{
     const [search,setSearch] = useState("");
     const [todos,setTodos] = useState([]);
     const [flag,setFlag] = useState("");
+    const [deleteid,setDeleteid] = useState<string[]>([]);
+    const [checkdata,setCheckdata] = useState<any>({});
     const router=useRouter();
+    const domRef = useRef<HTMLInputElement>(null);
 
     const getenv = router.query.state as unknown as string;
     console.log(getenv)
@@ -236,6 +284,26 @@ export const Todo = ()=>{
         setSearch(event.target.value);
     }
 
+    const doCheck = (event:{target:HTMLInputElement})=>{
+        let check = event.target.checked
+        let id = (event.target.value) as string
+        setCheckdata({
+            ...checkdata,
+            [id]:check
+        })
+        if(check===true&&!deleteid.includes(id)) {
+            setDeleteid([...deleteid,id])
+        }else if(check===false&&deleteid.includes(id)) {
+            setDeleteid(
+                deleteid.filter((idlist)=>{
+                    return !idlist.includes(id)
+                })
+            )
+        }
+    }
+
+    console.log(checkdata)
+
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
         if(list!==""&&life!=="") {
@@ -259,13 +327,26 @@ export const Todo = ()=>{
     }
     }
     
-    const doDelete = (id:number)=>{
-        axios.delete(getenv+`/todos/${id}` as string)
-        .then(res => {
-            setFlag(res.data);
-        }).catch(error=> {
-            console.log("response error",error);
+    const doDelete = ()=>{
+        deleteid.forEach((id)=>{
+            axios.delete(getenv+`/todos/${id}` as string)
+            .then(res => {
+                setFlag(res.data);
+            }).catch(error=> {
+                console.log("response error",error);
+            })
+            setDeleteid([])
+            setCheckdata({})
         })
+    }
+
+    const doAllcheck = ()=>{
+        if(!domRef.current) return
+        let checkid = domRef.current.id;
+        console.log(checkid)
+        for(let i=0;i<checkid.length;i++) {
+           // checkid[i].checked = true;
+        }
     }
 
 //DatePicker関数
@@ -327,18 +408,17 @@ const handleChangeEnd = (selectedDate:Date) => {
             <SInput type={"text"} value={list} placeholder={"やること"} onChange={doList}/><br></br>
             <SInput type={"text"} value={life} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
             <SButton type={"submit"}>リスト作成</SButton><br></br>
-            <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/>
+            <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/><SButton type={"button"} onClick={doDelete}>削除</SButton>
         </SForm>
         </Body>
                     <STable>
                     <thead className="thead">
                         <tr className="tr">
-                        <td className="non"></td>
-                        <td className="td" scope="col">開始日</td>
-                        <td className="td" scope="col">期日</td>
-                        <td className="td" scope="col">TODO</td>
-                        <td className="td" scope="col">手続き内容</td>
-                        <td className="non"></td>
+                        <td className="check"><SCheck type={"checkbox"} onChange={doAllcheck}/></td>
+                        <td className="start" scope="col">開始日</td>
+                        <td className="due" scope="col">期日</td>
+                        <td className="life" scope="col">項目</td>
+                        <td className="todo" scope="col">TODO</td>
                         </tr>
                     </thead>
                     </STable>
@@ -354,12 +434,11 @@ const handleChangeEnd = (selectedDate:Date) => {
                 <STable>
                     <tbody className="tbody">
                         <tr className="tr">
-                            <th className="th"> <SCheck type={"checkbox"}></SCheck></th>
-                            <td data-label="開始日" className="txt">{todo.startdate}</td>
-                            <td data-label="期日" className="txt">{todo.duedate}</td>
-                            <td data-label="TODO" className="txt">{todo.list}</td>
-                            <td data-label="手続き内容" className="txt">{todo.life}</td>
-                            <td><SButton onClick={()=>doDelete(todo.id)}>削除</SButton></td>
+                            <th className="txt_check"><SCheck value={todo.id} id="check" checked={checkdata[todo.id]} type={"checkbox"} onChange={doCheck} ref={domRef}/></th>
+                            <td data-label="開始日" className="txt_start">{todo.startdate}</td>
+                            <td data-label="期日" className="txt_due">{todo.duedate}</td>
+                            <td data-label="手続き内容" className="txt_life">{todo.life}</td>
+                            <td data-label="TODO" className="txt_todo">{todo.list}</td>
                         </tr>
                     </tbody>
                 </STable>

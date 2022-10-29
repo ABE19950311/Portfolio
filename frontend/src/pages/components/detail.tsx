@@ -66,7 +66,7 @@ width: 2px;
 position: absolute;
 top: 0.7rem; /* 円のwidthの半分 */
 left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100% - 0.7rem); /* 100% - top */
+height: calc(100%); /* 100% - top */
 /* 連番より後ろに表示するため */
 z-index: 0;
 }
@@ -98,6 +98,32 @@ position: absolute;
 left: 0;
 /* 縦棒より手前に表示するため */
 z-index: 1;
+}
+.steps > h3 {
+    counter-reset: step-counter;
+    /* 連番カウンターを垂直方向に中央揃えで表示する */
+    display: flex;
+    align-items: center;
+}
+.steps > h3:before {
+    content: "";
+    /* フォントと色 */
+    background: #d59533;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    /* 文字を中央に表示する */
+    line-height: 1.5rem;
+    text-align: center;
+    /* 円で表示する */
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    /* .stepsでmargin-left +2rem したぶん左に戻す */
+    position: absolute;
+    left: 0;
+    /* 縦棒より手前に表示するため */
+    z-index: 1;
 }
 `
 
@@ -146,6 +172,8 @@ export const Detail = ()=>{
                         <li>荷ほどき</li>
                         <li>電気/ガス等が問題なく使用できるか確認</li>
                     </ul>
+                <h3></h3>
+                
             </div>
             </Steps>
         )
