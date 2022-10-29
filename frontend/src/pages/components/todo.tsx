@@ -11,6 +11,7 @@ import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
 import { identity } from "@fullcalendar/react"
+import { check } from "prettier"
 
 registerLocale("ja",ja);
 
@@ -25,8 +26,9 @@ type Todo = {
 
 type Check = {
     id:string,
-    check:boolean
-}
+    checked:boolean
+} 
+
 
 const Container = styled.div`
 min-height: 100vh;
@@ -287,10 +289,10 @@ export const Todo = ()=>{
     const doCheck = (event:{target:HTMLInputElement})=>{
         let check = event.target.checked
         let id = (event.target.value) as string
-        setCheckdata({
+        setCheckdata((checkdata:any)=>({
             ...checkdata,
             [id]:check
-        })
+        }))
         if(check===true&&!deleteid.includes(id)) {
             setDeleteid([...deleteid,id])
         }else if(check===false&&deleteid.includes(id)) {
@@ -302,6 +304,7 @@ export const Todo = ()=>{
         }
     }
 
+    console.log(deleteid)
     console.log(checkdata)
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
@@ -340,14 +343,45 @@ export const Todo = ()=>{
         })
     }
 
-    const doAllcheck = ()=>{
-        if(!domRef.current) return
-        let checkid = domRef.current.id;
-        console.log(checkid)
-        for(let i=0;i<checkid.length;i++) {
-           // checkid[i].checked = true;
+    const doAllcheck = (event:{target:HTMLInputElement})=>{
+        setCheckdata({})
+        if(event.target.checked===true) {
+        todos.forEach((todo:Todo)=>{
+            return setCheck(todo.id)
+        })
+        }else if(event.target.checked===false) {
+        todos.forEach((todo:Todo)=>{
+            return delCheck(todo.id)
+        })
         }
     }
+
+    const setCheck = (id:number)=>{
+        let todoid = String(id)
+        setCheckdata((checkdata:any)=>({
+            ...checkdata,
+            [todoid]:true
+        }))
+        setDeleteid((deleteid:string[])=>([
+            ...deleteid,todoid
+            ]
+        ))
+    }
+
+    const delCheck = (id:number)=>{
+        let todoid = String(id)
+        setCheckdata((checkdata:any)=>({
+            ...checkdata,
+            [todoid]:false
+        }))
+        setDeleteid((deleteid:any)=>(
+                deleteid.filter((list:any)=>{
+                return !list.includes(todoid)
+            }))
+        )
+    }
+
+    console.log(todos)
 
 //DatePicker関数
 
