@@ -27,12 +27,21 @@ export const Board = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault();
+        const date = new Date();
+        axios.post(getenv+"/boards",
+        {
+            boards:{
+                postdate:`${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日 ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
+                posttitle:title,
+                postcontent:content,
+                username:name
+            }
+        }).then(res=>{
+            console.log(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
     }
-
-    console.log(name)
-    console.log(title)
-    console.log(content)
-
 
     return (
         <>

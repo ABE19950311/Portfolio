@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   get "/sessions", to: "sessions#show"
 
   resources :todos
-  resources :schedules
+  resources :boards
 
   get "/health_check", to: "health_check#health_check"
 end
