@@ -13,7 +13,6 @@
 ActiveRecord::Schema[7.0].define(version: 2022_10_28_063508) do
   create_table "boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
-    t.time "postdate", null: false
     t.string "posttitle", null: false
     t.string "postcontent", null: false
     t.string "username"

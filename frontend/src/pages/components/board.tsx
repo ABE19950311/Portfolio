@@ -4,14 +4,35 @@ import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import Router, {useRouter} from "next/router"
 import Layout from "./layout"
+import moment from "moment"
+
+type Board = {
+    id:number,
+    created_at:string,
+    posttitle:string,
+    postcontent:string,
+    username:string
+}
 
 export const Board = ()=>{
     const [name,setName] = useState("");
     const [title,setTitle] = useState("");
     const [content,setContent] = useState("");
+    const [flag,setFlag] = useState("");
+    const [board,setBoard] = useState([]);
     const router=useRouter();
 
     const getenv = router.query.state as unknown as string;
+
+    useEffect(()=>{
+        axios.get(getenv+"/boards")
+        .then(res=>{
+            setBoard(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[flag])
 
     const doName = (event:{target:HTMLInputElement})=>{
         setName(event.target.value)
@@ -27,19 +48,28 @@ export const Board = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault();
-        const date = new Date();
         axios.post(getenv+"/boards",
         {
             boards:{
-                postdate:`${date.getFullYear()}年${date.getMonth()+1}月${date.getDate()}日 ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
                 posttitle:title,
                 postcontent:content,
                 username:name
             }
         }).then(res=>{
             console.log(res.data)
+            setFlag(res.data)
+            setName("")
+            setContent("")
+            setTitle("")
         }).catch(error=>{
             console.log(error)
+        })
+    }
+
+    const doBoard = (content:string,id:number)=>{
+        router.push({
+            pathname:"/components/boardcontent",
+            query:{content:content,id:id}
         })
     }
 
@@ -47,10 +77,19 @@ export const Board = ()=>{
         <>
         <Layout>
         <form>
-        <input type="text" value={name} onChange={doName}/><input type="text" value={title} onChange={doTitle}/><br></br>
-        <textarea rows={4} cols={40} value={content} onChange={doContent}/><br></br>
-        <button type="submit" onClick={doSubmit}>作成する</button>
+        <label>名前:</label><input type="text" value={name} onChange={doName}/><br></br>
+        <label>タイトル:</label><input type="text" value={title} onChange={doTitle}/><br></br>
+        <textarea rows={5} cols={70} value={content} onChange={doContent}/><br></br>
+        <button type="submit" onClick={doSubmit}>投稿する</button>
         </form>
+            {board.map((board:Board,key:number)=>{
+                return (
+                    <>
+                    <p>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>
+                    <a onClick={()=>doBoard(board.postcontent,board.id)} href="#">{board.posttitle}</a>
+                    </>
+                )
+            })}
         </Layout>
         </>
     )

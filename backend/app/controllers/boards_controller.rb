@@ -1,14 +1,20 @@
 class BoardsController < ApplicationController
+
+    def index
+        @board = Board.all
+        render json:@board
+    end
+
     def create
-        @user_id = User.find_by(username: session[:username]).id
-        @board = Board.create(board_params.merge(:user_id @user_id))
+        @user_id = User.find_by(username: session[:user_name]).id
+        @board = Board.create(board_params.merge(user_id: @user_id))
         render json:@board
     end
     
     private
 
     def board_params
-        params.require(:boards).permit(:postdate,:posttitle,:postcontent,:username)
+        params.require(:boards).permit(:posttitle,:postcontent,:username)
     end
 
 end
