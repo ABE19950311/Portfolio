@@ -8,6 +8,7 @@ import moment from "moment"
 
 type Board = {
     id:number,
+    user_id:number,
     created_at:string,
     posttitle:string,
     postcontent:string,
@@ -66,12 +67,13 @@ export const Board = ()=>{
         })
     }
 
-    const doBoard = (content:string,id:number)=>{
+    const doBoard = (content:string,board_id:number,user_id:number)=>{
         router.push({
             pathname:"/components/boardcontent",
-            query:{content:content,id:id}
+            query:{content:content,board_id:board_id,user_id:user_id,env:getenv}
         })
     }
+    console.log(board)
 
     return (
         <>
@@ -86,7 +88,7 @@ export const Board = ()=>{
                 return (
                     <>
                     <p>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>
-                    <a onClick={()=>doBoard(board.postcontent,board.id)} href="#">{board.posttitle}</a>
+                    <a onClick={()=>doBoard(board.postcontent,board.id,board.user_id)} href="#">{board.posttitle}</a>
                     </>
                 )
             })}

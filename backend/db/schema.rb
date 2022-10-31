@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_28_063508) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_31_090807) do
   create_table "boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.string "posttitle", null: false
@@ -19,6 +19,17 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_063508) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "posts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "board_id"
+    t.string "username"
+    t.string "postcontent", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_posts_on_board_id"
+    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "todos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -40,5 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_28_063508) do
   end
 
   add_foreign_key "boards", "users"
+  add_foreign_key "posts", "boards"
+  add_foreign_key "posts", "users"
   add_foreign_key "todos", "users"
 end

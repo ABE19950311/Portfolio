@@ -8,6 +8,7 @@ Rails.application.routes.draw do
 
   resources :todos
   resources :boards
+  resources :posts
 
   get "/health_check", to: "health_check#health_check"
 end
