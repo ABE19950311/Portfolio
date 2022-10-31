@@ -250,6 +250,9 @@ table td:last-child {
 const SCheck = styled.input`
 `
 
+const SSelect = styled.select`
+`
+
 export const Todo = ()=>{
     const [list,setList] = useState("");
     const [life,setLife] = useState("");
@@ -278,7 +281,7 @@ export const Todo = ()=>{
         setList(event.target.value);
     }
 
-    const doProcedure = (event:{target:HTMLInputElement}) => {
+    const doLife = (event:{target:HTMLSelectElement}) => {
         setLife(event.target.value);
     }
 
@@ -440,7 +443,13 @@ const handleChangeEnd = (selectedDate:Date) => {
                 onChange={handleChangeEnd}
             />
             <SInput type={"text"} value={list} placeholder={"やること"} onChange={doList}/><br></br>
-            <SInput type={"text"} value={life} placeholder={"手続き内容（任意）"}onChange={doProcedure}/><br></br>
+            <SSelect onChange={doLife}>
+                <option value="none">none</option>
+                <option value="部屋探し・入居">部屋探し・入居</option>
+                <option value="入居後手続き">入居後手続き</option>
+                <option value="防犯・防災">防犯・防災</option>
+                <option value="掃除">掃除</option>
+            </SSelect><br></br>
             <SButton type={"submit"}>リスト作成</SButton><br></br>
             <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/><SButton type={"button"} onClick={doDelete}>削除</SButton>
         </SForm>

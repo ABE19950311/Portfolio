@@ -47,7 +47,7 @@ export const Board = ()=>{
         setContent(event.target.value)
     }
 
-    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
+    const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
         axios.post(getenv+"/boards",
         {
@@ -78,11 +78,11 @@ export const Board = ()=>{
     return (
         <>
         <Layout>
-        <form>
+        <form onSubmit={doSubmit}>
         <label>名前:</label><input type="text" value={name} onChange={doName}/><br></br>
         <label>タイトル:</label><input type="text" value={title} onChange={doTitle}/><br></br>
         <textarea rows={5} cols={70} value={content} onChange={doContent}/><br></br>
-        <button type="submit" onClick={doSubmit}>投稿する</button>
+        <button type="submit">投稿する</button>
         </form>
             {board.map((board:Board,key:number)=>{
                 return (

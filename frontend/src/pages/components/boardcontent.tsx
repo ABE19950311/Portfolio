@@ -47,7 +47,7 @@ export const Boardcontent = ()=>{
         setPost(event.target.value)
     }
 
-    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
+    const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault()
         axios.post(getenv+"/posts",
         {
@@ -70,11 +70,11 @@ export const Boardcontent = ()=>{
     return (
         <>
         <Layout>
-            <form>
+            <form onSubmit={doSubmit}>
             <input type="text" value={name} onChange={doName}/><br></br>
             <textarea rows={5} cols={70} value={post} onChange={doPost}></textarea>
             <h1>kouzityuu</h1>
-            <button type="submit" onClick={doSubmit}>返信する</button>
+            <button type="submit">返信する</button>
             </form>
             {postcontent.filter((posts:Post)=>{
                     if(board_id==posts.board_id) {
