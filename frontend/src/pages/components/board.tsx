@@ -21,6 +21,7 @@ export const Board = ()=>{
     const [content,setContent] = useState("");
     const [flag,setFlag] = useState("");
     const [board,setBoard] = useState([]);
+    const [sessionid,setSessionid] = useState(0);
     const router=useRouter();
 
     const getenv = router.query.state as unknown as string;
@@ -34,6 +35,16 @@ export const Board = ()=>{
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[flag])
+
+    useEffect(()=>{
+        axios.get(getenv+"/sessionid")
+        .then(res=>{
+            setSessionid(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[])
 
     const doName = (event:{target:HTMLInputElement})=>{
         setName(event.target.value)
@@ -73,7 +84,15 @@ export const Board = ()=>{
             query:{content:content,board_id:board_id,user_id:user_id,env:getenv}
         })
     }
-    console.log(board)
+    
+    const doDelete = (deleteid:number)=>{
+        axios.delete(getenv+`/boards/${deleteid}`)
+        .then(res=>{
+            setFlag(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+    }
 
     return (
         <>
@@ -87,7 +106,7 @@ export const Board = ()=>{
             {board.map((board:Board,key:number)=>{
                 return (
                     <>
-                    <p>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>
+                    <p>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}
                     <a onClick={()=>doBoard(board.postcontent,board.id,board.user_id)} href="#">{board.posttitle}</a>
                     </>
                 )

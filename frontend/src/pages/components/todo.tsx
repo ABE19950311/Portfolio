@@ -133,6 +133,70 @@ width: 1000px;
 table-layout: fixed;
 overflow-wrap: break-word;
 
+.start {
+    cursor: pointer;
+    position: relative;
+}
+
+.start::before, .start::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+.start::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.start::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.due {
+    cursor: pointer;
+    position: relative;
+}
+
+.due::before, .due::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+.due::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.due::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.startasc::before {
+    border-bottom-color: #444;
+}
+.startdesc::after {
+    border-top-color: #444;
+}
+
+.dueasc::before {
+    border-bottom-color: #444;
+}
+.duedesc::after {
+    border-top-color: #444;
+}
+
 tr {
 background-color: #fff;
 border: 1px solid #bbb;
@@ -261,6 +325,8 @@ export const Todo = ()=>{
     const [flag,setFlag] = useState("");
     const [deleteid,setDeleteid] = useState<string[]>([]);
     const [checkdata,setCheckdata] = useState<any>({});
+    const [startclass,setStartclass] = useState(false);
+    const [dueclass,setDueclass] = useState(false);
     const router=useRouter();
     const domRef = useRef<HTMLInputElement>(null);
 
@@ -289,6 +355,52 @@ export const Todo = ()=>{
         setSearch(event.target.value);
     }
 
+    const startdateasc = () => {
+        setStartclass(!startclass)
+        const sorttodo = 
+                todos.sort((a:Todo,b:Todo)=>{
+                if(a.startdate<b.startdate) return -1;
+                if(a.startdate>b.startdate) return 1;
+                return 0;
+            })
+            setTodos(sorttodo)
+    }
+
+    const startdatedesc = () => {
+        setStartclass(!startclass)
+        const sorttodo = 
+                todos.sort((a:Todo,b:Todo)=>{
+                if(a.startdate<b.startdate) return 1;
+                if(a.startdate>b.startdate) return -1;
+                return 0;
+            })
+            setTodos(sorttodo)
+    }
+
+    const duedateasc = () => {
+        setDueclass(!dueclass)
+        console.log("asc")
+        const sorttodo = 
+                todos.sort((a:Todo,b:Todo)=>{
+                if(a.duedate<b.duedate) return -1;
+                if(a.duedate>b.duedate) return 1;
+                return 0;
+            })
+            setTodos(sorttodo)
+    }
+
+    const duedatedesc = () => {
+        setDueclass(!dueclass)
+        console.log("desc")
+        const sorttodo = 
+                todos.sort((a:Todo,b:Todo)=>{
+                if(a.duedate<b.duedate) return 1;
+                if(a.duedate>b.duedate) return -1;
+                return 0;
+            })
+            setTodos(sorttodo)
+    }
+
     const doCheck = (event:{target:HTMLInputElement})=>{
         let check = event.target.checked
         let id = (event.target.value) as string
@@ -306,9 +418,6 @@ export const Todo = ()=>{
             )
         }
     }
-
-    console.log(deleteid)
-    console.log(checkdata)
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -458,8 +567,8 @@ const handleChangeEnd = (selectedDate:Date) => {
                     <thead className="thead">
                         <tr className="tr">
                         <td className="check"><SCheck type={"checkbox"} onChange={doAllcheck}/></td>
-                        <td className="start" scope="col">開始日</td>
-                        <td className="due" scope="col">期日</td>
+                        <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
+                        <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
                         <td className="life" scope="col">項目</td>
                         <td className="todo" scope="col">TODO</td>
                         </tr>

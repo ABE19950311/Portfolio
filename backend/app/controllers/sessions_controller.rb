@@ -31,6 +31,11 @@ class SessionsController < ApplicationController
         end
     end
 
+    def sessionid
+        @current_id = User.find_by(username: session[:user_name]).id
+        render json:@current_id
+    end
+
     private
 
     def session_params

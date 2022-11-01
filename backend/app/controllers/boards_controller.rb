@@ -10,6 +10,12 @@ class BoardsController < ApplicationController
         @board = Board.create(board_params.merge(user_id: @user_id))
         render json:@board
     end
+
+    def destroy
+        @board = Board.find(params[:id])
+        @board.destroy
+        render json:@board
+    end
     
     private
 

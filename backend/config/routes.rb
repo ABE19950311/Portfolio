@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   delete "/logout", to: "sessions#logout"
   get "/logged_in", to: "sessions#logged_in?"
   get "/sessions", to: "sessions#show"
+  get "/sessionid", to: "sessions#sessionid"
 
   resources :todos
   resources :boards
