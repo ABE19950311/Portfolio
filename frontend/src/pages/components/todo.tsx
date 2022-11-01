@@ -264,6 +264,11 @@ tbody tr:hover{
     background-color: #fffae9;
 }
 
+.tdselect {
+    outline: none;
+    background-color: #eee;
+}
+
 @media screen and (max-width: 600px) {
 table {
     border: 0;
@@ -323,6 +328,7 @@ export const Todo = ()=>{
     const [search,setSearch] = useState("");
     const [todos,setTodos] = useState([]);
     const [flag,setFlag] = useState("");
+    const [selectlife,setSelectlife] = useState("");
     const [deleteid,setDeleteid] = useState<string[]>([]);
     const [checkdata,setCheckdata] = useState<any>({});
     const [startclass,setStartclass] = useState(false);
@@ -331,7 +337,6 @@ export const Todo = ()=>{
     const domRef = useRef<HTMLInputElement>(null);
 
     const getenv = router.query.state as unknown as string;
-    console.log(getenv)
 
     useEffect(()=>{
         axios.get(getenv+"/todos" as string
@@ -353,6 +358,10 @@ export const Todo = ()=>{
 
     const doSearch = (event:{target:HTMLInputElement}) => {
         setSearch(event.target.value);
+    }
+
+    const doSeleclife = (event:{target:HTMLSelectElement}) => {
+        setSelectlife(event.target.value);
     }
 
     const startdateasc = () => {
@@ -569,15 +578,29 @@ const handleChangeEnd = (selectedDate:Date) => {
                         <td className="check"><SCheck type={"checkbox"} onChange={doAllcheck}/></td>
                         <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
                         <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
-                        <td className="life" scope="col">項目</td>
+                        <td className="life" scope="col">項目
+                                <select className="tdselect" onChange={doSeleclife}>
+                                    <option value="none">none</option>
+                                    <option value="部屋探し・入居">部屋探し・入居</option>
+                                    <option value="入居後手続き">入居後手続き</option>
+                                    <option value="防犯・防災">防犯・防災</option>
+                                    <option value="掃除">掃除</option>
+                                </select>
+                        </td>
                         <td className="todo" scope="col">TODO</td>
                         </tr>
                     </thead>
                     </STable>
             {todos.filter((todos:Todo)=>{
+                if(todos.life.includes(selectlife)) {
+                    return todos;
+                }else if(selectlife==="none"){
+                    return todos;
+                }
+            }).filter((todos:Todo)=>{
                 if(todos.list.includes(search)) {
                     return todos;
-                }else if(search===""){
+                }else if(search==="") {
                     return todos;
                 }
             }).map((todo:Todo,key:number)=>{

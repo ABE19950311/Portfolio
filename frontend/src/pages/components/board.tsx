@@ -15,6 +15,40 @@ type Board = {
     username:string
 }
 
+const SForm = styled.form` 
+    padding-top:30px;
+    padding-bottom:10px;
+    padding-left:25%;
+
+    input {
+        width:200px;
+    }
+
+    label {
+        margin-bottom:3px;
+        display: inline-block;
+        width: 100px;
+    }
+
+    input,textarea {
+        margin-left:10px;
+    }
+
+    button {
+        margin:10px 0 0 10px
+    }
+`
+
+const SDiv = styled.div`
+    padding-left:3%;
+    margin-left:25%;
+    margin-top:20px;
+    margin-bottom:20px;
+    border: solid 1px #000000;
+    box-sizing: border-box;
+    width:700px
+`
+
 export const Board = ()=>{
     const [name,setName] = useState("");
     const [title,setTitle] = useState("");
@@ -97,17 +131,19 @@ export const Board = ()=>{
     return (
         <>
         <Layout>
-        <form onSubmit={doSubmit}>
+        <SForm onSubmit={doSubmit}>
         <label>名前:</label><input type="text" value={name} onChange={doName}/><br></br>
         <label>タイトル:</label><input type="text" value={title} onChange={doTitle}/><br></br>
-        <textarea rows={5} cols={70} value={content} onChange={doContent}/><br></br>
-        <button type="submit">投稿する</button>
-        </form>
+        <label></label><textarea rows={8} cols={70} placeholder={"投稿内容"} value={content} onChange={doContent}/><br></br>
+        <label></label><button type="submit">投稿する</button>
+        </SForm>
             {board.map((board:Board,key:number)=>{
                 return (
                     <>
-                    <p>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}
+                    <SDiv>
+                    <p key={key}>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}
                     <a onClick={()=>doBoard(board.postcontent,board.id,board.user_id)} href="#">{board.posttitle}</a>
+                    </SDiv>
                     </>
                 )
             })}
