@@ -42,11 +42,18 @@ const SForm = styled.form`
 const SDiv = styled.div`
     padding-left:3%;
     margin-left:25%;
+    margin-right:15%;
     margin-top:20px;
     margin-bottom:20px;
     border: solid 1px #000000;
     box-sizing: border-box;
-    width:700px
+    height:100px;
+    position:relative;
+
+    a {
+        color:blue;
+        text-decoration: underline;
+    }
 `
 
 export const Board = ()=>{
@@ -112,10 +119,10 @@ export const Board = ()=>{
         })
     }
 
-    const doBoard = (content:string,board_id:number,user_id:number)=>{
+    const doBoard = (content:string,board_id:number,user_id:number,username:string,createdate:string)=>{
         router.push({
             pathname:"/components/boardcontent",
-            query:{content:content,board_id:board_id,user_id:user_id,env:getenv}
+            query:{content:content,board_id:board_id,user_id:user_id,env:getenv,username:username,createdate:createdate}
         })
     }
     
@@ -139,12 +146,10 @@ export const Board = ()=>{
         </SForm>
             {board.map((board:Board,key:number)=>{
                 return (
-                    <>
-                    <SDiv>
-                    <p key={key}>作成者:{board.username} {moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</p>{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}
-                    <a onClick={()=>doBoard(board.postcontent,board.id,board.user_id)} href="#">{board.posttitle}</a>
+                    <SDiv key={key}>
+                    <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
+                    <label>タイトル:</label><a onClick={()=>doBoard(board.postcontent,board.id,board.user_id,board.username,board.created_at)} href="#">{board.posttitle}</a>
                     </SDiv>
-                    </>
                 )
             })}
         </Layout>
