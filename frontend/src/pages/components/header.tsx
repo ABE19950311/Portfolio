@@ -104,6 +104,7 @@ export const Header = ()=>{
         <SHeader>
             <SLogo><Image src="/logo.png" height="100px" width="100px" alt="logo"/></SLogo>
             <SMenu>
+                <Link href="/mappage"><SItem><a href="#">ハザードマップ</a></SItem></Link>
                 <Link href="/components/mainpage"><SItem><a href="#">手続きリストへ戻る</a></SItem></Link>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
