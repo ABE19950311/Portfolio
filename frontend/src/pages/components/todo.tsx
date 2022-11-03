@@ -1,17 +1,12 @@
 import styled from "styled-components"
-import Link from "next/link"
 import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
-import {Footer} from "./footer"
-import {Procedure} from "./dailylifey"
 import DatePicker,{registerLocale} from "react-datepicker"
 import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
-import { identity } from "@fullcalendar/react"
-import { check } from "prettier"
 
 registerLocale("ja",ja);
 
