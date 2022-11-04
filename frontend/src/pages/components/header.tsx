@@ -6,6 +6,7 @@ import {useRouter} from "next/router"
 import Image from 'next/image'
 
 
+
 const SHeader = styled.div`
     background: #f0ffff;
     display: flex;

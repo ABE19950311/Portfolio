@@ -1,14 +1,16 @@
-import dynamic from "next/dynamic"
-import {useMemo} from "react"
+import dynamic from "next/dynamic";
+import React from "react";
 
-export const Mappage = ()=>{
-    const Map = useMemo(()=>{
-        return dynamic(()=> import("./components/map"),{
-            loading: () => <p>A map is loading</p>,
-            ssr: false,
-        })
-    },[])
+function MapPage() {
+    const Map = React.useMemo(
+        () =>
+        dynamic(() => import("../components/map"), {
+        loading: () => <p>A map is loading</p>,
+        ssr: false,
+        }),
+    []
+    );
     return <Map />;
 }
 
-export default Mappage
+export default MapPage;
