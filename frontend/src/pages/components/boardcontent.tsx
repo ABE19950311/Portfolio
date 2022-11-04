@@ -1,10 +1,11 @@
 import styled from "styled-components"
-import Link from "next/link"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import Router, {useRouter} from "next/router"
 import Layout from "./layout"
 import moment from "moment"
+import { FaHeart } from "react-icons/fa";
+
 
 type Post = {
     id:number,
@@ -14,6 +15,10 @@ type Post = {
     postcontent:string,
     created_at:Date
 }
+
+const Container = styled.div`
+    max-width:1200px;
+`
 
 const SForm = styled.form` 
     padding-top:30px;
@@ -44,19 +49,37 @@ const SForm = styled.form`
 `
 
 const SDiv = styled.div`
+    width:70%;
+    display:inline-block;
     padding-left:3%;
     margin-left:25%;
     margin-top:20px;
-    margin-bottom:20px;
     border: solid 1px #000000;
-    box-sizing: border-box;
-    width:700px
+
+    .content {
+        font-size:20px;
+        font-family:'Comic Sans MS'
+    }
+
+    .post {
+        font-size:18px;
+        font-family:'Comic Sans MS'
+    }
+
+    .setcolor {
+        color:#e2264d;
+    }
+
+    .none {
+        color:initial;
+    }
 `
 
 export const Boardcontent = ()=>{
     const [name,setName] = useState("")
     const [post,setPost] = useState("")
     const [flag,setFlag] = useState("")
+    const [fontcolor,setFontcolor] = useState<any>({})
     const [sessionid,setSessionid] = useState(0)
     const [postcontent,setPostcontent] = useState([])
     const router=useRouter();
@@ -88,8 +111,6 @@ export const Boardcontent = ()=>{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
-    console.log(postcontent)
-
     const doName = (event:{target:HTMLInputElement})=>{
             setName(event.target.value)
     }
@@ -99,6 +120,17 @@ export const Boardcontent = ()=>{
         if(sessionid==user_id) {
             setName(username)
         }
+    }
+
+    const setcolorflag = (postid:number)=>{
+        let id = postid
+        setFontcolor((fontcolor:any)=>({
+                ...fontcolor,
+                [id]:true
+            })
+        )
+        console.log(id)
+        console.log(fontcolor)
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
@@ -125,14 +157,15 @@ export const Boardcontent = ()=>{
     return (
         <>
         <Layout>
+            <Container>
             <SForm onSubmit={doSubmit}>
             <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
             <label></label><textarea rows={5} cols={70} value={post} onChange={doPost}></textarea><br></br>
             <label></label><button type="submit">返信する</button>
             </SForm>
             <SDiv>
-                <p>投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</p>
-                <p>{content}</p>
+                <span className="content">投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</span>
+                <p className="post">{content}</p>
             </SDiv>
             {postcontent.filter((posts:Post)=>{
                     if(board_id==posts.board_id) {
@@ -143,13 +176,14 @@ export const Boardcontent = ()=>{
                 return (
                     <>
                         <SDiv key={key}>
-                        <p>投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}</p>
-                        <p>{post.postcontent}</p>
+                        <span className="content" onClick={()=>setcolorflag(post.id)} >投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} /></span>
+                        <p className="post">{post.postcontent}</p>
                         </SDiv>
                     </>
                     )
                 })
             }
+            </Container>
         </Layout>
         </>
     )
