@@ -116,14 +116,6 @@ export const Boardcontent = ()=>{
             let heartcount:any = {}
 
             setHeartdata(res.data)
-            res.data.map((res:Heart)=>{
-                if(sessionid==res.user_id) {
-                setFontcolor((fontcolor:any)=>({
-                    ...fontcolor,
-                    [res.post_id]:true
-                }))
-                }
-            })
 
             for(let i=0;i<res.data.length;i++) {
                 let elm = res.data[i]
@@ -133,6 +125,15 @@ export const Boardcontent = ()=>{
                     heartcount
                 }))
             }
+    
+            res.data.map((res:Heart)=>{
+                if(sessionid==res.user_id) {
+                setFontcolor((fontcolor:any)=>({
+                    ...fontcolor,
+                    [res.post_id]:true
+                }))
+                }
+            })
             
         }).catch(error=>{
             console.log(error)
@@ -140,8 +141,8 @@ export const Boardcontent = ()=>{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[heartflag])
 
-    console.log(heartdata)
-    console.log(heartnumber)
+    //console.log(heartdata)
+    //console.log(heartnumber)
 
     const doName = (event:{target:HTMLInputElement})=>{
             setName(event.target.value)
@@ -155,21 +156,27 @@ export const Boardcontent = ()=>{
     }
 
     const setcolorflag = (postid:number)=>{
-        setFontcolor((fontcolor:any)=>({
-                ...fontcolor,
-                [postid]:true
-            })
-        )
-        axios.post(getenv+"/hearts",{
-            hearts: {
-                    post_id:postid,
-                    user_id:sessionid
+            axios.post(getenv+"/hearts",{
+                hearts: {
+                        post_id:postid,
+                        user_id:sessionid
+                    }
+            }).then(res=>{
+                setHeartflag(res.data)
+                if(res.data.status=="created") {
+                setFontcolor((fontcolor:any)=>({
+                    ...fontcolor,
+                    [postid]:true
+                }))
+                }else if(res.data.status==="none") {
+                    setFontcolor((fontcolor:any)=>({
+                        ...fontcolor,
+                        [postid]:false
+                    }))
                 }
-        }).then(res=>{
-            setHeartflag(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
+            }).catch(error=>{
+                console.log(error)
+            })
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{

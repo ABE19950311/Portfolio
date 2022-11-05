@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get "/logged_in", to: "sessions#logged_in?"
   get "/sessions", to: "sessions#show"
   get "/sessionid", to: "sessions#sessionid"
-  
 
   resources :todos
   resources :boards

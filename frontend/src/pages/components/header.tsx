@@ -76,8 +76,6 @@ export const Header = ()=>{
         }
     },[])
 
-    console.log(getenv)
-
     const logout = ()=>{
         axios.delete(getenv+"/logout" as string)
         .then(res=> {

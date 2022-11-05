@@ -425,14 +425,14 @@ export const Todo = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if(list!==""&&life!=="") {
+        if(list!=="") {
         axios.post(getenv+"/todos" as string,
             {
                 todos: {
                     list:list,
                     startdate:startDate,
                     duedate:endDate,
-                    life:life,
+                    life:life ? life:"none",
                 },
             },
         ).then(res=> {
@@ -575,6 +575,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                         <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
                         <td className="life" scope="col">項目
                                 <select className="tdselect" onChange={doSeleclife}>
+                                    <option value="フィルター項目">フィルター項目</option>
                                     <option value="none">none</option>
                                     <option value="部屋探し・入居">部屋探し・入居</option>
                                     <option value="入居後手続き">入居後手続き</option>
@@ -589,7 +590,7 @@ const handleChangeEnd = (selectedDate:Date) => {
             {todos.filter((todos:Todo)=>{
                 if(todos.life.includes(selectlife)) {
                     return todos;
-                }else if(selectlife==="none"){
+                }else if(selectlife==="フィルター項目"){
                     return todos;
                 }
             }).filter((todos:Todo)=>{
