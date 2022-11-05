@@ -122,7 +122,7 @@ export const Board = ()=>{
     const doBoard = (content:string,board_id:number,user_id:number,username:string,createdate:string)=>{
         router.push({
             pathname:"/components/boardcontent",
-            query:{content:content,board_id:board_id,user_id:user_id,env:getenv,username:username,createdate:createdate}
+            query:{content:content,board_id:board_id,user_id:user_id,env:getenv,username:username,createdate:createdate,sessionid:sessionid}
         })
     }
     

@@ -16,6 +16,12 @@ type Post = {
     created_at:Date
 }
 
+type Heart = {
+    id:number,
+    post_id:number,
+    user_id:number
+}
+
 const Container = styled.div`
     max-width:1200px;
 `
@@ -79,8 +85,10 @@ export const Boardcontent = ()=>{
     const [name,setName] = useState("")
     const [post,setPost] = useState("")
     const [flag,setFlag] = useState("")
+    const [heartnumber,setHeartnumber] = useState<any>(0)
+    const [heartflag,setHeartflag] = useState("")
+    const [heartdata,setHeartdata] = useState([])
     const [fontcolor,setFontcolor] = useState<any>({})
-    const [sessionid,setSessionid] = useState(0)
     const [postcontent,setPostcontent] = useState([])
     const router=useRouter();
 
@@ -90,6 +98,7 @@ export const Boardcontent = ()=>{
     const createdate = router.query.createdate as unknown as string;
     const getenv = router.query.env as unknown as string;
     const content = router.query.content as unknown as string;
+    const sessionid = router.query.sessionid as unknown as number;
 
     useEffect(()=>{
         axios.get(getenv+"/posts")
@@ -102,14 +111,37 @@ export const Boardcontent = ()=>{
     },[flag])
 
     useEffect(()=>{
-        axios.get(getenv+"/sessionid")
+        axios.get(getenv+"/hearts")
         .then(res=>{
-            setSessionid(res.data)
+            let heartcount:any = {}
+
+            setHeartdata(res.data)
+            res.data.map((res:Heart)=>{
+                if(sessionid==res.user_id) {
+                setFontcolor((fontcolor:any)=>({
+                    ...fontcolor,
+                    [res.post_id]:true
+                }))
+                }
+            })
+
+            for(let i=0;i<res.data.length;i++) {
+                let elm = res.data[i]
+                heartcount[elm.post_id] = heartcount[elm.post_id] ? heartcount[elm.post_id]+1:1;
+                setHeartnumber((heartnumber:any)=>({
+                    ...heartnumber,
+                    heartcount
+                }))
+            }
+            
         }).catch(error=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[heartflag])
+
+    console.log(heartdata)
+    console.log(heartnumber)
 
     const doName = (event:{target:HTMLInputElement})=>{
             setName(event.target.value)
@@ -123,14 +155,21 @@ export const Boardcontent = ()=>{
     }
 
     const setcolorflag = (postid:number)=>{
-        let id = postid
         setFontcolor((fontcolor:any)=>({
                 ...fontcolor,
-                [id]:true
+                [postid]:true
             })
         )
-        console.log(id)
-        console.log(fontcolor)
+        axios.post(getenv+"/hearts",{
+            hearts: {
+                    post_id:postid,
+                    user_id:sessionid
+                }
+        }).then(res=>{
+            setHeartflag(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
@@ -176,7 +215,7 @@ export const Boardcontent = ()=>{
                 return (
                     <>
                         <SDiv key={key}>
-                        <span className="content" onClick={()=>setcolorflag(post.id)} >投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} /></span>
+                        <span className="content" onClick={()=>setcolorflag(post.id)} >投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                         <p className="post">{post.postcontent}</p>
                         </SDiv>
                     </>
