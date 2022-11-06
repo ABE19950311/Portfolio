@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {Layout} from "./layout"
-import {Procedure} from "./dailylifey"
+import {Dailylifey} from "./dailylifey"
 
 
 const Container = styled.div`
@@ -20,7 +20,7 @@ export const MainPage = ()=>{
     return (
         <>
         <Layout>
-        <Procedure />
+        <Dailylifey />
         </Layout>
         </>
     )

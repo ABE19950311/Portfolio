@@ -151,6 +151,7 @@ export const Login = ()=>{
         }).catch(error => {
             console.log("registration error",error)
         })
+
         }
 
     return (

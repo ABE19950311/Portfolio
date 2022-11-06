@@ -152,7 +152,7 @@ box-shadow: inset 1px 1px 1px #fff;
 `
 
 
-export const Procedure = ()=>{
+export const Dailylifey = ()=>{
     const router=useRouter();
 
     const Router = (state:string) =>{
@@ -172,7 +172,7 @@ export const Procedure = ()=>{
             <Sbtn onClick={()=>Router("heya")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
-            <p><strong>入居後手続き</strong></p>
+            <p><strong>入居前後の手続き</strong></p>
             <Image src="/nyukyo.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
             <Sbtn onClick={()=>Router("hikkoshi")}><span>確認する</span></Sbtn>
         </SItem>
@@ -186,10 +186,20 @@ export const Procedure = ()=>{
             <Image src="/souzi.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
             <Sbtn onClick={()=>Router("souzi")}><span>確認する</span></Sbtn>
         </SItem>
+        <SItem>
+            <p><strong>料理</strong></p>
+            <Image src="/ryouri.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Sbtn onClick={()=>Router("ryouri")}><span>確認する</span></Sbtn>
+        </SItem>
+        <SItem>
+            <p><strong>洗濯</strong></p>
+            <Image src="/sentaku.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Sbtn onClick={()=>Router("sentaku")}><span>確認する</span></Sbtn>
+        </SItem>
     </SCard>
     </Container>
     </Body>
     )
 }
 
-export default Procedure
+export default Dailylifey

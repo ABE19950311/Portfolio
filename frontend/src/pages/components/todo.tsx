@@ -556,12 +556,14 @@ const handleChangeEnd = (selectedDate:Date) => {
                 onChange={handleChangeEnd}
             />
             <SInput type={"text"} value={list} placeholder={"やること"} onChange={doList}/><br></br>
-            <SSelect onChange={doLife}>
+            <SSelect onChange={doLife} value={life}>
                 <option value="none">none</option>
                 <option value="部屋探し・入居">部屋探し・入居</option>
-                <option value="入居後手続き">入居後手続き</option>
+                <option value="入居前後の手続き">入居前後の手続き</option>
                 <option value="防犯・防災">防犯・防災</option>
                 <option value="掃除">掃除</option>
+                <option value="料理">料理</option>
+                <option value="洗濯">洗濯</option>
             </SSelect><br></br>
             <SButton type={"submit"}>リスト作成</SButton><br></br>
             <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/><SButton type={"button"} onClick={doDelete}>削除</SButton>
@@ -578,9 +580,11 @@ const handleChangeEnd = (selectedDate:Date) => {
                                     <option value="フィルター項目">フィルター項目</option>
                                     <option value="none">none</option>
                                     <option value="部屋探し・入居">部屋探し・入居</option>
-                                    <option value="入居後手続き">入居後手続き</option>
+                                    <option value="入居前後の手続き">入居前後の手続き</option>
                                     <option value="防犯・防災">防犯・防災</option>
                                     <option value="掃除">掃除</option>
+                                    <option value="料理">料理</option>
+                                    <option value="洗濯">洗濯</option>
                                 </select>
                         </td>
                         <td className="todo" scope="col">TODO</td>

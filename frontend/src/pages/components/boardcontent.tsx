@@ -117,15 +117,6 @@ export const Boardcontent = ()=>{
 
             setHeartdata(res.data)
 
-            for(let i=0;i<res.data.length;i++) {
-                let elm = res.data[i]
-                heartcount[elm.post_id] = heartcount[elm.post_id] ? heartcount[elm.post_id]+1:1;
-                setHeartnumber((heartnumber:any)=>({
-                    ...heartnumber,
-                    heartcount
-                }))
-            }
-    
             res.data.map((res:Heart)=>{
                 if(sessionid==res.user_id) {
                 setFontcolor((fontcolor:any)=>({
@@ -134,6 +125,23 @@ export const Boardcontent = ()=>{
                 }))
                 }
             })
+
+            if(res.data.length) {
+            for(let i=0;i<res.data.length;i++) {
+                let elm = res.data[i]
+                heartcount[elm.post_id] = heartcount[elm.post_id] ? heartcount[elm.post_id]+1:1;
+                setHeartnumber((heartnumber:any)=>({
+                    ...heartnumber,
+                    heartcount
+                }))
+            }
+            }else if(!res.data.length) {
+                heartcount = {}
+                setHeartnumber((heartnumber:any)=>({
+                    ...heartnumber,
+                    heartcount
+                }))
+            }
             
         }).catch(error=>{
             console.log(error)
@@ -141,8 +149,8 @@ export const Boardcontent = ()=>{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[heartflag])
 
-    //console.log(heartdata)
-    //console.log(heartnumber)
+    console.log(heartdata)
+    console.log(heartnumber)
 
     const doName = (event:{target:HTMLInputElement})=>{
             setName(event.target.value)
@@ -220,12 +228,10 @@ export const Boardcontent = ()=>{
                 }    
             ).map((post:Post,key:number)=>{
                 return (
-                    <>
                         <SDiv key={key}>
                         <span className="content" onClick={()=>setcolorflag(post.id)} >投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                         <p className="post">{post.postcontent}</p>
                         </SDiv>
-                    </>
                     )
                 })
             }

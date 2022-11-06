@@ -67,12 +67,37 @@ const SItem = styled.li`
 export const Header = ()=>{
     const router = useRouter();
     const [getenv,setGetenv] = useState("");
+    const [sessionid,setSessionid] = useState("")
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)    
+            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)   
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
+            .then(res=>{
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
+            }).catch(error=>{
+                console.log(error)
+            })
+            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
+            .then(res=>{
+                setSessionid(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
         }else{
             setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
+            .then(res=>{
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
+            }).catch(error=>{
+                console.log(error)
+            })
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessionid")
+            .then(res=>{
+                setSessionid(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
         }
     },[])
 
@@ -99,12 +124,29 @@ export const Header = ()=>{
             })
     }
 
+    const mypage = ()=>{
+        axios.post(getenv+"/mypages",
+            {
+            users: {
+                user_id:sessionid
+            }
+        }).then(res=>{
+            console.log(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+        router.push({
+            pathname:"/components/mypage",
+            })
+    }
+
     return (
         <SHeader>
             <SLogo><Image src="/logo.png" height="100px" width="100px" alt="logo"/></SLogo>
             <SMenu>
+                <Link href="/components/mainpage"><SItem><a href="#">トップページへ戻る</a></SItem></Link>
+                <Sbtn onClick={mypage}><a href="#">マイページ</a></Sbtn>
                 <Link href="/mappage"><SItem><a href="#">ハザードマップ</a></SItem></Link>
-                <Link href="/components/mainpage"><SItem><a href="#">手続きリストへ戻る</a></SItem></Link>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
                 <Sbtn onClick={board}><a href="#">掲示板</a></Sbtn>

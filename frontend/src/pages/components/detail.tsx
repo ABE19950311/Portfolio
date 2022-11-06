@@ -48,6 +48,29 @@ ul li{
     font-weight: bold;
 }
 
+.check {
+    position: relative;
+    padding: 15px 40px 15px 30px;
+    font: 14px/1.6 'arial narrow', sans-serif;
+    border: solid 2px #adcce8;
+    border-radius:8px;
+    color: #448ccb;
+    width:400px;
+    background: #fff;
+}
+
+.check:before {
+    content: "CHECK";  /* 好きな文字を記述 */
+    position: absolute;
+    display: block;
+    top: -15px;
+    left: 20px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
 .steps {
 /* 連番カウンター名の定義 */
 counter-reset: step-counter;
@@ -179,40 +202,110 @@ export const Detail = ()=>{
         )
     }
 
+    const Hikkoshi = ()=>{
+        return (
+            <Steps>
+            <h1>入居前後の手続き内容</h1>
+            <div className="steps">
+                <h2>電気・ガス・水道・ネット回線</h2>
+                    <p>引っ越しの１週間ほど前までには入居後に利用する会社に連絡</p>
+                <h2>転出届・転居届提出</h2>
+                    <p>住民票の移動が必要になるため、現住所の市区町村役場で転出届を提出</p>
+                    <p>同じ市区町村内なら転居届を提出する</p>
+                <h2>郵便物の転送手続き</h2>
+                    <p>郵便局の窓口で転居届用紙を入手し、直接提出するかポストへ投函</p>
+                <h2>転入届提出</h2>
+                    <p>引っ越し先の役所に書類を提出</p>
+                    <p>転出届を提出した際に貰える転出証明書が必要なため注意</p>
+                <h2>運転免許・マイナンバー・国民健康保険、年金の住所変更</h2>
+                    <p>新住所で１４日以内に手続き実施</p>
+                <h3></h3>
+                
+            </div>
+            </Steps>
+        )
+    }
+
     const Bouhan = ()=>{
         return (
             <>
             <Steps>
-            <h1>カレーライスの作り方</h1>
+            <h1>防犯・防災のための心がけ</h1>
             <div className="steps">
-                <h2>野菜と肉を切る</h2>
-                <p>いい感じの大きさに野菜と肉を切ります。</p>
-
-                <h2>煮込む</h2>
-                <p>切った具材を鍋に入れて煮込みます。</p>
-
-                <h2>味付け</h2>
-                <p>カレールーなど調味料を入れて完成です。</p>
-
-                <h2>てすと</h2>
-                <h2></h2>
+                <h2>家の周辺環境を確認する</h2>
+                <p>ゴミ・タバコの放置、壁の落書き等が存在している場合、治安が芳しくない可能性あり</p>
+                    <ul className="check">
+                        <li>道路のゴミ</li>
+                        <li>壁の落書き</li>
+                        <li>交番が近くに存在しているか</li>
+                        <li>街灯が十分にあるか</li>
+                        <li>夜の人通り</li>
+                    </ul>
+                <h2>空き巣・不審者対策</h2>
+                <p>家の中外関係なく、基本に忠実に細心の注意を払う</p>
+                    <ul className="check">
+                        <li>来訪者は必ず確認</li>
+                        <li>夜は出来るだけ明るい道を選ぶ</li>
+                        <li>防犯ブザー・アプリ等の用意</li>
+                        <li>二重ロック等鍵の強化</li>
+                        <li>近所の写真をSNSにアップしない</li>
+                        <li>留守を悟られないよう小さい照明をつける</li>
+                    </ul>
+                <h2>地震・台風等自然災害の備え</h2>
+                <p>非常時用の備蓄・避難場所を日頃から意識する</p>
+                    <ul className="check">
+                        <li>大きな家具は固定する</li>
+                        <li>日常用品を備蓄する</li>
+                        <li>ハザードマップで周辺を確認</li>
+                        <li>停電に備え枕元に懐中電灯を用意しておく</li>
+                    </ul>
+                <h3></h3>
             </div>
             </Steps>
             </>
         )
     }
 
-    const Hikkoshi = ()=>{
+    const Souzi = ()=>{
         return (
-            <>
-            </>
+            <Steps>
+            <h1>掃除・片付け概要</h1>
+            <div className="steps">
+                <h2>掃除道具の用意</h2>
+                    <p>一人暮らしであれば、コスト・置き場所等の観点から最低限用意</p>
+                    <ul className="check">
+                        <li>スポンジ</li>
+                        <li>掃除機</li>
+                        <li>アルコール除菌スプレー</li>
+                        <li>フローリングワイパー</li>
+                        <li>中性洗剤</li>
+                        <li>使い捨てシート</li>
+                        <li>粘着クリーナー</li>
+                        <li>etc</li>
+                    </ul>
+                <h2>汚れ・カビ対策</h2>
+                    <p>汚れが定着してしまう前に日頃から予防掃除が大切</p>
+                    <p>クローゼット・押入れ</p>
+                    <p>→湿気がたまりやすく、カビが生えやすい。定期的な換気と除湿剤を入れておく</p>
+                    <p>風呂・水回り</p>
+                    <p>→防カビ剤を定期的にたいて防止する。洗面台や浴室ドアは汚れがたまりやすいため</p>
+                    <p> マスキングテープを貼って保護。</p>
+                <h3></h3>
+                
+            </div>
+            </Steps>
         )
     }
 
-    const Souzi = ()=>{
-        return (
-            <>
-            </>
+    const Ryouri = ()=>{
+        return(
+            <></>
+        )
+    }
+
+    const Sentaku =()=>{
+        return(
+            <></>
         )
     }
 
@@ -228,8 +321,12 @@ export const Detail = ()=>{
                     return <Bouhan />
                 }else if(query==="souzi") {
                     return <Souzi />
+                }else if(query==="ryouri") {
+                    return <Ryouri />
+                }else if(query==="sentaku") {
+                    return <Sentaku />
                 }else {
-                    console.log("error");
+                    console.log("error")
                 }
             })()}
             </Layout>
