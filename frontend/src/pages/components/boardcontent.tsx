@@ -5,6 +5,7 @@ import Router, {useRouter} from "next/router"
 import Layout from "./layout"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
+import Header from "./header"
 
 
 type Post = {
@@ -210,7 +211,7 @@ export const Boardcontent = ()=>{
 
     return (
         <>
-        <Layout>
+            <Header />
             <Container>
             <SForm onSubmit={doSubmit}>
             <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
@@ -236,7 +237,6 @@ export const Boardcontent = ()=>{
                 })
             }
             </Container>
-        </Layout>
         </>
     )
 }

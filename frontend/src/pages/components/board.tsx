@@ -3,7 +3,7 @@ import Link from "next/link"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import Router, {useRouter} from "next/router"
-import Layout from "./layout"
+import Header from "./header"
 import moment from "moment"
 
 type Board = {
@@ -101,12 +101,13 @@ export const Board = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
+        
         axios.post(getenv+"/boards",
         {
             boards:{
                 posttitle:title,
                 postcontent:content,
-                username:name
+                username:name ? name:"名無しさん"
             }
         }).then(res=>{
             console.log(res.data)
@@ -137,7 +138,7 @@ export const Board = ()=>{
 
     return (
         <>
-        <Layout>
+        <Header />
         <SForm onSubmit={doSubmit}>
         <label>名前:</label><input type="text" value={name} onChange={doName}/><br></br>
         <label>タイトル:</label><input type="text" value={title} onChange={doTitle}/><br></br>
@@ -152,7 +153,6 @@ export const Board = ()=>{
                     </SDiv>
                 )
             })}
-        </Layout>
         </>
     )
 }

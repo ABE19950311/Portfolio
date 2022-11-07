@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState,useEffect,useRef} from "react"
+import React, {useState,useEffect,useRef, Fragment} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
@@ -7,6 +7,7 @@ import DatePicker,{registerLocale} from "react-datepicker"
 import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
+import { MdSearch } from "react-icons/md";
 
 registerLocale("ja",ja);
 
@@ -19,104 +20,108 @@ type Todo = {
     duedate:String
 }
 
-type Check = {
-    id:string,
-    checked:boolean
-} 
-
-
-const Container = styled.div`
-min-height: 100vh;
-position: relative;/*←相対位置*/
-padding-bottom: 120px;/*←footerの高さ*/
-box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
-`
-
-const Body = styled.div`
+const SDiv = styled.div`
 font-family: "Open Sans", sans-serif;
 line-height: 1.25;
-text-align:center;
-width:70%
+max-width:1500px;
 
-body {
-    margin: 0;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-p {
-    margin: 0;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-}
-
-table {
-    border-collapse: collapse;
-}
-
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
 
 h2{
+    text-align:center;
     border-top: double 4px #27acd9;
 	border-bottom: double 4px #27acd9;
 	padding: 0.5rem 0;
+}
 
-    .test {
-        width: 30%; /*親要素いっぱい広げる*/
-padding: 10px 15px; /*ボックスを大きくする*/
-border-radius: 3px; /*ボックス角の丸み*/
-border: 2px solid #ddd; /*枠線*/
-box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+.datepos {
+    margin-left:40%;
+}
+
+.inputpos {
+    text-align:center;
+}
+
+.search {
+    position: relative;
+    display: flex;
+    justify-content:center;
+}
+
+.searchicon {
+    position: absolute;
+    color: #333;
+    font-size: 2rem;
+    top: 50%;
+    left: 51%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+}
+
+.datepicker {
+        text-align:left;
+        font-size:16px;
+        padding: 6px 40px; /*ボックスを大きくする*/
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
     }
-`
 
-const SForm = styled.form`
+.customform {
     margin-bottom:20px;
+}
 
-`
+.custominput {
+    padding: 10px 100px 10px 10px;
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
 
-const SInput = styled.input`
-width: 30%; /*親要素いっぱい広げる*/
-padding: 10px 15px; /*ボックスを大きくする*/
-font-size: 16px;
-border-radius: 3px; /*ボックス角の丸み*/
-border: 2px solid #ddd; /*枠線*/
-box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-`
-const SButton = styled.button`
-font-weight: 700;
-padding: 0.5rem 1.5rem;
-cursor: pointer;
+.todolabel {
+    color:red;
+}
 
-text-align: center;
-vertical-align: middle;
-text-decoration: none;
-letter-spacing: 0.1em;
-border-radius: 0.5rem;
-
-border: 1px solid #ccc;
-background: #f1e767;
-background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
-background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
-background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
--webkit-box-shadow: inset 1px 1px 1px #fff;
-box-shadow: inset 1px 1px 1px #fff;
-    &:hover {
-    background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
-    background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
-    background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
+.customselect {
+        padding: 10px; 15px;
+        border-radius: 4px;
+        border: none;
+        box-shadow: 0 0 0 1px #ccc inset;
+        cursor: pointer;
+        font-size:16px;
+    
+    &::focus {
+        outline: 0;
+        box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
     }
+}
+
+.custombutton {
+    font-weight: 700;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+    
+    border: 1px solid #ccc;
+    background: #f1e767;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
+    background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
+    background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
+    -webkit-box-shadow: inset 1px 1px 1px #fff;
+    box-shadow: inset 1px 1px 1px #fff;
+
+    &:hover {
+        background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
+        background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
+        background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
+    }
+}
 
 `
 
@@ -127,6 +132,10 @@ padding: 0;
 width: 1000px;
 table-layout: fixed;
 overflow-wrap: break-word;
+
+.check {
+    text-align:center;
+}
 
 .start {
     cursor: pointer;
@@ -311,11 +320,7 @@ table td:last-child {
     border-bottom: 0;
 }
 `
-const SCheck = styled.input`
-`
 
-const SSelect = styled.select`
-`
 
 export const Todo = ()=>{
     const [list,setList] = useState("");
@@ -329,7 +334,6 @@ export const Todo = ()=>{
     const [startclass,setStartclass] = useState(false);
     const [dueclass,setDueclass] = useState(false);
     const router=useRouter();
-    const domRef = useRef<HTMLInputElement>(null);
 
     const getenv = router.query.state as unknown as string;
 
@@ -365,6 +369,8 @@ export const Todo = ()=>{
                 todos.sort((a:Todo,b:Todo)=>{
                 if(a.startdate<b.startdate) return -1;
                 if(a.startdate>b.startdate) return 1;
+                if(a.duedate==null) return 1;
+                if(b.duedate==null) return -1;
                 return 0;
             })
             setTodos(sorttodo)
@@ -376,6 +382,8 @@ export const Todo = ()=>{
                 todos.sort((a:Todo,b:Todo)=>{
                 if(a.startdate<b.startdate) return 1;
                 if(a.startdate>b.startdate) return -1;
+                if(a.duedate==null) return 1;
+                if(b.duedate==null) return -1;
                 return 0;
             })
             setTodos(sorttodo)
@@ -388,6 +396,8 @@ export const Todo = ()=>{
                 todos.sort((a:Todo,b:Todo)=>{
                 if(a.duedate<b.duedate) return -1;
                 if(a.duedate>b.duedate) return 1;
+                if(a.duedate==null) return 1;
+                if(b.duedate==null) return -1;
                 return 0;
             })
             setTodos(sorttodo)
@@ -400,6 +410,8 @@ export const Todo = ()=>{
                 todos.sort((a:Todo,b:Todo)=>{
                 if(a.duedate<b.duedate) return 1;
                 if(a.duedate>b.duedate) return -1;
+                if(a.duedate==null) return 1;
+                if(b.duedate==null) return -1;
                 return 0;
             })
             setTodos(sorttodo)
@@ -440,6 +452,8 @@ export const Todo = ()=>{
             setFlag(res.data);
             setList("");
             setLife("");
+            setStartDate(undefined)
+            setEndDate(undefined)       
         }).catch(error=> {
             console.log("response error",error);
         })
@@ -529,34 +543,69 @@ const handleChangeEnd = (selectedDate:Date) => {
         .format('YYYY-MM-DD')
     }
 
-    const [startDate, setStartDate] = useState(toUtcIso8601str(moment()))
-    const [endDate, setEndDate] = useState(toUtcIso8601str(moment()))
+    const [startDate, setStartDate] = useState<Date>()
+    const [endDate, setEndDate] = useState<Date>()
+
+    console.log(startDate)
 
     return (
         <>
         <Header />
-        <Body>
+
+        <SDiv>
         <h2>TODOリスト作成</h2>
-        <SForm onSubmit={doSubmit}>
-            <DatePicker
-                className="test"
-                dateFormat="yyyy-MM-dd"
-                locale="ja"
-                selected={moment(startDate).toDate()}
-                selectsStart
-                startDate={moment(startDate).toDate()}
-                onChange={handleChangeStart}
-            />
-            <DatePicker
-                dateFormat="yyyy-MM-dd"
-                locale="ja"
-                selected={moment(endDate).toDate()}
-                selectsEnd
-                endDate={moment(endDate).toDate()}
-                onChange={handleChangeEnd}
-            />
-            <SInput type={"text"} value={list} placeholder={"やること"} onChange={doList}/><br></br>
-            <SSelect onChange={doLife} value={life}>
+            <form className="customform" onSubmit={doSubmit}>
+
+            <div className="datepos">
+            {startDate ?  
+                <DatePicker
+                    className="datepicker"
+                    dateFormat="yyyy-MM-dd"
+                    locale="ja"
+                    selected={moment(startDate).toDate()}
+                    selectsStart
+                    startDate={moment(startDate).toDate()}
+                    onChange={handleChangeStart}
+                />
+                :
+                <DatePicker
+                    className="datepicker"
+                    dateFormat="yyyy-MM-dd"
+                    locale="ja"
+                    selectsStart
+                    startDate={moment(startDate).toDate()}
+                    onChange={handleChangeStart}
+                    placeholderText="開始日"
+                />
+            }
+
+            {endDate ? 
+                <DatePicker
+                    className="datepicker"
+                    dateFormat="yyyy-MM-dd"
+                    locale="ja"
+                    selected={moment(endDate).toDate()}
+                    selectsEnd
+                    endDate={moment(endDate).toDate()}
+                    onChange={handleChangeEnd}
+                />
+                :
+                <DatePicker
+                    className="datepicker"
+                    dateFormat="yyyy-MM-dd"
+                    locale="ja"
+                    selectsEnd
+                    endDate={moment(endDate).toDate()}
+                    onChange={handleChangeEnd}
+                    placeholderText="期日"
+                />
+            }
+            </div>
+
+            <div className="inputpos">
+            <br></br>
+            <label>TODO内容入力<span className="todolabel">(必須)</span>:</label><input className="custominput" type={"text"} value={list} onChange={doList}/>
+            <label>&emsp;項目を選択:</label><select className="customselect" onChange={doLife} value={life}>
                 <option value="none">none</option>
                 <option value="部屋探し・入居">部屋探し・入居</option>
                 <option value="入居前後の手続き">入居前後の手続き</option>
@@ -564,15 +613,21 @@ const handleChangeEnd = (selectedDate:Date) => {
                 <option value="掃除">掃除</option>
                 <option value="料理">料理</option>
                 <option value="洗濯">洗濯</option>
-            </SSelect><br></br>
-            <SButton type={"submit"}>リスト作成</SButton><br></br>
-            <SInput type={"text"} placeholder={"検索内容"} onChange={doSearch}/><SButton type={"button"} onClick={doDelete}>削除</SButton>
-        </SForm>
-        </Body>
+            </select>
+            &emsp;&emsp;<button className="custombutton" type={"submit"}>リスト作成</button><br></br><br></br><br></br>
+            <div className="search">
+            <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+            </div>
+            </div>
+
+            </form>
+        </SDiv>
+
                     <STable>
                     <thead className="thead">
                         <tr className="tr">
-                        <td className="check"><SCheck type={"checkbox"} onChange={doAllcheck}/></td>
+                        <td className="check"><input type="checkbox" onChange={doAllcheck}/></td>
                         <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
                         <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
                         <td className="life" scope="col">項目
@@ -591,6 +646,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                         </tr>
                     </thead>
                     </STable>
+
             {todos.filter((todos:Todo)=>{
                 if(todos.life.includes(selectlife)) {
                     return todos;
@@ -605,11 +661,10 @@ const handleChangeEnd = (selectedDate:Date) => {
                 }
             }).map((todo:Todo,key:number)=>{
                 return (
-                <Body key={key}>
-                <STable>
+                <STable key={key}>
                     <tbody className="tbody">
                         <tr className="tr">
-                            <th className="txt_check"><SCheck value={todo.id} id="check" checked={checkdata[todo.id]} type={"checkbox"} onChange={doCheck} ref={domRef}/></th>
+                            <th className="txt_check"><input value={todo.id} id="check" checked={checkdata[todo.id]} type="checkbox" onChange={doCheck} /></th>
                             <td data-label="開始日" className="txt_start">{todo.startdate}</td>
                             <td data-label="期日" className="txt_due">{todo.duedate}</td>
                             <td data-label="手続き内容" className="txt_life">{todo.life}</td>
@@ -617,7 +672,6 @@ const handleChangeEnd = (selectedDate:Date) => {
                         </tr>
                     </tbody>
                 </STable>
-                </Body>
                 )
             })}
         </>

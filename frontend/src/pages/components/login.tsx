@@ -4,78 +4,78 @@ import React, {useState,useEffect,useContext} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 
+const SDiv = styled.div`
 
-const SBody = styled.div`
-body {
-    margin: 0;
+.login-page {
+    width: 360px;
+    padding: 8% 0 0;
+    margin: auto;
 }
 
-
-p {
-    margin: 0;
+.validation {
+    font-size:12px;
+    color:red;
+    float:right;
 }
 
-a {
-    color: inherit;
+.form {
+    position: relative;
+    z-index: 1;
+    background: #FFFFFF;
+    max-width: 360px;
+    margin: 0 auto 100px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.form input {
+    font-family: "Roboto", sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin-top: 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.form button {
+    font-family: "Roboto", sans-serif;
+    text-transform: uppercase;
+    outline: 0;
+    background: #2C7CFF;
+    width: 100%;
+    border: 0;
+    padding: 15px;
+    margin-top:15px;
+    color: #FFFFFF;
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+.form button:hover,.form button:active,.form button:focus {
+    background: #005FFF;
+}
+.form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.form .message a {
+    color: #4CAF50;
     text-decoration: none;
 }
-
-ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.form .register-form {
+    display: none;
 }
+
 `
 
-const SForm = styled.div`
-position: absolute;
-top: 50%; /*親要素を起点に上から50%*/
-left: 50%;  /*親要素を起点に左から50%*/
-transform: translateY(-50%) translateX(-50%); /*要素の大きさの半分ずつを戻す*/
--webkit-transform: translateY(-50%) translateX(-50%);
-`;
-
-const SFormHead = styled.div`
-    margin-bottom: 5px;
-    font-weight: bold;
-`;
-
-const SFormInput = styled.input`
-width: 120%; /*親要素いっぱい広げる*/
-padding: 10px 15px; /*ボックスを大きくする*/
-font-size: 16px;
-border-radius: 3px; /*ボックス角の丸み*/
-border: 2px solid #ddd; /*枠線*/
-box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-`;
-
-const SButton = styled.button`
-font-weight: 700;
-padding: 0.5rem 1.5rem;
-cursor: pointer;
-
-text-align: center;
-vertical-align: middle;
-text-decoration: none;
-letter-spacing: 0.1em;
-border-radius: 0.5rem;
-
-border: 1px solid #ccc;
-background: #f1e767;
-background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
-background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
-background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
--webkit-box-shadow: inset 1px 1px 1px #fff;
-box-shadow: inset 1px 1px 1px #fff;
-    &:hover {
-    background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
-    background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
-    background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
-    }
-`
 
 export const Login = ()=>{
-    const [loginStatus,setLoginStatus] = useState("未ログイン");
+    const [validationName,setValidationName] = useState("");
+    const [validationPass,setValidationPass] = useState("");
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [getenv,setGetenv] = useState("");
@@ -105,21 +105,18 @@ export const Login = ()=>{
         }
     },[])
 
-
-   // useEffect(()=>{
-   //     axios.get(getenv+"/logged_in" as string,
-   //     {withCredentials:true})
-   //     .then(res => {
-   //         if(res.data.logged_in&&loginStatus==="未ログイン") {
-   //             setLoginStatus("ログイン済み");
-   //         }else if (!res.data.logged_in&&loginStatus==="ログイン済み") {
-   //            setLoginStatus("未ログイン");
-   //         }
-   //     }).catch(error => {
-   //         console.log("ログインエラー",error)
-   //     })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-   // },[getenv]);
+    useEffect(()=>{
+        if(username.trim()==="") {
+            setValidationName("ユーザ名が空欄です")
+        }else {
+            setValidationName("")
+        }
+        if(password.trim()==="") {
+            setValidationPass("パスワードが空欄です")
+        }else {
+            setValidationPass("")
+        }
+    },[username,password])
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -129,8 +126,9 @@ export const Login = ()=>{
         setPassword(event.target.value);
     }
 
-    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
+    const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
+        if(validationName||validationPass) return
         axios.post(getenv+"/login" as string,
             {
                 user: {
@@ -146,7 +144,6 @@ export const Login = ()=>{
                     pathname:"/components/mainpage",
                     query:{state:getenv}
                     });
-                setLoginStatus("ログイン済み");
             }
         }).catch(error => {
             console.log("registration error",error)
@@ -155,25 +152,19 @@ export const Login = ()=>{
         }
 
     return (
-        <SBody>
-        <SForm>
-            <h1>depp</h1>
-            <h3>ログイン状態:{loginStatus}</h3>
-                <SFormHead>ユーザ名</SFormHead>
-                <SFormInput type={"text"} onChange={doName} />
-                <SFormHead>パスワード</SFormHead>
-                <SFormInput type={"text"} onChange={doPass} /><br></br>
-                <SButton type={"submit"} onClick={doSubmit}>ログイン</SButton><br></br>
-
-                <Link href="/components/mainpage">
-                    <a>ゲストユーザの方はこちら</a>
-                </Link>
-                <br />
-                <Link href="/components/newaccount">
-                    <a>新しくアカウントを作成する</a>
-                </Link>
-        </SForm>
-        </SBody>
+        <SDiv>
+        <div className="login-page">
+        <div className="form">
+        <form className="login-form" onSubmit={doSubmit}>
+            <input type="text" onChange={doName} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
+            <input type="password" onChange={doPass} placeholder="パスワード"/><span className="validation">{validationPass}</span>
+            <button type="submit">ログイン</button>
+            <Link href="/components/newaccount"><p className="message"><a href="#">新規登録はこちら</a></p></Link>
+            <Link href="/components/mainpage"><p className="message"><a href="#">ゲストユーザの方はこちら</a></p></Link>
+            </form>
+        </div>
+        </div>
+        </SDiv>
     )
 }
 
