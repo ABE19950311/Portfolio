@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Link from "next/link"
-import React, {useState,useEffect} from "react"
+import React, {useState,useEffect,useRef,useCallback} from "react"
 import axios from "../../csrf-axios"
 import Router, {useRouter} from "next/router"
 
@@ -69,6 +69,7 @@ export const Newaccount = ()=>{
     const [passwordconfirm,setPasswordconfirm] = useState("");
     const [getenv,setGetenv] = useState("");
     const router = useRouter();
+    const processtimer = useRef<NodeJS.Timer|null>(null);
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
@@ -117,8 +118,21 @@ export const Newaccount = ()=>{
         setPasswordconfirm(event.target.value);
     }
 
+    const debounce = (event:React.MouseEvent<HTMLFormElement>)=>{
+        event.preventDefault();
+        if(processtimer.current) clearTimeout(processtimer.current)
+
+        processtimer.current = setTimeout(()=>{
+            doSubmit(event)
+        },2000)
+    }
+
+    console.log(processtimer.current)
+
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
+        
+    
         if(validationName||validationPass||validationPassfilm) return
         axios.post(getenv+"/signup" as string,
             {
@@ -129,19 +143,21 @@ export const Newaccount = ()=>{
                 }
             },
         ).then(res => {
+            console.log(res.data)
             if(res.data.status==="created") {
                 router.push("/components/login");
             }
         }).catch(error => {
             console.log("registration error",error)
         })
+
         }
 
     return (
         <SDiv>
         <div className="login-page">
         <div className="form">
-        <form className="login-form" onSubmit={doSubmit}>
+        <form className="login-form" onSubmit={debounce}>
             <input type="text" onChange={doName} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
             <input type="password" onChange={doPass} placeholder="パスワード"/><span className="validation">{validationPass}</span>
             <input type="password" onChange={doPassconfirm} placeholder="パスワード再入力"/><span className="validation">{validationPassfilm}</span>

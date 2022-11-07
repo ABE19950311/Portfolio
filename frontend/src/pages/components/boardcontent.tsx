@@ -190,7 +190,8 @@ export const Boardcontent = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault()
-
+        
+        if(!post) return
         axios.post(getenv+"/posts",
         {
             posts: {
