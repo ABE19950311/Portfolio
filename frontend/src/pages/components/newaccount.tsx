@@ -88,12 +88,15 @@ export const Newaccount = ()=>{
     useEffect(()=>{
         if(password.trim()!==""&&passwordconfirm.trim()!==""&&password.trim()!==passwordconfirm.trim()) {
             setValidationPass("パスワードが一致しません")
+        }else if(validationPass==="パスワードが一致しません"&&passwordconfirm!=="") {
+            setValidationPass("")
         }else if(password.trim()!=="") {
             setValidationPass("")
         }
         if(passwordconfirm.trim()!=="") {
             setValidationPassfilm("")
         }
+         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[password,passwordconfirm])
 
     console.log(password)

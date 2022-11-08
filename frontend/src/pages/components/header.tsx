@@ -137,6 +137,7 @@ export const Header = ()=>{
         })
         router.push({
             pathname:"/components/mypage",
+            query:{state:getenv}
             })
     }
 

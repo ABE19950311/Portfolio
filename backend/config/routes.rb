@@ -3,9 +3,14 @@ Rails.application.routes.draw do
   post "/signup", to: "registrations#signup"
   post "/login", to: "sessions#login"
   delete "/logout", to: "sessions#logout"
-  get "/logged_in", to: "sessions#logged_in?"
+  post "/usercheck", to: "sessions#usercheck"
   get "/sessions", to: "sessions#show"
   get "/sessionid", to: "sessions#sessionid"
+  get "/myboards", to: "boards#myboard"
+  get "/myposts", to: "posts#mypost"
+  get "/myhearts", to: "hearts#myheart"
+  get "/sessionname", to:"sessions#sessionname"
+  patch "/newpass", to:"registrations#update"
 
   resources :todos
   resources :boards

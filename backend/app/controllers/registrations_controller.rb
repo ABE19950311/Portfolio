@@ -15,9 +15,16 @@ class RegistrationsController < ApplicationController
         end
     end
 
+    def update
+        @updateuser = User.find_by(username: registrations_params[:username])
+        @updateuser.update(password: registrations_params[:password], password_confirmation: registrations_params[:password_confirmation])
+        render json:@updateuser
+    end
+
     private
     
     def registrations_params
         params.require(:user).permit(:username, :password, :password_confirmation)
     end
+
 end

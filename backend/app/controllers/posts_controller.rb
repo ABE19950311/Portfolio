@@ -5,6 +5,12 @@ class PostsController < ApplicationController
         render json:@post
     end
 
+    def mypost
+        @user_id = User.find_by(username: session[:user_name]).id
+        @post = Post.where(user_id: @user_id)
+        render json:@post
+    end
+
     def create
         @post = Post.create(post_params)
         render json:@post

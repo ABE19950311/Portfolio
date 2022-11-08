@@ -5,6 +5,12 @@ class HeartsController < ApplicationController
         render json:@heart
     end
 
+    def myheart
+        @user_id = User.find_by(username: session[:user_name]).id
+        @heart = Heart.where(user_id: @user_id)
+        render json:@heart
+    end
+
     def create
         @heartidcheck = Heart.where(post_id: heart_params[:post_id], user_id: heart_params[:user_id]).exists?
         if @heartidcheck

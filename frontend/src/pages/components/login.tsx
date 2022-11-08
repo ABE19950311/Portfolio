@@ -132,22 +132,24 @@ export const Login = ()=>{
             setValidationPass("パスワードが空欄です")
         }
 
-        if(validationName||validationPass) return
+        if(validationName||validationPass||username.trim()===""||password.trim()==="") return
         axios.post(getenv+"/login" as string,
             {
                 user: {
                     username:username,
                     password:password
                 }
-            },
-            {withCredentials: true}
-        ).then(res => {
-            console.log("login response: ", res.data.logged_in)
+            }).then(res => {
             if(res.data.logged_in) {
                 router.push({
                     pathname:"/components/mainpage",
                     query:{state:getenv}
                     });
+            }else if(!res.data.logged_in) {
+                    setValidationName("ユーザ名またはパスワードが一致しません")
+                    setValidationPass("ユーザ名またはパスワードが一致しません")
+                    setUsername("")
+                    setPassword("")
             }
         }).catch(error => {
             console.log("registration error",error)
@@ -160,8 +162,8 @@ export const Login = ()=>{
         <div className="login-page">
         <div className="form">
         <form className="login-form" onSubmit={doSubmit}>
-            <input type="text" onChange={doName} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
-            <input type="password" onChange={doPass} placeholder="パスワード"/><span className="validation">{validationPass}</span>
+            <input type="text" onChange={doName}  value={username} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
+            <input type="password" onChange={doPass} value={password} placeholder="パスワード"/><span className="validation">{validationPass}</span>
             <button type="submit">ログイン</button>
             <Link href="/components/newaccount"><p className="message"><a href="#">新規登録はこちら</a></p></Link>
             <Link href="/components/mainpage"><p className="message"><a href="#">ゲストユーザの方はこちら</a></p></Link>
