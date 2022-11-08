@@ -147,8 +147,8 @@ export const Header = ()=>{
                 <Link href="/components/mainpage"><SItem><a href="#">トップページへ戻る</a></SItem></Link>
                 <Sbtn onClick={mypage}><a href="#">マイページ</a></Sbtn>
                 <Link href="/mappage"><SItem><a href="#">ハザードマップ</a></SItem></Link>
-                <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
+                <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Sbtn onClick={board}><a href="#">掲示板</a></Sbtn>
                 <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>

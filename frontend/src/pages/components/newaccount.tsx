@@ -80,31 +80,24 @@ export const Newaccount = ()=>{
     },[])
 
     useEffect(()=>{
-        if(username.trim()==="") {
-            setValidationName("ユーザ名が空欄です")
-        }else {
+        if(username.trim()!=="") {
             setValidationName("")
         }
     },[username])
 
     useEffect(()=>{
-        if(password.trim()===""&&passwordconfirm.trim()==="") {
-            setValidationPass("パスワードが空欄です")
-            setValidationPassfilm("パスワードが空欄です")
-        }else if(password.trim()!==""&&passwordconfirm.trim()==="") {
-            setValidationPass("")
-            setValidationPassfilm("パスワードが空欄です")
-        }else if(password.trim()===""&&passwordconfirm.trim()!=="") {
-            setValidationPass("パスワードが空欄です")
-            setValidationPassfilm("")
-        }else if(password.trim()!==""&&passwordconfirm.trim()!==""&&password.trim()!==passwordconfirm.trim()) {
+        if(password.trim()!==""&&passwordconfirm.trim()!==""&&password.trim()!==passwordconfirm.trim()) {
             setValidationPass("パスワードが一致しません")
-            setValidationPassfilm("")
-        }else {
+        }else if(password.trim()!=="") {
             setValidationPass("")
+        }
+        if(passwordconfirm.trim()!=="") {
             setValidationPassfilm("")
         }
     },[password,passwordconfirm])
+
+    console.log(password)
+    console.log(passwordconfirm)
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -124,14 +117,25 @@ export const Newaccount = ()=>{
 
         processtimer.current = setTimeout(()=>{
             doSubmit(event)
-        },2000)
+        },1000)
     }
-
-    console.log(processtimer.current)
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
-        
+
+        if(username.trim()==="") {
+            setValidationName("ユーザ名が空欄です")
+        }
+        if(password.trim()===""&&passwordconfirm.trim()==="") {
+            setValidationPass("パスワードが空欄です")
+            setValidationPassfilm("パスワードが空欄です")
+        }else if(password.trim()!==""&&passwordconfirm.trim()==="") {
+            setValidationPass("")
+            setValidationPassfilm("パスワードが空欄です")
+        }else if(password.trim()===""&&passwordconfirm.trim()!=="") {
+            setValidationPass("パスワードが空欄です")
+            setValidationPassfilm("")
+        }
     
         if(validationName||validationPass||validationPassfilm) return
         axios.post(getenv+"/signup" as string,

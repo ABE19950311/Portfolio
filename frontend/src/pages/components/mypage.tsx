@@ -7,6 +7,7 @@ import Layout from "./layout"
 import moment from "moment"
 
 export const Mypage = ()=>{
+
     return(
         <Layout>
         <><h1>kouzinow</h1></>

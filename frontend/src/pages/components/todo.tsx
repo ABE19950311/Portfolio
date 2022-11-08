@@ -51,11 +51,7 @@ h2{
     position: absolute;
     color: #333;
     font-size: 2rem;
-    top: 50%;
-    left: 51%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    -ms-transform: translate(-50%, -50%);
+    transform: translate(220px,5px);
 }
 
 .datepicker {
@@ -616,8 +612,8 @@ const handleChangeEnd = (selectedDate:Date) => {
             </select>
             &emsp;&emsp;<button className="custombutton" type={"submit"}>リスト作成</button><br></br><br></br><br></br>
             <div className="search">
-            <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
-            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+            <button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+            &emsp;&emsp;<MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
             </div>
             </div>
 

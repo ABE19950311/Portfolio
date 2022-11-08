@@ -6,6 +6,7 @@ import Layout from "./layout"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import Header from "./header"
+import Link from "next/link"
 
 
 type Post = {
@@ -39,7 +40,15 @@ const SForm = styled.form`
     label {
         margin-bottom:3px;
         display: inline-block;
-        width: 100px;
+        width: 120px;
+    }
+
+    .titlelabel {
+        color:red;
+    }
+
+    .postlabel {
+        transform: translate(0px,-70px)
     }
 
     input,textarea {
@@ -195,7 +204,7 @@ export const Boardcontent = ()=>{
         axios.post(getenv+"/posts",
         {
             posts: {
-                username:name,
+                username:name ? name:"名無しさん",
                 postcontent:post,
                 board_id:board_id,
                 user_id:user_id
@@ -210,14 +219,21 @@ export const Boardcontent = ()=>{
         })
     }
 
+    const doBoard = ()=>{
+        router.push({
+            pathname:"/components/board",
+            query:{state:getenv}
+        })
+    }
+
     return (
         <>
             <Header />
             <Container>
             <SForm onSubmit={doSubmit}>
             <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-            <label></label><textarea rows={5} cols={70} value={post} onChange={doPost}></textarea><br></br>
-            <label></label><button type="submit">返信する</button>
+            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
+            <label></label><button type="submit">返信する</button><button onClick={doBoard}>掲示板へ戻る</button>
             </SForm>
             <SDiv>
                 <span className="content">投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</span>

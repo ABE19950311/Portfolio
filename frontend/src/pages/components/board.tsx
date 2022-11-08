@@ -19,6 +19,7 @@ const SForm = styled.form`
     padding-top:30px;
     padding-bottom:10px;
     padding-left:25%;
+    position:relative;
 
     input {
         width:200px;
@@ -27,7 +28,16 @@ const SForm = styled.form`
     label {
         margin-bottom:3px;
         display: inline-block;
-        width: 100px;
+        width: 120px;
+        top: 50%;
+    }
+
+    .titlelabel {
+        color:red;
+    }
+
+    .postlabel {
+        transform: translate(0px,-70px)
     }
 
     input,textarea {
@@ -75,7 +85,7 @@ export const Board = ()=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag])
+    },[flag,getenv,router])
 
     useEffect(()=>{
         axios.get(getenv+"/sessionid")
@@ -85,7 +95,7 @@ export const Board = ()=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[getenv,router])
 
     const doName = (event:{target:HTMLInputElement})=>{
         setName(event.target.value)
@@ -102,6 +112,7 @@ export const Board = ()=>{
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
         
+        if(!title||!content) return
         axios.post(getenv+"/boards",
         {
             boards:{
@@ -141,8 +152,8 @@ export const Board = ()=>{
         <Header />
         <SForm onSubmit={doSubmit}>
         <label>名前:</label><input type="text" value={name} onChange={doName}/><br></br>
-        <label>タイトル:</label><input type="text" value={title} onChange={doTitle}/><br></br>
-        <label></label><textarea rows={8} cols={70} placeholder={"投稿内容"} value={content} onChange={doContent}/><br></br>
+        <label>タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
+        <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={content} onChange={doContent}/><br></br>
         <label></label><button type="submit">投稿する</button>
         </SForm>
             {board.map((board:Board,key:number)=>{
