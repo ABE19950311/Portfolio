@@ -99,9 +99,6 @@ export const Newaccount = ()=>{
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[password,passwordconfirm])
 
-    console.log(password)
-    console.log(passwordconfirm)
-
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
     }
@@ -140,7 +137,7 @@ export const Newaccount = ()=>{
             setValidationPassfilm("")
         }
     
-        if(validationName||validationPass||validationPassfilm) return
+        if(username.trim()===""||password.trim()===""||passwordconfirm.trim()==="") return
         axios.post(getenv+"/signup" as string,
             {
                 user: {

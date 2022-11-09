@@ -132,6 +132,13 @@ export const Passchange = ()=>{
         },1000)
     }
 
+    const doMypage =()=>{
+        router.push({
+            pathname:"/components/mypage",
+            query:{state:getenv}
+            })
+    }
+
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
 
@@ -149,7 +156,7 @@ export const Passchange = ()=>{
             setValidationNewPassfilm("パスワードが空欄です")
         }
 
-        if(validationPass||password.trim()===""||passwordconfirm.trim()==="") return
+        if(validationPass||oldpass.trim()===""||password.trim()===""||passwordconfirm.trim()==="") return
 
         axios.post(getenv+"/usercheck",
         {
@@ -191,6 +198,7 @@ export const Passchange = ()=>{
             <input type="password" onChange={doNewPass} placeholder="新しいパスワード"/><span className="validation">{validationNewPass}</span>
             <input type="password" onChange={doNewPassconfirm} placeholder="新しいパスワード再入力"/><span className="validation">{validationNewPassfilm}</span>
             <button type="submit">パスワードを変更する</button>
+            <button onClick={doMypage}>マイページへ戻る</button>
             </form>
         </div>
         </div>

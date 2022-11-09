@@ -207,7 +207,7 @@ export const Boardcontent = ()=>{
                 username:name ? name:"名無しさん",
                 postcontent:post,
                 board_id:board_id,
-                user_id:user_id
+                user_id:sessionid
             }
         }).then(res=>{
             console.log(res.data)
@@ -247,7 +247,7 @@ export const Boardcontent = ()=>{
             ).map((post:Post,key:number)=>{
                 return (
                         <SDiv key={key}>
-                        <span className="content" onClick={()=>setcolorflag(post.id)} >投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
+                        <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                         <p className="post">{post.postcontent}</p>
                         </SDiv>
                     )

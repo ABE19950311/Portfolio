@@ -8,7 +8,7 @@ import Image from 'next/image'
 
 
 const SHeader = styled.div`
-    background: #f0ffff;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -146,11 +146,11 @@ export const Header = ()=>{
             <SLogo><Image src="/logo.png" height="100px" width="100px" alt="logo"/></SLogo>
             <SMenu>
                 <Link href="/components/mainpage"><SItem><a href="#">トップページへ戻る</a></SItem></Link>
-                <Sbtn onClick={mypage}><a href="#">マイページ</a></Sbtn>
                 <Link href="/mappage"><SItem><a href="#">ハザードマップ</a></SItem></Link>
                 <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Sbtn onClick={board}><a href="#">掲示板</a></Sbtn>
+                <Sbtn onClick={mypage}><a href="#">マイページ</a></Sbtn>
                 <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
             </SMenu>
         </SHeader>

@@ -15,6 +15,81 @@ type Todo = {
     duedate:String
 }
 
+type Board = {
+    id:number,
+    user_id:number,
+    created_at:string,
+    posttitle:string,
+    postcontent:string,
+    username:string
+}
+
+type Post = {
+    id:number,
+    board_id:number,
+    user_id:number,
+    username:string,
+    postcontent:string,
+    created_at:string
+}
+
+type Heart = {
+    id:number,
+    post_id:number,
+    user_id:number
+}
+
+const SDiv = styled.div`
+
+    .topmain {
+        display:flex;
+        justify-content:space-between;
+
+        h1 {
+            margin-left:30px;
+        }
+
+        button {
+            margin:20px 50px 0 0;
+            padding:10px 10px;
+        }
+    }
+
+    .main {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px 20px;
+
+        .content {
+            width:30%;
+            text-align: center;
+
+            table {
+                margin-left:20px;
+                text-align: center;
+                border-collapse: collapse;
+            }
+            caption {
+                margin-top:20px;
+                font-size:18px;
+                background-color: lightyellow;
+                border: solid 1px #333;
+            }
+            th {
+                padding: 10px;
+                background: #e3faf8;
+                border: solid 1px #748ca5;
+            }
+            td {
+                padding: 10px;
+                border: solid 1px #748ca5;
+                background-color:white;
+            }
+        }
+    }
+
+`
+
 export const Mypage = ()=>{
     const [todo,setTodo] = useState([])
     const [board,setBoard] = useState([])
@@ -26,12 +101,6 @@ export const Mypage = ()=>{
 
     const getenv = router.query.state as unknown as string
 
-    console.log(sessionname)
-    console.log(todo)
-    console.log(board)
-    console.log(post)
-    console.log(heart)
-    
     useEffect(()=>{
         axios.get(getenv+"/sessionid")
         .then(res=>{
@@ -78,18 +147,68 @@ export const Mypage = ()=>{
             })
     }
 
-
     return(
+        <>
         <Layout>
-        <h1>ようこそ！{sessionname}さん！</h1><h1 onClick={passChange}>パスワードを変更する</h1>
-        {todo.map((todo:Todo)=>{
+        <SDiv>
+            <div className="topmain">
+            <div><h1>{sessionname}様のマイページ</h1></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+            </div>
+
+        <div className="main">
+
+            <div className="content">
+            <table border={1}>
+            <caption>作成したTODOリスト</caption>
+                <tr>
+                    <th>開始日</th><th>期日</th><th>項目</th><th>TODO</th>
+                </tr>
+        {todo.map((todo:Todo,key:number)=>{
             return(
-                <>
-                <h3>{todo.list}</h3><h3>{todo.life}</h3><h3>{todo.startdate}</h3><h3>{todo.duedate}</h3>
-                </>
+                <tr key={key}> 
+                    <td>{todo.startdate}</td><td>{todo.duedate}</td><td>{todo.life}</td><td>{todo.list}</td>
+                </tr>
             )
         })}
+            </table>
+            </div>
+
+            <div className="content">
+            <table border={1}>
+                <caption>作成した掲示板</caption>
+                <tr>
+                    <th>入力したユーザ名</th><th>タイトル</th><th>内容</th><th>作成日時</th>
+                </tr>
+        {board.map((board:Board,key:number)=>{
+            return(
+                <tr key={key}>
+                    <td>{board.username}</td><td>{board.posttitle}</td><td>{board.postcontent}</td><td>{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                </tr>
+            )
+        })}
+            </table>
+            </div>
+
+            <div className="content">
+                <table border={1}>
+                    <caption>掲示板に投稿した内容</caption>
+                    <tr>
+                        <th>入力したユーザ名</th><th>投稿内容</th><th>投稿日時</th>
+                    </tr>
+        {post.map((post:Post,key:number)=>{
+            return(
+                <tr key={key}>
+                    <td>{post.username}</td><td>{post.postcontent}</td><td>{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                </tr>
+            )
+        })}
+                </table>
+            </div>
+
+        </div>
+        </SDiv>
         </Layout>
+        </>
     )
 }
 
