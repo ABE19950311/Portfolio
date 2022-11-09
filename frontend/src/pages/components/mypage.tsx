@@ -101,6 +101,8 @@ export const Mypage = ()=>{
 
     const getenv = router.query.state as unknown as string
 
+    console.log(sessionid)
+
     useEffect(()=>{
         axios.get(getenv+"/sessionid")
         .then(res=>{
