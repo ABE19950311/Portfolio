@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   resources :posts
   resources :hearts
   resources :mypages
+  resources :lifeposts
 
   get "/health_check", to: "health_check#health_check"
 end

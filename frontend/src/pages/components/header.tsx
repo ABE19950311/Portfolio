@@ -124,6 +124,13 @@ export const Header = ()=>{
             })
     }
 
+    const lifepost =()=>{
+        router.push({
+            pathname:"/components/lifepost",
+            query:{state:getenv}
+            })
+    }
+
     const mypage = ()=>{
         axios.post(getenv+"/mypages",
             {
@@ -147,6 +154,7 @@ export const Header = ()=>{
             <SMenu>
                 <Link href="/components/mainpage"><SItem><a href="#">トップページへ戻る</a></SItem></Link>
                 <Link href="/mappage"><SItem><a href="#">ハザードマップ</a></SItem></Link>
+                <Sbtn onClick={lifepost}><a href="#">生活情報を投稿する</a></Sbtn>
                 <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
                 <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
                 <Sbtn onClick={board}><a href="#">掲示板</a></Sbtn>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_06_102421) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_09_112216) do
   create_table "boards", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id"
     t.string "posttitle", null: false
@@ -28,6 +28,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_102421) do
     t.datetime "updated_at", null: false
     t.index ["post_id"], name: "index_hearts_on_post_id"
     t.index ["user_id"], name: "index_hearts_on_user_id"
+  end
+
+  create_table "lifeposts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "title", null: false
+    t.string "lifeitem", null: false
+    t.string "headline", null: false
+    t.string "content", null: false
+    t.string "detail", null: false
+    t.string "checkcontent"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_lifeposts_on_user_id"
   end
 
   create_table "mypages", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -69,6 +82,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_06_102421) do
   add_foreign_key "boards", "users"
   add_foreign_key "hearts", "posts"
   add_foreign_key "hearts", "users"
+  add_foreign_key "lifeposts", "users"
   add_foreign_key "mypages", "users"
   add_foreign_key "posts", "boards"
   add_foreign_key "posts", "users"
