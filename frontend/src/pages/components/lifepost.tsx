@@ -13,8 +13,8 @@ export const Lifepost =()=>{
     const [contnet,setContent] = useState({})
     const [detail,setDetail] = useState({})
     const [checkcontent,setCheckcontent] = useState("")
-    const [formcount,setFormcount] = useState(1)
-    const [listcount,setListcount] = useState(1)
+    const [formcount,setFormcount] = useState<any[]>([1])
+    const [listcount,setListcount] = useState<number[]>([])
 
     const router = useRouter()
 
@@ -33,11 +33,23 @@ export const Lifepost =()=>{
     }
 
     const doFormplus = ()=>{
-        setFormcount((formcount)=>formcount+1)
+        setFormcount((formcount)=>([
+            ...formcount,
+            1
+        ]))
     }
 
-    const doListplus = ()=>{
-        setListcount((listcount)=>listcount+1)
+    const doFormminus = ()=>{
+        const length = formcount.length
+        const count =formcount.splice(1,length-1)
+        setFormcount(count)
+    }
+
+    const doListplus = (id:number)=>{
+        setListcount((listcount)=>([
+            ...listcount,
+            id
+        ]))
     }
 
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
@@ -65,8 +77,7 @@ export const Lifepost =()=>{
 
     }
 
-    console.log(detail)
-    console.log(listcount)
+    console.log(formcount)
 
 
     return (
@@ -86,33 +97,63 @@ export const Lifepost =()=>{
                 <label>見出しの文章(必須):</label><input onChange={doHeadline} type={"text"}/>
                 <br></br>
                 <br></br>
-                <button onClick={doFormplus}>入力項目を増やす</button>
+                <button onClick={doFormplus}>入力項目を増やす</button><button onClick={doFormminus}>入力項目を減らす</button>
 
-                {(()=>{
-                    const form = []
-    
-                    for(let i=0;i<formcount;i++) {
+                {formcount.map((count:number,key:number)=>{
+                    return (
+                        <div className="plusform">
+                            <label>{key+1}つ目の目次(必須):</label><input max={key+1} onChange={doContent} type={"text"}/>
+                            <br></br>
+                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
+                            <br></br>
+                            <button onClick={()=>doListplus(1)}>リスト項目を増やす</button>
+                        </div>   
+                    )
+                })}
+
+                
+
+                {/* {(()=>{
+                    const form:any[] = [""]
+                    const listarray:any = {}
+                    const list:any[] = []
+                    for(let i=1;i<3;++i) {
+                        console.log(i)
                         form.push(
-                            <div className="plusform">
-                            <label>{i+1}つ目の目次(必須):</label><input max={i+1} onChange={doContent} type={"text"}/>
-                            <br></br>
-                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={i+1} onChange={doDetail} />
-                            <br></br>
-                            <button onClick={doListplus}>リスト項目を増やす</button>
-                            
-                            {(()=>{
-                                const list = []
-                                for(let t=0;t<listcount;t++) {
-                                    list.push(<><label>チェックリスト:</label><input type={"text"}/></>)
-                                }
-                                return list
-                            })()}
+        
 
-                            </div>
+                            
+                            {list.map((lists:any,key:number)=>{
+                                    console.log(i)
+                                    return (
+                                        lists[i-1]
+                                    )
+                                })}
+        
+                        
                         )
+                        {(()=>{
+                            listcount.forEach((number:number,key:number)=>{
+                                if(i==number||number==0) {
+                                    list.push({[number]:<h1>test{number}</h1>})
+                                }
+                            })
+                            
+                        })()}  
+                        // {(()=>{
+                        //     for(let k=0;k<listcount.length;k++) {
+                        //         let count = listcount[k]
+                        //         listarray[count] = listarray[count] ? listarray[count]+1:1
+                        //     }
+                        //     for(let j=0;j<count;j++) {
+                        //         list.push(
+                        //             <><input /></>
+                        //         )
+                        //     }
+                        // })()}  
                     }
                     return form
-                })()}
+                })()} */}
 
                 <br></br>
                 <button type={"submit"}>送信する</button>
