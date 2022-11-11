@@ -14,7 +14,7 @@ export const Lifepost =()=>{
     const [detail,setDetail] = useState({})
     const [checkcontent,setCheckcontent] = useState("")
     const [formcount,setFormcount] = useState<any[]>([1])
-    const [listcount,setListcount] = useState<number[]>([])
+    const [list,setList] = useState<any[]>([])
 
     const router = useRouter()
 
@@ -46,10 +46,20 @@ export const Lifepost =()=>{
     }
 
     const doListplus = (id:number)=>{
-        setListcount((listcount)=>([
+        let list:any = {}
+        list[id] = <h1>test</h1>
+        setList((listcount)=>([
             ...listcount,
-            id
+            list
         ]))
+    }
+    
+    console.log(list)
+
+    const doListminus = (id:number)=>{
+        const del = list.find((list)=>list[id])
+        const dellist = list.filter((list)=>list!=del)
+        setList(dellist)
     }
 
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
@@ -77,9 +87,6 @@ export const Lifepost =()=>{
 
     }
 
-    console.log(formcount)
-
-
     return (
         <Layout>
             <form onSubmit={doSubmit}>
@@ -106,54 +113,16 @@ export const Lifepost =()=>{
                             <br></br>
                             <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
                             <br></br>
-                            <button onClick={()=>doListplus(1)}>リスト項目を増やす</button>
+                            <button onClick={()=>doListplus(key+1)}>リスト項目を増やす</button>
+                            <button onClick={()=>doListminus(key+1)}>リスト項目を減らす</button>
+                            {list.map((list:any,index:number)=>{
+                                return (
+                                    list[key+1]
+                                )
+                            })}
                         </div>   
                     )
                 })}
-
-                
-
-                {/* {(()=>{
-                    const form:any[] = [""]
-                    const listarray:any = {}
-                    const list:any[] = []
-                    for(let i=1;i<3;++i) {
-                        console.log(i)
-                        form.push(
-        
-
-                            
-                            {list.map((lists:any,key:number)=>{
-                                    console.log(i)
-                                    return (
-                                        lists[i-1]
-                                    )
-                                })}
-        
-                        
-                        )
-                        {(()=>{
-                            listcount.forEach((number:number,key:number)=>{
-                                if(i==number||number==0) {
-                                    list.push({[number]:<h1>test{number}</h1>})
-                                }
-                            })
-                            
-                        })()}  
-                        // {(()=>{
-                        //     for(let k=0;k<listcount.length;k++) {
-                        //         let count = listcount[k]
-                        //         listarray[count] = listarray[count] ? listarray[count]+1:1
-                        //     }
-                        //     for(let j=0;j<count;j++) {
-                        //         list.push(
-                        //             <><input /></>
-                        //         )
-                        //     }
-                        // })()}  
-                    }
-                    return form
-                })()} */}
 
                 <br></br>
                 <button type={"submit"}>送信する</button>
