@@ -15,11 +15,21 @@ export const Lifepost =()=>{
     const [checkcontent,setCheckcontent] = useState({})
     const [formcount,setFormcount] = useState<string[]>(["1"])
     const [list,setList] = useState<any[]>([])
-    const [filterdata,setFilterdata] = useState({})
+    const [filterdata,setFilterdata] = useState<string>("")
 
     const router = useRouter()
 
     const getenv = router.query.state as unknown as string
+
+    // useEffect(()=>{
+    //     console.log(filterdata)
+    //     const find = content.findIndex((content)=>content[filterdata])
+    //     console.log(find)
+    //     if(find==-1) return
+    //     content.splice(find,1)
+    //     console.log(content)
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // },[content,filterdata])
 
     console.log(title)
     console.log(lifeitem)
@@ -27,17 +37,6 @@ export const Lifepost =()=>{
     console.log(content)
     console.log(detail)
     console.log(checkcontent)
-
-    useEffect(()=>{
-        console.log(filterdata)
-        const find = content.find((content)=>content==filterdata)
-        console.log(find)
-        if(content.length>1) {
-        const filter = content.filter((content,index)=>content!=find)
-        console.log(filter)
-        setContent(filter)
-        }
-    },[filterdata])
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -83,20 +82,18 @@ export const Lifepost =()=>{
         const id = event.target.max
         const value= event.target.value
         const obj = {[id]:value}
-        setFilterdata(obj)
+        setFilterdata(id)
 
         setContent((content)=>([
             ...content,
             obj
         ]))
 
-        // const filter = content.filter((value,index,array)=>value.lastIndexOf(id)===index)
-        // console.log(filter)
-        // obj.push(json)
-        // obj.filter((obj)=>{
-        //     return obj.length==formcount.length
-        // })
-        // console.log(obj)
+        const find = content.findIndex((content)=>content[id])
+        console.log(find)
+        if(find==-1) return
+        content.splice(find,1)
+        console.log(content)
     }
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -154,7 +151,7 @@ export const Lifepost =()=>{
                             <button onClick={()=>doListminus(key+1)}>リスト項目を減らす</button>
                             {list.map((list:any,index:number)=>{
                                 return (
-                                    <ul>
+                                    <ul key={index}>
                                     {list[key+1]}
                                     </ul>
                                 )
