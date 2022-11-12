@@ -10,15 +10,34 @@ export const Lifepost =()=>{
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
     const [headline,setHeadline] = useState("")
-    const [contnet,setContent] = useState({})
+    const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState({})
-    const [checkcontent,setCheckcontent] = useState("")
-    const [formcount,setFormcount] = useState<any[]>([1])
+    const [checkcontent,setCheckcontent] = useState({})
+    const [formcount,setFormcount] = useState<string[]>(["1"])
     const [list,setList] = useState<any[]>([])
+    const [filterdata,setFilterdata] = useState({})
 
     const router = useRouter()
 
     const getenv = router.query.state as unknown as string
+
+    console.log(title)
+    console.log(lifeitem)
+    console.log(headline)
+    console.log(content)
+    console.log(detail)
+    console.log(checkcontent)
+
+    useEffect(()=>{
+        console.log(filterdata)
+        const find = content.find((content)=>content==filterdata)
+        console.log(find)
+        if(content.length>1) {
+        const filter = content.filter((content,index)=>content!=find)
+        console.log(filter)
+        setContent(filter)
+        }
+    },[filterdata])
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -35,7 +54,7 @@ export const Lifepost =()=>{
     const doFormplus = ()=>{
         setFormcount((formcount)=>([
             ...formcount,
-            1
+            "1"
         ]))
     }
 
@@ -47,15 +66,13 @@ export const Lifepost =()=>{
 
     const doListplus = (id:number)=>{
         let list:any = {}
-        list[id] = <h1>test</h1>
+        list[id] = <li><input max={id} onChange={doCheckcontent} type={"text"}/></li>
         setList((listcount)=>([
             ...listcount,
             list
         ]))
     }
     
-    console.log(list)
-
     const doListminus = (id:number)=>{
         const del = list.find((list)=>list[id])
         const dellist = list.filter((list)=>list!=del)
@@ -65,11 +82,21 @@ export const Lifepost =()=>{
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
         const id = event.target.max
         const value= event.target.value
+        const obj = {[id]:value}
+        setFilterdata(obj)
 
-        setContent((content)=>({
+        setContent((content)=>([
             ...content,
-            [id]:value
-        }))
+            obj
+        ]))
+
+        // const filter = content.filter((value,index,array)=>value.lastIndexOf(id)===index)
+        // console.log(filter)
+        // obj.push(json)
+        // obj.filter((obj)=>{
+        //     return obj.length==formcount.length
+        // })
+        // console.log(obj)
     }
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -78,6 +105,16 @@ export const Lifepost =()=>{
 
         setDetail((detail)=>({
             ...detail,
+            [id]:value
+        }))
+    }
+
+    const doCheckcontent = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        const id = event.target.max
+        const value = event.target.value
+
+        setCheckcontent((checkcontent)=>({
+            ...checkcontent,
             [id]:value
         }))
     }
@@ -106,9 +143,9 @@ export const Lifepost =()=>{
                 <br></br>
                 <button onClick={doFormplus}>入力項目を増やす</button><button onClick={doFormminus}>入力項目を減らす</button>
 
-                {formcount.map((count:number,key:number)=>{
+                {formcount.map((count:string,key:number)=>{
                     return (
-                        <div className="plusform">
+                        <div className="plusform" key={key}>
                             <label>{key+1}つ目の目次(必須):</label><input max={key+1} onChange={doContent} type={"text"}/>
                             <br></br>
                             <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
@@ -117,7 +154,9 @@ export const Lifepost =()=>{
                             <button onClick={()=>doListminus(key+1)}>リスト項目を減らす</button>
                             {list.map((list:any,index:number)=>{
                                 return (
-                                    list[key+1]
+                                    <ul>
+                                    {list[key+1]}
+                                    </ul>
                                 )
                             })}
                         </div>   
