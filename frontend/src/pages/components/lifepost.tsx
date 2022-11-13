@@ -5,28 +5,34 @@ import {useRouter} from "next/router"
 import {Header} from "./header"
 import moment from "moment"
 import Layout from "./layout"
+import { check } from "prettier"
 
 export const Lifepost =()=>{
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
     const [headline,setHeadline] = useState("")
     const [content,setContent] = useState<any[]>([])
-    const [detail,setDetail] = useState({})
-    const [checkcontent,setCheckcontent] = useState({})
+    const [detail,setDetail] = useState<any[]>([])
+    const [checkcontent,setCheckcontent] = useState<any[]>([])
     const [formcount,setFormcount] = useState<string[]>(["1"])
     const [list,setList] = useState<any[]>([])
+    const [filterid,setFilterid] = useState("")
 
     const router = useRouter()
 
     const getenv = router.query.state as unknown as string
     
-
-    console.log(title)
-    console.log(lifeitem)
-    console.log(headline)
-    console.log(content)
-    console.log(detail)
     console.log(checkcontent)
+    
+    useEffect(()=>{
+        //console.log(checkcontent)
+        //const find = checkcontent.findIndex((check)=>check[filterid]||check[filterid]=="")
+        //console.log(find)
+        // if(checkcontent.length>1) {
+        //const fil = checkcontent.splice(find,1)
+        // setCheckcontent(fil)
+        // }
+    },[checkcontent])
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -47,25 +53,22 @@ export const Lifepost =()=>{
         ]))
     }
     
-    console.log(formcount.length)
-
     const doFormminus = ()=>{
         const length = formcount.length
         const count =formcount.splice(1,length-1)
-
-        console.log(length)
-        const find = content.findIndex((content)=>content[length]||content[length]=="")
-        console.log(find)
-        if(find==-1) return
-        content.splice(find,1)
-
         setFormcount(count)
+
+        const contentfind = content.findIndex((content)=>content[length]||content[length]=="")
+        const detailfind = detail.findIndex((detail)=>detail[length]||detail[length]=="")
+        console.log(contentfind)
+        if(contentfind==-1||detailfind==-1) return
+        content.splice(contentfind,1)
+        detail.splice(detailfind,1)
     }
 
 
     const doListplus = (id:number)=>{
-        let list:any = {}
-        list[id] = <li><input max={id} onChange={doCheckcontent} type={"text"}/></li>
+        const list = {[id]:<li><input max={id} onChange={doCheckcontent} type={"text"}/></li>}
         setList((listcount)=>([
             ...listcount,
             list
@@ -97,21 +100,31 @@ export const Lifepost =()=>{
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
         const value= event.target.value
+        const obj = {[id]:value}
 
-        setDetail((detail)=>({
+        setDetail((detail)=>([
             ...detail,
-            [id]:value
-        }))
+            obj
+        ]))
+
+        const find = detail.findIndex((detail)=>detail[id]||detail[id]=="")
+        console.log(find)
+        if(find==-1) return
+        detail.splice(find,1)
     }
 
     const doCheckcontent = (event:React.ChangeEvent<HTMLInputElement>)=>{
         const id = event.target.max
         const value = event.target.value
-
-        setCheckcontent((checkcontent)=>({
+        const obj = {[id]:value}
+        
+        setFilterid(id)
+    
+        setCheckcontent((checkcontent)=>([
             ...checkcontent,
-            [id]:value
-        }))
+            obj
+        ]))
+        
     }
 
     const doSubmit =(event:React.MouseEvent<HTMLFormElement>)=>{
