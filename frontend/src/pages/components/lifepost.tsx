@@ -15,21 +15,11 @@ export const Lifepost =()=>{
     const [checkcontent,setCheckcontent] = useState({})
     const [formcount,setFormcount] = useState<string[]>(["1"])
     const [list,setList] = useState<any[]>([])
-    const [filterdata,setFilterdata] = useState<string>("")
 
     const router = useRouter()
 
     const getenv = router.query.state as unknown as string
-
-    // useEffect(()=>{
-    //     console.log(filterdata)
-    //     const find = content.findIndex((content)=>content[filterdata])
-    //     console.log(find)
-    //     if(find==-1) return
-    //     content.splice(find,1)
-    //     console.log(content)
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // },[content,filterdata])
+    
 
     console.log(title)
     console.log(lifeitem)
@@ -56,12 +46,22 @@ export const Lifepost =()=>{
             "1"
         ]))
     }
+    
+    console.log(formcount.length)
 
     const doFormminus = ()=>{
         const length = formcount.length
         const count =formcount.splice(1,length-1)
+
+        console.log(length)
+        const find = content.findIndex((content)=>content[length]||content[length]=="")
+        console.log(find)
+        if(find==-1) return
+        content.splice(find,1)
+
         setFormcount(count)
     }
+
 
     const doListplus = (id:number)=>{
         let list:any = {}
@@ -82,18 +82,16 @@ export const Lifepost =()=>{
         const id = event.target.max
         const value= event.target.value
         const obj = {[id]:value}
-        setFilterdata(id)
 
         setContent((content)=>([
             ...content,
             obj
         ]))
 
-        const find = content.findIndex((content)=>content[id])
+        const find = content.findIndex((content)=>content[id]||content[id]=="")
         console.log(find)
         if(find==-1) return
         content.splice(find,1)
-        console.log(content)
     }
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
