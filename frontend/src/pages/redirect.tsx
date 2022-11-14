@@ -5,7 +5,7 @@ import {useRouter} from "next/router"
 
 export const Redirect = ()=>{
     const router = useRouter()
-    const query = router.query.state as unknown as string
+    const query = router.query.life as unknown as string
 
     useEffect(()=>{
         if(query==="lifepost") {

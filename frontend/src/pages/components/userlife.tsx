@@ -10,6 +10,19 @@ const SDiv = styled.div`
 
 `
 
+type Life = {
+    id:number,
+    user_id:number,
+    title:string,
+    lifeitem:string,
+    headline:string,
+    created_at:Date,
+    updated_at:Date,
+    content:string[],
+    detail:string[],
+    checkcontent:string[]
+}
+
 export const Userlife = ()=>{
     const [lifepost,setLifepost] = useState([])
     const router = useRouter()
@@ -24,7 +37,7 @@ export const Userlife = ()=>{
             console.log(error)
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[router,query])
+    },[router,getenv])
 
     console.log(lifepost)
 
@@ -32,7 +45,24 @@ export const Userlife = ()=>{
         <Layout>
         <SDiv>
         {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:<></>}
-        <h1>kouzinoww</h1>
+
+        <table border={1}>
+            <tr>
+                <th>タイトル</th><th>項目</th><th>作成日</th><th>更新日</th>
+            </tr>
+        </table>
+        {lifepost.map((life:Life)=>{
+            return (
+                <>
+                <table>
+                    <tr>
+                        <td>{life.title}</td><td>{life.lifeitem}</td><td>{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td>{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                    </tr>
+                </table>
+                </>
+            )
+        })}
+        
         </SDiv>
         </Layout>
     )
