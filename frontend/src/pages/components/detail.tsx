@@ -83,7 +83,7 @@ padding-left: 2rem; /* 連番(1.5rem) + 余白 */
 .steps:before {
 content: "";
 /* 幅と色 */
-background-color: #d59533;
+background-color: #111111;
 width: 2px;
 /* 位置 */
 position: absolute;
@@ -105,7 +105,7 @@ align-items: center;
 /* 連番カウンターの値を表示する */
 content: counter(step-counter);
 /* フォントと色 */
-background: #d59533;
+background: #111111;
 color: white;
 font-size: 0.8rem;
 font-weight: normal;
@@ -131,7 +131,7 @@ z-index: 1;
 .steps > h3:before {
     content: "";
     /* フォントと色 */
-    background: #d59533;
+    background: #111111;
     color: white;
     font-size: 0.8rem;
     font-weight: normal;
