@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState,useEffect} from "react"
+import {useState,useEffect} from "react"
 import {useRouter} from "next/router"
 import Image from 'next/image'
 
@@ -68,32 +68,32 @@ export const Dailylifey = ()=>{
     <SDiv>
         <SItem>
             <p><strong>部屋探し・入居</strong></p>
-            <Image src="/heya.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Image src="/heya.png" layout="responsive" height="90" width="90" alt="heya"/> 
             <Sbtn onClick={()=>Router("heya")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
             <p><strong>入居前後の手続き</strong></p>
-            <Image src="/nyukyo.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Image src="/nyukyo.png" layout="responsive" height="90" width="90" alt="heya"/> 
             <Sbtn onClick={()=>Router("hikkoshi")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
             <p><strong>防犯・防災</strong></p>
-            <Image src="/bousai.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Image src="/bousai.png" layout="responsive" height="90" width="90" alt="heya"/> 
             <Sbtn onClick={()=>Router("bouhan")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
             <p><strong>掃除</strong></p>
-            <Image src="/souzi.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Image src="/souzi.png" layout="responsive" height="90" width="90" alt="heya"/> 
             <Sbtn onClick={()=>Router("souzi")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
             <p><strong>料理</strong></p>
-            <Image src="/ryouri.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Image src="/ryouri.png" layout="responsive" height="90" width="90" alt="heya"/> 
             <Sbtn onClick={()=>Router("ryouri")}><span>確認する</span></Sbtn>
         </SItem>
         <SItem>
             <p><strong>洗濯</strong></p>
-            <Image src="/sentaku.png" layout="responsive" height="90px" width="90px" alt="heya"/> 
+            <Image src="/sentaku.png" layout="responsive" height="90" width="90" alt="heya"/> 
             <Sbtn onClick={()=>Router("sentaku")}><span>確認する</span></Sbtn>
         </SItem>
     </SDiv>

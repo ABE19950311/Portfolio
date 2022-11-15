@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState,useEffect} from "react"
+import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {Layout} from "./layout"
 import FullCalendar, { DateSelectArg,EventApi } from "@fullcalendar/react"

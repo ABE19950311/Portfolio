@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Link from "next/link"
-import React, {useState,useEffect,useContext} from "react"
+import {useState,useEffect,useContext} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 
@@ -62,7 +62,7 @@ const SDiv = styled.div`
     color: #b3b3b3;
     font-size: 12px;
 }
-.form .message a {
+.form .message span {
     color: #4CAF50;
     text-decoration: none;
 }
@@ -165,8 +165,8 @@ export const Login = ()=>{
             <input type="text" onChange={doName}  value={username} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
             <input type="password" onChange={doPass} value={password} placeholder="パスワード"/><span className="validation">{validationPass}</span>
             <button type="submit">ログイン</button>
-            <Link href="/components/newaccount"><p className="message"><a href="#">新規登録はこちら</a></p></Link>
-            <Link href="/components/mainpage"><p className="message"><a href="#">ゲストユーザの方はこちら</a></p></Link>
+            <Link href="/components/newaccount"><p className="message"><span>新規登録はこちら</span></p></Link>
+            <Link href="/components/mainpage"><p className="message"><span>ゲストユーザの方はこちら</span></p></Link>
             </form>
         </div>
         </div>

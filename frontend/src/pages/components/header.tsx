@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import Link from "next/link"
-import React, {useState,useEffect} from "react"
+import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Image from 'next/image'
@@ -50,7 +50,7 @@ margin-right:20px;
 `
 
 const SItem = styled.li`
-    a {
+    span {
         display: flex;
         align-items: center;
         justify-content: center;
@@ -157,17 +157,17 @@ export const Header = ()=>{
 
     return (
         <SHeader>
-            <SLogo><Image src="/logo.png" height="100px" width="100px" alt="logo"/></SLogo>
+            <SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo>
             <SMenu>
-                <Link href="/components/mainpage"><SItem><a href="#">トップページへ戻る</a></SItem></Link>
-                <Sbtn onClick={lifepost}><a href="#">生活情報を投稿する</a></Sbtn>
-                <Sbtn onClick={userlife}><a href="#">ユーザが投稿した情報を確認</a></Sbtn>
-                <Link href="/mappage"><SItem><a href="#">ハザードマップ</a></SItem></Link>
-                <Sbtn onClick={todo}><a href="#">TODOリスト</a></Sbtn>
-                <Link href="/components/calendar"><SItem><a href="#">カレンダー</a></SItem></Link>
-                <Sbtn onClick={board}><a href="#">掲示板</a></Sbtn>
-                <Sbtn onClick={mypage}><a href="#">マイページ</a></Sbtn>
-                <Sbtn onClick={logout}><a href="#">ログアウト</a></Sbtn>
+                <Link href="/components/mainpage"><SItem><span>トップページへ戻る</span></SItem></Link>
+                <Sbtn onClick={lifepost}><a href="#"><span>生活情報を投稿する</span></a></Sbtn>
+                <Sbtn onClick={userlife}><a href="#"><span>ユーザが投稿した情報を確認</span></a></Sbtn>
+                <Link href="/mappage"><SItem><span>ハザードマップ</span></SItem></Link>
+                <Sbtn onClick={todo}><a href="#"><span>TODOリスト</span></a></Sbtn>
+                <Link href="/components/calendar"><SItem><span>カレンダー</span></SItem></Link>
+                <Sbtn onClick={board}><a href="#"><span>掲示板</span></a></Sbtn>
+                <Sbtn onClick={mypage}><a href="#"><span>マイページ</span></a></Sbtn>
+                <Sbtn onClick={logout}><a href="#"><span>ログアウト</span></a></Sbtn>
             </SMenu>
         </SHeader>
     )

@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Head from 'next/head'
 import {Header} from "./header"
 import {Footer} from "./footer"
-import { ReactNode } from "react"
+import type {ReactNode} from "react"
 
 type Props = {
     children: ReactNode;

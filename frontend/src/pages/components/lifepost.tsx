@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState,useEffect,useRef, Fragment} from "react"
+import {useState,useEffect,useRef, Fragment} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
