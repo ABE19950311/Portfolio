@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get "/myhearts", to: "hearts#myheart"
   get "/sessionname", to:"sessions#sessionname"
   patch "/newpass", to:"registrations#update"
+  post "/userposts", to:"lifeposts#userpost"
 
   resources :todos
   resources :boards

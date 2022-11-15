@@ -126,8 +126,8 @@ export const Lifepost =()=>{
     useEffect(()=>{
         if(formflag===true) {
             router.push({
-                pathname:"/redirect",
-                query:{life:"lifepost"}
+                pathname:"/components/userlife",
+                query:{life:"lifepost",state:getenv}
                 })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -223,23 +223,23 @@ export const Lifepost =()=>{
 
         setFormflag(true)
 
-        // axios.post(getenv+"/lifeposts",
-        // {   
-        //     lifepost: {
-        //         title:title,
-        //         lifeitem:lifeitem==""||lifeitem=="項目を選択しない" ? "none":lifeitem,
-        //         headline:headline,
-        //         content:jsoncontent,
-        //         detail:jsondetail,
-        //         checkcontent:jsoncheck
-        //     }
-        // }).then(res=>{
-        //     console.log(res.data)
-        //     setFlag(res.data)
-        //     setFormflag(true)
-        // }).catch(error=>{
-        //     console.log(error)
-        // })
+        axios.post(getenv+"/lifeposts",
+        {   
+            lifepost: {
+                title:title,
+                lifeitem:lifeitem==""||lifeitem=="項目を選択しない" ? "none":lifeitem,
+                headline:headline,
+                content:jsoncontent,
+                detail:jsondetail,
+                checkcontent:jsoncheck
+            }
+        }).then(res=>{
+            console.log(res.data)
+            setFlag(res.data)
+            setFormflag(true)
+        }).catch(error=>{
+            console.log(error)
+        })
     }
 
     return (

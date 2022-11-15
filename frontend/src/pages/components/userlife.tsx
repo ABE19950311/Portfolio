@@ -7,7 +7,54 @@ import moment from "moment"
 import Layout from "./layout"
 
 const SDiv = styled.div`
+    
+    margin:70px 0 0 80px;
 
+    table {
+    text-align:center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+    th {
+    padding: 10px;
+    background: #778ca3;
+    border: solid 1px #666666;
+    color: #ffffff;
+    }
+    td {
+    padding: 10px;
+    border: solid 1px #666666;
+    }
+    td:first-child {
+    cursor:pointer;
+    color:blue;
+    text-decoration : underline;
+    background: #e9faf9;
+    }
+    .thtitle {
+        width:450px;
+    }
+    .thhead {
+        width:250px;
+    }
+    .thcreate {
+        width:250px;
+    }
+    .thupdate {
+        width:250px;
+    }
+    .tdtitle {
+        width:450px;
+    }
+    .tdhead {
+        width:250px;
+    }
+    .tdcreate {
+        width:250px;
+    }
+    .tdupdate {
+        width:250px;
+    }
 `
 
 type Life = {
@@ -39,7 +86,12 @@ export const Userlife = ()=>{
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[router,getenv])
 
-    console.log(lifepost)
+    const lifecontent = (id:number,user_id:number)=>{
+        router.push({
+            pathname:"/components/lifecontent",
+            query:{id:id,user_id:user_id,env:getenv}
+            })
+    }
 
     return (
         <Layout>
@@ -48,7 +100,7 @@ export const Userlife = ()=>{
 
         <table border={1}>
             <tr>
-                <th>タイトル</th><th>項目</th><th>作成日</th><th>更新日</th>
+                <th className="thtitle">タイトル</th><th className="thhead">項目</th><th className="thcreate">作成日</th><th className="thupdate">更新日</th>
             </tr>
         </table>
         {lifepost.map((life:Life)=>{
@@ -56,7 +108,7 @@ export const Userlife = ()=>{
                 <>
                 <table>
                     <tr>
-                        <td>{life.title}</td><td>{life.lifeitem}</td><td>{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td>{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                     </tr>
                 </table>
                 </>

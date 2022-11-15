@@ -11,10 +11,19 @@ class LifepostsController < ApplicationController
         render json:@lifepost
     end
 
+    def userpost
+        @getpost = Lifepost.find_by(id: user_params[:id], user_id: user_params[:user_id])
+        render json:@getpost
+    end
+
     private
 
     def life_params
         params.require(:lifepost).permit(:title,:lifeitem,:headline,:content,:detail,:checkcontent)
+    end
+
+    def user_params
+        params.require(:userpost).permit(:id,:user_id)
     end
 
 end
