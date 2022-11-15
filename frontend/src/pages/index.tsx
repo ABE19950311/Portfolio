@@ -1,58 +1,106 @@
 import styled from "styled-components"
+import {useState,useEffect} from "react"
+import {useRouter} from "next/router"
 import Image from 'next/image'
-import Link from "next/link"
+import {Layout} from "./components/layout"
 
 
-const Main = styled.div`
-
-h1 {
-    position:absolute;
-    top: 40%;
-    left: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    margin:0;
-    padding:0;
-}
-
-h3 {
-    position:absolute;
-    top: 40%;
-    left: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    margin-top:40px;
-    padding:0;
-}
+const SDiv = styled.div`
+padding: 20px 0px 0px 100px;
+display: flex;
+flex-wrap: wrap;
+gap: 30px 20px;
 `
 
-const Button = styled.button`
-    position:absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
-    margin:0;
-    padding:0;
+const SItem = styled.div`
+width:30%;
+text-align: center;
+box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+`
+
+const Sbtn = styled.button`
+    margin-top: auto;
+    font-size: 0.7rem;
+    font-weight: 700;
+    line-height: 1.5;
+    position: relative;
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    letter-spacing: 0.1em;
+    border-radius: 0.5rem;
+
+    border: 1px solid #ccc;
+    background: #f1e767;
+    background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
+    background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
+    background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
+    -webkit-box-shadow: inset 1px 1px 1px #fff;
+    box-shadow: inset 1px 1px 1px #fff;
+
+    &:hover {
+        background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
+        background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
+        background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
+    }
 `
 
 
-const Home = () => {
-return (
-        <>
-        <Main>
-            <Image src="/main.png" layout="fill" alt="logo"/>   
-            <h1>Dailylifey</h1>
-            <h3>様々な手続きが、一目で分かる</h3>
-            <Link href="/components/login">
-                <Button>利用する</Button>
-            </Link>
-        </Main>
-    </>
+export const Dailylifey = ()=>{
+    const router=useRouter();
+
+    const Router = (state:string) =>{
+    router.push({
+        pathname:"/components/detail",
+        query:{state:state}
+        })
+    }
+
+    return (
+    <Layout>       
+    <SDiv>
+        <SItem>
+            <p><strong>部屋探し・入居</strong></p>
+            <Image src="/heya.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Sbtn onClick={()=>Router("heya")}><span>確認する</span></Sbtn>
+        </SItem>
+        <SItem>
+            <p><strong>入居前後の手続き</strong></p>
+            <Image src="/nyukyo.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Sbtn onClick={()=>Router("hikkoshi")}><span>確認する</span></Sbtn>
+        </SItem>
+        <SItem>
+            <p><strong>防犯・防災</strong></p>
+            <Image src="/bousai.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Sbtn onClick={()=>Router("bouhan")}><span>確認する</span></Sbtn>
+        </SItem>
+        <SItem>
+            <p><strong>掃除</strong></p>
+            <Image src="/souzi.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Sbtn onClick={()=>Router("souzi")}><span>確認する</span></Sbtn>
+        </SItem>
+        <SItem>
+            <p><strong>料理</strong></p>
+            <Image src="/ryouri.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Sbtn onClick={()=>Router("ryouri")}><span>確認する</span></Sbtn>
+        </SItem>
+        <SItem>
+            <p><strong>洗濯</strong></p>
+            <Image src="/sentaku.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Sbtn onClick={()=>Router("sentaku")}><span>確認する</span></Sbtn>
+        </SItem>
+    </SDiv>
+    </Layout>
     )
 }
 
-export default Home
+export default Dailylifey

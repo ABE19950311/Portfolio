@@ -104,7 +104,8 @@ export const Header = ()=>{
     const logout = ()=>{
         axios.delete(getenv+"/logout" as string)
         .then(res=> {
-            router.push("/components/login");
+            router.push("/");
+            setSessionid("")
         }).catch(error=>{
             console.log("logouterror",error);
         })
@@ -158,8 +159,9 @@ export const Header = ()=>{
     return (
         <SHeader>
             <SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo>
+            {sessionid ? 
             <SMenu>
-                <Link href="/components/mainpage"><SItem><span>トップページへ戻る</span></SItem></Link>
+                <Link href="/"><SItem><span>トップページへ戻る</span></SItem></Link>
                 <Sbtn onClick={lifepost}><a href="#"><span>生活情報を投稿する</span></a></Sbtn>
                 <Sbtn onClick={userlife}><a href="#"><span>ユーザが投稿した情報を確認</span></a></Sbtn>
                 <Link href="/mappage"><SItem><span>ハザードマップ</span></SItem></Link>
@@ -169,6 +171,16 @@ export const Header = ()=>{
                 <Sbtn onClick={mypage}><a href="#"><span>マイページ</span></a></Sbtn>
                 <Sbtn onClick={logout}><a href="#"><span>ログアウト</span></a></Sbtn>
             </SMenu>
+            :
+            <SMenu>
+                <Link href="/"><SItem><span>トップページへ戻る</span></SItem></Link>
+                <Sbtn onClick={userlife}><a href="#"><span>ユーザが投稿した情報を確認</span></a></Sbtn>
+                <Link href="/mappage"><SItem><span>ハザードマップ</span></SItem></Link>
+                <Link href="/components/calendar"><SItem><span>カレンダー</span></SItem></Link>
+                <Link href="/components/newaccount"><SItem><span>新規登録</span></SItem></Link>
+                <Link href="/components/login"><SItem><span>ログイン</span></SItem></Link>
+            </SMenu>
+            }
         </SHeader>
     )
 }

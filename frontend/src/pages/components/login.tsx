@@ -142,7 +142,7 @@ export const Login = ()=>{
             }).then(res => {
             if(res.data.logged_in) {
                 router.push({
-                    pathname:"/components/mainpage",
+                    pathname:"/",
                     query:{state:getenv}
                     });
             }else if(!res.data.logged_in) {
@@ -165,8 +165,7 @@ export const Login = ()=>{
             <input type="text" onChange={doName}  value={username} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
             <input type="password" onChange={doPass} value={password} placeholder="パスワード"/><span className="validation">{validationPass}</span>
             <button type="submit">ログイン</button>
-            <Link href="/components/newaccount"><p className="message"><span>新規登録はこちら</span></p></Link>
-            <Link href="/components/mainpage"><p className="message"><span>ゲストユーザの方はこちら</span></p></Link>
+            <Link href="/"><p className="message"><span>トップページへ戻る</span></p></Link>
             </form>
         </div>
         </div>

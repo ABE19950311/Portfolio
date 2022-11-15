@@ -56,6 +56,15 @@ const SDiv = styled.div`
 .form button:hover,.form button:active,.form button:focus {
     background: #005FFF;
 }
+.form .message {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+.form .message span {
+    color: #4CAF50;
+    text-decoration: none;
+}
 
 `
 
@@ -149,7 +158,7 @@ export const Newaccount = ()=>{
         ).then(res => {
             console.log(res.data)
             if(res.data.status==="created") {
-                router.push("/components/login");
+                router.push("/");
             }
         }).catch(error => {
             console.log("registration error",error)
@@ -166,6 +175,7 @@ export const Newaccount = ()=>{
             <input type="password" onChange={doPass} placeholder="パスワード"/><span className="validation">{validationPass}</span>
             <input type="password" onChange={doPassconfirm} placeholder="パスワード再入力"/><span className="validation">{validationPassfilm}</span>
             <button type="submit">新規登録</button>
+            <Link href="/"><p className="message"><span>トップページへ戻る</span></p></Link>
             </form>
         </div>
         </div>
