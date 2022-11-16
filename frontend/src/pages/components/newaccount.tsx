@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import Link from "next/link"
-import {useState,useEffect,useRef,useCallback} from "react"
+import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import Router, {useRouter} from "next/router"
+import {useRouter} from "next/router"
 
 const SDiv = styled.div`
 

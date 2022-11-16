@@ -1,8 +1,7 @@
 import styled from "styled-components"
-import Link from "next/link"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import Router, {useRouter} from "next/router"
+import {useRouter} from "next/router"
 import Layout from "./layout"
 import moment from "moment"
 
@@ -50,8 +49,23 @@ const SDiv = styled.div`
         }
 
         button {
-            margin:20px 50px 0 0;
-            padding:10px 10px;
+            margin:30px 50px 0 0;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            text-align: center;
+            vertical-align: middle;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            border: 2px solid #27acd9;
+            background: #27acd9;
+            color: #fff;
         }
     }
 

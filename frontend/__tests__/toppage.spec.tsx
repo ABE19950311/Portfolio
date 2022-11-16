@@ -1,11 +1,9 @@
-import  Home  from "../src/pages/index"
+import  Dailylifey  from "../src/pages/index"
 import { render,screen,RenderResult } from "@testing-library/react";
 
 describe("Sampleコンポーネント", () => {
     test("should first", () => {
-        const { getByText } = render(<Home />);
-        expect(getByText("Dailylifey")).toBeTruthy();
-        expect(getByText("様々な手続きが、一目で分かる")).toBeTruthy();
-        expect(getByText("利用する")).toBeTruthy();
+        const { getByText } = render(<Dailylifey />);
+        expect(getByText("部屋探し・入居")).toBeTruthy();
     });
 });

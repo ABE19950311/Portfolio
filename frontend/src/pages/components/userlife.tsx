@@ -1,8 +1,7 @@
 import styled from "styled-components"
-import {useState,useEffect,useRef, Fragment} from "react"
+import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
-import {Header} from "./header"
 import moment from "moment"
 import Layout from "./layout"
 
@@ -10,7 +9,44 @@ const SDiv = styled.div`
     
     margin:70px 0 0 80px;
 
+    .kousinbtn {
+        font-weight: 700;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+    }
+
+    .delbtn {
+        font-weight: 700;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #FF9933;
+        background: #FF9933;
+        color: #fff;
+    }
+
     table {
+    overflow-wrap:break-word;
     text-align:center;
     border-collapse: collapse;
     border-spacing: 0;
@@ -38,10 +74,10 @@ const SDiv = styled.div`
         width:250px;
     }
     .thcreate {
-        width:250px;
+        width:200px;
     }
     .thupdate {
-        width:250px;
+        width:200px;
     }
     .tdtitle {
         width:450px;
@@ -50,10 +86,10 @@ const SDiv = styled.div`
         width:250px;
     }
     .tdcreate {
-        width:250px;
+        width:200px;
     }
     .tdupdate {
-        width:250px;
+        width:200px;
     }
 `
 
@@ -72,6 +108,8 @@ type Life = {
 
 export const Userlife = ()=>{
     const [lifepost,setLifepost] = useState([])
+    const [sessionid,setSessionid] = useState(0)
+    const [flag,setFlag] = useState("")
     const router = useRouter()
     const query = router.query.life as unknown as string
     const getenv = router.query.state as unknown as string
@@ -84,6 +122,15 @@ export const Userlife = ()=>{
             console.log(error)
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[router,getenv,flag])
+
+    useEffect(()=>{
+        axios.get(getenv+"/sessionid")
+        .then(res=>{
+            setSessionid(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
     },[router,getenv])
 
     const lifecontent = (id:number,user_id:number)=>{
@@ -91,6 +138,15 @@ export const Userlife = ()=>{
             pathname:"/components/lifecontent",
             query:{id:id,user_id:user_id,env:getenv}
             })
+    }
+
+    const doDelete = (id:number)=>{
+        axios.delete(getenv+`/lifeposts/${id}`)
+        .then(res=>{
+            setFlag(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
     }
 
     return (
@@ -109,6 +165,7 @@ export const Userlife = ()=>{
                 <table>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        {sessionid==life.user_id ? <><td><button className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
                     </tr>
                 </table>
                 </>

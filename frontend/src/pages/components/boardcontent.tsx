@@ -1,12 +1,10 @@
 import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import Router, {useRouter} from "next/router"
-import Layout from "./layout"
+import {useRouter} from "next/router"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import Header from "./header"
-import Link from "next/link"
 
 
 type Post = {
@@ -28,7 +26,7 @@ const Container = styled.div`
     max-width:1200px;
 `
 
-const SForm = styled.form` 
+const SDiv = styled.div` 
     padding-top:30px;
     padding-bottom:10px;
     padding-left:25%;
@@ -47,6 +45,10 @@ const SForm = styled.form`
         color:red;
     }
 
+    .returnbtn {
+        margin-left:350px;
+    }
+
     .postlabel {
         transform: translate(0px,-70px)
     }
@@ -62,24 +64,21 @@ const SForm = styled.form`
     .none {
         display:none;
     }
-`
 
-const SDiv = styled.div`
-    width:70%;
+.postcontent {
+    overflow-wrap:break-word;
+    width:80%;
     display:inline-block;
-    padding-left:3%;
-    margin-left:25%;
+    padding:10px 0 0 15px;
     margin-top:20px;
     border: solid 1px #000000;
 
     .content {
         font-size:20px;
-        font-family:'Comic Sans MS'
     }
 
     .post {
         font-size:18px;
-        font-family:'Comic Sans MS'
     }
 
     .setcolor {
@@ -89,6 +88,7 @@ const SDiv = styled.div`
     .none {
         color:initial;
     }
+}
 `
 
 export const Boardcontent = ()=>{
@@ -197,7 +197,7 @@ export const Boardcontent = ()=>{
             })
     }
 
-    const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
+    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
         
         if(!post) return
@@ -230,15 +230,15 @@ export const Boardcontent = ()=>{
         <>
             <Header />
             <Container>
-            <SForm onSubmit={doSubmit}>
+            <SDiv>
             <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
             <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
-            <label></label><button type="submit">返信する</button><button onClick={doBoard}>掲示板へ戻る</button>
-            </SForm>
-            <SDiv>
+            <label></label><button type="submit" onClick={doSubmit}>返信する</button><button className="returnbtn" onClick={doBoard}>掲示板へ戻る</button>
+    
+            <div className="postcontent">
                 <span className="content">投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</span>
                 <p className="post">{content}</p>
-            </SDiv>
+            </div>
             {postcontent.filter((posts:Post)=>{
                     if(board_id==posts.board_id) {
                         return posts;
@@ -246,13 +246,14 @@ export const Boardcontent = ()=>{
                 }    
             ).map((post:Post,key:number)=>{
                 return (
-                        <SDiv key={key}>
+                        <div className="postcontent" key={key}>
                         <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                         <p className="post">{post.postcontent}</p>
-                        </SDiv>
+                        </div>
                     )
                 })
             }
+            </SDiv>
             </Container>
         </>
     )

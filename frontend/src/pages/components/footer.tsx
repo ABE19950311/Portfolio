@@ -1,8 +1,4 @@
 import styled from "styled-components"
-import Link from "next/link"
-import {useState,useEffect} from "react"
-import axios from "axios"
-import {useRouter} from "next/router"
 
 const SFooter = styled.div`
 width: 100%;

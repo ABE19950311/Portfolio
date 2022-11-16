@@ -1,8 +1,7 @@
 import styled from "styled-components"
-import Link from "next/link"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import Router, {useRouter} from "next/router"
+import {useRouter} from "next/router"
 import Header from "./header"
 import moment from "moment"
 
@@ -15,7 +14,7 @@ type Board = {
     username:string
 }
 
-const SForm = styled.form` 
+const SDiv = styled.div` 
     padding-top:30px;
     padding-bottom:10px;
     padding-left:25%;
@@ -25,7 +24,14 @@ const SForm = styled.form`
         width:200px;
     }
 
-    label {
+    .post {
+        margin-bottom:3px;
+        display: inline-block;
+        width: 120px;
+        top: 50%;
+    }
+
+    .sub {
         margin-bottom:3px;
         display: inline-block;
         width: 120px;
@@ -37,6 +43,10 @@ const SForm = styled.form`
     }
 
     .postlabel {
+        margin-bottom:3px;
+        display: inline-block;
+        width: 120px;
+        top: 50%;
         transform: translate(0px,-70px)
     }
 
@@ -47,23 +57,22 @@ const SForm = styled.form`
     button {
         margin:10px 0 0 10px
     }
-`
 
-const SDiv = styled.div`
-    padding-left:3%;
-    margin-left:25%;
-    margin-right:15%;
-    margin-top:20px;
-    margin-bottom:20px;
+.content {
+    overflow-wrap:break-word;
     border: solid 1px #000000;
     box-sizing: border-box;
-    height:100px;
-    position:relative;
+    padding:0 250px 15px 20px;
+    margin-top:20px;
+    transform: translate(0px,10px);
+    display:inline-block;
 
     a {
+        text-align:left;
         color:blue;
         text-decoration: underline;
     }
+}
 `
 
 export const Board = ()=>{
@@ -109,7 +118,7 @@ export const Board = ()=>{
         setContent(event.target.value)
     }
 
-    const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
+    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault();
         
         if(!title||!content) return
@@ -150,20 +159,21 @@ export const Board = ()=>{
     return (
         <>
         <Header />
-        <SForm onSubmit={doSubmit}>
-        <label>名前:</label><input type="text" value={name} onChange={doName}/><br></br>
-        <label>タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
+        <SDiv>
+        <label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
+        <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
         <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={content} onChange={doContent}/><br></br>
-        <label></label><button type="submit">投稿する</button>
-        </SForm>
+        <label className="sub"></label><button type="submit" onClick={doSubmit}>投稿する</button><br></br>
+        
             {board.map((board:Board,key:number)=>{
                 return (
-                    <SDiv key={key}>
+                    <div className="content" key={key}>
                     <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
                     <label>タイトル:</label><a onClick={()=>doBoard(board.postcontent,board.id,board.user_id,board.username,board.created_at)} href="#">{board.posttitle}</a>
-                    </SDiv>
+                    </div>
                 )
             })}
+        </SDiv>
         </>
     )
 }

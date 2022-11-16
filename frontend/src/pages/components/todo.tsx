@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect,useRef, Fragment} from "react"
+import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import {Header} from "./header"
@@ -21,10 +21,9 @@ type Todo = {
 }
 
 const SDiv = styled.div`
-font-family: "Open Sans", sans-serif;
 line-height: 1.25;
 max-width:1500px;
-
+margin-bottom:20px;
 
 h2{
     text-align:center;
@@ -51,7 +50,7 @@ h2{
     position: absolute;
     color: #333;
     font-size: 2rem;
-    transform: translate(220px,5px);
+    transform: translate(25px,5px);
 }
 
 .datepicker {
@@ -62,10 +61,6 @@ h2{
         border: 2px solid #ddd; /*枠線*/
         box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
     }
-
-.customform {
-    margin-bottom:20px;
-}
 
 .custominput {
     padding: 10px 100px 10px 10px;
@@ -97,26 +92,19 @@ h2{
     font-weight: 700;
     padding: 0.5rem 1.5rem;
     cursor: pointer;
-    
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
     text-align: center;
     vertical-align: middle;
     text-decoration: none;
-    letter-spacing: 0.1em;
     border-radius: 0.5rem;
-    
-    border: 1px solid #ccc;
-    background: #f1e767;
-    background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
-    background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
-    background: linear-gradient(to bottom, #fdfbfb 0%, #ebedee 100%);
-    -webkit-box-shadow: inset 1px 1px 1px #fff;
-    box-shadow: inset 1px 1px 1px #fff;
-
-    &:hover {
-        background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
-        background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
-        background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
-    }
+    border: 2px solid #27acd9;
+    background: #27acd9;
+    color: #fff;
 }
 
 `
@@ -221,11 +209,11 @@ background-color: #eee;
 }
 
 .start {
-    width:150px;
+    width:120px;
 }
 
 .due {
-    width:150px;
+    width:120px;
 }
 
 .todo {
@@ -242,12 +230,12 @@ background-color: #eee;
 
 .txt_start{
     text-align: left;
-    width:150px;
+    width:120px;
 }
 
 .txt_due{
     text-align: left;
-    width:150px;
+    width:120px;
 }
 
 .txt_todo{
@@ -265,8 +253,9 @@ tbody tr:hover{
 }
 
 .tdselect {
+    margin-left:5px;
     outline: none;
-    background-color: #eee;
+    background-color: #FFFFFF;
 }
 
 @media screen and (max-width: 600px) {
@@ -431,7 +420,7 @@ export const Todo = ()=>{
         }
     }
 
-    const doSubmit = (event:React.MouseEvent<HTMLFormElement>) => {
+    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if(list!=="") {
         axios.post(getenv+"/todos" as string,
@@ -507,8 +496,6 @@ export const Todo = ()=>{
         )
     }
 
-    console.log(todos)
-
 //DatePicker関数
 
 const handleChangeStart = (selectedDate:Date) => {
@@ -550,7 +537,6 @@ const handleChangeEnd = (selectedDate:Date) => {
 
         <SDiv>
         <h2>TODOリスト作成</h2>
-            <form className="customform" onSubmit={doSubmit}>
 
             <div className="datepos">
             {startDate ?  
@@ -610,14 +596,13 @@ const handleChangeEnd = (selectedDate:Date) => {
                 <option value="料理">料理</option>
                 <option value="洗濯">洗濯</option>
             </select>
-            &emsp;&emsp;<button className="custombutton" type={"submit"}>リスト作成</button><br></br><br></br><br></br>
+            &emsp;&emsp;<button className="custombutton" type={"submit"} onClick={doSubmit}>リスト作成</button><br></br><br></br><br></br>
             <div className="search">
-            <button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
-            &emsp;&emsp;<MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+            <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
             </div>
             </div>
 
-            </form>
         </SDiv>
 
                     <STable>

@@ -1,15 +1,14 @@
 import styled from "styled-components"
-import {useState,useEffect,useRef, Fragment} from "react"
+import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
-import {Header} from "./header"
-import moment from "moment"
 import Layout from "./layout"
 
 
 const Steps = styled.div`
 width:800px;
 margin-left:250px;
+overflow-wrap:break-word;
 
 h1 {
     padding: 1rem 1rem;

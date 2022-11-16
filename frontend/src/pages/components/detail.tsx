@@ -1,14 +1,7 @@
 import styled from "styled-components"
-import {useState,useEffect} from "react"
 import {useRouter} from "next/router"
 import {Layout} from "./layout"
 
-const Container = styled.div`
-min-height: 100vh;
-position: relative;/*←相対位置*/
-padding-bottom: 120px;/*←footerの高さ*/
-box-sizing: border-box;/*←全て含めてmin-height:100vhに*/
-`
 
 const Steps = styled.div`
 width:800px;
@@ -34,7 +27,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "TODO";  /* 好きな文字を記述 */
+    content: "CHECK";  /* 好きな文字を記述 */
     position: absolute;
     display: block;
     top: -15px;
@@ -46,29 +39,6 @@ ul:before{
 }
 ul li{
     font-weight: bold;
-}
-
-.check {
-    position: relative;
-    padding: 15px 40px 15px 30px;
-    font: 14px/1.6 'arial narrow', sans-serif;
-    border: solid 2px #adcce8;
-    border-radius:8px;
-    color: #448ccb;
-    width:400px;
-    background: #fff;
-}
-
-.check:before {
-    content: "CHECK";  /* 好きな文字を記述 */
-    position: absolute;
-    display: block;
-    top: -15px;
-    left: 20px;
-    background: #fff;
-    font-size: 16px;
-    font-weight: bold;
-    padding: 0 10px;
 }
 
 .steps {
@@ -151,7 +121,6 @@ z-index: 1;
 `
 
 export const Detail = ()=>{
-    const [item,setItem] = useState("");
     const router=useRouter();
     const query = router.query.state as unknown as string;
 
@@ -234,7 +203,7 @@ export const Detail = ()=>{
             <div className="steps">
                 <h2>家の周辺環境を確認する</h2>
                 <p>ゴミ・タバコの放置、壁の落書き等が存在している場合、治安が芳しくない可能性あり</p>
-                    <ul className="check">
+                    <ul>
                         <li>道路のゴミ</li>
                         <li>壁の落書き</li>
                         <li>交番が近くに存在しているか</li>
@@ -243,7 +212,7 @@ export const Detail = ()=>{
                     </ul>
                 <h2>空き巣・不審者対策</h2>
                 <p>家の中外関係なく、基本に忠実に細心の注意を払う</p>
-                    <ul className="check">
+                    <ul>
                         <li>来訪者は必ず確認</li>
                         <li>夜は出来るだけ明るい道を選ぶ</li>
                         <li>防犯ブザー・アプリ等の用意</li>
@@ -253,7 +222,7 @@ export const Detail = ()=>{
                     </ul>
                 <h2>地震・台風等自然災害の備え</h2>
                 <p>非常時用の備蓄・避難場所を日頃から意識する</p>
-                    <ul className="check">
+                    <ul>
                         <li>大きな家具は固定する</li>
                         <li>日常用品を備蓄する</li>
                         <li>ハザードマップで周辺を確認</li>
@@ -273,7 +242,7 @@ export const Detail = ()=>{
             <div className="steps">
                 <h2>掃除道具の用意</h2>
                     <p>一人暮らしであれば、コスト・置き場所等の観点から最低限用意</p>
-                    <ul className="check">
+                    <ul>
                         <li>スポンジ</li>
                         <li>掃除機</li>
                         <li>アルコール除菌スプレー</li>
