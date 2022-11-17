@@ -1,11 +1,13 @@
 import styled from "styled-components"
 import Link from "next/link"
-import {useState,useEffect} from "react"
+import {useState,useEffect,useLayoutEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Image from 'next/image'
 import useSWR from "swr"
 import {FetchData} from "./fetchdata"
+import { Transition } from '@headlessui/react'
+import ReactLoading from 'react-loading';
 
 
 
@@ -72,20 +74,33 @@ export const Header = ()=>{
     const [sessionid,setSessionid] = useState("")
     const [loginflag,setLoginflag] = useState("")
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         setSessionid(userid)
         setLoginflag(loginstate)
     },[userid,loginstate])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <p>lodaing...</p>
+    if(isLoading||loginflag=="") return (
+        <Transition
+            show={isLoading||loginflag==""}
+            enter="transition-opacity duration-75 delay-500"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-150"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+        >
+            <SHeader><SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo><ReactLoading type="spin" /></SHeader>
+        </Transition>
+    )
+
 
     const logout = ()=>{
         axios.delete(env+"/logout" as string)
         .then(res=> {
             router.push("/");
             setSessionid("")
-            setLoginflag("")
+            setLoginflag("logout")
         }).catch(error=>{
             console.log("logouterror",error);
         })

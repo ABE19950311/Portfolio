@@ -1,4 +1,4 @@
-import {useState,useEffect} from "react"
+import {useState,useEffect,useLayoutEffect} from "react"
 import axios from "../../csrf-axios"
 
 
@@ -8,9 +8,9 @@ export const FetchData = ()=>{
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState("")
 
-    useEffect(()=>{
+    useLayoutEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            setEnv(process.env.NEXT_PUBLIC_ADDRESS)
+            setEnv(process.env.NEXT_PUBLIC_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
             .then(res=>{
                 axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
@@ -37,7 +37,7 @@ export const FetchData = ()=>{
         env: env,
         loginstate: loginstate,
         userid: userid ? userid:"",
-        isLoading: !error && !env,
+        isLoading: !error && !env && !loginstate && !userid,
         isError: error
     }
 }

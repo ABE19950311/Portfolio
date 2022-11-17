@@ -150,6 +150,13 @@ export const Userlife = ()=>{
         })
     }
 
+    const doUpdate = ()=>{
+        router.push({
+            pathname:"/components/lifepost",
+            query:{flag:true}
+            })
+    }
+
     return (
         <Layout>
         <SDiv>
@@ -165,7 +172,7 @@ export const Userlife = ()=>{
                 <table key={key}>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        {sessionid==life.user_id ? <><td><button className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
+                        {sessionid==life.user_id ? <><td><button onClick={doUpdate} className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
                     </tr>
                 </table>
             )

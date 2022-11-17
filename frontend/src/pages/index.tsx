@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {useRouter} from "next/router"
-import Image from 'next/image'
+import Image from 'next/legacy/image'
 import {Layout} from "./components/layout"
 
 

@@ -108,8 +108,14 @@ export const Lifepost =()=>{
     const [flag,setFlag] = useState("")
     const [lifepost,setLifepost] = useState("")
     const [formflag,setFormflag] = useState(false)
+    const [updateflag,setUpdateflag] = useState(false)
 
     const router = useRouter()
+    const update = router.query.flag as unknown as boolean
+
+    useEffect(()=>{
+        setUpdateflag(update)
+    },[update])
 
     useEffect(()=>{ 
         if(!env) return
@@ -246,6 +252,9 @@ export const Lifepost =()=>{
 
     return (
         <Layout>
+            {updateflag ?
+            <><h1>kouzisitemasu</h1></>
+            :
             <Steps>
                 <label>投稿タイトル(必須):</label><input onChange={doTitle} type={"text"}/>
                 <br></br>
@@ -280,6 +289,7 @@ export const Lifepost =()=>{
                 <br></br>
                 <button onClick={doSubmit}>送信する</button>
             </Steps>
+            }
         </Layout>
     )
 }
