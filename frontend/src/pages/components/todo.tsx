@@ -8,6 +8,7 @@ import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
 import { MdSearch } from "react-icons/md";
+import {FetchData} from "./fetchdata"
 
 registerLocale("ja",ja);
 
@@ -308,6 +309,7 @@ table td:last-child {
 
 
 export const Todo = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [list,setList] = useState("");
     const [life,setLife] = useState("");
     const [search,setSearch] = useState("");
@@ -318,19 +320,23 @@ export const Todo = ()=>{
     const [checkdata,setCheckdata] = useState<any>({});
     const [startclass,setStartclass] = useState(false);
     const [dueclass,setDueclass] = useState(false);
+    const [startDate, setStartDate] = useState<Date>()
+    const [endDate, setEndDate] = useState<Date>()
     const router=useRouter();
 
-    const getenv = router.query.state as unknown as string;
-
     useEffect(()=>{
-        axios.get(getenv+"/todos" as string
+        if(!env) return
+        axios.get(env+"/todos" as string
         ).then(res=> {
             setTodos(res.data);
         }).catch(error=> {
             console.log("response error",error);
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag]);
+    },[flag,env]);
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doList = (event:{target:HTMLInputElement}) => {
         setList(event.target.value);
@@ -423,7 +429,7 @@ export const Todo = ()=>{
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if(list!=="") {
-        axios.post(getenv+"/todos" as string,
+        axios.post(env+"/todos" as string,
             {
                 todos: {
                     list:list,
@@ -447,7 +453,7 @@ export const Todo = ()=>{
     
     const doDelete = ()=>{
         deleteid.forEach((id)=>{
-            axios.delete(getenv+`/todos/${id}` as string)
+            axios.delete(env+`/todos/${id}` as string)
             .then(res => {
                 setFlag(res.data);
             }).catch(error=> {
@@ -526,10 +532,6 @@ const handleChangeEnd = (selectedDate:Date) => {
         .format('YYYY-MM-DD')
     }
 
-    const [startDate, setStartDate] = useState<Date>()
-    const [endDate, setEndDate] = useState<Date>()
-
-    console.log(startDate)
 
     return (
         <>

@@ -4,6 +4,7 @@ import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Header from "./header"
 import moment from "moment"
+import {FetchData} from "./fetchdata"
 
 type Board = {
     id:number,
@@ -76,35 +77,33 @@ const SDiv = styled.div`
 `
 
 export const Board = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("");
     const [title,setTitle] = useState("");
     const [content,setContent] = useState("");
     const [flag,setFlag] = useState("");
     const [board,setBoard] = useState([]);
-    const [sessionid,setSessionid] = useState(0);
     const router=useRouter();
 
-    const getenv = router.query.state as unknown as string;
+    useEffect(()=>{
+        const id = Number(userid)
+        setSessionid(id)
+    },[userid])
 
     useEffect(()=>{
-        axios.get(getenv+"/boards")
+        if(!env) return
+        axios.get(env+"/boards")
         .then(res=>{
             setBoard(res.data)
         }).catch(error=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag,getenv,router])
+    },[flag,env,router])
 
-    useEffect(()=>{
-        axios.get(getenv+"/sessionid")
-        .then(res=>{
-            setSessionid(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[getenv,router])
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doName = (event:{target:HTMLInputElement})=>{
         setName(event.target.value)
@@ -122,7 +121,7 @@ export const Board = ()=>{
         event.preventDefault();
         
         if(!title||!content) return
-        axios.post(getenv+"/boards",
+        axios.post(env+"/boards",
         {
             boards:{
                 posttitle:title,
@@ -143,12 +142,12 @@ export const Board = ()=>{
     const doBoard = (content:string,board_id:number,user_id:number,username:string,createdate:string)=>{
         router.push({
             pathname:"/components/boardcontent",
-            query:{content:content,board_id:board_id,user_id:user_id,env:getenv,username:username,createdate:createdate,sessionid:sessionid}
+            query:{content:content,board_id:board_id,user_id:user_id,username:username,createdate:createdate,sessionid:sessionid}
         })
     }
     
     const doDelete = (deleteid:number)=>{
-        axios.delete(getenv+`/boards/${deleteid}`)
+        axios.delete(env+`/boards/${deleteid}`)
         .then(res=>{
             setFlag(res.data)
         }).catch(error=>{

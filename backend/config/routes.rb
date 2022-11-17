@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#login"
   delete "/logout", to: "sessions#logout"
   post "/usercheck", to: "sessions#usercheck"
-  get "/sessions", to: "sessions#show"
   get "/sessionid", to: "sessions#sessionid"
   get "/myboards", to: "boards#myboard"
   get "/myposts", to: "posts#mypost"

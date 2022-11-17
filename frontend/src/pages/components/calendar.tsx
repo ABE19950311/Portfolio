@@ -8,6 +8,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import listPlugin from "@fullcalendar/list"
 import jaLocale from "@fullcalendar/core/locales/ja"
+import {FetchData} from "./fetchdata"
 
 type Todo = {
     id:number,
@@ -19,17 +20,20 @@ type Todo = {
 
 export const Calendar = ()=>{
     let eventGuid = 0;
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [event,setEvent] = useState([]);
     const [eventlist,setEventlist] = useState({});
     const createEventId = () => String(eventGuid++);
 
     useEffect(()=>{
-        axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/todos" as string)
+        if(!env) return
+        axios.get(env+"/todos" as string)
             .then(res => {
                 setEvent(res.data);
             }).catch(error=> {
                 console.log("response error",error);
             })
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
 
     useEffect(()=>{
@@ -40,6 +44,9 @@ export const Calendar = ()=>{
         }
         setEventlist(schedule);
     },[event])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const handleSelect = (selectInfo:DateSelectArg)=>{   
         let title = prompt("イベント内容を入力して下さい")?.trim();

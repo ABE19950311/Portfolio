@@ -5,6 +5,7 @@ import {useRouter} from "next/router"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import Header from "./header"
+import {FetchData} from "./fetchdata"
 
 
 type Post = {
@@ -85,13 +86,15 @@ const SDiv = styled.div`
         color:#e2264d;
     }
 
-    .none {
+    .noheart {
         color:initial;
     }
 }
 `
 
 export const Boardcontent = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("")
     const [post,setPost] = useState("")
     const [flag,setFlag] = useState("")
@@ -106,22 +109,30 @@ export const Boardcontent = ()=>{
     const user_id = router.query.user_id as unknown as number;
     const username = router.query.username as unknown as string;
     const createdate = router.query.createdate as unknown as string;
-    const getenv = router.query.env as unknown as string;
     const content = router.query.content as unknown as string;
-    const sessionid = router.query.sessionid as unknown as number;
+
+    console.log(heartnumber)
+    console.log(fontcolor)
 
     useEffect(()=>{
-        axios.get(getenv+"/posts")
+        const id = Number(userid)
+        setSessionid(id)
+    },[userid])
+
+    useEffect(()=>{
+        if(!env) return
+        axios.get(env+"/posts")
         .then(res=>{
             setPostcontent(res.data)
         }).catch(error=>{
             console.log(error)
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag])
+    },[flag,env])
 
     useEffect(()=>{
-        axios.get(getenv+"/hearts")
+        if(!env) return
+        axios.get(env+"/hearts")
         .then(res=>{
             let heartcount:any = {}
 
@@ -157,10 +168,10 @@ export const Boardcontent = ()=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[heartflag])
+    },[heartflag,env,sessionid])
 
-    console.log(heartdata)
-    console.log(heartnumber)
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doName = (event:{target:HTMLInputElement})=>{
             setName(event.target.value)
@@ -174,7 +185,7 @@ export const Boardcontent = ()=>{
     }
 
     const setcolorflag = (postid:number)=>{
-            axios.post(getenv+"/hearts",{
+            axios.post(env+"/hearts",{
                 hearts: {
                         post_id:postid,
                         user_id:sessionid
@@ -201,7 +212,7 @@ export const Boardcontent = ()=>{
         event.preventDefault()
         
         if(!post) return
-        axios.post(getenv+"/posts",
+        axios.post(env+"/posts",
         {
             posts: {
                 username:name ? name:"名無しさん",
@@ -222,7 +233,6 @@ export const Boardcontent = ()=>{
     const doBoard = ()=>{
         router.push({
             pathname:"/components/board",
-            query:{state:getenv}
         })
     }
 
@@ -247,7 +257,7 @@ export const Boardcontent = ()=>{
             ).map((post:Post,key:number)=>{
                 return (
                         <div className="postcontent" key={key}>
-                        <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"none"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
+                        <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                         <p className="post">{post.postcontent}</p>
                         </div>
                     )

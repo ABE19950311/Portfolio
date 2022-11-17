@@ -3,6 +3,7 @@ import Link from "next/link"
 import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
+import {FetchData} from "./fetchdata"
 
 const SDiv = styled.div`
 
@@ -70,23 +71,16 @@ const SDiv = styled.div`
 
 
 export const Newaccount = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [validationName,setValidationName] = useState("");
     const [validationPass,setValidationPass] = useState("");
     const [validationPassfilm,setValidationPassfilm] = useState("");
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
     const [passwordconfirm,setPasswordconfirm] = useState("");
-    const [getenv,setGetenv] = useState("");
     const router = useRouter();
     const processtimer = useRef<NodeJS.Timer|null>(null);
 
-    useEffect(()=>{
-        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-        }else{
-            setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-        }
-    },[])
 
     useEffect(()=>{
         if(username.trim()!=="") {
@@ -107,6 +101,9 @@ export const Newaccount = ()=>{
         }
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[password,passwordconfirm])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -147,7 +144,7 @@ export const Newaccount = ()=>{
         }
     
         if(username.trim()===""||password.trim()===""||passwordconfirm.trim()==="") return
-        axios.post(getenv+"/signup" as string,
+        axios.post(env+"/signup" as string,
             {
                 user: {
                     username:username,

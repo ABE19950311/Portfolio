@@ -3,6 +3,7 @@ import Link from "next/link"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
+import {FetchData} from "./fetchdata"
 
 const SDiv = styled.div`
 
@@ -74,36 +75,12 @@ const SDiv = styled.div`
 
 
 export const Login = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [validationName,setValidationName] = useState("");
     const [validationPass,setValidationPass] = useState("");
     const [username,setUsername] = useState("");
     const [password,setPassword] = useState("");
-    const [getenv,setGetenv] = useState("");
     const router = useRouter();
-
-    console.log(process.env.NEXT_PUBLIC_ADDRESS)
-    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
-    console.log(getenv)
-
-    useEffect(()=>{
-        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
-            .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-            }).catch(error=>{
-                console.log(error)
-            })
-        }else{
-            setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
-            .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-            }).catch(error=>{
-                console.log(error)
-            })
-        }
-    },[])
 
     useEffect(()=>{
         if(username.trim()!=="") {
@@ -113,6 +90,9 @@ export const Login = ()=>{
             setValidationPass("")
         }
     },[username,password])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);
@@ -133,7 +113,7 @@ export const Login = ()=>{
         }
 
         if(validationName||validationPass||username.trim()===""||password.trim()==="") return
-        axios.post(getenv+"/login" as string,
+        axios.post(env+"/login" as string,
             {
                 user: {
                     username:username,
@@ -143,7 +123,6 @@ export const Login = ()=>{
             if(res.data.logged_in) {
                 router.push({
                     pathname:"/",
-                    query:{state:getenv}
                     });
             }else if(!res.data.logged_in) {
                     setValidationName("ユーザ名またはパスワードが一致しません")

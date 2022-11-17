@@ -4,6 +4,7 @@ import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import moment from "moment"
 import Layout from "./layout"
+import {FetchData} from "./fetchdata"
 
 const SDiv = styled.div`
     
@@ -107,41 +108,41 @@ type Life = {
 }
 
 export const Userlife = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const [sessionid,setSessionid] = useState<number>()
     const [lifepost,setLifepost] = useState([])
-    const [sessionid,setSessionid] = useState(0)
     const [flag,setFlag] = useState("")
     const router = useRouter()
     const query = router.query.life as unknown as string
-    const getenv = router.query.state as unknown as string
 
     useEffect(()=>{
-        axios.get(getenv+"/lifeposts")
+        const id = Number(userid)
+        setSessionid(id)
+    },[userid])
+
+    useEffect(()=>{
+        if(!env) return
+        axios.get(env+"/lifeposts")
         .then(res=>{
             setLifepost(res.data)
         }).catch(error=>{
             console.log(error)
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[router,getenv,flag])
+    },[router,env,flag])
 
-    useEffect(()=>{
-        axios.get(getenv+"/sessionid")
-        .then(res=>{
-            setSessionid(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
-    },[router,getenv])
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const lifecontent = (id:number,user_id:number)=>{
         router.push({
             pathname:"/components/lifecontent",
-            query:{id:id,user_id:user_id,env:getenv}
+            query:{id:id,user_id:user_id}
             })
     }
 
     const doDelete = (id:number)=>{
-        axios.delete(getenv+`/lifeposts/${id}`)
+        axios.delete(env+`/lifeposts/${id}`)
         .then(res=>{
             setFlag(res.data)
         }).catch(error=>{
@@ -159,16 +160,14 @@ export const Userlife = ()=>{
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th><th className="thcreate">作成日</th><th className="thupdate">更新日</th>
             </tr>
         </table>
-        {lifepost.map((life:Life)=>{
+        {lifepost.map((life:Life,key:number)=>{
             return (
-                <>
-                <table>
+                <table key={key}>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                         {sessionid==life.user_id ? <><td><button className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
                     </tr>
                 </table>
-                </>
             )
         })}
         

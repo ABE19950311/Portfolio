@@ -4,6 +4,8 @@ import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Image from 'next/image'
+import useSWR from "swr"
+import {FetchData} from "./fetchdata"
 
 
 
@@ -66,46 +68,24 @@ const SItem = styled.li`
 
 export const Header = ()=>{
     const router = useRouter();
-    const [getenv,setGetenv] = useState("");
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState("")
+    const [loginflag,setLoginflag] = useState("")
 
     useEffect(()=>{
-        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            setGetenv(process.env.NEXT_PUBLIC_ADDRESS)   
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessions")
-            .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-            }).catch(error=>{
-                console.log(error)
-            })
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
-            .then(res=>{
-                setSessionid(res.data)
-            }).catch(error=>{
-                console.log(error)
-            })
-        }else{
-            setGetenv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessions")
-            .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-            }).catch(error=>{
-                console.log(error)
-            })
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessionid")
-            .then(res=>{
-                setSessionid(res.data)
-            }).catch(error=>{
-                console.log(error)
-            })
-        }
-    },[])
+        setSessionid(userid)
+        setLoginflag(loginstate)
+    },[userid,loginstate])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const logout = ()=>{
-        axios.delete(getenv+"/logout" as string)
+        axios.delete(env+"/logout" as string)
         .then(res=> {
             router.push("/");
             setSessionid("")
+            setLoginflag("")
         }).catch(error=>{
             console.log("logouterror",error);
         })
@@ -114,33 +94,29 @@ export const Header = ()=>{
     const todo = ()=>{
         router.push({
             pathname:"/components/todo",
-            query:{state:getenv}
             })
     }
 
     const board = ()=>{
         router.push({
             pathname:"/components/board",
-            query:{state:getenv}
             })
     }
 
     const lifepost =()=>{
         router.push({
             pathname:"/components/lifepost",
-            query:{state:getenv}
             })
     }
 
     const userlife =()=>{
         router.push({
             pathname:"/components/userlife",
-            query:{state:getenv}
             })
     }
 
     const mypage = ()=>{
-        axios.post(getenv+"/mypages",
+        axios.post(env+"/mypages",
             {
             users: {
                 user_id:sessionid
@@ -152,14 +128,13 @@ export const Header = ()=>{
         })
         router.push({
             pathname:"/components/mypage",
-            query:{state:getenv}
             })
     }
 
     return (
         <SHeader>
             <SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo>
-            {sessionid ? 
+            {loginflag=="login" ? 
             <SMenu>
                 <Link href="/"><SItem><span>トップページへ戻る</span></SItem></Link>
                 <Sbtn onClick={lifepost}><a href="#"><span>生活情報を投稿する</span></a></Sbtn>

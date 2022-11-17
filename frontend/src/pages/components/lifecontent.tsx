@@ -3,6 +3,7 @@ import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
+import {FetchData} from "./fetchdata"
 
 
 const Steps = styled.div`
@@ -159,15 +160,15 @@ type Content = {
 }
 
 export const Lifecontent = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [usercontent,setUsercontent] = useState<Content>()
 
     const router = useRouter()
     const id = router.query.id as unknown as number
     const user_id = router.query.user_id as unknown as number
-    const getenv = router.query.env as unknown as string
 
     useEffect(()=>{
-        axios.post(getenv+"/userposts",
+        axios.post(env+"/userposts",
         {
             userpost: {
                 id:id,
@@ -178,8 +179,10 @@ export const Lifecontent = ()=>{
         }).catch(error=>{
             console.log(error)
         })
-    },[id,user_id,getenv])
+    },[id,user_id,env])
 
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
     if(usercontent==undefined) return
 
     const content = JSON.parse(usercontent.content)
@@ -222,5 +225,4 @@ export const Lifecontent = ()=>{
 }
 
 export default Lifecontent
-
 

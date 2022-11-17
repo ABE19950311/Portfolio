@@ -3,6 +3,7 @@ import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
+import {FetchData} from "./fetchdata"
 
 
 const Steps = styled.div`
@@ -96,6 +97,7 @@ z-index: 1;
 
 
 export const Lifepost =()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
     const [headline,setHeadline] = useState("")
@@ -109,27 +111,29 @@ export const Lifepost =()=>{
 
     const router = useRouter()
 
-    const getenv = router.query.state as unknown as string
-
     useEffect(()=>{ 
-        axios.get(getenv+"/lifeposts")
+        if(!env) return
+        axios.get(env+"/lifeposts")
         .then(res=>{
             setLifepost(res.data)
         }).catch(error=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag])
+    },[flag,env])
 
     useEffect(()=>{
         if(formflag===true) {
             router.push({
                 pathname:"/components/userlife",
-                query:{life:"lifepost",state:getenv}
+                query:{life:"lifepost"}
                 })
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[formflag])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
 
     const doTitle = (event:{target:HTMLInputElement})=>{
@@ -221,7 +225,7 @@ export const Lifepost =()=>{
 
         setFormflag(true)
 
-        axios.post(getenv+"/lifeposts",
+        axios.post(env+"/lifeposts",
         {   
             lifepost: {
                 title:title,

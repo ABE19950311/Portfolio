@@ -1,10 +1,5 @@
 class SessionsController < ApplicationController
 
-    def show
-        set_csrf_token_header
-        render json:{message:"ok"}, status: :ok
-    end
-
     def login
         set_csrf_token_header
         @user = User.find_by(username: session_params[:username])
@@ -33,8 +28,14 @@ class SessionsController < ApplicationController
     end
 
     def sessionid
-        @current_id = User.find_by(username: session[:user_name]).id
-        render json:@current_id
+        set_csrf_token_header
+        @existid = User.where(username: session[:user_name]).exists?
+        if @existid
+            @current_id = User.find_by(username: session[:user_name]).id
+            render json:{state: :login,id: @current_id}
+        else
+            render json:{state: :logout}
+        end
     end
 
     def sessionname

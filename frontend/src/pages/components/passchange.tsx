@@ -2,6 +2,7 @@ import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
+import {FetchData} from "./fetchdata"
 
 const SDiv = styled.div`
 
@@ -60,33 +61,25 @@ const SDiv = styled.div`
 
 
 export const Passchange = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [validationPass,setValidationPass] = useState("");
     const [validationNewPass,setValidationNewPass] = useState("");
     const [validationNewPassfilm,setValidationNewPassfilm] = useState("");
     const [username,setUsername] = useState("");
-    const [sessionid,setSessionid] = useState("");
     const [oldpass,setOldpass] = useState("");
     const [password,setPassword] = useState("");
     const [passwordconfirm,setPasswordconfirm] = useState("");
     const router = useRouter();
     const processtimer = useRef<NodeJS.Timer|null>(null);
 
-    const getenv = router.query.state as unknown as string;
-
     useEffect(()=>{
-        axios.get(getenv+"/sessionid")
-        .then(res=>{
-            setSessionid(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
-        axios.get(getenv+"/sessionname")
+        axios.get(env+"/sessionname")
         .then(res=>{
             setUsername(res.data)
         }).catch(error=>{
             console.log(error)
         })
-    },[router,getenv])    
+    },[router,env])    
 
     useEffect(()=>{
         if(oldpass.trim()!=="") {
@@ -109,6 +102,9 @@ export const Passchange = ()=>{
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[password,passwordconfirm])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doPass = (event:{target:HTMLInputElement})=>{
         setOldpass(event.target.value);
@@ -134,7 +130,6 @@ export const Passchange = ()=>{
     const doMypage =()=>{
         router.push({
             pathname:"/components/mypage",
-            query:{state:getenv}
             })
     }
 
@@ -157,7 +152,7 @@ export const Passchange = ()=>{
 
         if(validationPass||oldpass.trim()===""||password.trim()===""||passwordconfirm.trim()==="") return
 
-        axios.post(getenv+"/usercheck",
+        axios.post(env+"/usercheck",
         {
             user :{
                 username:username,
@@ -166,7 +161,7 @@ export const Passchange = ()=>{
         }
         ).then(res=>{
             if(res.data.status) {
-                axios.patch(getenv+"/newpass",
+                axios.patch(env+"/newpass",
                 {
                     user :{
                         username:username,
@@ -176,7 +171,6 @@ export const Passchange = ()=>{
                 }).then(res=>{
                     router.push({
                         pathname:"/components/mypage",
-                        query:{state:getenv}
                         });
                 }).catch(error=>{
                     console.log(error)

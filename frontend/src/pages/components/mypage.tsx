@@ -4,6 +4,7 @@ import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
 import moment from "moment"
+import {FetchData} from "./fetchdata"
 
 type Todo = {
     id:number,
@@ -105,61 +106,65 @@ const SDiv = styled.div`
 `
 
 export const Mypage = ()=>{
+    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const [sessionid,setSessionid] = useState("")
     const [todo,setTodo] = useState([])
     const [board,setBoard] = useState([])
     const [post,setPost] = useState([])
     const [heart,setHeart] = useState([])
-    const [sessionid,setSessionid] = useState("")
     const [sessionname,setSessionname] = useState("")
     const router = useRouter()
 
-    const getenv = router.query.state as unknown as string
-
-    console.log(sessionid)
+    useEffect(()=>{
+        setSessionid(userid)
+    },[userid])
 
     useEffect(()=>{
-        axios.get(getenv+"/sessionid")
+        if(!env) return
+        axios.get(env+"/sessionid")
         .then(res=>{
             setSessionid(res.data)
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(getenv+"/sessionname")
+        axios.get(env+"/sessionname")
         .then(res=>{
             setSessionname(res.data)
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(getenv+"/todos")
+        axios.get(env+"/todos")
         .then(res=>{
             setTodo(res.data)
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(getenv+"/myboards")
+        axios.get(env+"/myboards")
         .then(res=>{
             setBoard(res.data)
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(getenv+"/myposts")
+        axios.get(env+"/myposts")
         .then(res=>{
             setPost(res.data)
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(getenv+"/myhearts")
+        axios.get(env+"/myhearts")
         .then(res=>[
             setHeart(res.data)
         ]).catch(error=>{
             console.log(error)
         })
-    },[router,getenv])
+    },[router,env])
+
+    if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const passChange = ()=>{
         router.push({
             pathname:"/components/passchange",
-            query:{state:getenv}
             })
     }
 
