@@ -16,6 +16,16 @@ class LifepostsController < ApplicationController
         render json:@getpost
     end
 
+    def update
+        @updatelife = Lifepost.find(params[:id])
+        @updatelife.update(
+            title: life_params[:title],lifeitem: life_params[:lifeitem],
+            headline: life_params[:headline],content: life_params[:content],
+            detail: life_params[:detail],checkcontent: life_params[:checkcontent]
+        )
+        render json:@updatelife
+    end
+
     def destroy 
         @lifepost = Lifepost.find(params[:id])
         @lifepost.destroy

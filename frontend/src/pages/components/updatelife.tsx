@@ -107,7 +107,7 @@ type Life = {
     checkcontent:string[]
 }
 
-export const Lifepost =()=>{
+export const Updatelife =()=>{
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
@@ -115,24 +115,82 @@ export const Lifepost =()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
-    const [formflag,setFormflag] = useState(false)
-    const [formcount,setFormcount] = useState<string[]>(["1"])
+    const [contentid,setContentid] = useState(-1)
+    const [detailid,setDetailid] = useState(-1)
+    const [checkid,setCheckid] = useState(-1)
+    const [none,setNone] = useState<any[]>([])
 
     const router = useRouter()
+    const updateid = router.query.id as unknown as number
+    const updateuser = router.query.userid as unknown as number
+    const [formcount,setFormcount] = useState<string[]>([])
 
     useEffect(()=>{
-        if(formflag===true) {
-            router.push({
-                pathname:"/components/userlife",
-                query:{life:"lifepost"}
-                })
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[formflag])
+        if(!env||!updateid||!updateuser) return
+            axios.post(env+"/userposts",
+            {
+                userpost: {
+                    id:updateid,
+                    user_id:updateuser
+                }
+            }).then(res=>{
+                setTitle(res.data.title)
+                setLifeitem(res.data.lifeitem)
+                setHeadline(res.data.headline)
+                    if(!formcount.length) {
+                    JSON.parse(res.data.content).forEach(()=>{
+                    setFormcount((formcount)=>([
+                        ...formcount,
+                        "1"
+                        ]))
+                    })
+                    }
+                setContent(JSON.parse(res.data.content))
+                setDetail(JSON.parse(res.data.detail))
+                setCheckcontent(JSON.parse(res.data.checkcontent))
+            }).catch(error=>{
+                console.log(error)
+            })
+             // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[updateid,updateuser,env])
+
+    useEffect(()=>{
+        const find = content.findIndex((content)=>content[contentid]||content[contentid]=="")
+        const tyoufuku = content.map((value)=>{
+                let count = 0
+                if(value.sortid==contentid) {
+                    count+=1
+                }       
+                return {[value.sortid]:count}
+        })
+        console.log(tyoufuku)
+        console.log(tyoufuku.find((value)=>value[contentid]))
+        if(find==-1) return
+        content.splice(find,1)
+        content.sort((a,b)=>a.sortid-b.sortid)
+        setNone(content)
+    },[content,contentid])
+
+    useEffect(()=>{
+        const find = detail.findIndex((detail)=>detail[detailid]||detail[detailid]=="")
+        if(find==-1) return
+        detail.splice(find,1)
+        detail.sort((a,b)=>a.sortid-b.sortid)
+        setNone(detail)
+    },[detail,detailid])
+
+    useEffect(()=>{
+        const find = checkcontent.findIndex((checkcontent)=>checkcontent[checkid]||checkcontent[checkid]=="")
+        if(find==-1) return
+        checkcontent.splice(find,1)
+        checkcontent.sort((a,b)=>a.sortid-b.sortid)
+        setNone(checkcontent)
+    },[checkcontent,checkid])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
+    console.log(content)
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -179,9 +237,7 @@ export const Lifepost =()=>{
             obj
         ]))
 
-        const find = content.findIndex((content)=>content[numberid]||content[numberid]=="")
-        if(find==-1) return
-        content.splice(find,1)
+        setContentid(numberid)
     }
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -194,9 +250,7 @@ export const Lifepost =()=>{
             obj
         ]))
 
-        const find = detail.findIndex((detail)=>detail[id]||detail[id]=="")
-        if(find==-1) return
-        detail.splice(find,1)
+        setDetailid(id)
     }
 
     const doCheckcontent = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -209,9 +263,7 @@ export const Lifepost =()=>{
                 obj
         ]))
 
-        const find = checkcontent.findIndex((value)=>value[id]||value[id]=="")
-        if(find==-1) return
-        checkcontent.splice(find,1)
+        setCheckid(id)
     }
 
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
@@ -221,9 +273,7 @@ export const Lifepost =()=>{
         const jsondetail = JSON.stringify(detail)
         const jsoncheck = JSON.stringify(checkcontent)
 
-        setFormflag(true)
-
-        axios.post(env+"/lifeposts",
+        axios.patch(env+`/lifeposts/${updateid}`,
         {   
             lifepost: {
                 title:title,
@@ -234,7 +284,10 @@ export const Lifepost =()=>{
                 checkcontent:jsoncheck
             }
         }).then(res=>{
-            setFormflag(true)
+            router.push({
+                pathname:"/components/userlife",
+                query:{life:"updatepost"}
+                })
         }).catch(error=>{
             console.log(error)
         })
@@ -242,20 +295,20 @@ export const Lifepost =()=>{
 
     return (
         <Layout>
-            <Steps>
-                <label>投稿タイトル(必須):</label><input onChange={doTitle} type={"text"}/>
+                <Steps>
+                <label>投稿タイトル(必須):</label><input defaultValue={title} onChange={doTitle} type={"text"}/>
                 <br></br>
                 <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
                 <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
                 <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
-                <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
+                <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} defaultChecked onChange={doLifeitem}/><label>掃除</label>
                 <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label>
                 <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
                 <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
-                <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
+                <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} onChange={doLifeitem}/><label>項目を選択しない</label>
 
                 <br></br>
-                <h1><label>見出しの文章(必須):</label><input onChange={doHeadline} type={"text"}/></h1>
+                <h1><label>見出しの文章(必須):</label><input defaultValue={headline} onChange={doHeadline} type={"text"}/></h1>
                 <br></br>
                 <button onClick={doFormplus}>入力項目を増やす</button><button onClick={doFormminus}>入力項目を減らす</button>
                 <br></br>
@@ -263,21 +316,21 @@ export const Lifepost =()=>{
                 {formcount.map((count:string,key:number)=>{
                     return (
                         <div className="steps" key={key}>
-                            <h2><label>{key+1}つ目の目次(必須):</label><input max={key+1} onChange={doContent} type={"text"}/></h2>
+                            <h2><label>{key+1}つ目の目次(必須):</label><input max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                             <br></br>
-                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
+                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={detail[key+0]?.[key+1]} onChange={doDetail} />
                             <br></br>
-                            <label>{key+1}つ目の項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
+                            <label>{key+1}つ目の項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
                             <h2></h2>
                         </div>   
                     )
                 })}
 
                 <br></br>
-                <button onClick={doSubmit}>送信する</button>
+                <button onClick={doSubmit}>更新する</button>
             </Steps>
         </Layout>
     )
 }
 
-export default Lifepost
+export default Updatelife

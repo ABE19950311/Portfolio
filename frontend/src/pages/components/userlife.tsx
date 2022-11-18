@@ -150,17 +150,17 @@ export const Userlife = ()=>{
         })
     }
 
-    const doUpdate = ()=>{
+    const doUpdate = (id:number,userid:number)=>{
         router.push({
-            pathname:"/components/lifepost",
-            query:{flag:true}
+            pathname:"/components/updatelife",
+            query:{id:id,userid:userid}
             })
     }
 
     return (
         <Layout>
         <SDiv>
-        {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:<></>}
+        {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
 
         <table border={1}>
             <tr>
@@ -172,7 +172,7 @@ export const Userlife = ()=>{
                 <table key={key}>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        {sessionid==life.user_id ? <><td><button onClick={doUpdate} className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
+                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
                     </tr>
                 </table>
             )
