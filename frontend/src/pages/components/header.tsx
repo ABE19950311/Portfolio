@@ -151,24 +151,24 @@ export const Header = ()=>{
             <SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo>
             {loginflag=="login" ? 
             <SMenu>
-                <Link href="/"><SItem><span>トップページへ戻る</span></SItem></Link>
-                <Sbtn onClick={lifepost}><a href="#"><span>生活情報を投稿する</span></a></Sbtn>
-                <Sbtn onClick={userlife}><a href="#"><span>ユーザが投稿した情報を確認</span></a></Sbtn>
-                <Link href="/mappage"><SItem><span>ハザードマップ</span></SItem></Link>
-                <Sbtn onClick={todo}><a href="#"><span>TODOリスト</span></a></Sbtn>
-                <Link href="/components/calendar"><SItem><span>カレンダー</span></SItem></Link>
-                <Sbtn onClick={board}><a href="#"><span>掲示板</span></a></Sbtn>
-                <Sbtn onClick={mypage}><a href="#"><span>マイページ</span></a></Sbtn>
-                <Sbtn onClick={logout}><a href="#"><span>ログアウト</span></a></Sbtn>
+                <Link href="/"><SItem><span><strong>トップページへ戻る</strong></span></SItem></Link>
+                <Sbtn onClick={lifepost}><a href="#"><span><strong>生活情報を投稿する</strong></span></a></Sbtn>
+                <Sbtn onClick={userlife}><a href="#"><span><strong>ユーザが投稿した情報を確認</strong></span></a></Sbtn>
+                <Link href="/mappage"><SItem><span><strong>ハザードマップ</strong></span></SItem></Link>
+                <Sbtn onClick={todo}><a href="#"><span><strong>TODOリスト</strong></span></a></Sbtn>
+                <Link href="/components/calendar"><SItem><span><strong>カレンダー</strong></span></SItem></Link>
+                <Sbtn onClick={board}><a href="#"><span><strong>掲示板</strong></span></a></Sbtn>
+                <Sbtn onClick={mypage}><a href="#"><span><strong>マイページ</strong></span></a></Sbtn>
+                <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
             </SMenu>
             :
             <SMenu>
-                <Link href="/"><SItem><span>トップページへ戻る</span></SItem></Link>
-                <Sbtn onClick={userlife}><a href="#"><span>ユーザが投稿した情報を確認</span></a></Sbtn>
-                <Link href="/mappage"><SItem><span>ハザードマップ</span></SItem></Link>
-                <Link href="/components/calendar"><SItem><span>カレンダー</span></SItem></Link>
-                <Link href="/components/newaccount"><SItem><span>新規登録</span></SItem></Link>
-                <Link href="/components/login"><SItem><span>ログイン</span></SItem></Link>
+                <Link href="/"><SItem><span><strong>トップページへ戻る</strong></span></SItem></Link>
+                <Sbtn onClick={userlife}><a href="#"><span><strong>ユーザが投稿した情報を確認</strong></span></a></Sbtn>
+                <Link href="/mappage"><SItem><span><strong>ハザードマップ</strong></span></SItem></Link>
+                <Link href="/components/calendar"><SItem><span><strong>カレンダー</strong></span></SItem></Link>
+                <Link href="/components/newaccount"><SItem><span><strong>新規登録</strong></span></SItem></Link>
+                <Link href="/components/login"><SItem><span><strong>ログイン</strong></span></SItem></Link>
             </SMenu>
             }
         </SHeader>

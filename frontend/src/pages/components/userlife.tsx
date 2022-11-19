@@ -9,6 +9,11 @@ import {FetchData} from "./fetchdata"
 const SDiv = styled.div`
     
     margin:70px 0 0 80px;
+    overflow-wrap: break-word;
+
+    caption {
+        text-align:left;
+    }
 
     .kousinbtn {
         font-weight: 700;
@@ -74,12 +79,6 @@ const SDiv = styled.div`
     .thhead {
         width:250px;
     }
-    .thcreate {
-        width:200px;
-    }
-    .thupdate {
-        width:200px;
-    }
     .tdtitle {
         width:450px;
     }
@@ -92,6 +91,73 @@ const SDiv = styled.div`
     .tdupdate {
         width:200px;
     }
+
+    .create {
+        width:200px;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .create::before, .create::after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: 5px solid transparent;
+        right: 10px;
+        top: 50%;
+    }
+    
+    .create::before {
+        border-bottom-color: #aaa;
+        margin-top: -10px;
+    }
+    
+    .create::after {
+        border-top-color: #aaa;
+        margin-top: 2px;
+    }
+    
+    .update {
+        width:200px;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .update::before, .update::after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: 5px solid transparent;
+        right: 10px;
+        top: 50%;
+    }
+    
+    .update::before {
+        border-bottom-color: #aaa;
+        margin-top: -10px;
+    }
+    
+    .update::after {
+        border-top-color: #aaa;
+        margin-top: 2px;
+    }
+    
+    .createdesc::before {
+        border-bottom-color: #444;
+    }
+    .createasc::after {
+        border-top-color: #444;
+    }
+    
+    .updatedesc::before {
+        border-bottom-color: #444;
+    }
+    .updateasc::after {
+        border-top-color: #444;
+    }
+
 `
 
 type Life = {
@@ -112,6 +178,8 @@ export const Userlife = ()=>{
     const [sessionid,setSessionid] = useState<number>()
     const [lifepost,setLifepost] = useState([])
     const [flag,setFlag] = useState("")
+    const [createSortflag,setCreateSortflag] = useState(false)
+    const [updateSortflag,setUpdateSortflag] = useState(false)
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -141,6 +209,42 @@ export const Userlife = ()=>{
             })
     }
 
+    const createAsc = ()=>{
+        lifepost.sort((a:Life,b:Life)=>{
+            if(a.created_at<b.created_at) return -1
+            if(a.created_at>b.created_at) return 1
+            return 0
+        })
+        setCreateSortflag(false)
+    }
+
+    const createDesc = ()=>{
+        lifepost.sort((a:Life,b:Life)=>{
+            if(a.created_at>b.created_at) return -1
+            if(a.created_at<b.created_at) return 1
+            return 0
+        })
+        setCreateSortflag(true)
+    }
+
+    const updateAsc = ()=>{
+        lifepost.sort((a:Life,b:Life)=>{
+            if(a.updated_at<b.updated_at) return -1
+            if(a.updated_at>b.updated_at) return 1
+            return 0
+        })
+        setUpdateSortflag(false)
+    }
+
+    const updateDesc = ()=>{
+        lifepost.sort((a:Life,b:Life)=>{
+            if(a.updated_at>b.updated_at) return -1
+            if(a.updated_at<b.updated_at) return 1
+            return 0
+        })
+        setUpdateSortflag(true)
+    }
+
     const doDelete = (id:number)=>{
         axios.delete(env+`/lifeposts/${id}`)
         .then(res=>{
@@ -163,8 +267,11 @@ export const Userlife = ()=>{
         {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
 
         <table border={1}>
+        <caption>投稿件数:{lifepost.length}件</caption>
             <tr>
-                <th className="thtitle">タイトル</th><th className="thhead">項目</th><th className="thcreate">作成日</th><th className="thupdate">更新日</th>
+                <th className="thtitle">タイトル</th><th className="thhead">項目</th>
+                <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
+                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
             </tr>
         </table>
         {lifepost.map((life:Life,key:number)=>{

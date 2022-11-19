@@ -121,12 +121,6 @@ export const Mypage = ()=>{
 
     useEffect(()=>{
         if(!env) return
-        axios.get(env+"/sessionid")
-        .then(res=>{
-            setSessionid(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
         axios.get(env+"/sessionname")
         .then(res=>{
             setSessionname(res.data)

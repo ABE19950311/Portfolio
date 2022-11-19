@@ -123,7 +123,7 @@ export const Newaccount = ()=>{
 
         processtimer.current = setTimeout(()=>{
             doSubmit(event)
-        },1000)
+        },200)
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
