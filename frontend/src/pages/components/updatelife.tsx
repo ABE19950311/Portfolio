@@ -115,14 +115,20 @@ export const Updatelife =()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
-    const [contentid,setContentid] = useState(-1)
-    const [detailid,setDetailid] = useState(-1)
-    const [checkid,setCheckid] = useState(-1)
-    const [none,setNone] = useState<any[]>([])
 
+    const [deftitle,defsetTitle] = useState("")
+    const [deflifeitem,defsetLifeitem] = useState("")
+    const [defheadline,defsetHeadline] = useState("")
+    const [defcontent,defsetContent] = useState<any[]>([])
+    const [defdetail,defsetDetail] = useState<any[]>([])
+    const [defcheckcontent,defsetCheckcontent] = useState<any[]>([])
+    
     const router = useRouter()
     const updateid = router.query.id as unknown as number
     const updateuser = router.query.userid as unknown as number
+    const contenttimer = useRef<NodeJS.Timer|null>(null);
+    const detailtimer = useRef<NodeJS.Timer|null>(null);
+    const checktimer = useRef<NodeJS.Timer|null>(null);
     const [formcount,setFormcount] = useState<string[]>([])
 
     useEffect(()=>{
@@ -134,9 +140,9 @@ export const Updatelife =()=>{
                     user_id:updateuser
                 }
             }).then(res=>{
-                setTitle(res.data.title)
-                setLifeitem(res.data.lifeitem)
-                setHeadline(res.data.headline)
+                defsetTitle(res.data.title)
+                defsetLifeitem(res.data.lifeitem)
+                defsetHeadline(res.data.headline)
                     if(!formcount.length) {
                     JSON.parse(res.data.content).forEach(()=>{
                     setFormcount((formcount)=>([
@@ -145,9 +151,9 @@ export const Updatelife =()=>{
                         ]))
                     })
                     }
-                setContent(JSON.parse(res.data.content))
-                setDetail(JSON.parse(res.data.detail))
-                setCheckcontent(JSON.parse(res.data.checkcontent))
+                defsetContent(JSON.parse(res.data.content))
+                defsetDetail(JSON.parse(res.data.detail))
+                defsetCheckcontent(JSON.parse(res.data.checkcontent))
             }).catch(error=>{
                 console.log(error)
             })
@@ -155,42 +161,20 @@ export const Updatelife =()=>{
     },[updateid,updateuser,env])
 
     useEffect(()=>{
-        const find = content.findIndex((content)=>content[contentid]||content[contentid]=="")
-        const tyoufuku = content.map((value)=>{
-                let count = 0
-                if(value.sortid==contentid) {
-                    count+=1
-                }       
-                return {[value.sortid]:count}
-        })
-        console.log(tyoufuku)
-        console.log(tyoufuku.find((value)=>value[contentid]))
-        if(find==-1) return
-        content.splice(find,1)
-        content.sort((a,b)=>a.sortid-b.sortid)
-        setNone(content)
-    },[content,contentid])
-
-    useEffect(()=>{
-        const find = detail.findIndex((detail)=>detail[detailid]||detail[detailid]=="")
-        if(find==-1) return
-        detail.splice(find,1)
-        detail.sort((a,b)=>a.sortid-b.sortid)
-        setNone(detail)
-    },[detail,detailid])
-
-    useEffect(()=>{
-        const find = checkcontent.findIndex((checkcontent)=>checkcontent[checkid]||checkcontent[checkid]=="")
-        if(find==-1) return
-        checkcontent.splice(find,1)
-        checkcontent.sort((a,b)=>a.sortid-b.sortid)
-        setNone(checkcontent)
-    },[checkcontent,checkid])
+        setTitle(deftitle)
+        setLifeitem(deflifeitem)
+        setHeadline(defheadline)
+        setContent(defcontent)
+        setDetail(defdetail)
+        setCheckcontent(defcheckcontent)
+    },[deftitle,deflifeitem,defheadline,defcontent,defdetail,defcheckcontent])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
     console.log(content)
+    console.log(detail)
+    console.log(checkcontent)
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -226,18 +210,26 @@ export const Updatelife =()=>{
         checkcontent.splice(checkfind,1)
     }
 
+
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
         const id = event.target.max
         const numberid = Number(id)
         const value= event.target.value
         const obj = {[numberid]:value,sortid:numberid}
+        
+        if(contenttimer.current) clearTimeout(contenttimer.current)
 
-        setContent((content)=>([
-            ...content,
-            obj
-        ]))
+        contenttimer.current = setTimeout(()=>{
+            setContent((content)=>([
+                ...content,
+                obj
+            ]))
+        },200)
 
-        setContentid(numberid)
+        const find = content.findIndex((content)=>content[numberid]||content[numberid]=="")
+        if(find==-1) return
+        content.splice(find,1)
+
     }
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -245,12 +237,18 @@ export const Updatelife =()=>{
         const value= event.target.value
         const obj = {[id]:value,sortid:id}
 
+        if(detailtimer.current) clearTimeout(detailtimer.current)
+
+        detailtimer.current = setTimeout(()=>{
         setDetail((detail)=>([
             ...detail,
             obj
         ]))
+        },200)
 
-        setDetailid(id)
+        const find = detail.findIndex((detail)=>detail[id]||detail[id]=="")
+        if(find==-1) return
+        detail.splice(find,1)
     }
 
     const doCheckcontent = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -258,12 +256,18 @@ export const Updatelife =()=>{
         const value = event.target.value
         const obj = {[id]:value,sortid:id}
 
+        if(checktimer.current) clearTimeout(checktimer.current)
+
+        checktimer.current = setTimeout(()=>{
         setCheckcontent((checkcontent)=>([
             ...checkcontent,
                 obj
         ]))
+        },200)
 
-        setCheckid(id)
+        const find = checkcontent.findIndex((value)=>value[id]||value[id]=="")
+        if(find==-1) return
+        checkcontent.splice(find,1)
     }
 
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
@@ -296,7 +300,7 @@ export const Updatelife =()=>{
     return (
         <Layout>
                 <Steps>
-                <label>投稿タイトル(必須):</label><input defaultValue={title} onChange={doTitle} type={"text"}/>
+                <label>投稿タイトル(必須):</label><input defaultValue={deftitle} onChange={doTitle} type={"text"}/>
                 <br></br>
                 <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
                 <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
@@ -308,7 +312,7 @@ export const Updatelife =()=>{
                 <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} onChange={doLifeitem}/><label>項目を選択しない</label>
 
                 <br></br>
-                <h1><label>見出しの文章(必須):</label><input defaultValue={headline} onChange={doHeadline} type={"text"}/></h1>
+                <h1><label>見出しの文章(必須):</label><input defaultValue={defheadline} onChange={doHeadline} type={"text"}/></h1>
                 <br></br>
                 <button onClick={doFormplus}>入力項目を増やす</button><button onClick={doFormminus}>入力項目を減らす</button>
                 <br></br>
@@ -316,11 +320,11 @@ export const Updatelife =()=>{
                 {formcount.map((count:string,key:number)=>{
                     return (
                         <div className="steps" key={key}>
-                            <h2><label>{key+1}つ目の目次(必須):</label><input max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                            <h2><label>{key+1}つ目の目次(必須):</label><input max={key+1} defaultValue={defcontent[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                             <br></br>
-                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={detail[key+0]?.[key+1]} onChange={doDetail} />
+                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defdetail[key+0]?.[key+1]} onChange={doDetail} />
                             <br></br>
-                            <label>{key+1}つ目の項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                            <label>{key+1}つ目の項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defcheckcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
                             <h2></h2>
                         </div>   
                     )

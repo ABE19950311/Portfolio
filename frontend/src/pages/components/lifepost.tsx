@@ -117,6 +117,9 @@ export const Lifepost =()=>{
     const [checkcontent,setCheckcontent] = useState<any[]>([])
     const [formflag,setFormflag] = useState(false)
     const [formcount,setFormcount] = useState<string[]>(["1"])
+    const contenttimer = useRef<NodeJS.Timer|null>(null);
+    const detailtimer = useRef<NodeJS.Timer|null>(null);
+    const checktimer = useRef<NodeJS.Timer|null>(null);
 
     const router = useRouter()
 
@@ -133,6 +136,9 @@ export const Lifepost =()=>{
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
+    console.log(content)
+    console.log(detail)
+    console.log(checkcontent)
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -173,15 +179,20 @@ export const Lifepost =()=>{
         const numberid = Number(id)
         const value= event.target.value
         const obj = {[numberid]:value,sortid:numberid}
+        
+        if(contenttimer.current) clearTimeout(contenttimer.current)
 
-        setContent((content)=>([
-            ...content,
-            obj
-        ]))
+        contenttimer.current = setTimeout(()=>{
+            setContent((content)=>([
+                ...content,
+                obj
+            ]))
+        },200)
 
         const find = content.findIndex((content)=>content[numberid]||content[numberid]=="")
         if(find==-1) return
         content.splice(find,1)
+
     }
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
@@ -189,10 +200,14 @@ export const Lifepost =()=>{
         const value= event.target.value
         const obj = {[id]:value,sortid:id}
 
+        if(detailtimer.current) clearTimeout(detailtimer.current)
+
+        detailtimer.current = setTimeout(()=>{
         setDetail((detail)=>([
             ...detail,
             obj
         ]))
+        },200)
 
         const find = detail.findIndex((detail)=>detail[id]||detail[id]=="")
         if(find==-1) return
@@ -204,10 +219,14 @@ export const Lifepost =()=>{
         const value = event.target.value
         const obj = {[id]:value,sortid:id}
 
+        if(checktimer.current) clearTimeout(checktimer.current)
+
+        checktimer.current = setTimeout(()=>{
         setCheckcontent((checkcontent)=>([
             ...checkcontent,
                 obj
         ]))
+        },200)
 
         const find = checkcontent.findIndex((value)=>value[id]||value[id]=="")
         if(find==-1) return
