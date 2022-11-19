@@ -8,7 +8,7 @@ import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
 import { MdSearch } from "react-icons/md";
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 
 registerLocale("ja",ja);
 

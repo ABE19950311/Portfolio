@@ -3,7 +3,7 @@ import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 
 
 const Steps = styled.div`

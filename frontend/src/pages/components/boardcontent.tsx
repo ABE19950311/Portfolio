@@ -5,7 +5,7 @@ import {useRouter} from "next/router"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import Header from "./header"
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 
 
 type Post = {

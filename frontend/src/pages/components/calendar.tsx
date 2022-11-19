@@ -8,7 +8,7 @@ import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin from "@fullcalendar/interaction"
 import listPlugin from "@fullcalendar/list"
 import jaLocale from "@fullcalendar/core/locales/ja"
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 
 type Todo = {
     id:number,

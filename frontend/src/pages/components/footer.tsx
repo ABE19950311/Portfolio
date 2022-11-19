@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 
 const SFooter = styled.div`
 width: 100%;

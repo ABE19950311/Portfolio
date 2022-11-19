@@ -5,7 +5,7 @@ import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Image from 'next/image'
 import useSWR from "swr"
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 import { Transition } from '@headlessui/react'
 import ReactLoading from 'react-loading';
 

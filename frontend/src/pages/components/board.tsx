@@ -4,7 +4,7 @@ import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Header from "./header"
 import moment from "moment"
-import {FetchData} from "./fetchdata"
+import {FetchData} from "../../components/fetchdata"
 
 type Board = {
     id:number,
