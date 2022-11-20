@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import moment from "moment"
@@ -180,6 +180,7 @@ export const Userlife = ()=>{
     const [flag,setFlag] = useState("")
     const [createSortflag,setCreateSortflag] = useState(false)
     const [updateSortflag,setUpdateSortflag] = useState(false)
+    const [filterlife,setFilterlife] = useState("")
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -207,6 +208,10 @@ export const Userlife = ()=>{
             pathname:"/components/lifecontent",
             query:{id:id,user_id:user_id}
             })
+    }
+
+    const dofilterlife = (event:React.ChangeEvent<HTMLSelectElement>)=>{
+        setFilterlife(event.target.value)
     }
 
     const createAsc = ()=>{
@@ -269,12 +274,30 @@ export const Userlife = ()=>{
         <table border={1}>
         <caption>投稿件数:{lifepost.length}件</caption>
             <tr>
-                <th className="thtitle">タイトル</th><th className="thhead">項目</th>
+                <th className="thtitle">タイトル</th><th className="thhead">項目 
+                &emsp;<select onChange={dofilterlife}>
+                    <option value="フィルター内容を選択">フィルター内容を選択</option>
+                    <option value="none">none</option>
+                    <option value="部屋探し・入居">部屋探し・入居</option>
+                    <option value="入居前後の手続き">入居前後の手続き</option>
+                    <option value="防犯・防災">防犯・防災</option>
+                    <option value="掃除">掃除</option>
+                    <option value="料理">料理</option>
+                    <option value="洗濯">洗濯</option>
+                </select>
+                </th>
                 <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
                 <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
             </tr>
         </table>
-        {lifepost.map((life:Life,key:number)=>{
+
+        {lifepost.filter((value:Life)=>{
+            if(value.lifeitem.includes(filterlife)) {
+                return value
+            }else if(filterlife==="フィルター内容を選択") {
+                return value
+            }
+        }).map((life:Life,key:number)=>{
             return (
                 <table key={key}>
                     <tr>

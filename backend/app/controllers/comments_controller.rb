@@ -1,7 +1,7 @@
 class CommentsController < ApplicationController
 
-    def index
-        @comment = Comment.all
+    def show
+        @comment = Comment.where(lifepost_id: params[:id])
         render json:@comment
     end
 

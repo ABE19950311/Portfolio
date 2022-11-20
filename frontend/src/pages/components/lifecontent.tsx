@@ -163,18 +163,31 @@ type Content = {
     checkcontent:string
 }
 
+type Comment = {
+    id:number,
+    lifepost_id:number,
+    user_id:number,
+    comment:string,
+    commentuser:string,
+    created_at:Date,
+    updated_at:Date
+}
+
 export const Lifecontent = ()=>{
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [usercontent,setUsercontent] = useState<Content>()
     const [commentflag,setCommentflag] = useState(false)
     const [name,setName] = useState("")
     const [comment,setComment] = useState("")
+    const [flag,setFlag] = useState("")
+    const [commentdata,setCommentdata] = useState([])
 
     const router = useRouter()
     const id = router.query.id as unknown as number
     const user_id = router.query.user_id as unknown as number
 
     useEffect(()=>{
+        if(!env) return
         axios.post(env+"/userposts",
         {
             userpost: {
@@ -188,9 +201,21 @@ export const Lifecontent = ()=>{
         })
     },[id,user_id,env])
 
+    useEffect(()=>{
+        if(!env) return
+        axios.get(`${env}/comments/${id}}`)
+        .then(res=>{
+            setCommentdata(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+    },[id,env,flag])
+
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
     if(usercontent==undefined) return
+
+    console.log(commentdata)
 
     const content = JSON.parse(usercontent.content)
     const detail = JSON.parse(usercontent.detail)
@@ -216,7 +241,7 @@ export const Lifecontent = ()=>{
                 commentuser:name
             }
         }).then(res=>{
-            console.log(res.data)
+            setFlag(res.data)
         }).catch(error=>{
             console.log(error)
         })
@@ -255,6 +280,15 @@ export const Lifecontent = ()=>{
             <label className={commentflag ? "":"none"}>名前:</label><input className={commentflag ? "":"none"} type={"text"} onChange={doName} /><br></br>
             <label className={commentflag ? "":"none"}>コメント内容:</label><textarea className={commentflag ? "":"none"} rows={8} cols={70} onChange={doComment} /><br></br>
             <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
+
+            {commentdata.map((value:Comment,key:number)=>{
+                return (
+                <>
+                <p key={key}>{value.commentuser}</p>
+                <p>{value.comment}</p>
+                </>
+                )
+            })}
             </Steps>
         </Layout>
     )

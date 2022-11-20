@@ -34,7 +34,7 @@ export const Calendar = ()=>{
                 console.log("response error",error);
             })
             // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[])
+    },[env])
 
     useEffect(()=>{
         const schedule = ()=>{

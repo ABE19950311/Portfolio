@@ -106,65 +106,23 @@ export const Header = ()=>{
         })
     }
 
-    const todo = ()=>{
-        router.push({
-            pathname:"/components/todo",
-            })
-    }
-
-    const board = ()=>{
-        router.push({
-            pathname:"/components/board",
-            })
-    }
-
-    const lifepost =()=>{
-        router.push({
-            pathname:"/components/lifepost",
-            })
-    }
-
-    const userlife =()=>{
-        router.push({
-            pathname:"/components/userlife",
-            })
-    }
-
-    const mypage = ()=>{
-        axios.post(env+"/mypages",
-            {
-            users: {
-                user_id:sessionid
-            }
-        }).then(res=>{
-            console.log(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
-        router.push({
-            pathname:"/components/mypage",
-            })
-    }
-
     return (
         <SHeader>
-            <SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo>
+            <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
             {loginflag=="login" ? 
             <SMenu>
-                <Link href="/"><SItem><span><strong>トップページへ戻る</strong></span></SItem></Link>
-                <Sbtn onClick={lifepost}><a href="#"><span><strong>生活情報を投稿する</strong></span></a></Sbtn>
-                <Sbtn onClick={userlife}><a href="#"><span><strong>ユーザが投稿した情報を確認</strong></span></a></Sbtn>
+                <Link href="/components/lifepost"><SItem><span><strong>生活情報を投稿する</strong></span></SItem></Link>
+                <Link href="/components/userlife"><SItem><span><strong>ユーザが投稿した情報を確認</strong></span></SItem></Link>
                 <Link href="/mappage"><SItem><span><strong>ハザードマップ</strong></span></SItem></Link>
-                <Sbtn onClick={todo}><a href="#"><span><strong>TODOリスト</strong></span></a></Sbtn>
+                <Link href="/components/todo"><SItem><span><strong>TODOリスト</strong></span></SItem></Link>
                 <Link href="/components/calendar"><SItem><span><strong>カレンダー</strong></span></SItem></Link>
-                <Sbtn onClick={board}><a href="#"><span><strong>掲示板</strong></span></a></Sbtn>
-                <Sbtn onClick={mypage}><a href="#"><span><strong>マイページ</strong></span></a></Sbtn>
+                <Link href="/components/board"><SItem><span><strong>掲示板</strong></span></SItem></Link>
+                <Link href="/components/mypage"><SItem><span><strong>マイページ</strong></span></SItem></Link>
                 <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
             </SMenu>
             :
             <SMenu>
-                <Link href="/"><SItem><span><strong>トップページへ戻る</strong></span></SItem></Link>
-                <Sbtn onClick={userlife}><a href="#"><span><strong>ユーザが投稿した情報を確認</strong></span></a></Sbtn>
+                <Link href="/components/userlife"><SItem><span><strong>ユーザが投稿した情報を確認</strong></span></SItem></Link>
                 <Link href="/mappage"><SItem><span><strong>ハザードマップ</strong></span></SItem></Link>
                 <Link href="/components/calendar"><SItem><span><strong>カレンダー</strong></span></SItem></Link>
                 <Link href="/components/newaccount"><SItem><span><strong>新規登録</strong></span></SItem></Link>
