@@ -7,6 +7,8 @@ class User < ApplicationRecord
     has_many :hearts, dependent: :destroy
     has_many :posts, through: :hearts
     has_many :lifeposts, dependent: :destroy
+    has_many :comments, dependent: :destroy
+    has_many :lifeposts, through: :comments
 
     # 重複登録NG
     validates :username, uniqueness: true

@@ -197,7 +197,7 @@ export const Userlife = ()=>{
             console.log(error)
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[router,env,flag])
+    },[env,flag])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>

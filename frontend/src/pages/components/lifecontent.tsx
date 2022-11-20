@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
@@ -10,6 +10,10 @@ const Steps = styled.div`
 width:800px;
 margin-left:250px;
 overflow-wrap:break-word;
+
+.none {
+    display:none;
+}
 
 h1 {
     padding: 1rem 1rem;
@@ -162,6 +166,9 @@ type Content = {
 export const Lifecontent = ()=>{
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [usercontent,setUsercontent] = useState<Content>()
+    const [commentflag,setCommentflag] = useState(false)
+    const [name,setName] = useState("")
+    const [comment,setComment] = useState("")
 
     const router = useRouter()
     const id = router.query.id as unknown as number
@@ -189,6 +196,32 @@ export const Lifecontent = ()=>{
     const detail = JSON.parse(usercontent.detail)
     const checkcontent = JSON.parse(usercontent.checkcontent)
 
+    const doName= (event:React.ChangeEvent<HTMLInputElement>)=>{
+        setName(event.target.value)
+    }
+
+    const doComment = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
+        setComment(event.target.value)
+    }
+
+    const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
+        event.preventDefault()
+
+        axios.post(env+"/comments",
+        {
+            comments: {
+                lifepost_id:id,
+                user_id:userid,
+                comment:comment,
+                commentuser:name
+            }
+        }).then(res=>{
+            console.log(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
+    }
+
 
     return (
         <Layout>
@@ -214,11 +247,14 @@ export const Lifecontent = ()=>{
                             )
                         })}
                         </>
-                    
                 )
             })}
             <h3></h3>
             </div>
+            <button onClick={()=>commentflag ? setCommentflag(false):setCommentflag(true)}>コメントをする</button><br></br>
+            <label className={commentflag ? "":"none"}>名前:</label><input className={commentflag ? "":"none"} type={"text"} onChange={doName} /><br></br>
+            <label className={commentflag ? "":"none"}>コメント内容:</label><textarea className={commentflag ? "":"none"} rows={8} cols={70} onChange={doComment} /><br></br>
+            <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
             </Steps>
         </Layout>
     )
