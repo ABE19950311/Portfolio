@@ -275,6 +275,8 @@ export const Userlife = (props:any)=>{
     const [filterlife,setFilterlife] = useState("")
     const [ offset, setOffset ] = useState(0); // 何番目のアイテムから表示するか
     const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
+    const [postlength,setPostlength] = useState(0)
+    const [currentpage,setCurrentpage] = useState(1)
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -282,7 +284,8 @@ export const Userlife = (props:any)=>{
     useEffect(()=>{
         const id = Number(userid)
         setSessionid(id)
-    },[userid])
+        setPostlength(lifepost.length)
+    },[userid,lifepost])
 
     useEffect(()=>{
         if(!env) return
@@ -294,6 +297,18 @@ export const Userlife = (props:any)=>{
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[env,flag])
+
+    useEffect(()=>{
+        let array = lifepost.filter((value:Life)=>{
+            if(value.lifeitem.includes(filterlife)) {
+                return value
+            }else if(filterlife==="フィルター内容を選択") {
+                return value
+            }
+        })
+        setPostlength(array.length)
+         // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[filterlife])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
@@ -365,6 +380,7 @@ export const Userlife = (props:any)=>{
     const handlePageChange = (data:any) => {
     let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
     setOffset(page_number*perPage); // offsetを変更し、表示開始するアイテムの番号を変更
+    setCurrentpage(page_number+1)
     }
 
     return (
@@ -373,7 +389,7 @@ export const Userlife = (props:any)=>{
         {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
 
         <table border={1}>
-        <caption>投稿件数:{lifepost.length}件</caption>
+        <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目 
                 &emsp;<select onChange={dofilterlife}>
@@ -393,7 +409,7 @@ export const Userlife = (props:any)=>{
         </table>
 
         {lifepost.slice(offset,offset+perPage)
-            .filter((value:Life)=>{
+            .filter((value:Life,index,self)=>{
                 if(value.lifeitem.includes(filterlife)) {
                     return value
                 }else if(filterlife==="フィルター内容を選択") {
@@ -413,7 +429,7 @@ export const Userlife = (props:any)=>{
 
         <PageContainer>
             <ReactPaginate
-                pageCount={Math.ceil(lifepost.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                pageCount={Math.ceil(postlength/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
                 marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
                 pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
                 onPageChange={handlePageChange} // クリック時のfunction
