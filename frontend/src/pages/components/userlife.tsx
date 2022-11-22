@@ -5,6 +5,8 @@ import {useRouter} from "next/router"
 import moment from "moment"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
+import ReactPaginate from 'react-paginate'; 
+
 
 const SDiv = styled.div`
     
@@ -158,6 +160,95 @@ const SDiv = styled.div`
         border-top-color: #444;
     }
 
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        gap: 20px 6px;
+    }
+    
+    
+    .page-item,
+    .page-link {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 30px;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+        height: 40px;
+        width: 40px;
+    }
+`
+
+const PageContainer = styled.div`
+margin: 24px 0;
+& ul {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+& li {
+    list-style-type: none;
+    margin: 0 4px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    &:hover {
+    opacity: 0.6;
+    }
+}
+& .previous a, .next a {
+    display: block;
+    margin-top: 15px;
+    width: 16px;
+    height: 16px;
+    text-indent: -1000px;
+    transform: rotate(45deg);
+    overflow: hidden;
+}
+& .previous a {
+    border-left: 1px solid #39c;
+    border-bottom: 1px solid #39c;
+}
+& .next a {
+    border-top: 1px solid #39c;
+    border-right: 1px solid #39c;
+}
+& li.selected {
+    pointer-events: none;
+}
+& li.selected a {
+    background-color: #39c !important;
+    color: #fff !important;
+}
+& li:not(.previous,.next) a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #39c;
+    color: #39c;
+}
+& li.break a {
+    border: none;
+}
+.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+}
+@media (max-width: 600px) {
+    & .previous a, .next a {
+    margin-top: 13px;
+    width: 8px;
+    height: 8px;
+    }
+    & li:not(.previous,.next) a {
+    width: 32px;
+    height: 32px;
+    }
+}
 `
 
 type Life = {
@@ -173,7 +264,8 @@ type Life = {
     checkcontent:string[]
 }
 
-export const Userlife = ()=>{
+
+export const Userlife = (props:any)=>{
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [lifepost,setLifepost] = useState([])
@@ -181,8 +273,11 @@ export const Userlife = ()=>{
     const [createSortflag,setCreateSortflag] = useState(false)
     const [updateSortflag,setUpdateSortflag] = useState(false)
     const [filterlife,setFilterlife] = useState("")
+    const [ offset, setOffset ] = useState(0); // 何番目のアイテムから表示するか
+    const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
     const router = useRouter()
     const query = router.query.life as unknown as string
+
 
     useEffect(()=>{
         const id = Number(userid)
@@ -266,6 +361,12 @@ export const Userlife = ()=>{
             })
     }
 
+     // クリック時のfunction
+    const handlePageChange = (data:any) => {
+    let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
+    setOffset(page_number*perPage); // offsetを変更し、表示開始するアイテムの番号を変更
+    }
+
     return (
         <Layout>
         <SDiv>
@@ -291,13 +392,14 @@ export const Userlife = ()=>{
             </tr>
         </table>
 
-        {lifepost.filter((value:Life)=>{
-            if(value.lifeitem.includes(filterlife)) {
-                return value
-            }else if(filterlife==="フィルター内容を選択") {
-                return value
-            }
-        }).map((life:Life,key:number)=>{
+        {lifepost.slice(offset,offset+perPage)
+            .filter((value:Life)=>{
+                if(value.lifeitem.includes(filterlife)) {
+                    return value
+                }else if(filterlife==="フィルター内容を選択") {
+                    return value
+                }
+            }).map((life:Life,key:number)=>{
             return (
                 <table key={key}>
                     <tr>
@@ -307,8 +409,35 @@ export const Userlife = ()=>{
                 </table>
             )
         })}
-        
         </SDiv>
+
+        <PageContainer>
+            <ReactPaginate
+                pageCount={Math.ceil(lifepost.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                onPageChange={handlePageChange} // クリック時のfunction
+                containerClassName="pagination justify-center" // ul(pagination本体)
+                pageClassName="page-item" // li
+                pageLinkClassName="page-link rounded-full" // a
+                activeClassName="active" // active.li
+                activeLinkClassName="active" // active.li < a
+                
+                // 戻る・進む関連
+                previousClassName="page-item" // li
+                nextClassName="page-item" // li
+                previousLabel={'<'} // a
+                previousLinkClassName="previous-link"
+                nextLabel={'>'} // a
+                nextLinkClassName="next-link"
+                // 先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくする
+                disabledClassName="disabled-button d-none"
+                // 中間ページの省略表記関連
+                breakLabel="..."
+                breakClassName="page-item"
+                breakLinkClassName="page-link"
+            />
+            </PageContainer>
         </Layout>
     )
 }
