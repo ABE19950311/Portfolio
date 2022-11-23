@@ -6,7 +6,7 @@ import moment from "moment"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import ReactPaginate from 'react-paginate'; 
-
+import { useMediaQuery } from "react-responsive"
 
 const SDiv = styled.div`
     
@@ -266,6 +266,9 @@ type Life = {
 
 
 export const Userlife = (props:any)=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [lifepost,setLifepost] = useState([])

@@ -4,7 +4,7 @@ import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
-
+import { useMediaQuery } from "react-responsive"
 
 const Steps = styled.div`
 width:800px;
@@ -174,6 +174,9 @@ type Comment = {
 }
 
 export const Lifecontent = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [usercontent,setUsercontent] = useState<Content>()
     const [commentflag,setCommentflag] = useState(false)

@@ -3,6 +3,7 @@ import Head from 'next/head'
 import {Header} from "./header"
 import {Footer} from "./footer"
 import type {ReactNode} from "react"
+import { useMediaQuery } from "react-responsive"
 
 type Props = {
     children: ReactNode;
@@ -19,6 +20,10 @@ main {
 `
 
 export const Layout = (props:Props)=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
+
     return (
         <>
             <Head>

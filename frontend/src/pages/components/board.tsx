@@ -5,6 +5,7 @@ import {useRouter} from "next/router"
 import Header from "./header"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
+import { useMediaQuery } from "react-responsive"
 
 type Board = {
     id:number,
@@ -77,6 +78,9 @@ const SDiv = styled.div`
 `
 
 export const Board = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("");

@@ -8,67 +8,128 @@ import useSWR from "swr"
 import {FetchData} from "../../components/fetchdata"
 import { Transition } from '@headlessui/react'
 import ReactLoading from 'react-loading';
+import { useMediaQuery } from "react-responsive"
+import { slide as Menu } from 'react-burger-menu'
 
+const BeargerHeader = styled.div`
+background-color: white;
 
-
-const SHeader = styled.div`
-    background-color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+a {
+    color: inherit;
+    text-decoration: none;
+}
+ul {
+    list-style: none;
     margin: 0;
     padding: 0;
-    line-height: 0;
-    width:100%
+}
+`
+
+const SBurgerMenu = styled.ul`
+        li {
+            margin-bottom:15px;
+        &:hover{
+            color:#ffa500;
+        }
+    }
     
+`
 
-    p {
-        margin: 0;
-    }
+const SHeader = styled.div`
+background-color: white;
+display: flex;
+align-items: center;
+justify-content: space-between;
 
-    a {
-        color: inherit;
-        text-decoration: none;
-    }
-
-    ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
-    `
+a {
+    color: inherit;
+    text-decoration: none;
+}
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+`
 
 const SLogo = styled.div`
-    padding:5px 0 0 5px;
+padding:5px 0 0 5px;
 `
 
 const SMenu = styled.ul`
-    display: flex;
+display: flex;
+
+        li {
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        span {    
+        margin-right:20px;
+        font-size:1.3vw;
+        }
+        &:hover{
+            color:#ffa500;
+        }
+    }
 `
 
 const Sbtn = styled.div`
 margin-right:20px;
 &:hover{
-    color:#ffa500;
+color:#ffa500;
 }
 `
 
-const SItem = styled.li`
-    span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        height: 100%;
-        margin-right:20px
+const styles = {
+    position:"relative",
+bmBurgerButton: {
+    position: 'absolute',
+    width: '36px',
+    height: '30px',
+    right:"30px",
+    top: '36px'
+    },
+    bmBurgerBars: {
+    background: '#373a47'
+    },
+    bmBurgerBarsHover: {
+    background: '#a90000'
+    },
+    bmCrossButton: {
+    height: '24px',
+    width: '24px'
+    },
+    bmCross: {
+    background: '#bdc3c7'
+    },
+    bmMenuWrap: {
+    position: 'fixed',
+    height: '100%'
+    },
+    bmMenu: {
+    background: '#373a47',
+    padding: '2.5em 1.5em 0',
+    fontSize: '1.15em'
+    },
+    bmMorphShape: {
+    fill: '#373a47'
+    },
+    bmItemList: {
+    color: '#b8b7ad',
+    padding: '0.8em'
+    },
+    bmItem: {
+    display: 'inline-block'
+    },
+    bmOverlay: {
+    background: 'rgba(0, 0, 0, 0.3)'
     }
-
-    &:hover{
-        color:#ffa500;
-    }
-`
+}
 
 export const Header = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const router = useRouter();
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState("")
@@ -90,10 +151,9 @@ export const Header = ()=>{
             leaveFrom="opacity-100"
             leaveTo="opacity-0"
         >
-            <SHeader><SLogo><Image src="/logo.png" width="100" height="100" alt="logo"/></SLogo><ReactLoading type="spin" /></SHeader>
+            <SHeader><SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo><ReactLoading type="spin" /></SHeader>
         </Transition>
     )
-
 
     const logout = ()=>{
         axios.delete(env+"/logout" as string)
@@ -106,31 +166,63 @@ export const Header = ()=>{
         })
     }
 
-    return (
-        <SHeader>
+    if(PC) {
+        return (  
+            <SHeader>
             <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
             {loginflag=="login" ? 
             <SMenu>
-                <Link href="/components/lifepost"><SItem><span><strong>生活情報を投稿する</strong></span></SItem></Link>
-                <Link href="/components/userlife"><SItem><span><strong>ユーザが投稿した情報を確認</strong></span></SItem></Link>
-                <Link href="/mappage"><SItem><span><strong>ハザードマップ</strong></span></SItem></Link>
-                <Link href="/components/todo"><SItem><span><strong>TODOリスト</strong></span></SItem></Link>
-                <Link href="/components/calendar"><SItem><span><strong>カレンダー</strong></span></SItem></Link>
-                <Link href="/components/board"><SItem><span><strong>掲示板</strong></span></SItem></Link>
-                <Link href="/components/mypage"><SItem><span><strong>マイページ</strong></span></SItem></Link>
+                <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/todo"><li><span><strong>TODOリスト</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
+                <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
                 <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
             </SMenu>
             :
             <SMenu>
-                <Link href="/components/userlife"><SItem><span><strong>ユーザが投稿した情報を確認</strong></span></SItem></Link>
-                <Link href="/mappage"><SItem><span><strong>ハザードマップ</strong></span></SItem></Link>
-                <Link href="/components/calendar"><SItem><span><strong>カレンダー</strong></span></SItem></Link>
-                <Link href="/components/newaccount"><SItem><span><strong>新規登録</strong></span></SItem></Link>
-                <Link href="/components/login"><SItem><span><strong>ログイン</strong></span></SItem></Link>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
+                <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
             </SMenu>
+            } 
+            </SHeader>
+        )
+    }else{
+        return (
+            <BeargerHeader>
+            <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
+            {loginflag=="login" ?
+            <Menu right styles={styles}>
+            <SBurgerMenu>
+                <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/todo"><li><span><strong>TODOリスト</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
+                <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
+                <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
+            </SBurgerMenu>
+            </Menu> 
+            :
+            <Menu right styles={styles}>
+            <SBurgerMenu>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
+                <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
+            </SBurgerMenu>
+            </Menu> 
             }
-        </SHeader>
-    )
+        </BeargerHeader>
+        )
+    }
 }
 
 export default Header

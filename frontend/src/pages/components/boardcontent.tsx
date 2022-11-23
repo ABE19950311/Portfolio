@@ -6,6 +6,7 @@ import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import Header from "./header"
 import {FetchData} from "../../components/fetchdata"
+import { useMediaQuery } from "react-responsive"
 
 
 type Post = {
@@ -93,6 +94,9 @@ const SDiv = styled.div`
 `
 
 export const Boardcontent = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("")

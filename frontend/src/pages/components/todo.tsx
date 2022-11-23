@@ -9,6 +9,7 @@ import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
 import { MdSearch } from "react-icons/md";
 import {FetchData} from "../../components/fetchdata"
+import { useMediaQuery } from "react-responsive"
 
 registerLocale("ja",ja);
 
@@ -309,6 +310,9 @@ table td:last-child {
 
 
 export const Todo = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [list,setList] = useState("");
     const [life,setLife] = useState("");

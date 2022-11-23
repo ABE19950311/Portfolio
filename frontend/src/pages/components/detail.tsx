@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {useRouter} from "next/router"
 import {Layout} from "./layout"
-
+import { useMediaQuery } from "react-responsive"
 
 const Steps = styled.div`
 width:800px;
@@ -121,6 +121,9 @@ z-index: 1;
 `
 
 export const Detail = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const router=useRouter();
     const query = router.query.state as unknown as string;
 

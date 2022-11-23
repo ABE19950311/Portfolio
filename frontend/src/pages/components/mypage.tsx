@@ -5,6 +5,7 @@ import {useRouter} from "next/router"
 import Layout from "./layout"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
+import { useMediaQuery } from "react-responsive"
 
 type Todo = {
     id:number,
@@ -106,6 +107,9 @@ const SDiv = styled.div`
 `
 
 export const Mypage = ()=>{
+    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState("")
     const [todo,setTodo] = useState([])
@@ -166,6 +170,7 @@ export const Mypage = ()=>{
         <>
         <Layout>
         <SDiv>
+            {PC ? <h1>pc</h1>:Tablet ? <h1>tablet</h1>:<h1>mobile</h1>}
             <div className="topmain">
             <div><h1>{sessionname}様のマイページ</h1></div><div><button onClick={passChange}>パスワードを変更する</button></div>
             </div>
