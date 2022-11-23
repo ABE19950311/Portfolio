@@ -277,6 +277,7 @@ export const Userlife = (props:any)=>{
     const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
+    const [slicepost,setSlicepost] = useState(lifepost)
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -310,6 +311,11 @@ export const Userlife = (props:any)=>{
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[filterlife])
 
+    useEffect(()=>{
+        let slice = lifepost.slice(offset,offset+perPage)
+        setSlicepost(slice)
+    },[lifepost,offset])
+
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
@@ -325,7 +331,7 @@ export const Userlife = (props:any)=>{
     }
 
     const createAsc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        slicepost.sort((a:Life,b:Life)=>{
             if(a.created_at<b.created_at) return -1
             if(a.created_at>b.created_at) return 1
             return 0
@@ -334,7 +340,7 @@ export const Userlife = (props:any)=>{
     }
 
     const createDesc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        slicepost.sort((a:Life,b:Life)=>{
             if(a.created_at>b.created_at) return -1
             if(a.created_at<b.created_at) return 1
             return 0
@@ -343,7 +349,7 @@ export const Userlife = (props:any)=>{
     }
 
     const updateAsc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        slicepost.sort((a:Life,b:Life)=>{
             if(a.updated_at<b.updated_at) return -1
             if(a.updated_at>b.updated_at) return 1
             return 0
@@ -352,7 +358,7 @@ export const Userlife = (props:any)=>{
     }
 
     const updateDesc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        slicepost.sort((a:Life,b:Life)=>{
             if(a.updated_at>b.updated_at) return -1
             if(a.updated_at<b.updated_at) return 1
             return 0
@@ -408,8 +414,7 @@ export const Userlife = (props:any)=>{
             </tr>
         </table>
 
-        {lifepost.slice(offset,offset+perPage)
-            .filter((value:Life,index,self)=>{
+        {slicepost.filter((value:Life,index,self)=>{
                 if(value.lifeitem.includes(filterlife)) {
                     return value
                 }else if(filterlife==="フィルター内容を選択") {

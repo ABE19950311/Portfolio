@@ -19,6 +19,70 @@ h1 {
 p {
     line-height:0.5;
 }
+span {
+    color:red;
+    font-weight:normal;
+}
+.koumokubtn {
+        border: 0;
+        text-align: center;
+        display: inline-block;
+        padding: 11px;
+        width: 120px;
+        margin: 7px;
+        color: #ffffff;
+        background-color: #36a2eb;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: box-shadow 200ms ease-out;
+        cursor:pointer;
+}
+.sousin {
+    cursor: pointer;
+    text-decoration: inherit;
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    padding: 0.5rem 2rem;
+    border-image-slice: 1;
+    border-image-Creator: linear-gradient(to left, #743ad5, #d53a9d);
+    margin-left:250px;
+}
+.koumoku {
+    width: 50%; /*親要素いっぱい広げる*/
+    padding: 10px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+.title {
+        width: 50%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+.headline {
+        width: 50%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+        transform: translate(0px,-4px);
+}
+.labelnaiyou {
+    display: inline-block;
+    transform: translate(0px,-60px);
+    margin-left:64px;
+}
+.labelmatome {
+    display: inline-block;
+    transform: translate(0px,-60px);
+}
 
 .check {
     position: relative;
@@ -262,8 +326,8 @@ export const Lifepost =()=>{
     return (
         <Layout>
             <Steps>
-                <label>投稿タイトル(必須):</label><input onChange={doTitle} type={"text"}/>
-                <br></br>
+                <label>投稿タイトル<span>(必須):</span></label><input className="title"onChange={doTitle} type={"text"}/>
+                <br></br><br></br>
                 <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
                 <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
                 <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
@@ -274,26 +338,24 @@ export const Lifepost =()=>{
                 <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
 
                 <br></br>
-                <h1><label>見出しの文章(必須):</label><input onChange={doHeadline} type={"text"}/></h1>
-                <br></br>
-                <button onClick={doFormplus}>入力項目を増やす</button><button onClick={doFormminus}>入力項目を減らす</button>
+                <h1><label>見出しの文章<span>(必須):</span></label><input className="headline" onChange={doHeadline} type={"text"}/></h1>
+        
+                <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>送信する</button>
                 <br></br>
 
                 {formcount.map((count:string,key:number)=>{
                     return (
                         <div className="steps" key={key}>
-                            <h2><label>{key+1}つ目の目次(必須):</label><input max={key+1} onChange={doContent} type={"text"}/></h2>
+                            <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
                             <br></br>
-                            <label>内容(必須):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
+                            <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
                             <br></br>
-                            <label>{key+1}つ目の項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
+                            <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
                             <h2></h2>
                         </div>   
                     )
                 })}
 
-                <br></br>
-                <button onClick={doSubmit}>送信する</button>
             </Steps>
         </Layout>
     )
