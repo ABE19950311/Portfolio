@@ -8,7 +8,7 @@ import {FetchData} from "../../components/fetchdata"
 import ReactPaginate from 'react-paginate'; 
 import { useMediaQuery } from "react-responsive"
 
-const SDiv = styled.div`
+const PCDiv = styled.div`
     
     margin:70px 0 0 80px;
     overflow-wrap: break-word;
@@ -16,8 +16,13 @@ const SDiv = styled.div`
     caption {
         text-align:left;
     }
+    .filter {
+        margin-left:30vw;
+        margin-bottom:5px;
+    }
 
     .kousinbtn {
+        font-size:1.5vw;
         font-weight: 700;
         cursor: pointer;
         -webkit-user-select: none;
@@ -36,6 +41,7 @@ const SDiv = styled.div`
     }
 
     .delbtn {
+        font-size:1.5vw;
         font-weight: 700;
         cursor: pointer;
         -webkit-user-select: none;
@@ -76,26 +82,33 @@ const SDiv = styled.div`
     background: #e9faf9;
     }
     .thtitle {
-        width:450px;
+        width:30vw;
     }
     .thhead {
-        width:250px;
+        width:14vw;
+    }
+    .none {
+        width:7.5vw;
     }
     .tdtitle {
-        width:450px;
+        font-size:1.7vw;
+        width:30vw;
     }
     .tdhead {
-        width:250px;
+        font-size:1.5vw;
+        width:14vw;
     }
     .tdcreate {
-        width:200px;
+        font-size:1.2vw;
+        width:15vw;
     }
     .tdupdate {
-        width:200px;
+        font-size:1.2vw;
+        width:15vw;
     }
 
     .create {
-        width:200px;
+        width:15vw;
         cursor: pointer;
         position: relative;
     }
@@ -121,7 +134,7 @@ const SDiv = styled.div`
     }
     
     .update {
-        width:200px;
+        width:15vw;
         cursor: pointer;
         position: relative;
     }
@@ -181,6 +194,386 @@ const SDiv = styled.div`
         width: 40px;
     }
 `
+
+const TabDiv = styled.div`
+    
+    margin:70px 0 0 80px;
+    overflow-wrap: break-word;
+
+    caption {
+        text-align:left;
+    }
+    .filter {
+        margin-left:30vw;
+        margin-bottom:5px;
+    }
+
+    .kousinbtn {
+        font-size:1.5vw;
+        font-weight: 700;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+    }
+
+    .delbtn {
+        font-size:1.5vw;
+        font-weight: 700;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #FF9933;
+        background: #FF9933;
+        color: #fff;
+    }
+
+    table {
+    overflow-wrap:break-word;
+    text-align:center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+    th {
+    padding: 10px;
+    background: #778ca3;
+    border: solid 1px #666666;
+    color: #ffffff;
+    }
+    td {
+    padding: 10px;
+    border: solid 1px #666666;
+    }
+    td:first-child {
+    cursor:pointer;
+    color:blue;
+    text-decoration : underline;
+    background: #e9faf9;
+    }
+    .thtitle {
+        width:30vw;
+    }
+    .thhead {
+        width:14vw;
+    }
+    .none {
+        width:7.5vw;
+    }
+    .tdtitle {
+        font-size:1.7vw;
+        width:30vw;
+    }
+    .tdhead {
+        font-size:1.5vw;
+        width:14vw;
+    }
+    .tdcreate {
+        font-size:1.2vw;
+        width:15vw;
+    }
+    .tdupdate {
+        font-size:1.2vw;
+        width:15vw;
+    }
+
+    .create {
+        width:15vw;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .create::before, .create::after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: 5px solid transparent;
+        right: 10px;
+        top: 50%;
+    }
+    
+    .create::before {
+        border-bottom-color: #aaa;
+        margin-top: -10px;
+    }
+    
+    .create::after {
+        border-top-color: #aaa;
+        margin-top: 2px;
+    }
+    
+    .update {
+        width:15vw;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .update::before, .update::after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: 5px solid transparent;
+        right: 10px;
+        top: 50%;
+    }
+    
+    .update::before {
+        border-bottom-color: #aaa;
+        margin-top: -10px;
+    }
+    
+    .update::after {
+        border-top-color: #aaa;
+        margin-top: 2px;
+    }
+    
+    .createdesc::before {
+        border-bottom-color: #444;
+    }
+    .createasc::after {
+        border-top-color: #444;
+    }
+    
+    .updatedesc::before {
+        border-bottom-color: #444;
+    }
+    .updateasc::after {
+        border-top-color: #444;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        gap: 20px 6px;
+    }
+    
+    
+    .page-item,
+    .page-link {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 30px;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+        height: 40px;
+        width: 40px;
+    }
+`
+
+const MobDiv = styled.div`
+    
+    margin:70px 0 0 0;
+    overflow-wrap: break-word;
+
+    caption {
+        text-align:left;
+    }
+    .filter {
+        margin-bottom:5px;
+    }
+
+    .kousinbtn {
+        font-size:1.5vw;
+        font-weight: 700;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+    }
+
+    .delbtn {
+        font-size:1.5vw;
+        font-weight: 700;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #FF9933;
+        background: #FF9933;
+        color: #fff;
+    }
+
+    table {
+    overflow-wrap:break-word;
+    text-align:center;
+    border-collapse: collapse;
+    border-spacing: 0;
+    }
+    th {
+    padding: 10px;
+    background: #778ca3;
+    border: solid 1px #666666;
+    color: #ffffff;
+    }
+    td {
+    padding: 10px;
+    border: solid 1px #666666;
+    }
+    td:first-child {
+    cursor:pointer;
+    color:blue;
+    text-decoration : underline;
+    background: #e9faf9;
+    }
+    .thtitle {
+        font-size:2.5vw;
+        width:30vw;
+    }
+    .thhead {
+        font-size:2.5vw;
+        width:14vw;
+    }
+    .none {
+        width:7.5vw;
+    }
+    .tdtitle {
+        font-size:2.5vw;
+        width:30vw;
+    }
+    .tdhead {
+        font-size:2vw;
+        width:14vw;
+    }
+    .tdcreate {
+        font-size:1.2vw;
+        width:15vw;
+    }
+    .tdupdate {
+        font-size:1.2vw;
+        width:15vw;
+    }
+
+    .create {
+        width:15vw;
+        font-size:2.5vw;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .create::before, .create::after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: 5px solid transparent;
+        right: 10px;
+        top: 50%;
+    }
+    
+    .create::before {
+        border-bottom-color: #aaa;
+        margin-top: -10px;
+    }
+    
+    .create::after {
+        border-top-color: #aaa;
+        margin-top: 2px;
+    }
+    
+    .update {
+        width:15vw;
+        font-size:2.5vw;
+        cursor: pointer;
+        position: relative;
+    }
+    
+    .update::before, .update::after {
+        content: "";
+        height: 0;
+        width: 0;
+        position: absolute;
+        border: 5px solid transparent;
+        right: 10px;
+        top: 50%;
+    }
+    
+    .update::before {
+        border-bottom-color: #aaa;
+        margin-top: -10px;
+    }
+    
+    .update::after {
+        border-top-color: #aaa;
+        margin-top: 2px;
+    }
+    
+    .createdesc::before {
+        border-bottom-color: #444;
+    }
+    .createasc::after {
+        border-top-color: #444;
+    }
+    
+    .updatedesc::before {
+        border-bottom-color: #444;
+    }
+    .updateasc::after {
+        border-top-color: #444;
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        gap: 20px 6px;
+    }
+    
+    
+    .page-item,
+    .page-link {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 30px;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 16px;
+        height: 40px;
+        width: 40px;
+    }
+`
+
+
+
 
 const PageContainer = styled.div`
 margin: 24px 0;
@@ -392,16 +785,16 @@ export const Userlife = (props:any)=>{
     setCurrentpage(page_number+1)
     }
 
+    if(PC) {
     return (
         <Layout>
-        <SDiv>
+        <PCDiv>
         {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
 
         <table border={1}>
         <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
-            <tr>
-                <th className="thtitle">タイトル</th><th className="thhead">項目 
-                &emsp;<select onChange={dofilterlife}>
+        <caption>
+        <select className="filter" onChange={dofilterlife}>
                     <option value="フィルター内容を選択">フィルター内容を選択</option>
                     <option value="none">none</option>
                     <option value="部屋探し・入居">部屋探し・入居</option>
@@ -411,7 +804,9 @@ export const Userlife = (props:any)=>{
                     <option value="料理">料理</option>
                     <option value="洗濯">洗濯</option>
                 </select>
-                </th>
+        </caption>
+            <tr>
+                <th className="thtitle">タイトル</th><th className="thhead">項目</th>
                 <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
                 <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
             </tr>
@@ -428,12 +823,12 @@ export const Userlife = (props:any)=>{
                 <table key={key}>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新する</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除する</button></td></>:<></>}
+                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                 </table>
             )
         })}
-        </SDiv>
+        </PCDiv>
 
         <PageContainer>
             <ReactPaginate
@@ -464,6 +859,155 @@ export const Userlife = (props:any)=>{
             </PageContainer>
         </Layout>
     )
+    }else if(Tablet) {
+        return (
+            <Layout>
+            <TabDiv>
+            {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
+    
+            <table border={1}>
+            <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
+            <caption>
+            <select className="filter" onChange={dofilterlife}>
+                    <option value="フィルター内容を選択">フィルター内容を選択</option>
+                    <option value="none">none</option>
+                    <option value="部屋探し・入居">部屋探し・入居</option>
+                    <option value="入居前後の手続き">入居前後の手続き</option>
+                    <option value="防犯・防災">防犯・防災</option>
+                    <option value="掃除">掃除</option>
+                    <option value="料理">料理</option>
+                    <option value="洗濯">洗濯</option>
+                </select>
+            </caption>
+            <tr>
+                <th className="thtitle">タイトル</th><th className="thhead">項目</th>
+                <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
+                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
+            </tr>
+            </table>
+    
+            {slicepost.filter((value:Life,index,self)=>{
+                    if(value.lifeitem.includes(filterlife)) {
+                        return value
+                    }else if(filterlife==="フィルター内容を選択") {
+                        return value
+                    }
+                }).map((life:Life,key:number)=>{
+                return (
+                    <table key={key}>
+                        <tr>
+                            <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                            {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        </tr>
+                    </table>
+                )
+            })}
+            </TabDiv>
+    
+            <PageContainer>
+                <ReactPaginate
+                    pageCount={Math.ceil(postlength/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                    marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                    pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                    onPageChange={handlePageChange} // クリック時のfunction
+                    containerClassName="pagination justify-center" // ul(pagination本体)
+                    pageClassName="page-item" // li
+                    pageLinkClassName="page-link rounded-full" // a
+                    activeClassName="active" // active.li
+                    activeLinkClassName="active" // active.li < a
+                    
+                    // 戻る・進む関連
+                    previousClassName="page-item" // li
+                    nextClassName="page-item" // li
+                    previousLabel={'<'} // a
+                    previousLinkClassName="previous-link"
+                    nextLabel={'>'} // a
+                    nextLinkClassName="next-link"
+                    // 先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくする
+                    disabledClassName="disabled-button d-none"
+                    // 中間ページの省略表記関連
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                />
+                </PageContainer>
+            </Layout>
+        )
+    }else {
+        return (
+            <Layout>
+            <MobDiv>
+            {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
+    
+            <table border={1}>
+            <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
+            <caption>
+            <select className="filter" onChange={dofilterlife}>
+                    <option value="フィルター内容を選択">フィルター内容を選択</option>
+                    <option value="none">none</option>
+                    <option value="部屋探し・入居">部屋探し・入居</option>
+                    <option value="入居前後の手続き">入居前後の手続き</option>
+                    <option value="防犯・防災">防犯・防災</option>
+                    <option value="掃除">掃除</option>
+                    <option value="料理">料理</option>
+                    <option value="洗濯">洗濯</option>
+                </select>
+            </caption>
+            <tr>
+                <th className="thtitle">タイトル</th><th className="thhead">項目</th>
+                <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
+                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
+            </tr>
+            </table>
+    
+            {slicepost.filter((value:Life,index,self)=>{
+                    if(value.lifeitem.includes(filterlife)) {
+                        return value
+                    }else if(filterlife==="フィルター内容を選択") {
+                        return value
+                    }
+                }).map((life:Life,key:number)=>{
+                return (
+                    <table key={key}>
+                        <tr>
+                            <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                            {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        </tr>
+                    </table>
+                )
+            })}
+            </MobDiv>
+    
+            <PageContainer>
+                <ReactPaginate
+                    pageCount={Math.ceil(postlength/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                    marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                    pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                    onPageChange={handlePageChange} // クリック時のfunction
+                    containerClassName="pagination justify-center" // ul(pagination本体)
+                    pageClassName="page-item" // li
+                    pageLinkClassName="page-link rounded-full" // a
+                    activeClassName="active" // active.li
+                    activeLinkClassName="active" // active.li < a
+                    
+                    // 戻る・進む関連
+                    previousClassName="page-item" // li
+                    nextClassName="page-item" // li
+                    previousLabel={'<'} // a
+                    previousLinkClassName="previous-link"
+                    nextLabel={'>'} // a
+                    nextLinkClassName="next-link"
+                    // 先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくする
+                    disabledClassName="disabled-button d-none"
+                    // 中間ページの省略表記関連
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                />
+                </PageContainer>
+            </Layout>
+        )
+    }
 }
 
 export default Userlife

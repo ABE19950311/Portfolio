@@ -6,9 +6,10 @@ import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 
-const Steps = styled.div`
+const PCSteps = styled.div`
 width:800px;
-margin:20px 0 0 250px;
+margin-top:20px;
+margin-left:15vw;
 
 h1 {
     padding: 1rem 1rem;
@@ -155,7 +156,310 @@ left: 0;
 /* 縦棒より手前に表示するため */
 z-index: 1;
 }
+`
 
+const TabSteps = styled.div`
+width:800px;
+margin-top:20px;
+margin-left:75px;
+
+h1 {
+    padding: 1rem 1rem;
+    border-left: 5px solid #ff9800;
+    background: #ffe0b2;
+    color: #f57c00;
+}
+p {
+    line-height:0.5;
+}
+span {
+    color:red;
+    font-weight:normal;
+}
+.koumokubtn {
+        border: 0;
+        text-align: center;
+        display: inline-block;
+        padding: 11px;
+        width: 120px;
+        margin: 7px;
+        color: #ffffff;
+        background-color: #36a2eb;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: box-shadow 200ms ease-out;
+        cursor:pointer;
+}
+.sousin {
+    cursor: pointer;
+    text-decoration: inherit;
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    padding: 0.5rem 2rem;
+    border-image-slice: 1;
+    border-image-Creator: linear-gradient(to left, #743ad5, #d53a9d);
+    margin-left:250px;
+}
+.koumoku {
+    width: 50%; /*親要素いっぱい広げる*/
+    padding: 10px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+.title {
+        width: 50%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+.headline {
+        width: 50%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+        transform: translate(0px,-4px);
+}
+.labelnaiyou {
+    display: inline-block;
+    transform: translate(0px,-60px);
+    margin-left:64px;
+}
+.labelmatome {
+    display: inline-block;
+    transform: translate(0px,-60px);
+}
+
+.check {
+    position: relative;
+    padding: 15px 40px 15px 30px;
+    font: 14px/1.6 'arial narrow', sans-serif;
+    border: solid 2px #adcce8;
+    border-radius:8px;
+    color: #448ccb;
+    width:400px;
+    background: #fff;
+}
+
+.check:before {
+    content: "CHECK";  /* 好きな文字を記述 */
+    position: absolute;
+    display: block;
+    top: -15px;
+    left: 20px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.steps {
+/* 連番カウンター名の定義 */
+counter-reset: step-counter;
+/* 縦棒との位置関係に必要 */
+position: relative;
+/* 縦棒と連番のためのスペースを左に確保 */
+padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+}
+/* 縦棒 */
+.steps:before {
+content: "";
+/* 幅と色 */
+background-color: #111111;
+width: 2px;
+/* 位置 */
+position: absolute;
+top: 0.7rem; /* 円のwidthの半分 */
+left: 0.7rem; /* 円のwidthの半分 */
+height: calc(100%); /* 100% - top */
+/* 連番より後ろに表示するため */
+z-index: 0;
+}
+.steps > h2 {
+display: flex;
+align-items: center;
+}
+/* ①②③など連番 */
+.steps > h2:before {
+/* 連番カウンターの値を表示する */
+content: "";
+/* フォントと色 */
+background: #111111;
+color: white;
+font-size: 0.8rem;
+font-weight: normal;
+/* 文字を中央に表示する */
+line-height: 1.5rem;
+text-align: center;
+/* 円で表示する */
+width: 1.5rem;
+height: 1.5rem;
+border-radius: 1.5rem;
+/* .stepsでmargin-left +2rem したぶん左に戻す */
+position: absolute;
+left: 0;
+/* 縦棒より手前に表示するため */
+z-index: 1;
+}
+`
+
+const MobSteps = styled.div`
+width:519px;
+margin-top:20px;
+
+.head {
+    padding: 1rem 1rem;
+    border-left: 5px solid #ff9800;
+    background: #ffe0b2;
+    color: #f57c00;
+}
+p {
+    line-height:0.5;
+}
+span {
+    color:red;
+    font-weight:normal;
+}
+.koumokubtn {
+        border: 0;
+        text-align: center;
+        display: inline-block;
+        padding: 11px;
+        width: 120px;
+        margin: 7px;
+        color: #ffffff;
+        background-color: #36a2eb;
+        border-radius: 8px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: box-shadow 200ms ease-out;
+        cursor:pointer;
+        transform: translate(115px,0px);
+}
+.sousin {
+    cursor: pointer;
+    text-decoration: inherit;
+    font-size: 1rem;
+    color: white;
+    background-color: black;
+    padding: 0.5rem 2rem;
+    border-image-slice: 1;
+    border-image-Creator: linear-gradient(to left, #743ad5, #d53a9d);
+    transform: translate(185px,10px);
+}
+.koumoku {
+    width: 50%; /*親要素いっぱい広げる*/
+    padding: 10px 15px; /*ボックスを大きくする*/
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+.title {
+        width: 50%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+.headline {
+        width: 50%; /*親要素いっぱい広げる*/
+        padding: 10px 15px; /*ボックスを大きくする*/
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+        transform: translate(0px,-4px);
+}
+.labelnaiyou {
+    display: inline-block;
+    transform: translate(0px,-60px);
+    margin-left:64px;
+}
+.labelmatome {
+    display: inline-block;
+    transform: translate(0px,-60px);
+}
+
+.check {
+    position: relative;
+    padding: 15px 40px 15px 30px;
+    font: 14px/1.6 'arial narrow', sans-serif;
+    border: solid 2px #adcce8;
+    border-radius:8px;
+    color: #448ccb;
+    width:400px;
+    background: #fff;
+}
+
+.check:before {
+    content: "CHECK";  /* 好きな文字を記述 */
+    position: absolute;
+    display: block;
+    top: -15px;
+    left: 20px;
+    background: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.steps {
+/* 連番カウンター名の定義 */
+counter-reset: step-counter;
+/* 縦棒との位置関係に必要 */
+position: relative;
+/* 縦棒と連番のためのスペースを左に確保 */
+padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+}
+/* 縦棒 */
+.steps:before {
+content: "";
+/* 幅と色 */
+background-color: #111111;
+width: 2px;
+/* 位置 */
+position: absolute;
+top: 0.7rem; /* 円のwidthの半分 */
+left: 0.7rem; /* 円のwidthの半分 */
+height: calc(100%); /* 100% - top */
+/* 連番より後ろに表示するため */
+z-index: 0;
+}
+.steps > h2 {
+display: flex;
+align-items: center;
+}
+/* ①②③など連番 */
+.steps > h2:before {
+/* 連番カウンターの値を表示する */
+content: "";
+/* フォントと色 */
+background: #111111;
+color: white;
+font-size: 0.8rem;
+font-weight: normal;
+/* 文字を中央に表示する */
+line-height: 1.5rem;
+text-align: center;
+/* 円で表示する */
+width: 1.5rem;
+height: 1.5rem;
+border-radius: 1.5rem;
+/* .stepsでmargin-left +2rem したぶん左に戻す */
+position: absolute;
+left: 0;
+/* 縦棒より手前に表示するため */
+z-index: 1;
+}
 `
 
 type Life = {
@@ -326,9 +630,11 @@ export const Lifepost =()=>{
         })
     }
 
+
+    if(PC) {
     return (
         <Layout>
-            <Steps>
+            <PCSteps>
                 <label>投稿タイトル<span>(必須):</span></label><input className="title"onChange={doTitle} type={"text"}/>
                 <br></br><br></br>
                 <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
@@ -359,9 +665,86 @@ export const Lifepost =()=>{
                     )
                 })}
 
-            </Steps>
+            </PCSteps>
         </Layout>
     )
+    }else if(Tablet) {
+        return (
+            <Layout>
+                <TabSteps>
+                    <label>投稿タイトル<span>(必須):</span></label><input className="title"onChange={doTitle} type={"text"}/>
+                    <br></br><br></br>
+                    <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
+                    <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
+                    <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
+                    <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
+                    <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label>
+                    <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
+                    <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
+                    <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
+    
+                    <br></br>
+                    <h1><label>見出しの文章<span>(必須):</span></label><input className="headline" onChange={doHeadline} type={"text"}/></h1>
+            
+                    <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>送信する</button>
+                    <br></br>
+    
+                    {formcount.map((count:string,key:number)=>{
+                        return (
+                            <div className="steps" key={key}>
+                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
+                                <br></br>
+                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
+                                <br></br>
+                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
+                                <h2></h2>
+                            </div>   
+                        )
+                    })}
+    
+                </TabSteps>
+            </Layout>
+        )
+    }else {
+        return (
+            <Layout>
+                <MobSteps>
+                    <label>投稿タイトル<span>(必須):</span></label><input className="title"onChange={doTitle} type={"text"}/>
+                    <br></br><br></br>
+                    <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
+                    <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
+                    <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
+                    <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
+                    <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label><br></br>
+                    <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
+                    <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
+                    <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
+    
+                    <br></br>
+                    <h2 className="head"><label>見出しの文章<span>(必須):</span></label><input className="headline" onChange={doHeadline} type={"text"}/></h2>
+            
+                    <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><br></br>
+                    <button className="sousin" onClick={doSubmit}>送信する</button>
+                    <br></br>
+                    <br></br>
+    
+                    {formcount.map((count:string,key:number)=>{
+                        return (
+                            <div className="steps" key={key}>
+                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
+                                <br></br>
+                                内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} onChange={doDetail} />
+                                <br></br>
+                                項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} onChange={doCheckcontent} />
+                                <h2></h2>
+                            </div>   
+                        )
+                    })}
+    
+                </MobSteps>
+            </Layout>
+        )
+    }
 }
 
 export default Lifepost

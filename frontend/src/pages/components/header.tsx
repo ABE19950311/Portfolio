@@ -74,7 +74,7 @@ display: flex;
 `
 
 const Sbtn = styled.div`
-margin-right:20px;
+cursor:pointer;
 &:hover{
 color:#ffa500;
 }
@@ -179,7 +179,7 @@ export const Header = ()=>{
                 <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
                 <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
                 <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
-                <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
+                <Sbtn onClick={logout}><li><span><strong>ログアウト</strong></span></li></Sbtn>
             </SMenu>
             :
             <SMenu>
