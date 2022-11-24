@@ -22,7 +22,199 @@ type Todo = {
     duedate:String
 }
 
-const SDiv = styled.div`
+const PCDiv = styled.div`
+line-height: 1.25;
+max-width:1500px;
+margin-bottom:20px;
+
+h2{
+    text-align:center;
+    border-top: double 4px #27acd9;
+	border-bottom: double 4px #27acd9;
+	padding: 0.5rem 0;
+}
+
+.datepos {
+    margin-left:40%;
+}
+
+.inputpos {
+    text-align:center;
+}
+
+.search {
+    position: relative;
+    display: flex;
+    justify-content:center;
+}
+
+.searchicon {
+    position: absolute;
+    color: #333;
+    font-size: 2rem;
+    transform: translate(100px,5px);
+}
+
+.datepicker {
+        text-align:left;
+        font-size:16px;
+        padding: 6px 40px; /*ボックスを大きくする*/
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    }
+
+.custominput {
+    padding: 10px 100px 10px 10px;
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+
+.todolabel {
+    color:red;
+}
+
+.customselect {
+        padding: 10px; 15px;
+        border-radius: 4px;
+        border: none;
+        box-shadow: 0 0 0 1px #ccc inset;
+        cursor: pointer;
+        font-size:16px;
+    
+    &::focus {
+        outline: 0;
+        box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
+    }
+}
+
+.custombutton {
+    font-weight: 700;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #27acd9;
+    background: #27acd9;
+    color: #fff;
+}
+
+.filterselect {
+    transform: translate(-25px,0px);
+    padding:0 10px;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+`
+
+const TabDiv = styled.div`
+line-height: 1.25;
+max-width:1500px;
+margin-bottom:20px;
+
+h2{
+    text-align:center;
+    border-top: double 4px #27acd9;
+	border-bottom: double 4px #27acd9;
+	padding: 0.5rem 0;
+}
+
+.datepos {
+    margin-left:40%;
+}
+
+.inputpos {
+    text-align:center;
+}
+
+.search {
+    position: relative;
+    display: flex;
+    justify-content:center;
+}
+
+.searchicon {
+    position: absolute;
+    color: #333;
+    font-size: 2rem;
+    transform: translate(100px,5px);
+}
+
+.datepicker {
+        text-align:left;
+        font-size:16px;
+        padding: 6px 40px; /*ボックスを大きくする*/
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    }
+
+.custominput {
+    padding: 10px 100px 10px 10px;
+    font-size: 16px;
+    border-radius: 3px; /*ボックス角の丸み*/
+    border: 2px solid #ddd; /*枠線*/
+    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+}
+
+.todolabel {
+    color:red;
+}
+
+.customselect {
+        padding: 10px; 15px;
+        border-radius: 4px;
+        border: none;
+        box-shadow: 0 0 0 1px #ccc inset;
+        cursor: pointer;
+        font-size:16px;
+    
+    &::focus {
+        outline: 0;
+        box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
+    }
+}
+
+.custombutton {
+    font-weight: 700;
+    padding: 0.5rem 1.5rem;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #27acd9;
+    background: #27acd9;
+    color: #fff;
+}
+
+.filterselect {
+    transform: translate(-25px,0px);
+    padding:0 10px;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+`
+
+const MobDiv = styled.div`
 line-height: 1.25;
 max-width:1500px;
 margin-bottom:20px;
@@ -109,19 +301,301 @@ h2{
     color: #fff;
 }
 
+.filterselect {
+    transform: translate(-160px,-5px);
+    padding:0 10px;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
 `
 
-const STable = styled.table`
+const PCTable = styled.table`
 border-collapse: collapse;
 margin: 0 auto;
-padding: 0;
-width: 1000px;
+width: 950px;
+overflow-wrap: break-word;
+
+.check {
+    text-align:center;
+    width:5vw;
+}
+
+.start {
+    cursor: pointer;
+    position: relative;
+}
+
+.start::before, .start::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+.start::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.start::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.due {
+    cursor: pointer;
+    position: relative;
+}
+
+.due::before, .due::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+.due::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.due::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.startasc::before {
+    border-bottom-color: #444;
+}
+.startdesc::after {
+    border-top-color: #444;
+}
+
+.dueasc::before {
+    border-bottom-color: #444;
+}
+.duedesc::after {
+    border-top-color: #444;
+}
+
+tr {
+background-color: #fff;
+border: 1px solid #bbb;
+padding: .35em;
+}
+
+th,td {
+padding: 1em 10px 1em 1em;
+border-right: 1px solid #bbb;
+}
+
+thead tr{
+background-color: #eee;
+}
+
+.start {
+    width:9vw;
+}
+
+.due {
+    width:9vw;
+}
+
+.todo {
+    width:30vw;
+}
+
+.life {
+    width:13vw;
+}
+
+.txt_start{
+    text-align: left;
+    width:9vw;
+}
+
+.txt_due{
+    text-align: left;
+    width:9vw;
+}
+
+.txt_todo{
+    text-align: left;
+    width:30vw;
+}
+
+.txt_life{
+    text-align: left;
+    width:13vw;
+}
+
+tbody tr:hover{
+    background-color: #fffae9;
+}
+
+`
+
+const TabTable = styled.table`
+border-collapse: collapse;
+margin: 0 auto;
+width: 900px;
 table-layout: fixed;
 overflow-wrap: break-word;
 
 .check {
     text-align:center;
 }
+
+.start {
+    cursor: pointer;
+    position: relative;
+}
+
+.start::before, .start::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+.start::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.start::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.due {
+    cursor: pointer;
+    position: relative;
+}
+
+.due::before, .due::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}
+
+.due::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}
+
+.due::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}
+
+.startasc::before {
+    border-bottom-color: #444;
+}
+.startdesc::after {
+    border-top-color: #444;
+}
+
+.dueasc::before {
+    border-bottom-color: #444;
+}
+.duedesc::after {
+    border-top-color: #444;
+}
+
+tr {
+background-color: #fff;
+border: 1px solid #bbb;
+padding: .35em;
+}
+
+th,td {
+padding: 1em 10px 1em 1em;
+border-right: 1px solid #bbb;
+}
+
+thead tr{
+background-color: #eee;
+}
+
+.check {
+    width:6vw;
+}
+
+.start {
+    width:9vw;
+}
+
+.due {
+    width:9vw;
+}
+
+.todo {
+    width:30vw;
+}
+
+.life {
+    width:14vw;
+}
+
+.txt_check{
+    width:100px;
+}
+
+.txt_start{
+    text-align: left;
+    width:9vw;
+    font-size:1.5vw;
+}
+
+.txt_due{
+    text-align: left;
+    width:9vw;
+    font-size:1.5vw;
+}
+
+.txt_todo{
+    text-align: left;
+    width:30vw;
+}
+
+.txt_life{
+    text-align: left;
+    width:14vw;
+}
+
+tbody tr:hover{
+    background-color: #fffae9;
+}
+
+.tdselect {
+    margin-left:5px;
+    outline: none;
+    background-color: #FFFFFF;
+}
+
+`
+
+const MobTable = styled.table`
+border-collapse: collapse;
+margin: 0 auto;
+width: 520px;
+table-layout: fixed;
+overflow-wrap: break-word;
 
 .start {
     cursor: pointer;
@@ -207,47 +681,50 @@ background-color: #eee;
 }
 
 .check {
-    width:100px;
+    width:7vw;
+    transform: translate(-6px,5px);
 }
 
 .start {
-    width:120px;
+    font-size:2.5vw;
+    width:15vw;
 }
 
 .due {
-    width:120px;
+    font-size:2.5vw;
+    width:15vw;
 }
 
 .todo {
-    width:350px
+    width:30vw;
 }
 
 .life {
-    width:170px;
-}
-
-.txt_check{
-    width:100px;
+    width:15vw;
+    font-size:3vw;
 }
 
 .txt_start{
     text-align: left;
-    width:120px;
+    width:15vw;
+    font-size:1vw;
 }
 
 .txt_due{
     text-align: left;
-    width:120px;
+    width:15vw;
+    font-size:1vw;
 }
 
 .txt_todo{
     text-align: left;
-    width:350px
+    width:30vw;
 }
 
 .txt_life{
     text-align: left;
-    width:170px;
+    width:15vw;
+    font-size:1vw;
 }
 
 tbody tr:hover{
@@ -260,52 +737,6 @@ tbody tr:hover{
     background-color: #FFFFFF;
 }
 
-@media screen and (max-width: 600px) {
-table {
-    border: 0;
-    width:100%
-}
-table th{
-    background-color: #eee;
-    display: block;
-    border-right: none;
-}
-table thead {
-    border: none;
-    clip: rect(0 0 0 0);
-    height: 1px;
-    margin: -1px;
-    overflow: hidden;
-    padding: 0;
-    position: absolute;
-    width: 1px;
-}
-
-table tr {
-    display: block;
-    margin-bottom: .625em;
-}
-
-table td {
-    border-bottom: 1px solid #bbb;
-    display: block;
-    font-size: .8em;
-    text-align: right;
-    position: relative;
-    padding: .625em .625em .625em 4em;
-    border-right: none;
-}
-
-table td::before {
-    content: attr(data-label);
-    font-weight: bold;
-    position: absolute;
-    left: 10px;
-}
-
-table td:last-child {
-    border-bottom: 0;
-}
 `
 
 
@@ -537,13 +968,12 @@ const handleChangeEnd = (selectedDate:Date) => {
     }
 
 
+    if(PC) {
     return (
         <>
         <Header />
-
-        <SDiv>
+        <PCDiv>
         <h2>TODOリスト作成</h2>
-
             <div className="datepos">
             {startDate ?  
                 <DatePicker
@@ -566,7 +996,6 @@ const handleChangeEnd = (selectedDate:Date) => {
                     placeholderText="開始日"
                 />
             }
-
             {endDate ? 
                 <DatePicker
                     className="datepicker"
@@ -589,7 +1018,6 @@ const handleChangeEnd = (selectedDate:Date) => {
                 />
             }
             </div>
-
             <div className="inputpos">
             <br></br>
             <label>TODO内容入力<span className="todolabel">(必須)</span>:</label><input className="custominput" type={"text"} value={list} onChange={doList}/>
@@ -604,21 +1032,7 @@ const handleChangeEnd = (selectedDate:Date) => {
             </select>
             &emsp;&emsp;<button className="custombutton" type={"submit"} onClick={doSubmit}>リスト作成</button><br></br><br></br><br></br>
             <div className="search">
-            <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
-            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
-            </div>
-            </div>
-
-        </SDiv>
-
-                    <STable>
-                    <thead className="thead">
-                        <tr className="tr">
-                        <td className="check"><input type="checkbox" onChange={doAllcheck}/></td>
-                        <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
-                        <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
-                        <td className="life" scope="col">項目
-                                <select className="tdselect" onChange={doSeleclife}>
+            <select className="filterselect" onChange={doSeleclife}>
                                     <option value="フィルター項目">フィルター項目</option>
                                     <option value="none">none</option>
                                     <option value="部屋探し・入居">部屋探し・入居</option>
@@ -627,13 +1041,23 @@ const handleChangeEnd = (selectedDate:Date) => {
                                     <option value="掃除">掃除</option>
                                     <option value="料理">料理</option>
                                     <option value="洗濯">洗濯</option>
-                                </select>
-                        </td>
+            </select>
+            <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+            </div>
+            </div>
+        </PCDiv>
+                    <PCTable>
+                    <thead className="thead">
+                        <tr className="tr">
+                        <td className="check"><input type="checkbox" onChange={doAllcheck}/></td>
+                        <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
+                        <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
+                        <td className="life" scope="col">項目</td>
                         <td className="todo" scope="col">TODO</td>
                         </tr>
                     </thead>
-                    </STable>
-
+                    </PCTable>
             {todos.filter((todos:Todo)=>{
                 if(todos.life.includes(selectlife)) {
                     return todos;
@@ -648,21 +1072,260 @@ const handleChangeEnd = (selectedDate:Date) => {
                 }
             }).map((todo:Todo,key:number)=>{
                 return (
-                <STable key={key}>
+                <PCTable key={key}>
                     <tbody className="tbody">
                         <tr className="tr">
-                            <th className="txt_check"><input value={todo.id} id="check" checked={checkdata[todo.id]} type="checkbox" onChange={doCheck} /></th>
+                            <td className="check"><input value={todo.id} id="check" checked={checkdata[todo.id]} type="checkbox" onChange={doCheck} /></td>
                             <td data-label="開始日" className="txt_start">{todo.startdate}</td>
                             <td data-label="期日" className="txt_due">{todo.duedate}</td>
                             <td data-label="手続き内容" className="txt_life">{todo.life}</td>
                             <td data-label="TODO" className="txt_todo">{todo.list}</td>
                         </tr>
                     </tbody>
-                </STable>
+                </PCTable>
                 )
             })}
         </>
     )
+    }else if(Tablet) {
+        return (
+            <>
+            <Header />
+            <TabDiv>
+            <h2>TODOリスト作成</h2>
+                <div className="datepos">
+                {startDate ?  
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selected={moment(startDate).toDate()}
+                        selectsStart
+                        startDate={moment(startDate).toDate()}
+                        onChange={handleChangeStart}
+                    />
+                    :
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selectsStart
+                        startDate={moment(startDate).toDate()}
+                        onChange={handleChangeStart}
+                        placeholderText="開始日"
+                    />
+                }
+                {endDate ? 
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selected={moment(endDate).toDate()}
+                        selectsEnd
+                        endDate={moment(endDate).toDate()}
+                        onChange={handleChangeEnd}
+                    />
+                    :
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selectsEnd
+                        endDate={moment(endDate).toDate()}
+                        onChange={handleChangeEnd}
+                        placeholderText="期日"
+                    />
+                }
+                </div>
+                <div className="inputpos">
+                <br></br>
+                <label>TODO内容入力<span className="todolabel">(必須)</span>:</label><input className="custominput" type={"text"} value={list} onChange={doList}/>
+                <label>&emsp;項目を選択:</label><select className="customselect" onChange={doLife} value={life}>
+                    <option value="none">none</option>
+                    <option value="部屋探し・入居">部屋探し・入居</option>
+                    <option value="入居前後の手続き">入居前後の手続き</option>
+                    <option value="防犯・防災">防犯・防災</option>
+                    <option value="掃除">掃除</option>
+                    <option value="料理">料理</option>
+                    <option value="洗濯">洗濯</option>
+                </select>
+                &emsp;&emsp;<button className="custombutton" type={"submit"} onClick={doSubmit}>リスト作成</button><br></br><br></br><br></br>
+                <div className="search">
+                <select className="filterselect" onChange={doSeleclife}>
+                                        <option value="フィルター項目">フィルター項目</option>
+                                        <option value="none">none</option>
+                                        <option value="部屋探し・入居">部屋探し・入居</option>
+                                        <option value="入居前後の手続き">入居前後の手続き</option>
+                                        <option value="防犯・防災">防犯・防災</option>
+                                        <option value="掃除">掃除</option>
+                                        <option value="料理">料理</option>
+                                        <option value="洗濯">洗濯</option>
+                </select>
+                <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+                &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+                </div>
+                </div>
+            </TabDiv>
+                        <TabTable>
+                        <thead className="thead">
+                            <tr className="tr">
+                            <td className="check"><input type="checkbox" onChange={doAllcheck}/></td>
+                            <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
+                            <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
+                            <td className="life" scope="col">項目</td>
+                            <td className="todo" scope="col">TODO</td>
+                            </tr>
+                        </thead>
+                        </TabTable>
+                {todos.filter((todos:Todo)=>{
+                    if(todos.life.includes(selectlife)) {
+                        return todos;
+                    }else if(selectlife==="フィルター項目"){
+                        return todos;
+                    }
+                }).filter((todos:Todo)=>{
+                    if(todos.list.includes(search)) {
+                        return todos;
+                    }else if(search==="") {
+                        return todos;
+                    }
+                }).map((todo:Todo,key:number)=>{
+                    return (
+                    <TabTable key={key}>
+                        <tbody className="tbody">
+                            <tr className="tr">
+                                <td className="check"><input value={todo.id} id="check" checked={checkdata[todo.id]} type="checkbox" onChange={doCheck} /></td>
+                                <td data-label="開始日" className="txt_start">{todo.startdate}</td>
+                                <td data-label="期日" className="txt_due">{todo.duedate}</td>
+                                <td data-label="手続き内容" className="txt_life">{todo.life}</td>
+                                <td data-label="TODO" className="txt_todo">{todo.list}</td>
+                            </tr>
+                        </tbody>
+                    </TabTable>
+                    )
+                })}
+            </>
+        )
+    }else {
+        return (
+            <>
+            <Header />
+            <MobDiv>
+            <h2>TODOリスト作成</h2>
+                <div className="datepos">
+                {startDate ?  
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selected={moment(startDate).toDate()}
+                        selectsStart
+                        startDate={moment(startDate).toDate()}
+                        onChange={handleChangeStart}
+                    />
+                    :
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selectsStart
+                        startDate={moment(startDate).toDate()}
+                        onChange={handleChangeStart}
+                        placeholderText="開始日"
+                    />
+                }
+                {endDate ? 
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selected={moment(endDate).toDate()}
+                        selectsEnd
+                        endDate={moment(endDate).toDate()}
+                        onChange={handleChangeEnd}
+                    />
+                    :
+                    <DatePicker
+                        className="datepicker"
+                        dateFormat="yyyy-MM-dd"
+                        locale="ja"
+                        selectsEnd
+                        endDate={moment(endDate).toDate()}
+                        onChange={handleChangeEnd}
+                        placeholderText="期日"
+                    />
+                }
+                </div>
+                <div className="inputpos">
+                <br></br>
+                <label>TODO内容入力<span className="todolabel">(必須)</span>:</label><input className="custominput" type={"text"} value={list} onChange={doList}/>
+                <br></br><label>&emsp;項目を選択:</label><select className="customselect" onChange={doLife} value={life}>
+                    <option value="none">none</option>
+                    <option value="部屋探し・入居">部屋探し・入居</option>
+                    <option value="入居前後の手続き">入居前後の手続き</option>
+                    <option value="防犯・防災">防犯・防災</option>
+                    <option value="掃除">掃除</option>
+                    <option value="料理">料理</option>
+                    <option value="洗濯">洗濯</option>
+                </select>
+                &emsp;&emsp;<button className="custombutton" type={"submit"} onClick={doSubmit}>リスト作成</button><br></br><br></br><br></br>
+                <select className="filterselect" onChange={doSeleclife}>
+                                        <option value="フィルター項目">フィルター項目</option>
+                                        <option value="none">none</option>
+                                        <option value="部屋探し・入居">部屋探し・入居</option>
+                                        <option value="入居前後の手続き">入居前後の手続き</option>
+                                        <option value="防犯・防災">防犯・防災</option>
+                                        <option value="掃除">掃除</option>
+                                        <option value="料理">料理</option>
+                                        <option value="洗濯">洗濯</option>
+                </select><br></br>
+                <div className="search">
+                <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+                &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+                </div>
+                </div>
+            </MobDiv>
+                        <MobTable>
+                        <thead className="thead">
+                            <tr className="tr">
+                            <td className="check"><input type="checkbox" onChange={doAllcheck}/></td>
+                            <td className={`start ${startclass ? "startdesc":"startasc"}`} scope="col" onClick={startclass ? startdateasc:startdatedesc}>開始日</td>
+                            <td className={`due ${dueclass ? "duedesc":"dueasc"}`} scope="col" onClick={dueclass ? duedateasc:duedatedesc}>期日</td>
+                            <td className="life" scope="col">項目</td>
+                            <td className="todo" scope="col">TODO</td>
+                            </tr>
+                        </thead>
+                        </MobTable>
+                {todos.filter((todos:Todo)=>{
+                    if(todos.life.includes(selectlife)) {
+                        return todos;
+                    }else if(selectlife==="フィルター項目"){
+                        return todos;
+                    }
+                }).filter((todos:Todo)=>{
+                    if(todos.list.includes(search)) {
+                        return todos;
+                    }else if(search==="") {
+                        return todos;
+                    }
+                }).map((todo:Todo,key:number)=>{
+                    return (
+                    <MobTable key={key}>
+                        <tbody className="tbody">
+                            <tr className="tr">
+                                <td className="check"><input value={todo.id} id="check" checked={checkdata[todo.id]} type="checkbox" onChange={doCheck} /></td>
+                                <td data-label="開始日" className="txt_start">{todo.startdate}</td>
+                                <td data-label="期日" className="txt_due">{todo.duedate}</td>
+                                <td data-label="手続き内容" className="txt_life">{todo.life}</td>
+                                <td data-label="TODO" className="txt_todo">{todo.list}</td>
+                            </tr>
+                        </tbody>
+                    </MobTable>
+                    )
+                })}
+            </>
+        )
+    }
 }
 
 export default Todo;
