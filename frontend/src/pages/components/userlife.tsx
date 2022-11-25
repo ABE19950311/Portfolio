@@ -67,9 +67,9 @@ const PCDiv = styled.div`
     }
     th {
     padding: 10px;
-    background: #778ca3;
+    background: #FFCC66;
     border: solid 1px #666666;
-    color: #ffffff;
+    color: #222222;
     }
     td {
     padding: 10px;
@@ -254,9 +254,9 @@ const TabDiv = styled.div`
     }
     th {
     padding: 10px;
-    background: #778ca3;
+    background: #FFCC66;
     border: solid 1px #666666;
-    color: #ffffff;
+    color: #222222;
     }
     td {
     padding: 10px;
@@ -440,9 +440,9 @@ const MobDiv = styled.div`
     }
     th {
     padding: 10px;
-    background: #778ca3;
+    background: #FFCC66;
     border: solid 1px #666666;
-    color: #ffffff;
+    color: #222222;
     }
     td {
     padding: 10px;
@@ -673,7 +673,6 @@ export const Userlife = (props:any)=>{
     const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
-    const [slicepost,setSlicepost] = useState(lifepost)
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -707,11 +706,6 @@ export const Userlife = (props:any)=>{
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[filterlife])
 
-    useEffect(()=>{
-        let slice = lifepost.slice(offset,offset+perPage)
-        setSlicepost(slice)
-    },[lifepost,offset])
-
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
@@ -727,7 +721,7 @@ export const Userlife = (props:any)=>{
     }
 
     const createAsc = ()=>{
-        slicepost.sort((a:Life,b:Life)=>{
+        lifepost.sort((a:Life,b:Life)=>{
             if(a.created_at<b.created_at) return -1
             if(a.created_at>b.created_at) return 1
             return 0
@@ -736,7 +730,7 @@ export const Userlife = (props:any)=>{
     }
 
     const createDesc = ()=>{
-        slicepost.sort((a:Life,b:Life)=>{
+        lifepost.sort((a:Life,b:Life)=>{
             if(a.created_at>b.created_at) return -1
             if(a.created_at<b.created_at) return 1
             return 0
@@ -745,7 +739,7 @@ export const Userlife = (props:any)=>{
     }
 
     const updateAsc = ()=>{
-        slicepost.sort((a:Life,b:Life)=>{
+        lifepost.sort((a:Life,b:Life)=>{
             if(a.updated_at<b.updated_at) return -1
             if(a.updated_at>b.updated_at) return 1
             return 0
@@ -754,7 +748,7 @@ export const Userlife = (props:any)=>{
     }
 
     const updateDesc = ()=>{
-        slicepost.sort((a:Life,b:Life)=>{
+        lifepost.sort((a:Life,b:Life)=>{
             if(a.updated_at>b.updated_at) return -1
             if(a.updated_at<b.updated_at) return 1
             return 0
@@ -812,13 +806,14 @@ export const Userlife = (props:any)=>{
             </tr>
         </table>
 
-        {slicepost.filter((value:Life,index,self)=>{
+        {lifepost.filter((value:Life,index,self)=>{
                 if(value.lifeitem.includes(filterlife)) {
                     return value
                 }else if(filterlife==="フィルター内容を選択") {
                     return value
                 }
-            }).map((life:Life,key:number)=>{
+            }).slice(offset,offset+perPage)
+            .map((life:Life,key:number)=>{
             return (
                 <table key={key}>
                     <tr>
@@ -886,13 +881,14 @@ export const Userlife = (props:any)=>{
             </tr>
             </table>
     
-            {slicepost.filter((value:Life,index,self)=>{
+            {lifepost.filter((value:Life,index,self)=>{
                     if(value.lifeitem.includes(filterlife)) {
                         return value
                     }else if(filterlife==="フィルター内容を選択") {
                         return value
                     }
-                }).map((life:Life,key:number)=>{
+                }).slice(offset,offset+perPage)
+                .map((life:Life,key:number)=>{
                 return (
                     <table key={key}>
                         <tr>
@@ -960,13 +956,14 @@ export const Userlife = (props:any)=>{
             </tr>
             </table>
     
-            {slicepost.filter((value:Life,index,self)=>{
+            {lifepost.filter((value:Life,index,self)=>{
                     if(value.lifeitem.includes(filterlife)) {
                         return value
                     }else if(filterlife==="フィルター内容を選択") {
                         return value
                     }
-                }).map((life:Life,key:number)=>{
+                }).slice(offset,offset+perPage)
+                .map((life:Life,key:number)=>{
                 return (
                     <table key={key}>
                         <tr>
