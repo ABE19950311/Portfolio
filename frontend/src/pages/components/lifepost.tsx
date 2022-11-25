@@ -504,12 +504,15 @@ export const Lifepost =()=>{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[formflag])
 
+    useEffect(()=>{
+        const initial = 1
+        setContent([{[initial]:"",sortid:initial,nullflag:true}])
+        setDetail([{[initial]:"",sortid:initial,nullflag:true}])
+        setCheckcontent([{[initial]:"",sortid:initial,nullflag:true}])
+    },[])
+
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
-
-    console.log(content)
-    console.log(detail)
-    console.log(checkcontent)
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -524,9 +527,22 @@ export const Lifepost =()=>{
     }
 
     const doFormplus = ()=>{
+        const length = formcount.length
         setFormcount((formcount)=>([
             ...formcount,
             "1"
+        ]))
+        setContent((content)=>([
+            ...content,
+            {[length+1]:"",sortid:length+1,nullflag:true}
+        ]))
+        setDetail((detail)=>([
+            ...detail,
+            {[length+1]:"",sortid:length+1,nullflag:true}
+        ]))
+        setCheckcontent((checkcontent)=>([
+            ...checkcontent,
+            {[length+1]:"",sortid:length+1,nullflag:true}
         ]))
     }
     
@@ -549,7 +565,8 @@ export const Lifepost =()=>{
         const id = event.target.max
         const numberid = Number(id)
         const value= event.target.value
-        const obj = {[numberid]:value,sortid:numberid}
+        const nullflag = value.trim() ? false : true
+        const obj = {[numberid]:value,sortid:numberid,nullflag:nullflag}
         
         if(contenttimer.current) clearTimeout(contenttimer.current)
 
@@ -569,7 +586,8 @@ export const Lifepost =()=>{
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
         const value= event.target.value
-        const obj = {[id]:value,sortid:id}
+        const nullflag = value.trim() ? false : true
+        const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(detailtimer.current) clearTimeout(detailtimer.current)
 
@@ -588,7 +606,8 @@ export const Lifepost =()=>{
     const doCheckcontent = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
         const value = event.target.value
-        const obj = {[id]:value,sortid:id}
+        const nullflag = value.trim() ? false : true
+        const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(checktimer.current) clearTimeout(checktimer.current)
 
@@ -603,10 +622,15 @@ export const Lifepost =()=>{
         if(find==-1) return
         checkcontent.splice(find,1)
     }
-
+    
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
-        
+
+        const nullcontent = content.find((value)=>value.nullflag)
+        const nulldetail = detail.find((value)=>value.nullflag)
+    
+        if(!title.trim()||!headline.trim()||nullcontent||nulldetail) return
+
         const jsoncontent = JSON.stringify(content)
         const jsondetail = JSON.stringify(detail)
         const jsoncheck = JSON.stringify(checkcontent)

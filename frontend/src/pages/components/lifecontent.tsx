@@ -382,6 +382,10 @@ type Comment = {
     updated_at:Date
 }
 
+type Sort = {
+    sortid:number
+}
+
 export const Lifecontent = ()=>{
     const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
@@ -393,6 +397,12 @@ export const Lifecontent = ()=>{
     const [comment,setComment] = useState("")
     const [flag,setFlag] = useState("")
     const [commentdata,setCommentdata] = useState([])
+    const [rescontent,setRescontent] = useState<any[]>([])
+    const [resdetail,setResdetail] = useState<any[]>([])
+    const [rescheckcontent,setRescheckcontent] = useState<any[]>([])
+    const [content,setContent] = useState<any[]>([])
+    const [detail,setDetail] = useState<any[]>([])
+    const [checkcontent,setCheckcontent] = useState<any[]>([])
 
     const router = useRouter()
     const id = router.query.id as unknown as number
@@ -408,6 +418,9 @@ export const Lifecontent = ()=>{
             }
         }).then(res=>{
             setUsercontent(res.data)
+            setRescontent(JSON.parse(res.data.content))
+            setResdetail(JSON.parse(res.data.detail))
+            setRescheckcontent(JSON.parse(res.data.checkcontent))
         }).catch(error=>{
             console.log(error)
         })
@@ -422,16 +435,16 @@ export const Lifecontent = ()=>{
             console.log(error)
         })
     },[id,env,flag])
+    
+    useEffect(()=>{
+        setContent(rescontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+        setDetail(resdetail.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+        setCheckcontent(rescheckcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+    },[rescontent,resdetail,rescheckcontent])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
     if(usercontent==undefined) return
-
-    console.log(commentdata)
-
-    const content = JSON.parse(usercontent.content)
-    const detail = JSON.parse(usercontent.detail)
-    const checkcontent = JSON.parse(usercontent.checkcontent)
 
     const doName= (event:React.ChangeEvent<HTMLInputElement>)=>{
         setName(event.target.value)

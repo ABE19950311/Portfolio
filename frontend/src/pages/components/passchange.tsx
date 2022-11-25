@@ -82,20 +82,20 @@ export const Passchange = ()=>{
     },[router,env])    
 
     useEffect(()=>{
-        if(oldpass.trim()!=="") {
+        if(oldpass.trim()) {
         setValidationPass("")
         }
     },[oldpass])
 
     useEffect(()=>{
-        if(password.trim()!==""&&passwordconfirm!==""&&password.trim()!==passwordconfirm.trim()) {
+        if(password.trim()&&passwordconfirm.trim()&&password.trim()!==passwordconfirm.trim()) {
             setValidationNewPass("パスワードが一致しません")
-        }else if(validationNewPass==="パスワードが一致しません"&&passwordconfirm.trim()!=="") {
+        }else if(validationNewPass==="パスワードが一致しません"&&passwordconfirm.trim()) {
             setValidationNewPass("")
-        }else if(password.trim()!=="") {
+        }else if(password.trim()) {
             setValidationNewPass("")
         }
-        if(passwordconfirm.trim()!=="") {
+        if(passwordconfirm.trim()) {
             setValidationNewPassfilm("")
         }else{
             setValidationNewPass("")
@@ -136,21 +136,21 @@ export const Passchange = ()=>{
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
 
-        if(oldpass.trim()==="") {
+        if(!oldpass.trim()) {
             setValidationPass("パスワードが空欄です")
         }
-        if(password.trim()===""&&passwordconfirm==="") {
+        if(!password.trim()&&!passwordconfirm.trim()) {
             setValidationNewPass("パスワードが空欄です")
             setValidationNewPassfilm("パスワードが空欄です")
-        }else if(password.trim()===""&&passwordconfirm!=="") {
+        }else if(!password.trim()&&passwordconfirm.trim()) {
             setValidationNewPass("パスワードが空欄です")
             setValidationNewPassfilm("")
-        }else if(password.trim()!==""&&passwordconfirm==="") {
+        }else if(password.trim()&&!passwordconfirm.trim()) {
             setValidationNewPass("")
             setValidationNewPassfilm("パスワードが空欄です")
         }
 
-        if(validationPass||oldpass.trim()===""||password.trim()===""||passwordconfirm.trim()==="") return
+        if(validationPass||validationNewPass||!oldpass.trim()||!password.trim()||!passwordconfirm.trim()) return
 
         axios.post(env+"/usercheck",
         {

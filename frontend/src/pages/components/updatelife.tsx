@@ -564,9 +564,22 @@ export const Updatelife =()=>{
     }
 
     const doFormplus = ()=>{
+        const length = formcount.length
         setFormcount((formcount)=>([
             ...formcount,
             "1"
+        ]))
+        setContent((content)=>([
+            ...content,
+            {[length+1]:"",sortid:length+1,nullflag:true}
+        ]))
+        setDetail((detail)=>([
+            ...detail,
+            {[length+1]:"",sortid:length+1,nullflag:true}
+        ]))
+        setCheckcontent((checkcontent)=>([
+            ...checkcontent,
+            {[length+1]:"",sortid:length+1,nullflag:true}
         ]))
     }
     
@@ -590,7 +603,8 @@ export const Updatelife =()=>{
         const id = event.target.max
         const numberid = Number(id)
         const value= event.target.value
-        const obj = {[numberid]:value,sortid:numberid}
+        const nullflag = value.trim() ? false : true
+        const obj = {[numberid]:value,sortid:numberid,nullflag:nullflag}
         
         if(contenttimer.current) clearTimeout(contenttimer.current)
 
@@ -610,7 +624,8 @@ export const Updatelife =()=>{
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
         const value= event.target.value
-        const obj = {[id]:value,sortid:id}
+        const nullflag = value.trim() ? false : true
+        const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(detailtimer.current) clearTimeout(detailtimer.current)
 
@@ -629,7 +644,8 @@ export const Updatelife =()=>{
     const doCheckcontent = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
         const value = event.target.value
-        const obj = {[id]:value,sortid:id}
+        const nullflag = value.trim() ? false : true
+        const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(checktimer.current) clearTimeout(checktimer.current)
 
@@ -647,6 +663,11 @@ export const Updatelife =()=>{
 
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
+
+        const nullcontent = content.find((value)=>value.nullflag)
+        const nulldetail = detail.find((value)=>value.nullflag)
+    
+        if(!title.trim()||!headline.trim()||nullcontent||nulldetail) return
         
         const jsoncontent = JSON.stringify(content)
         const jsondetail = JSON.stringify(detail)

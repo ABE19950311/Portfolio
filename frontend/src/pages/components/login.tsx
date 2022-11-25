@@ -83,10 +83,10 @@ export const Login = ()=>{
     const router = useRouter();
 
     useEffect(()=>{
-        if(username.trim()!=="") {
+        if(username.trim()) {
             setValidationName("")
         }
-        if(password.trim()!=="") {
+        if(password.trim()) {
             setValidationPass("")
         }
     },[username,password])
@@ -105,14 +105,14 @@ export const Login = ()=>{
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
 
-        if(username.trim()==="") {
+        if(!username.trim()) {
             setValidationName("ユーザ名が空欄です")
         }
-        if(password.trim()==="") {
+        if(!password.trim()) {
             setValidationPass("パスワードが空欄です")
         }
 
-        if(validationName||validationPass||username.trim()===""||password.trim()==="") return
+        if(validationName||validationPass||!username.trim()||!password.trim()) return
         axios.post(env+"/login" as string,
             {
                 user: {

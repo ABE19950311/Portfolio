@@ -83,20 +83,20 @@ export const Newaccount = ()=>{
 
 
     useEffect(()=>{
-        if(username.trim()!=="") {
+        if(username.trim()) {
             setValidationName("")
         }
     },[username])
 
     useEffect(()=>{
-        if(password.trim()!==""&&passwordconfirm.trim()!==""&&password.trim()!==passwordconfirm.trim()) {
+        if(password.trim()&&passwordconfirm.trim()&&password.trim()!==passwordconfirm.trim()) {
             setValidationPass("パスワードが一致しません")
-        }else if(validationPass==="パスワードが一致しません"&&passwordconfirm!=="") {
+        }else if(validationPass==="パスワードが一致しません"&&passwordconfirm.trim()) {
             setValidationPass("")
-        }else if(password.trim()!=="") {
+        }else if(password.trim()) {
             setValidationPass("")
         }
-        if(passwordconfirm.trim()!=="") {
+        if(passwordconfirm.trim()) {
             setValidationPassfilm("")
         }
          // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -129,21 +129,21 @@ export const Newaccount = ()=>{
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
         event.preventDefault();
 
-        if(username.trim()==="") {
+        if(!username.trim()) {
             setValidationName("ユーザ名が空欄です")
         }
-        if(password.trim()===""&&passwordconfirm.trim()==="") {
+        if(!password.trim()&&!passwordconfirm.trim()) {
             setValidationPass("パスワードが空欄です")
             setValidationPassfilm("パスワードが空欄です")
-        }else if(password.trim()!==""&&passwordconfirm.trim()==="") {
+        }else if(password.trim()&&!passwordconfirm.trim()) {
             setValidationPass("")
             setValidationPassfilm("パスワードが空欄です")
-        }else if(password.trim()===""&&passwordconfirm.trim()!=="") {
+        }else if(!password.trim()&&passwordconfirm.trim()) {
             setValidationPass("パスワードが空欄です")
             setValidationPassfilm("")
         }
     
-        if(username.trim()===""||password.trim()===""||passwordconfirm.trim()==="") return
+        if(validationPass||!username.trim()||!password.trim()||!passwordconfirm.trim()) return
         axios.post(env+"/signup" as string,
             {
                 user: {
