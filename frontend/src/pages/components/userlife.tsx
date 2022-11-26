@@ -799,11 +799,13 @@ export const Userlife = (props:any)=>{
                     <option value="洗濯">洗濯</option>
                 </select>
         </caption>
+            <tbody>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th>
                 <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
                 <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
             </tr>
+            </tbody>
         </table>
 
         {lifepost.filter((value:Life,index,self)=>{
@@ -816,10 +818,12 @@ export const Userlife = (props:any)=>{
             .map((life:Life,key:number)=>{
             return (
                 <table key={key}>
+                    <tbody>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                         {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
+                    </tbody>
                 </table>
             )
         })}
@@ -874,11 +878,13 @@ export const Userlife = (props:any)=>{
                     <option value="洗濯">洗濯</option>
                 </select>
             </caption>
+            <tbody>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th>
                 <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
                 <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
             </tr>
+            </tbody>
             </table>
     
             {lifepost.filter((value:Life,index,self)=>{
@@ -891,10 +897,12 @@ export const Userlife = (props:any)=>{
                 .map((life:Life,key:number)=>{
                 return (
                     <table key={key}>
+                        <tbody>
                         <tr>
                             <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                             {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                         </tr>
+                        </tbody>
                     </table>
                 )
             })}
@@ -949,11 +957,13 @@ export const Userlife = (props:any)=>{
                     <option value="洗濯">洗濯</option>
                 </select>
             </caption>
+            <tbody>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th>
                 <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
                 <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
             </tr>
+            </tbody>
             </table>
     
             {lifepost.filter((value:Life,index,self)=>{
@@ -966,10 +976,12 @@ export const Userlife = (props:any)=>{
                 .map((life:Life,key:number)=>{
                 return (
                     <table key={key}>
+                        <tbody>
                         <tr>
                             <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                             {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                         </tr>
+                        </tbody>
                     </table>
                 )
             })}

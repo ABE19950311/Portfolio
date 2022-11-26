@@ -732,7 +732,7 @@ export const Updatelife =()=>{
                     <br></br>
                     <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h1>
             
-                    <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>送信する</button>
+                    <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>更新する</button>
                     <br></br>
     
                     {formcount.map((count:string,key:number)=>{
@@ -769,7 +769,7 @@ export const Updatelife =()=>{
                         <br></br>
                         <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h1>
                 
-                        <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>送信する</button>
+                        <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>更新する</button>
                         <br></br>
         
                         {formcount.map((count:string,key:number)=>{

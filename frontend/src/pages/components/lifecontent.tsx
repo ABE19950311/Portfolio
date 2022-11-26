@@ -481,24 +481,24 @@ export const Lifecontent = ()=>{
             <div className="steps">
             {content.map((content:string[],key:number)=>{
                 return (
-                        <>
-                        <h2 key={key}>{content[key+1]}</h2>
-                        {detail.map((detail:string[])=>{
+                        <React.Fragment key={key}>
+                            <h2>{content[key+1]}</h2>
+                        {detail.map((detail:string[],sekey:number)=>{
                             return(
-                                <>
-                                <p key={key}>{detail[key+1]}</p>
-                                </>
+                                <React.Fragment key={sekey}>
+                                <p>{detail[key+1]}</p>
+                                </React.Fragment>
                             )
                         })}
-                        {checkcontent.map((checkcontent:string[])=>{
+                        {checkcontent.map((checkcontent:string[],thkey:number)=>{
                             return(
-                            <>
-                                {checkcontent[key+1] ? <h4 key={key}>{checkcontent[key+1]}</h4>:<></>}
-                            </>
+                                <React.Fragment key={thkey}>
+                                {checkcontent[key+1] ? <h4>{checkcontent[key+1]}</h4>:<></>}
+                                </React.Fragment>
                             )
                         })}
-                        </>
-                )
+                        </React.Fragment>
+                    )
             })}
             <h3></h3>
             </div>
@@ -525,24 +525,24 @@ export const Lifecontent = ()=>{
                 <h1>{(usercontent as Content).headline}</h1>
                 <div className="steps">
                 {content.map((content:string[],key:number)=>{
-                    return (
-                            <>
-                            <h2 key={key}>{content[key+1]}</h2>
-                            {detail.map((detail:string[])=>{
-                                return(
-                                    <>
-                                    <p key={key}>{detail[key+1]}</p>
-                                    </>
-                                )
-                            })}
-                            {checkcontent.map((checkcontent:string[])=>{
-                                return(
-                                <>
-                                    {checkcontent[key+1] ? <h4 key={key}>{checkcontent[key+1]}</h4>:<></>}
-                                </>
-                                )
-                            })}
-                            </>
+                return (
+                        <React.Fragment key={key}>
+                            <h2>{content[key+1]}</h2>
+                        {detail.map((detail:string[],sekey:number)=>{
+                            return(
+                                <React.Fragment key={sekey}>
+                                <p>{detail[key+1]}</p>
+                                </React.Fragment>
+                            )
+                        })}
+                        {checkcontent.map((checkcontent:string[],thkey:number)=>{
+                            return(
+                                <React.Fragment key={thkey}>
+                                {checkcontent[key+1] ? <h4>{checkcontent[key+1]}</h4>:<></>}
+                                </React.Fragment>
+                            )
+                        })}
+                        </React.Fragment>
                     )
                 })}
                 <h3></h3>
@@ -570,24 +570,24 @@ export const Lifecontent = ()=>{
                 <h1>{(usercontent as Content).headline}</h1>
                 <div className="steps">
                 {content.map((content:string[],key:number)=>{
-                    return (
-                            <>
-                            <h2 key={key}>{content[key+1]}</h2>
-                            {detail.map((detail:string[])=>{
-                                return(
-                                    <>
-                                    <p key={key}>{detail[key+1]}</p>
-                                    </>
-                                )
-                            })}
-                            {checkcontent.map((checkcontent:string[])=>{
-                                return(
-                                <>
-                                    {checkcontent[key+1] ? <h4 key={key}>{checkcontent[key+1]}</h4>:<></>}
-                                </>
-                                )
-                            })}
-                            </>
+                return (
+                        <React.Fragment key={key}>
+                            <h2>{content[key+1]}</h2>
+                        {detail.map((detail:string[],sekey:number)=>{
+                            return(
+                                <React.Fragment key={sekey}>
+                                <p>{detail[key+1]}</p>
+                                </React.Fragment>
+                            )
+                        })}
+                        {checkcontent.map((checkcontent:string[],thkey:number)=>{
+                            return(
+                                <React.Fragment key={thkey}>
+                                {checkcontent[key+1] ? <h4>{checkcontent[key+1]}</h4>:<></>}
+                                </React.Fragment>
+                            )
+                        })}
+                        </React.Fragment>
                     )
                 })}
                 <h3></h3>
