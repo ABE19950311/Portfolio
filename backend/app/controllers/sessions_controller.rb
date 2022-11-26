@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
+    before_action :set_csrf_token_header, only: [:login,:sessionid]
 
     def login
-        set_csrf_token_header
         @user = User.find_by(username: session_params[:username])
 
         if @user && @user.authenticate(session_params[:password])
@@ -13,7 +13,9 @@ class SessionsController < ApplicationController
     end
 
     def logout
+        @current_id = User.find_by(username: session[:user_name]).id
         reset_session
+        cookies.delete(:current_id)
         render json: {status: 200, logged_out: true }
     end
 
@@ -28,7 +30,6 @@ class SessionsController < ApplicationController
     end
 
     def sessionid
-        set_csrf_token_header
         @existid = User.where(username: session[:user_name]).exists?
         if @existid
             @current_id = User.find_by(username: session[:user_name]).id

@@ -486,6 +486,7 @@ export const Updatelife =()=>{
     const {env,userid,loginstate,isLoading,isError} = FetchData()
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
+    const [checklife,setChecklife] = useState<any>({})
     const [headline,setHeadline] = useState("")
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
@@ -537,27 +538,47 @@ export const Updatelife =()=>{
 
     useEffect(()=>{
         setTitle(deftitle)
-        setLifeitem(deflifeitem)
         setHeadline(defheadline)
         setContent(defcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
         setDetail(defdetail.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
         setCheckcontent(defcheckcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+        setLifeitem(deflifeitem)
+        if(deflifeitem==="部屋探し・入居") {
+            setChecklife({1:true})
+        }else if(deflifeitem==="入居前後の手続き") {
+            setChecklife({2:true})
+        }else if(deflifeitem==="防犯・防災") {
+            setChecklife({3:true})
+        }else if(deflifeitem==="掃除") {
+            setChecklife({4:true})
+        }else if(deflifeitem==="料理") {
+            setChecklife({5:true})
+        }else if(deflifeitem==="洗濯") {
+            setChecklife({6:true})
+        }else if(deflifeitem==="その他") {
+            setChecklife({7:true})
+        }else {
+            setChecklife({8:true})
+        }
     },[deftitle,deflifeitem,defheadline,defcontent,defdetail,defcheckcontent])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
-
-    console.log(content)
-    console.log(detail)
-    console.log(checkcontent)
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
     }
 
     const doLifeitem = (event:{target:HTMLInputElement})=>{
-        setLifeitem(event.target.value)
+        const value = event.target.value
+        const id = Number(event.target.id)
+        const check = event.target.checked
+        setLifeitem(value)
+        setChecklife({[id]:check})
     }
+
+    console.log(checklife)
+    console.log(lifeitem)
 
     const doHeadline = (event:{target:HTMLInputElement})=>{
         setHeadline(event.target.value)
@@ -693,23 +714,20 @@ export const Updatelife =()=>{
         })
     }
 
-    //defaultValue={defcontent[key+0]?.[key+1]
-    console.log(defcontent)
-
     if(PC) {
         return (
             <Layout>
                 <PCSteps>
                     <label>投稿タイトル<span>(必須):</span></label><input defaultValue={deftitle} className="title" onChange={doTitle} type={"text"}/>
                     <br></br><br></br>
-                    <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
-                    <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
-                    <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
-                    <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
-                    <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label>
-                    <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
-                    <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
-                    <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
+                    <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
+                    <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} checked={checklife[2]} onChange={doLifeitem}/><label>入居前後の手続き</label>
+                    <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} checked={checklife[3]} onChange={doLifeitem}/><label>防犯・防災</label>
+                    <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} checked={checklife[4]} onChange={doLifeitem}/><label>掃除</label>
+                    <input type={"radio"} id={"5"} name={"Life"} value={"料理"} checked={checklife[5]} onChange={doLifeitem}/><label>料理</label>
+                    <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} checked={checklife[6]} onChange={doLifeitem}/><label>洗濯</label>
+                    <input type={"radio"} id={"7"} name={"Life"} value={"その他"} checked={checklife[7]} onChange={doLifeitem}/><label>その他</label>
+                    <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} checked={checklife[8]} onChange={doLifeitem}/><label>項目を選択しない</label>
     
                     <br></br>
                     <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h1>
@@ -739,14 +757,14 @@ export const Updatelife =()=>{
                     <TabSteps>
                         <label>投稿タイトル<span>(必須):</span></label><input defaultValue={deftitle} className="title" onChange={doTitle} type={"text"}/>
                         <br></br><br></br>
-                        <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
-                        <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
-                        <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
-                        <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
-                        <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label>
-                        <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
-                        <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
-                        <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
+                        <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
+                        <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} checked={checklife[2]} onChange={doLifeitem}/><label>入居前後の手続き</label>
+                        <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} checked={checklife[3]} onChange={doLifeitem}/><label>防犯・防災</label>
+                        <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} checked={checklife[4]} onChange={doLifeitem}/><label>掃除</label>
+                        <input type={"radio"} id={"5"} name={"Life"} value={"料理"} checked={checklife[5]} onChange={doLifeitem}/><label>料理</label>
+                        <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} checked={checklife[6]} onChange={doLifeitem}/><label>洗濯</label>
+                        <input type={"radio"} id={"7"} name={"Life"} value={"その他"} checked={checklife[7]} onChange={doLifeitem}/><label>その他</label>
+                        <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} checked={checklife[8]} onChange={doLifeitem}/><label>項目を選択しない</label>
         
                         <br></br>
                         <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h1>
@@ -776,14 +794,14 @@ export const Updatelife =()=>{
                     <MobSteps>
                         <label>投稿タイトル<span>(必須):</span></label><input defaultValue={deftitle} className="title" onChange={doTitle} type={"text"}/>
                         <br></br><br></br>
-                        <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
-                        <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
-                        <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
-                        <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
-                        <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label><br></br>
-                        <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
-                        <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
-                        <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
+                        <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
+                        <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} checked={checklife[2]} onChange={doLifeitem}/><label>入居前後の手続き</label>
+                        <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} checked={checklife[3]} onChange={doLifeitem}/><label>防犯・防災</label>
+                        <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} checked={checklife[4]} onChange={doLifeitem}/><label>掃除</label>
+                        <input type={"radio"} id={"5"} name={"Life"} value={"料理"} checked={checklife[5]} onChange={doLifeitem}/><label>料理</label>
+                        <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} checked={checklife[6]} onChange={doLifeitem}/><label>洗濯</label>
+                        <input type={"radio"} id={"7"} name={"Life"} value={"その他"} checked={checklife[7]} onChange={doLifeitem}/><label>その他</label>
+                        <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} checked={checklife[8]} onChange={doLifeitem}/><label>項目を選択しない</label>
         
                         <br></br>
                         <h2 className="head"><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h2>

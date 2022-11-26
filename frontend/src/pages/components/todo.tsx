@@ -13,7 +13,7 @@ import { useMediaQuery } from "react-responsive"
 
 registerLocale("ja",ja);
 
-type Todo = {
+type Todos = {
     id:number,
     user_id:number,
     list:string,
@@ -792,7 +792,7 @@ export const Todo = ()=>{
     const startdateasc = () => {
         setStartclass(!startclass)
         const sorttodo = 
-                todos.sort((a:Todo,b:Todo)=>{
+                todos.sort((a:Todos,b:Todos)=>{
                 if(a.startdate<b.startdate) return -1;
                 if(a.startdate>b.startdate) return 1;
                 if(a.duedate==null) return 1;
@@ -805,7 +805,7 @@ export const Todo = ()=>{
     const startdatedesc = () => {
         setStartclass(!startclass)
         const sorttodo = 
-                todos.sort((a:Todo,b:Todo)=>{
+                todos.sort((a:Todos,b:Todos)=>{
                 if(a.startdate<b.startdate) return 1;
                 if(a.startdate>b.startdate) return -1;
                 if(a.duedate==null) return 1;
@@ -819,7 +819,7 @@ export const Todo = ()=>{
         setDueclass(!dueclass)
         console.log("asc")
         const sorttodo = 
-                todos.sort((a:Todo,b:Todo)=>{
+                todos.sort((a:Todos,b:Todos)=>{
                 if(a.duedate<b.duedate) return -1;
                 if(a.duedate>b.duedate) return 1;
                 if(a.duedate==null) return 1;
@@ -833,7 +833,7 @@ export const Todo = ()=>{
         setDueclass(!dueclass)
         console.log("desc")
         const sorttodo = 
-                todos.sort((a:Todo,b:Todo)=>{
+                todos.sort((a:Todos,b:Todos)=>{
                 if(a.duedate<b.duedate) return 1;
                 if(a.duedate>b.duedate) return -1;
                 if(a.duedate==null) return 1;
@@ -902,11 +902,11 @@ export const Todo = ()=>{
     const doAllcheck = (event:{target:HTMLInputElement})=>{
         setCheckdata({})
         if(event.target.checked===true) {
-        todos.forEach((todo:Todo)=>{
+        todos.forEach((todo:Todos)=>{
             return setCheck(todo.id)
         })
         }else if(event.target.checked===false) {
-        todos.forEach((todo:Todo)=>{
+        todos.forEach((todo:Todos)=>{
             return delCheck(todo.id)
         })
         }
@@ -1058,19 +1058,19 @@ const handleChangeEnd = (selectedDate:Date) => {
                         </tr>
                     </thead>
                     </PCTable>
-            {todos.filter((todos:Todo)=>{
+            {todos.filter((todos:Todos)=>{
                 if(todos.life.includes(selectlife)) {
                     return todos;
                 }else if(selectlife==="フィルター項目"){
                     return todos;
                 }
-            }).filter((todos:Todo)=>{
+            }).filter((todos:Todos)=>{
                 if(todos.list.includes(search)) {
                     return todos;
                 }else if(search==="") {
                     return todos;
                 }
-            }).map((todo:Todo,key:number)=>{
+            }).map((todo:Todos,key:number)=>{
                 return (
                 <PCTable key={key}>
                     <tbody className="tbody">
@@ -1177,19 +1177,19 @@ const handleChangeEnd = (selectedDate:Date) => {
                             </tr>
                         </thead>
                         </TabTable>
-                {todos.filter((todos:Todo)=>{
+                {todos.filter((todos:Todos)=>{
                     if(todos.life.includes(selectlife)) {
                         return todos;
                     }else if(selectlife==="フィルター項目"){
                         return todos;
                     }
-                }).filter((todos:Todo)=>{
+                }).filter((todos:Todos)=>{
                     if(todos.list.includes(search)) {
                         return todos;
                     }else if(search==="") {
                         return todos;
                     }
-                }).map((todo:Todo,key:number)=>{
+                }).map((todo:Todos,key:number)=>{
                     return (
                     <TabTable key={key}>
                         <tbody className="tbody">
@@ -1296,19 +1296,19 @@ const handleChangeEnd = (selectedDate:Date) => {
                             </tr>
                         </thead>
                         </MobTable>
-                {todos.filter((todos:Todo)=>{
+                {todos.filter((todos:Todos)=>{
                     if(todos.life.includes(selectlife)) {
                         return todos;
                     }else if(selectlife==="フィルター項目"){
                         return todos;
                     }
-                }).filter((todos:Todo)=>{
+                }).filter((todos:Todos)=>{
                     if(todos.list.includes(search)) {
                         return todos;
                     }else if(search==="") {
                         return todos;
                     }
-                }).map((todo:Todo,key:number)=>{
+                }).map((todo:Todos,key:number)=>{
                     return (
                     <MobTable key={key}>
                         <tbody className="tbody">
