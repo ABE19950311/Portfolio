@@ -8,6 +8,7 @@ import {FetchData} from "../../components/fetchdata"
 import ReactPaginate from 'react-paginate'; 
 import { useMediaQuery } from "react-responsive"
 import { MdSearch } from "react-icons/md";
+import { FaRegLightbulb} from "react-icons/fa";
 
 const PCDiv = styled.div`
     
@@ -25,6 +26,17 @@ const PCDiv = styled.div`
     .filter {
         margin-left:30vw;
         margin-bottom:5px;
+    }
+
+    .sankouicon {
+        font-size: 1.5rem;
+        cursor:pointer;
+    }
+
+    .seticoncolor {
+        font-size: 1.5rem;
+        cursor:pointer;
+        color:#FFCC00;
     }
 
     .custominput {
@@ -741,15 +753,16 @@ export const Userlife = (props:any)=>{
     const [sessionid,setSessionid] = useState<number>()
     const [lifepost,setLifepost] = useState([])
     const [flag,setFlag] = useState("")
-    const [createSortflag,setCreateSortflag] = useState(false)
     const [updateSortflag,setUpdateSortflag] = useState(false)
     const [filterlife,setFilterlife] = useState("")
     const [filtertitle,setFiltertitle] = useState("")
     const [titledata,setTitledata] = useState([])
-    const [ offset, setOffset ] = useState(0); // 何番目のアイテムから表示するか
+    const [offset,setOffset] = useState(0); // 何番目のアイテムから表示するか
     const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
+    const [iconflag,setIconflag] = useState<any>({})
+    const [iconcount,setIconcount] = useState(0)
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -770,7 +783,7 @@ export const Userlife = (props:any)=>{
             console.log(error)
         })
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[env,flag])
+    },[env,flag,query])
 
     useEffect(()=>{
         let array = titledata.filter((value:Life)=>{
@@ -811,24 +824,6 @@ export const Userlife = (props:any)=>{
         setFiltertitle("")
     }
 
-    const createAsc = ()=>{
-        titledata.sort((a:Life,b:Life)=>{
-            if(a.created_at<b.created_at) return -1
-            if(a.created_at>b.created_at) return 1
-            return 0
-        })
-        setCreateSortflag(false)
-    }
-
-    const createDesc = ()=>{
-        titledata.sort((a:Life,b:Life)=>{
-            if(a.created_at>b.created_at) return -1
-            if(a.created_at<b.created_at) return 1
-            return 0
-        })
-        setCreateSortflag(true)
-    }
-
     const updateAsc = ()=>{
         titledata.sort((a:Life,b:Life)=>{
             if(a.updated_at<b.updated_at) return -1
@@ -845,6 +840,13 @@ export const Userlife = (props:any)=>{
             return 0
         })
         setUpdateSortflag(true)
+    }
+
+    const seticonflag = ()=>{
+        setIconflag((iconflag:any)=>({
+            ...iconflag,
+            1:true
+        }))
     }
 
     const doDelete = (id:number)=>{
@@ -892,8 +894,7 @@ export const Userlife = (props:any)=>{
             <tbody>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th>
-                <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
-                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
+                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>作成日</th>
             </tr>
             </tbody>
         </table>
@@ -910,8 +911,8 @@ export const Userlife = (props:any)=>{
                 <table key={key}>
                     <tbody>
                     <tr>
-                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td><FaRegLightbulb onClick={seticonflag} className={iconflag[life.id] ? "seticoncolor":"sankouicon"}/>{iconcount}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
@@ -970,8 +971,7 @@ export const Userlife = (props:any)=>{
             <tbody>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th>
-                <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
-                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
+                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>作成日</th>
             </tr>
             </tbody>
             </table>
@@ -988,7 +988,7 @@ export const Userlife = (props:any)=>{
                 <table key={key}>
                     <tbody>
                     <tr>
-                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                         {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
@@ -1048,8 +1048,7 @@ export const Userlife = (props:any)=>{
             <tbody>
             <tr>
                 <th className="thtitle">タイトル</th><th className="thhead">項目</th>
-                <th className={`create ${createSortflag ? "createasc":"createdesc"}`} onClick={createSortflag ? createAsc:createDesc}>作成日</th>
-                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>更新日</th>
+                <th className={`update ${updateSortflag ? "updateasc":"updatedesc"}`} onClick={updateSortflag ? updateAsc:updateDesc}>作成日</th>
             </tr>
             </tbody>
             </table>
@@ -1066,7 +1065,7 @@ export const Userlife = (props:any)=>{
                 <table key={key}>
                     <tbody>
                     <tr>
-                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                         {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>

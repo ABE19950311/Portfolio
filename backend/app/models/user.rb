@@ -10,6 +10,8 @@ class User < ApplicationRecord
     has_many :lifeposts, dependent: :destroy
     has_many :comments, dependent: :destroy
     has_many :lifeposts, through: :comments
+    has_many :helpfuls, dependent: :destroy
+    has_many :lifeposts, through: :helpfuls
 
     # 重複登録NG
     validates :username, uniqueness: true

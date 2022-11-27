@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :lifeposts
   resources :comments
   resources :contacts
+  resources :helpfuls
 
   get "/health_check", to: "health_check#health_check"
 end
