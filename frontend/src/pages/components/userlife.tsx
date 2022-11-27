@@ -7,6 +7,7 @@ import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import ReactPaginate from 'react-paginate'; 
 import { useMediaQuery } from "react-responsive"
+import { MdSearch } from "react-icons/md";
 
 const PCDiv = styled.div`
     
@@ -16,9 +17,35 @@ const PCDiv = styled.div`
     caption {
         text-align:left;
     }
+
+    select {
+        padding:10px;
+    }
+
     .filter {
         margin-left:30vw;
         margin-bottom:5px;
+    }
+
+    .custominput {
+        padding: 7px 100px 7px 10px;
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box;
+        margin-left:30vw;
+    }
+
+    .searchicon {
+        position: absolute;
+        color: #333;
+        font-size: 2rem;
+        transform: translate(245px,3px);
+        margin-left:30vw;
+    }
+
+    .custombutton {
+        padding: 3px 5px;
     }
 
     .kousinbtn {
@@ -197,7 +224,7 @@ const PCDiv = styled.div`
 
 const TabDiv = styled.div`
     
-    margin:70px 0 0 80px;
+    margin:70px 0 0 0;
     overflow-wrap: break-word;
 
     caption {
@@ -206,6 +233,30 @@ const TabDiv = styled.div`
     .filter {
         margin-left:30vw;
         margin-bottom:5px;
+    }
+    select {
+        padding:10px;
+    }
+
+    .custominput {
+        padding: 7px 100px 7px 10px;
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box;
+        margin-left:10vw;
+    }
+
+    .searchicon {
+        position: absolute;
+        color: #333;
+        font-size: 2rem;
+        transform: translate(245px,3px);
+        margin-left:10vw;
+    }
+
+    .custombutton {
+        padding: 3px 5px;
     }
 
     .kousinbtn {
@@ -392,6 +443,30 @@ const MobDiv = styled.div`
     }
     .filter {
         margin-bottom:5px;
+    }
+    select {
+        padding:10px;
+    }
+
+    .custominput {
+        padding: 7px 100px 7px 10px;
+        font-size: 16px;
+        border-radius: 3px; /*ボックス角の丸み*/
+        border: 2px solid #ddd; /*枠線*/
+        box-sizing: border-box;
+        margin-left:10vw;
+    }
+
+    .searchicon {
+        position: absolute;
+        color: #333;
+        font-size: 2rem;
+        transform: translate(245px,3px);
+        margin-left:10vw;
+    }
+
+    .custombutton {
+        padding: 3px 5px;
     }
 
     .kousinbtn {
@@ -669,6 +744,8 @@ export const Userlife = (props:any)=>{
     const [createSortflag,setCreateSortflag] = useState(false)
     const [updateSortflag,setUpdateSortflag] = useState(false)
     const [filterlife,setFilterlife] = useState("")
+    const [filtertitle,setFiltertitle] = useState("")
+    const [titledata,setTitledata] = useState([])
     const [ offset, setOffset ] = useState(0); // 何番目のアイテムから表示するか
     const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
     const [postlength,setPostlength] = useState(0)
@@ -680,6 +757,7 @@ export const Userlife = (props:any)=>{
     useEffect(()=>{
         const id = Number(userid)
         setSessionid(id)
+        setTitledata(lifepost)
         setPostlength(lifepost.length)
     },[userid,lifepost])
 
@@ -695,19 +773,22 @@ export const Userlife = (props:any)=>{
     },[env,flag])
 
     useEffect(()=>{
-        let array = lifepost.filter((value:Life)=>{
+        let array = titledata.filter((value:Life)=>{
             if(value.lifeitem.includes(filterlife)) {
                 return value
-            }else if(filterlife==="フィルター内容を選択") {
+            }else if(filterlife==="項目でフィルター") {
                 return value
             }
         })
         setPostlength(array.length)
          // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[filterlife])
+    },[filterlife,titledata])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
+
+    console.log(filtertitle)
+    console.log(titledata)
 
     const lifecontent = (id:number,user_id:number)=>{
         router.push({
@@ -720,8 +801,18 @@ export const Userlife = (props:any)=>{
         setFilterlife(event.target.value)
     }
 
+    const dofiltertitle = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        setFiltertitle(event.target.value)
+    }
+
+    const dosettitle = ()=>{
+        let title = lifepost.filter((value:Life)=>value.title.includes(filtertitle))
+        setTitledata(title)
+        setFiltertitle("")
+    }
+
     const createAsc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        titledata.sort((a:Life,b:Life)=>{
             if(a.created_at<b.created_at) return -1
             if(a.created_at>b.created_at) return 1
             return 0
@@ -730,7 +821,7 @@ export const Userlife = (props:any)=>{
     }
 
     const createDesc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        titledata.sort((a:Life,b:Life)=>{
             if(a.created_at>b.created_at) return -1
             if(a.created_at<b.created_at) return 1
             return 0
@@ -739,7 +830,7 @@ export const Userlife = (props:any)=>{
     }
 
     const updateAsc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        titledata.sort((a:Life,b:Life)=>{
             if(a.updated_at<b.updated_at) return -1
             if(a.updated_at>b.updated_at) return 1
             return 0
@@ -748,7 +839,7 @@ export const Userlife = (props:any)=>{
     }
 
     const updateDesc = ()=>{
-        lifepost.sort((a:Life,b:Life)=>{
+        titledata.sort((a:Life,b:Life)=>{
             if(a.updated_at>b.updated_at) return -1
             if(a.updated_at<b.updated_at) return 1
             return 0
@@ -783,13 +874,12 @@ export const Userlife = (props:any)=>{
     return (
         <Layout>
         <PCDiv>
-        {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
-
+        <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
         <table border={1}>
         <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
         <caption>
         <select className="filter" onChange={dofilterlife}>
-                    <option value="フィルター内容を選択">フィルター内容を選択</option>
+                    <option value="項目でフィルター">項目でフィルター</option>
                     <option value="none">none</option>
                     <option value="部屋探し・入居">部屋探し・入居</option>
                     <option value="入居前後の手続き">入居前後の手続き</option>
@@ -808,10 +898,10 @@ export const Userlife = (props:any)=>{
             </tbody>
         </table>
 
-        {lifepost.filter((value:Life,index,self)=>{
+        {titledata.filter((value:Life,index,self)=>{
                 if(value.lifeitem.includes(filterlife)) {
                     return value
-                }else if(filterlife==="フィルター内容を選択") {
+                }else if(filterlife==="項目でフィルター") {
                     return value
                 }
             }).slice(offset,offset+perPage)
@@ -862,13 +952,12 @@ export const Userlife = (props:any)=>{
         return (
             <Layout>
             <TabDiv>
-            {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
-    
+            <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
             <table border={1}>
             <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
             <caption>
             <select className="filter" onChange={dofilterlife}>
-                    <option value="フィルター内容を選択">フィルター内容を選択</option>
+                    <option value="項目でフィルター">項目でフィルター</option>
                     <option value="none">none</option>
                     <option value="部屋探し・入居">部屋探し・入居</option>
                     <option value="入居前後の手続き">入居前後の手続き</option>
@@ -887,23 +976,23 @@ export const Userlife = (props:any)=>{
             </tbody>
             </table>
     
-            {lifepost.filter((value:Life,index,self)=>{
-                    if(value.lifeitem.includes(filterlife)) {
-                        return value
-                    }else if(filterlife==="フィルター内容を選択") {
-                        return value
-                    }
-                }).slice(offset,offset+perPage)
-                .map((life:Life,key:number)=>{
-                return (
-                    <table key={key}>
-                        <tbody>
-                        <tr>
-                            <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                            {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
-                        </tr>
-                        </tbody>
-                    </table>
+            {titledata.filter((value:Life,index,self)=>{
+                if(value.lifeitem.includes(filterlife)) {
+                    return value
+                }else if(filterlife==="項目でフィルター") {
+                    return value
+                }
+            }).slice(offset,offset+perPage)
+            .map((life:Life,key:number)=>{
+            return (
+                <table key={key}>
+                    <tbody>
+                    <tr>
+                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                    </tr>
+                    </tbody>
+                </table>
                 )
             })}
             </TabDiv>
@@ -941,13 +1030,12 @@ export const Userlife = (props:any)=>{
         return (
             <Layout>
             <MobDiv>
-            {query==="lifepost" ?<h1>投稿できました！！！！！</h1>:query==="updatepost" ? <h1>更新しました！！</h1>:<></>}
-    
+            <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
             <table border={1}>
             <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
             <caption>
             <select className="filter" onChange={dofilterlife}>
-                    <option value="フィルター内容を選択">フィルター内容を選択</option>
+                    <option value="項目でフィルター">項目でフィルター</option>
                     <option value="none">none</option>
                     <option value="部屋探し・入居">部屋探し・入居</option>
                     <option value="入居前後の手続き">入居前後の手続き</option>
@@ -966,23 +1054,23 @@ export const Userlife = (props:any)=>{
             </tbody>
             </table>
     
-            {lifepost.filter((value:Life,index,self)=>{
-                    if(value.lifeitem.includes(filterlife)) {
-                        return value
-                    }else if(filterlife==="フィルター内容を選択") {
-                        return value
-                    }
-                }).slice(offset,offset+perPage)
-                .map((life:Life,key:number)=>{
-                return (
-                    <table key={key}>
-                        <tbody>
-                        <tr>
-                            <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                            {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
-                        </tr>
-                        </tbody>
-                    </table>
+            {titledata.filter((value:Life,index,self)=>{
+                if(value.lifeitem.includes(filterlife)) {
+                    return value
+                }else if(filterlife==="項目でフィルター") {
+                    return value
+                }
+            }).slice(offset,offset+perPage)
+            .map((life:Life,key:number)=>{
+            return (
+                <table key={key}>
+                    <tbody>
+                    <tr>
+                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdcreate">{moment(life.created_at).format("YYYY-MM-DD h:mm:ss")}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                    </tr>
+                    </tbody>
+                </table>
                 )
             })}
             </MobDiv>

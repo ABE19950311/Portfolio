@@ -123,7 +123,6 @@ z-index: 1;
 
 const TabSteps = styled.div`
 width:800px;
-margin-left:75px;
 overflow-wrap:  break-word;
 
 h1 {
