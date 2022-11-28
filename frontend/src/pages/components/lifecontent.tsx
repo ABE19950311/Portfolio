@@ -5,6 +5,8 @@ import {useRouter} from "next/router"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
+import moment from "moment"
+import ReactPaginate from 'react-paginate'; 
 
 const PCSteps = styled.div`
 width:800px;
@@ -20,6 +22,35 @@ h1 {
 p {
     font-size:20px;
 }
+.namelabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 110px;
+    top: 50%;
+}
+.commentlabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 110px;
+    top: 50%;
+    transform: translate(0px,-70px)
+}
+.comment {
+    overflow-wrap:break-word;
+    width:80%;
+    display:inline-block;
+    padding:10px 0 0 15px;
+    margin-top:10px;
+    background-color:#FFFFCC;
+    border: solid 1px #FFFFCC;
+}
+    .content {
+        font-size:16px;
+    }
+
+    .postcomment {
+        font-size:16px;
+    }
 ul {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -138,6 +169,35 @@ h1 {
 p {
     font-size:20px;
 }
+.namelabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 110px;
+    top: 50%;
+}
+.commentlabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 110px;
+    top: 50%;
+    transform: translate(0px,-70px)
+}
+.comment {
+    overflow-wrap:break-word;
+    width:80%;
+    display:inline-block;
+    padding:10px 0 0 15px;
+    margin-top:10px;
+    background-color:#FFFFCC;
+    border: solid 1px #FFFFCC;
+}
+    .content {
+        font-size:16px;
+    }
+
+    .postcomment {
+        font-size:16px;
+    }
 ul {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -255,6 +315,32 @@ h1 {
 p {
     font-size:18px;
 }
+.namelabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 50px;
+}
+.commentlabel {
+    margin-bottom:3px;
+    display: inline-block;
+    transform: translate(0px,0px)
+}
+.comment {
+    overflow-wrap:break-word;
+    width:95%;
+    display:inline-block;
+    padding:10px 0 0 15px;
+    margin-top:10px;
+    background-color:#FFFFCC;
+    border: solid 1px #FFFFCC;
+}
+    .content {
+        font-size:16px;
+    }
+
+    .postcomment {
+        font-size:16px;
+    }
 ul {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -359,6 +445,75 @@ z-index: 1;
 }
 `
 
+const PageContainer = styled.div`
+margin: 24px 0;
+& ul {
+    display: flex;
+    justify-content: center;
+    font-size: 14px;
+}
+& li {
+    list-style-type: none;
+    margin: 0 4px;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+    &:hover {
+    opacity: 0.6;
+    }
+}
+& .previous a, .next a {
+    display: block;
+    margin-top: 15px;
+    width: 16px;
+    height: 16px;
+    text-indent: -1000px;
+    transform: rotate(45deg);
+    overflow: hidden;
+}
+& .previous a {
+    border-left: 1px solid #39c;
+    border-bottom: 1px solid #39c;
+}
+& .next a {
+    border-top: 1px solid #39c;
+    border-right: 1px solid #39c;
+}
+& li.selected {
+    pointer-events: none;
+}
+& li.selected a {
+    background-color: #39c !important;
+    color: #fff !important;
+}
+& li:not(.previous,.next) a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border: 1px solid #39c;
+    color: #39c;
+}
+& li.break a {
+    border: none;
+}
+.disabled {
+    opacity: 0.2;
+    pointer-events: none;
+}
+@media (max-width: 600px) {
+    & .previous a, .next a {
+    margin-top: 13px;
+    width: 8px;
+    height: 8px;
+    }
+    & li:not(.previous,.next) a {
+    width: 32px;
+    height: 32px;
+    }
+}
+`
+
 type Content = {
     id:number,
     user_id:number,
@@ -403,6 +558,8 @@ export const Lifecontent = ()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
+    const [offset,setOffset] = useState(0); // 何番目のアイテムから表示するか
+    const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
 
     const router = useRouter()
     const id = router.query.id as unknown as number
@@ -463,13 +620,20 @@ export const Lifecontent = ()=>{
                 lifepost_id:id,
                 user_id:userid,
                 comment:comment,
-                commentuser:name
+                commentuser:name ? name:"匿名さん"
             }
         }).then(res=>{
             setFlag(res.data)
+            setName("")
+            setComment("")
         }).catch(error=>{
             console.log(error)
         })
+    }
+
+    const handlePageChange = (data:any) => {
+        let page_number = data['selected']
+        setOffset(page_number*perPage)
     }
 
 
@@ -502,20 +666,48 @@ export const Lifecontent = ()=>{
             })}
             <h3></h3>
             </div>
-            <button onClick={()=>commentflag ? setCommentflag(false):setCommentflag(true)}>コメントをする</button><br></br>
-            <label className={commentflag ? "":"none"}>名前:</label><input className={commentflag ? "":"none"} type={"text"} onChange={doName} /><br></br>
-            <label className={commentflag ? "":"none"}>コメント内容:</label><textarea className={commentflag ? "":"none"} rows={8} cols={70} onChange={doComment} /><br></br>
-            <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
+            <br></br>
+            <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
+            <label className="commentlabel">コメント内容:</label><textarea  value={comment} rows={8} cols={70} onChange={doComment} /><br></br>
+            <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
 
-            {commentdata.map((value:Comment,key:number)=>{
+            {commentdata.slice(offset,offset+perPage)
+            .map((value:Comment,key:number)=>{
                 return (
-                <React.Fragment key={key}>
-                <p key={key}>{value.commentuser}</p>
-                <p>{value.comment}</p>
-                </React.Fragment>
+                    <div className="comment" key={key}>
+                    <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
+                    <p className="postcomment">{value.comment}</p>
+                    </div>
                 )
             })}
             </PCSteps>
+            <PageContainer>
+                <ReactPaginate
+                    pageCount={Math.ceil(commentdata.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                    marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                    pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                    onPageChange={handlePageChange} // クリック時のfunction
+                    containerClassName="pagination justify-center" // ul(pagination本体)
+                    pageClassName="page-item" // li
+                    pageLinkClassName="page-link rounded-full" // a
+                    activeClassName="active" // active.li
+                    activeLinkClassName="active" // active.li < a
+                    
+                    // 戻る・進む関連
+                    previousClassName="page-item" // li
+                    nextClassName="page-item" // li
+                    previousLabel={'<'} // a
+                    previousLinkClassName="previous-link"
+                    nextLabel={'>'} // a
+                    nextLinkClassName="next-link"
+                    // 先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくする
+                    disabledClassName="disabled-button d-none"
+                    // 中間ページの省略表記関連
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                />
+                </PageContainer>
         </Layout>
     )
     }else if(Tablet) {
@@ -547,20 +739,47 @@ export const Lifecontent = ()=>{
                 })}
                 <h3></h3>
                 </div>
-                <button onClick={()=>commentflag ? setCommentflag(false):setCommentflag(true)}>コメントをする</button><br></br>
-                <label className={commentflag ? "":"none"}>名前:</label><input className={commentflag ? "":"none"} type={"text"} onChange={doName} /><br></br>
-                <label className={commentflag ? "":"none"}>コメント内容:</label><textarea className={commentflag ? "":"none"} rows={8} cols={70} onChange={doComment} /><br></br>
-                <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
+                <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
+                <label className="commentlabel">コメント内容:</label><textarea  value={comment} rows={8} cols={70} onChange={doComment} /><br></br>
+                <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
     
-                {commentdata.map((value:Comment,key:number)=>{
+                {commentdata.slice(offset,offset+perPage)
+                .map((value:Comment,key:number)=>{
                 return (
-                <React.Fragment key={key}>
-                <p key={key}>{value.commentuser}</p>
-                <p>{value.comment}</p>
-                </React.Fragment>
+                    <div className="comment" key={key}>
+                    <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
+                    <p className="postcomment">{value.comment}</p>
+                    </div>
                 )
                 })}
                 </TabSteps>
+                <PageContainer>
+                <ReactPaginate
+                    pageCount={Math.ceil(commentdata.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                    marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                    pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                    onPageChange={handlePageChange} // クリック時のfunction
+                    containerClassName="pagination justify-center" // ul(pagination本体)
+                    pageClassName="page-item" // li
+                    pageLinkClassName="page-link rounded-full" // a
+                    activeClassName="active" // active.li
+                    activeLinkClassName="active" // active.li < a
+                    
+                    // 戻る・進む関連
+                    previousClassName="page-item" // li
+                    nextClassName="page-item" // li
+                    previousLabel={'<'} // a
+                    previousLinkClassName="previous-link"
+                    nextLabel={'>'} // a
+                    nextLinkClassName="next-link"
+                    // 先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくする
+                    disabledClassName="disabled-button d-none"
+                    // 中間ページの省略表記関連
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                />
+                </PageContainer>
             </Layout>
         )
     }else {
@@ -593,26 +812,54 @@ export const Lifecontent = ()=>{
                 <h3></h3>
                 </div>
                 <br></br>
-                <button onClick={()=>commentflag ? setCommentflag(false):setCommentflag(true)}>コメントをする</button>
                 <br></br>
                 <br></br>
-                <label className={commentflag ? "":"none"}>名前:</label><input className={commentflag ? "":"none"} type={"text"} onChange={doName} />
+                <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} />
                 <br></br>
                 <br></br>
-                <label className={commentflag ? "":"none"}>コメント内容:</label><textarea className={commentflag ? "":"none"} rows={8} cols={60} onChange={doComment} />
+                <label className="commentlabel">コメント内容:</label><textarea  value={comment} rows={8} cols={60} onChange={doComment} />
                 <br></br>
                 <br></br>
-                <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
-    
-                {commentdata.map((value:Comment,key:number)=>{
+                <button type={"submit"} onClick={doSubmit} >コメントする</button>
+                <br></br>
+
+                {commentdata.slice(offset,offset+perPage)
+                .map((value:Comment,key:number)=>{
                 return (
-                <React.Fragment key={key}>
-                <p key={key}>{value.commentuser}</p>
-                <p>{value.comment}</p>
-                </React.Fragment>
-                )
+                    <div className="comment" key={key}>
+                    <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
+                    <p className="postcomment">{value.comment}</p>
+                    </div>
+                    )
                 })}
                 </MobSteps>
+                <PageContainer>
+                <ReactPaginate
+                    pageCount={Math.ceil(commentdata.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
+                    marginPagesDisplayed={4} // 一番最初と最後を基準にして、そこからいくつページ数を表示するか
+                    pageRangeDisplayed={5} // アクティブなページを基準にして、そこからいくつページ数を表示するか
+                    onPageChange={handlePageChange} // クリック時のfunction
+                    containerClassName="pagination justify-center" // ul(pagination本体)
+                    pageClassName="page-item" // li
+                    pageLinkClassName="page-link rounded-full" // a
+                    activeClassName="active" // active.li
+                    activeLinkClassName="active" // active.li < a
+                    
+                    // 戻る・進む関連
+                    previousClassName="page-item" // li
+                    nextClassName="page-item" // li
+                    previousLabel={'<'} // a
+                    previousLinkClassName="previous-link"
+                    nextLabel={'>'} // a
+                    nextLinkClassName="next-link"
+                    // 先頭 or 末尾に行ったときにそれ以上戻れ(進め)なくする
+                    disabledClassName="disabled-button d-none"
+                    // 中間ページの省略表記関連
+                    breakLabel="..."
+                    breakClassName="page-item"
+                    breakLinkClassName="page-link"
+                />
+                </PageContainer>
             </Layout>
         )
     }

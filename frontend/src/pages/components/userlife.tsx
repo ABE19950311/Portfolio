@@ -246,6 +246,16 @@ const TabDiv = styled.div`
         margin-left:30vw;
         margin-bottom:5px;
     }
+    .sankouicon {
+        font-size: 1.5rem;
+        cursor:pointer;
+    }
+
+    .seticoncolor {
+        font-size: 1.5rem;
+        cursor:pointer;
+        color:#FFCC00;
+    }
     select {
         padding:10px;
     }
@@ -456,6 +466,16 @@ const MobDiv = styled.div`
     .filter {
         margin-bottom:5px;
     }
+    .sankouicon {
+        font-size: 1rem;
+        cursor:pointer;
+    }
+
+    .seticoncolor {
+        font-size: 1rem;
+        cursor:pointer;
+        color:#FFCC00;
+    }
     select {
         padding:10px;
     }
@@ -566,7 +586,7 @@ const MobDiv = styled.div`
     }
     .tdupdate {
         font-size:1.2vw;
-        width:15vw;
+        width:18vw;
     }
 
     .create {
@@ -597,7 +617,7 @@ const MobDiv = styled.div`
     }
     
     .update {
-        width:15vw;
+        width:18vw;
         font-size:2.5vw;
         cursor: pointer;
         position: relative;
@@ -1046,7 +1066,7 @@ export const Userlife = ()=>{
                     <tbody>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
@@ -1123,7 +1143,7 @@ export const Userlife = ()=>{
                     <tbody>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        {sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>

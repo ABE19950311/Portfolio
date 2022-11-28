@@ -101,7 +101,6 @@ const PCDiv = styled.div`
 const TabDiv = styled.div` 
     padding-top:30px;
     padding-bottom:10px;
-    padding-left:15%;
 
     input {
         width:200px;
