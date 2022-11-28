@@ -73,6 +73,7 @@ export const Passchange = ()=>{
     const processtimer = useRef<NodeJS.Timer|null>(null);
 
     useEffect(()=>{
+        if(!env) return
         axios.get(env+"/sessionname")
         .then(res=>{
             setUsername(res.data)

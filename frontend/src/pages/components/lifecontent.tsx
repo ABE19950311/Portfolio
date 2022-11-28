@@ -509,10 +509,10 @@ export const Lifecontent = ()=>{
 
             {commentdata.map((value:Comment,key:number)=>{
                 return (
-                <>
+                <React.Fragment key={key}>
                 <p key={key}>{value.commentuser}</p>
                 <p>{value.comment}</p>
-                </>
+                </React.Fragment>
                 )
             })}
             </PCSteps>
@@ -553,12 +553,12 @@ export const Lifecontent = ()=>{
                 <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
     
                 {commentdata.map((value:Comment,key:number)=>{
-                    return (
-                    <>
-                    <p key={key}>{value.commentuser}</p>
-                    <p>{value.comment}</p>
-                    </>
-                    )
+                return (
+                <React.Fragment key={key}>
+                <p key={key}>{value.commentuser}</p>
+                <p>{value.comment}</p>
+                </React.Fragment>
+                )
                 })}
                 </TabSteps>
             </Layout>
@@ -605,12 +605,12 @@ export const Lifecontent = ()=>{
                 <button className={commentflag ? "":"none"} type={"submit"} onClick={doSubmit} >コメントする</button>
     
                 {commentdata.map((value:Comment,key:number)=>{
-                    return (
-                    <>
-                    <p key={key}>{value.commentuser}</p>
-                    <p>{value.comment}</p>
-                    </>
-                    )
+                return (
+                <React.Fragment key={key}>
+                <p key={key}>{value.commentuser}</p>
+                <p>{value.comment}</p>
+                </React.Fragment>
+                )
                 })}
                 </MobSteps>
             </Layout>

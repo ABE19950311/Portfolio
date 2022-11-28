@@ -744,8 +744,14 @@ type Life = {
     checkcontent:string[]
 }
 
+type Icon = {
+    id:number,
+    user_id:number,
+    lifepost_id:number
+}
 
-export const Userlife = (props:any)=>{
+
+export const Userlife = ()=>{
     const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
@@ -762,7 +768,8 @@ export const Userlife = (props:any)=>{
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
     const [iconflag,setIconflag] = useState<any>({})
-    const [iconcount,setIconcount] = useState(0)
+    const [iconcount,setIconcount] = useState<any>({})
+    const [icondata,setIcondata] = useState([])
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -782,6 +789,13 @@ export const Userlife = (props:any)=>{
         }).catch(error=>{
             console.log(error)
         })
+
+        axios.get(env+"/helpfuls")
+        .then(res=>{
+            setIcondata(res.data)
+        }).catch(error=>{
+            console.log(error)
+        })
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[env,flag,query])
 
@@ -797,11 +811,28 @@ export const Userlife = (props:any)=>{
          // eslint-disable-next-line react-hooks/exhaustive-deps
     },[filterlife,titledata])
 
+    useEffect(()=>{
+        let iconcount:any = {}
+        icondata.forEach((value:Icon)=>{
+            setIconflag((iconflag:any)=>({
+                ...iconflag,
+                [`${value.lifepost_id}${value.user_id}`]:true
+            }))
+        })
+
+        for(let i=0;i<icondata.length;i++) {
+            let data:Icon = icondata[i]
+            iconcount[data.lifepost_id] = iconcount[data.lifepost_id] ? iconcount[data.lifepost_id]+1:1
+        }
+        
+        setIconcount(iconcount)
+    },[icondata])
+
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
-    console.log(filtertitle)
-    console.log(titledata)
+    console.log(icondata)
+    console.log(iconcount)
 
     const lifecontent = (id:number,user_id:number)=>{
         router.push({
@@ -842,11 +873,37 @@ export const Userlife = (props:any)=>{
         setUpdateSortflag(true)
     }
 
-    const seticonflag = ()=>{
-        setIconflag((iconflag:any)=>({
-            ...iconflag,
-            1:true
-        }))
+    const seticonflag = (id:number)=>{
+        const find:any = icondata.find((value:Icon)=>value.lifepost_id===id&&value.user_id===sessionid)
+
+        if(find) {
+            axios.delete(`${env}/helpfuls/${find.id}`)
+            .then(res=>{
+                setFlag(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
+            setIconflag((iconflag:any)=>({
+                ...iconflag,
+                [`${id}${sessionid}`]:false
+            }))
+        }else {
+            axios.post(env+"/helpfuls",
+            {
+                helpfuls: {
+                    user_id:userid,
+                    lifepost_id:id
+                }
+            }).then(res=>{
+                setFlag(res.data)
+            }).catch(error=>{
+                console.log(error)
+            })
+            setIconflag((iconflag:any)=>({
+                ...iconflag,
+                [`${id}${sessionid}`]:true
+            }))
+        }
     }
 
     const doDelete = (id:number)=>{
@@ -912,7 +969,7 @@ export const Userlife = (props:any)=>{
                     <tbody>
                     <tr>
                         <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={seticonflag} className={iconflag[life.id] ? "seticoncolor":"sankouicon"}/>{iconcount}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>

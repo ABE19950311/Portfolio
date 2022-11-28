@@ -11,7 +11,7 @@ class HelpfulsController < ApplicationController
     end
 
     def destroy
-        @helpful = Helpful.find_by(user_id: helpful_params[:user_id],lifepost_id: helpful_params[:lifepost_id])
+        @helpful = Helpful.find(params[:id])
         @helpful.destroy
         render json:@helpful
     end

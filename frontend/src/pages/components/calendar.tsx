@@ -1,4 +1,3 @@
-import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {Layout} from "./layout"
@@ -19,11 +18,9 @@ type Todo = {
 }
 
 export const Calendar = ()=>{
-    let eventGuid = 0;
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const {env,isLoading,isError} = FetchData()
     const [event,setEvent] = useState([]);
     const [eventlist,setEventlist] = useState({});
-    const createEventId = () => String(eventGuid++);
 
     useEffect(()=>{
         if(!env) return
@@ -48,23 +45,6 @@ export const Calendar = ()=>{
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
-    const handleSelect = (selectInfo:DateSelectArg)=>{   
-        let title = prompt("イベント内容を入力して下さい")?.trim();
-        let calendar = selectInfo.view.calendar;
-        calendar.unselect();
-        if(title) {
-            calendar.addEvent({
-                id:createEventId(),
-                title,
-                start: selectInfo.startStr,
-                end: selectInfo.endStr,
-                allDay: selectInfo.allDay,
-            })
-        }
-    }
-
-    console.log(handleSelect);
-
     return (
         <>
         <Layout>
@@ -83,7 +63,6 @@ export const Calendar = ()=>{
              //   {title:`test`, start: '2022-10-17', end: '2022-10-24'}
             //]} //eventsでカレンダーにイベんとついかできる jsonでいける
             selectable={true}
-            select={handleSelect}
         />
         </Layout>
         </>

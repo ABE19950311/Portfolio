@@ -479,29 +479,25 @@ type Sort = {
     sortid:number
 }
 
+type Checklife = {
+    [id:number]:boolean
+}
+
 export const Updatelife =()=>{
     const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const {env,isLoading,isError} = FetchData()
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
-    const [checklife,setChecklife] = useState<any>({})
+    const [checklife,setChecklife] = useState<Checklife>({})
     const [headline,setHeadline] = useState("")
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
 
-    const [deftitle,defsetTitle] = useState("")
-    const [deflifeitem,defsetLifeitem] = useState("")
-    const [defheadline,defsetHeadline] = useState("")
-    const [defcontent,defsetContent] = useState<any[]>([])
-    const [defdetail,defsetDetail] = useState<any[]>([])
-    const [defcheckcontent,defsetCheckcontent] = useState<any[]>([])
-    
     const router = useRouter()
-    const updateid = router.query.id as unknown as number
-    const updateuser = router.query.userid as unknown as number
+    const updateid = router.query.id ? router.query.id as unknown as number:null
+    const updateuser = router.query.userid ? router.query.userid as unknown as number:null
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
     const checktimer = useRef<NodeJS.Timer|null>(null);
@@ -516,9 +512,13 @@ export const Updatelife =()=>{
                     user_id:updateuser
                 }
             }).then(res=>{
-                defsetTitle(res.data.title)
-                defsetLifeitem(res.data.lifeitem)
-                defsetHeadline(res.data.headline)
+                setTitle(res.data.title)
+                setLifeitem(res.data.lifeitem)
+                setHeadline(res.data.headline)
+                setLifeitem(res.data.lifeitem)
+                setContent(JSON.parse(res.data.content).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+                setDetail(JSON.parse(res.data.detail).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+                setCheckcontent(JSON.parse(res.data.checkcontent).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                     if(!formcount.length) {
                     JSON.parse(res.data.content).forEach(()=>{
                     setFormcount((formcount)=>([
@@ -527,9 +527,6 @@ export const Updatelife =()=>{
                         ]))
                     })
                     }
-                defsetContent(JSON.parse(res.data.content))
-                defsetDetail(JSON.parse(res.data.detail))
-                defsetCheckcontent(JSON.parse(res.data.checkcontent))
             }).catch(error=>{
                 console.log(error)
             })
@@ -537,34 +534,29 @@ export const Updatelife =()=>{
     },[updateid,updateuser,env])
 
     useEffect(()=>{
-        setTitle(deftitle)
-        setHeadline(defheadline)
-        setContent(defcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
-        setDetail(defdetail.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
-        setCheckcontent(defcheckcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
-        setLifeitem(deflifeitem)
-        if(deflifeitem==="部屋探し・入居") {
+        if(!lifeitem) return
+        if(lifeitem==="部屋探し・入居") {
             setChecklife({1:true})
-        }else if(deflifeitem==="入居前後の手続き") {
+        }else if(lifeitem==="入居前後の手続き") {
             setChecklife({2:true})
-        }else if(deflifeitem==="防犯・防災") {
+        }else if(lifeitem==="防犯・防災") {
             setChecklife({3:true})
-        }else if(deflifeitem==="掃除") {
+        }else if(lifeitem==="掃除") {
             setChecklife({4:true})
-        }else if(deflifeitem==="料理") {
+        }else if(lifeitem==="料理") {
             setChecklife({5:true})
-        }else if(deflifeitem==="洗濯") {
+        }else if(lifeitem==="洗濯") {
             setChecklife({6:true})
-        }else if(deflifeitem==="その他") {
+        }else if(lifeitem==="その他") {
             setChecklife({7:true})
-        }else {
+        }else if(lifeitem==="項目を選択しない") {
             setChecklife({8:true})
         }
-    },[deftitle,deflifeitem,defheadline,defcontent,defdetail,defcheckcontent])
+    },[lifeitem])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
-
+    
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
     }
@@ -576,9 +568,6 @@ export const Updatelife =()=>{
         setLifeitem(value)
         setChecklife({[id]:check})
     }
-
-    console.log(checklife)
-    console.log(lifeitem)
 
     const doHeadline = (event:{target:HTMLInputElement})=>{
         setHeadline(event.target.value)
@@ -718,7 +707,7 @@ export const Updatelife =()=>{
         return (
             <Layout>
                 <PCSteps>
-                    <label>投稿タイトル<span>(必須):</span></label><input defaultValue={deftitle} className="title" onChange={doTitle} type={"text"}/>
+                    <label>投稿タイトル<span>(必須):</span></label><input defaultValue={title} className="title" onChange={doTitle} type={"text"}/>
                     <br></br><br></br>
                     <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
                     <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} checked={checklife[2]} onChange={doLifeitem}/><label>入居前後の手続き</label>
@@ -728,9 +717,9 @@ export const Updatelife =()=>{
                     <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} checked={checklife[6]} onChange={doLifeitem}/><label>洗濯</label>
                     <input type={"radio"} id={"7"} name={"Life"} value={"その他"} checked={checklife[7]} onChange={doLifeitem}/><label>その他</label>
                     <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} checked={checklife[8]} onChange={doLifeitem}/><label>項目を選択しない</label>
-    
+
                     <br></br>
-                    <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h1>
+                    <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={headline} className="headline" onChange={doHeadline} type={"text"}/></h1>
             
                     <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>更新する</button>
                     <br></br>
@@ -738,11 +727,11 @@ export const Updatelife =()=>{
                     {formcount.map((count:string,key:number)=>{
                         return (
                             <div className="steps" key={key}>
-                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={defcontent[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
-                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defdetail[key+0]?.[key+1]} onChange={doDetail} />
+                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={detail[key+0]?.[key+1]} onChange={doDetail} />
                                 <br></br>
-                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defcheckcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
                                 <h2></h2>
                             </div>   
                         )
@@ -755,7 +744,7 @@ export const Updatelife =()=>{
             return (
                 <Layout>
                     <TabSteps>
-                        <label>投稿タイトル<span>(必須):</span></label><input defaultValue={deftitle} className="title" onChange={doTitle} type={"text"}/>
+                        <label>投稿タイトル<span>(必須):</span></label><input defaultValue={title} className="title" onChange={doTitle} type={"text"}/>
                         <br></br><br></br>
                         <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
                         <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} checked={checklife[2]} onChange={doLifeitem}/><label>入居前後の手続き</label>
@@ -767,7 +756,7 @@ export const Updatelife =()=>{
                         <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} checked={checklife[8]} onChange={doLifeitem}/><label>項目を選択しない</label>
         
                         <br></br>
-                        <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h1>
+                        <h1><label>見出しの文章<span>(必須):</span></label><input defaultValue={headline} className="headline" onChange={doHeadline} type={"text"}/></h1>
                 
                         <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>更新する</button>
                         <br></br>
@@ -775,11 +764,11 @@ export const Updatelife =()=>{
                         {formcount.map((count:string,key:number)=>{
                             return (
                                 <div className="steps" key={key}>
-                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={defcontent[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
-                                    <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={defdetail[key+0]?.[key+1]} tabIndex={key+1} onChange={doDetail} />
+                                    <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={detail[key+0]?.[key+1]} tabIndex={key+1} onChange={doDetail} />
                                     <br></br>
-                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defcheckcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
@@ -792,7 +781,7 @@ export const Updatelife =()=>{
             return (
                 <Layout>
                     <MobSteps>
-                        <label>投稿タイトル<span>(必須):</span></label><input defaultValue={deftitle} className="title" onChange={doTitle} type={"text"}/>
+                        <label>投稿タイトル<span>(必須):</span></label><input defaultValue={title} className="title" onChange={doTitle} type={"text"}/>
                         <br></br><br></br>
                         <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
                         <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} checked={checklife[2]} onChange={doLifeitem}/><label>入居前後の手続き</label>
@@ -804,7 +793,7 @@ export const Updatelife =()=>{
                         <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} checked={checklife[8]} onChange={doLifeitem}/><label>項目を選択しない</label>
         
                         <br></br>
-                        <h2 className="head"><label>見出しの文章<span>(必須):</span></label><input defaultValue={defheadline} className="headline" onChange={doHeadline} type={"text"}/></h2>
+                        <h2 className="head"><label>見出しの文章<span>(必須):</span></label><input defaultValue={headline} className="headline" onChange={doHeadline} type={"text"}/></h2>
                 
                         <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><br></br>
                         <button className="kousin" onClick={doSubmit}>更新する</button>
@@ -814,11 +803,11 @@ export const Updatelife =()=>{
                         {formcount.map((count:string,key:number)=>{
                             return (
                                 <div className="steps" key={key}>
-                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={defcontent[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
-                                    内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defdetail[key+0]?.[key+1]} onChange={doDetail} />
+                                    内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={detail[key+0]?.[key+1]} onChange={doDetail} />
                                     <br></br>
-                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defcheckcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
