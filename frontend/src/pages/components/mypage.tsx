@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect} from "react"
+import React, {useState,useEffect, ReactNode} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
@@ -12,42 +12,71 @@ type Todo = {
     user_id:number,
     list:string,
     life:string,
-    startdate:String,
-    duedate:String
+    startdate:string,
+    duedate:string
 }
 
-type Board = {
+type Life = {
     id:number,
     user_id:number,
-    created_at:string,
-    posttitle:string,
-    postcontent:string,
-    username:string
+    title:string,
+    lifeitem:string,
+    headline:string,
+    created_at:Date,
+    updated_at:Date,
+    content:string[],
+    detail:string[],
+    checkcontent:string[]
 }
 
-type Post = {
-    id:number,
-    board_id:number,
-    user_id:number,
-    username:string,
-    postcontent:string,
-    created_at:string
-}
+const PCDiv = styled.div`
+    overflow-wrap: break-word;
 
-type Heart = {
-    id:number,
-    post_id:number,
-    user_id:number
-}
+    .due {
+        margin-left:20px;
+    }
 
-const SDiv = styled.div`
+    ul {
+        list-style:none;
+        width:70%;
+        background: #fcfcfc;
+        padding: 0.1em 0 0.1em 0.5em;
+        border: solid 1px gray;
+    }
+    
+    ul li {
+        padding: 0.5em 0; 
+    }
 
     .topmain {
         display:flex;
         justify-content:space-between;
 
-        h1 {
-            margin-left:30px;
+        h2 {
+            position: relative;
+            display: inline-block;
+            padding: 0 65px;
+            text-align: center;
+            margin:30px 0 5px 40px;
+        }
+        
+        h2:before,
+        h2:after {
+            position: absolute;
+            top: calc(50% - 3px);
+            width: 50px;
+            height: 6px;
+            content: '';
+            border-top: solid 2px #000;
+            border-bottom: solid 2px #000;
+        }
+        
+        h2:before {
+            left: 0;
+        }
+        
+        h2:after {
+            right: 0;
         }
 
         button {
@@ -73,15 +102,14 @@ const SDiv = styled.div`
 
     .main {
         display: flex;
-        flex-wrap: wrap;
-        gap: 30px 20px;
-
+        justify-content:space-between;
+        
         .content {
-            width:30%;
             text-align: center;
 
             table {
-                margin-left:20px;
+                width:40vw;
+                margin:0 35px;
                 text-align: center;
                 border-collapse: collapse;
             }
@@ -97,6 +125,211 @@ const SDiv = styled.div`
                 border: solid 1px #748ca5;
             }
             td {
+                font-size:1.5vw;
+                padding: 10px;
+                border: solid 1px #748ca5;
+                background-color:white;
+            }
+        }
+    }
+
+`
+
+const TabDiv = styled.div`
+    overflow-wrap: break-word;
+
+    ul {
+        list-style:none;
+        width:100%;
+        background: #fcfcfc;
+        padding: 0.1em 0 0.1em 0.5em;
+        border: solid 1px gray;
+    }
+    
+    ul li {
+        padding: 0.5em 0; 
+    }
+
+    .topmain {
+        display:flex;
+        justify-content:space-between;
+
+        h2 {
+            font-size:3.5vw;
+            position: relative;
+            display: inline-block;
+            padding: 0 65px;
+            text-align: center;
+            margin:30px 0 5px 0;
+        }
+        
+        h2:before,
+        h2:after {
+            position: absolute;
+            top: calc(50% - 3px);
+            width: 50px;
+            height: 6px;
+            content: '';
+            border-top: solid 2px #000;
+            border-bottom: solid 2px #000;
+        }
+        
+        h2:before {
+            left: 0;
+        }
+        
+        h2:after {
+            right: 0;
+        }
+
+        button {
+            margin:30px 0 0 0;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            text-align: center;
+            vertical-align: middle;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            border: 2px solid #27acd9;
+            background: #27acd9;
+            color: #fff;
+        }
+    }
+
+    .main {
+        display: flex;
+        justify-content:space-between;
+
+        .content {
+            text-align: center;
+
+            table {
+                width:40vw;
+                text-align: center;
+                border-collapse: collapse;
+            }
+            caption {
+                margin-top:20px;
+                font-size:18px;
+                background-color: lightyellow;
+                border: solid 1px #333;
+            }
+            th {
+                font-size:1.5vw;
+                padding: 10px;
+                background: #e3faf8;
+                border: solid 1px #748ca5;
+            }
+            td {
+                font-size:1.5vw;
+                padding: 10px;
+                border: solid 1px #748ca5;
+                background-color:white;
+            }
+        }
+    }
+
+`
+
+const MobDiv = styled.div`
+    overflow-wrap: break-word;
+
+    ul {
+        list-style:none;
+        width:100%;
+        background: #fcfcfc;
+        padding: 0.1em 0 0.1em 0.5em;
+        border: solid 1px gray;
+    }
+    
+    ul li {
+        padding: 0.5em 0; 
+    }
+
+    .topmain {
+        display:flex;
+        flex-wrap:wrap;
+
+        h2 {
+            position: relative;
+            display: inline-block;
+            padding: 0 65px;
+            text-align: center;
+            margin:30px 0 5px 65px;
+        }
+        
+        h2:before,
+        h2:after {
+            position: absolute;
+            top: calc(50% - 3px);
+            width: 50px;
+            height: 6px;
+            content: '';
+            border-top: solid 2px #000;
+            border-bottom: solid 2px #000;
+        }
+        
+        h2:before {
+            left: 0;
+        }
+        
+        h2:after {
+            right: 0;
+        }
+
+        button {
+            margin:30px 0 20px 285px;
+            font-weight: 700;
+            padding: 0.5rem 1.5rem;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-transition: all 0.3s;
+            transition: all 0.3s;
+            text-align: center;
+            vertical-align: middle;
+            text-decoration: none;
+            border-radius: 0.5rem;
+            border: 2px solid #27acd9;
+            background: #27acd9;
+            color: #fff;
+        }
+    }
+
+    .main {
+
+        .content {
+            text-align: center;
+
+            table {
+                width:450px;
+                margin:0 0 20px 20px;
+                text-align: center;
+                border-collapse: collapse;
+            }
+            caption {
+                margin-top:20px;
+                font-size:18px;
+                background-color: lightyellow;
+                border: solid 1px #333;
+            }
+            th {
+                font-size:1.5vw;
+                padding: 10px;
+                background: #e3faf8;
+                border: solid 1px #748ca5;
+            }
+            td {
+                font-size:1.5vw;
                 padding: 10px;
                 border: solid 1px #748ca5;
                 background-color:white;
@@ -111,20 +344,21 @@ export const Mypage = ()=>{
     const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
     const {env,userid,loginstate,isLoading,isError} = FetchData()
-    const [sessionid,setSessionid] = useState("")
+    const [id,setId] = useState("")
     const [todo,setTodo] = useState([])
-    const [board,setBoard] = useState([])
-    const [post,setPost] = useState([])
-    const [heart,setHeart] = useState([])
+    const [lifepost,setLifepost] = useState([])
     const [sessionname,setSessionname] = useState("")
+    const [dueflag,setDueflag] = useState(false)
+    const [excessflag,setExcessflag] = useState(false)
+
     const router = useRouter()
 
     useEffect(()=>{
-        setSessionid(userid)
+        setId(userid)
     },[userid])
 
     useEffect(()=>{
-        if(!env) return
+        if(!env||!id) return
         axios.get(env+"/sessionname")
         .then(res=>{
             setSessionname(res.data)
@@ -137,25 +371,13 @@ export const Mypage = ()=>{
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(env+"/myboards")
+        axios.get(`${env}/lifeposts/${id}`)
         .then(res=>{
-            setBoard(res.data)
+            setLifepost(res.data)
         }).catch(error=>{
             console.log(error)
         })
-        axios.get(env+"/myposts")
-        .then(res=>{
-            setPost(res.data)
-        }).catch(error=>{
-            console.log(error)
-        })
-        axios.get(env+"/myhearts")
-        .then(res=>[
-            setHeart(res.data)
-        ]).catch(error=>{
-            console.log(error)
-        })
-    },[router,env])
+    },[router,env,id])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
@@ -166,23 +388,62 @@ export const Mypage = ()=>{
             })
     }
 
+    if(PC) {
     return(
-        <>
         <Layout>
-        <SDiv>
-            {PC ? <h1>pc</h1>:Tablet ? <h1>tablet</h1>:<h1>mobile</h1>}
+        <PCDiv>
             <div className="topmain">
-            <div><h1>{sessionname}様のマイページ</h1></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+            <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+            </div>
+
+            <div className="due">
+                {dueflag ? <h3>下記TODOが期日まで残り3日を切っています</h3>:<></>}
+                {todo.map((value:Todo,key:number)=>{
+                    let duedate = moment(value.duedate).format("YYYYMMDD")
+                    let nowdate = moment(new Date()).format("YYYYMMDD")
+                    let diffdate = Number(duedate)-Number(nowdate)
+                    if(diffdate<=3&&diffdate>=0) {
+                        dueflag ? "":setDueflag(true)
+                    return (
+                        <React.Fragment key={key}>
+                        <ul>
+                            <li>項目: {value.life}&emsp;TODO: {value.list}&emsp;残り日数: {diffdate}日</li>
+                        </ul>
+                        </React.Fragment>
+                    )
+                    }else {
+                        <></>
+                    }
+                })}
+                {excessflag ? <h3>下記TODOが期日を過ぎています</h3>:<></>}
+                {todo.map((value:Todo,key:number)=>{
+                    let duedate = moment(value.duedate).format("YYYYMMDD")
+                    let nowdate = moment(new Date()).format("YYYYMMDD")
+                    let diffdate = Number(duedate)-Number(nowdate)
+                    if(diffdate<=-1) {
+                        excessflag ? "":setExcessflag(true)
+                    return (
+                        <React.Fragment key={key}>
+                        <ul>
+                            <li>項目: {value.life}&emsp;TODO: {value.list}&emsp;経過日数: {Math.abs(diffdate)}日</li>
+                        </ul>
+                        </React.Fragment>
+                    )
+                    }else {
+                        <></>
+                    }
+                })}
             </div>
 
         <div className="main">
-
             <div className="content">
             <table border={1}>
             <caption>作成したTODOリスト</caption>
+                <tbody>
                 <tr>
                     <th>開始日</th><th>期日</th><th>項目</th><th>TODO</th>
                 </tr>
+                
         {todo.map((todo:Todo,key:number)=>{
             return(
                 <tr key={key}> 
@@ -190,46 +451,211 @@ export const Mypage = ()=>{
                 </tr>
             )
         })}
+            </tbody>
             </table>
             </div>
 
             <div className="content">
             <table border={1}>
-                <caption>作成した掲示板</caption>
+                <caption>投稿した生活情報</caption>
+                <tbody>
                 <tr>
-                    <th>入力したユーザ名</th><th>タイトル</th><th>内容</th><th>作成日時</th>
+                    <th>タイトル</th><th>項目</th><th>作成日</th>
                 </tr>
-        {board.map((board:Board,key:number)=>{
+        {lifepost.map((lifepost:Life,key:number)=>{
             return(
                 <tr key={key}>
-                    <td>{board.username}</td><td>{board.posttitle}</td><td>{board.postcontent}</td><td>{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                    <td>{lifepost.title}</td><td>{lifepost.lifeitem}</td><td>{moment(lifepost.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
                 </tr>
             )
         })}
+            </tbody>
             </table>
             </div>
 
-            <div className="content">
-                <table border={1}>
-                    <caption>掲示板に投稿した内容</caption>
-                    <tr>
-                        <th>入力したユーザ名</th><th>投稿内容</th><th>投稿日時</th>
-                    </tr>
-        {post.map((post:Post,key:number)=>{
-            return(
-                <tr key={key}>
-                    <td>{post.username}</td><td>{post.postcontent}</td><td>{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                </tr>
-            )
-        })}
-                </table>
-            </div>
-
         </div>
-        </SDiv>
+        </PCDiv>
         </Layout>
-        </>
     )
+    }else if(Tablet) {
+        return(
+            <Layout>
+            <TabDiv>
+                <div className="topmain">
+                <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+                </div>
+
+                <div className="due">
+                {dueflag ? <h3>下記TODOが期日まで残り3日を切っています</h3>:<></>}
+                {todo.map((value:Todo,key:number)=>{
+                    let duedate = moment(value.duedate).format("YYYYMMDD")
+                    let nowdate = moment(new Date()).format("YYYYMMDD")
+                    let diffdate = Number(duedate)-Number(nowdate)
+                    if(diffdate<=3&&diffdate>=0) {
+                        dueflag ? "":setDueflag(true)
+                    return (
+                        <React.Fragment key={key}>
+                        <ul>
+                            <li>項目: {value.life}&emsp;TODO: {value.list}&emsp;残り日数: {diffdate}日</li>
+                        </ul>
+                        </React.Fragment>
+                    )
+                    }else {
+                        <></>
+                    }
+                })}
+                {excessflag ? <h3>下記TODOが期日を過ぎています</h3>:<></>}
+                {todo.map((value:Todo,key:number)=>{
+                    let duedate = moment(value.duedate).format("YYYYMMDD")
+                    let nowdate = moment(new Date()).format("YYYYMMDD")
+                    let diffdate = Number(duedate)-Number(nowdate)
+                    if(diffdate<=-1) {
+                        excessflag ? "":setExcessflag(true)
+                    return (
+                        <React.Fragment key={key}>
+                        <ul>
+                            <li>項目: {value.life}&emsp;TODO: {value.list}&emsp;経過日数: {Math.abs(diffdate)}日</li>
+                        </ul>
+                        </React.Fragment>
+                    )
+                    }else {
+                        <></>
+                    }
+                })}
+            </div>
+    
+            <div className="main">
+    
+                <div className="content">
+                <table border={1}>
+                <caption>作成したTODOリスト</caption>
+                <tbody>
+                    <tr>
+                        <th>開始日</th><th>期日</th><th>項目</th><th>TODO</th>
+                    </tr>
+            {todo.map((todo:Todo,key:number)=>{
+                return(
+                    <tr key={key}> 
+                        <td>{todo.startdate}</td><td>{todo.duedate}</td><td>{todo.life}</td><td>{todo.list}</td>
+                    </tr>
+                )
+            })}
+            </tbody>
+                </table>
+                </div>
+    
+                <div className="content">
+                <table border={1}>
+                    <caption>投稿した生活情報</caption>
+                    <tbody>
+                    <tr>
+                        <th>タイトル</th><th>項目</th><th>作成日</th>
+                    </tr>
+            {lifepost.map((lifepost:Life,key:number)=>{
+                return(
+                    <tr key={key}>
+                        <td>{lifepost.title}</td><td>{lifepost.lifeitem}</td><td>{moment(lifepost.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                    </tr>
+                )
+            })}
+            </tbody>
+                </table>
+                </div>
+    
+            </div>
+            </TabDiv>
+            </Layout>
+        )
+    }else {
+        return(
+            <Layout>
+            <MobDiv>
+                <div className="topmain">
+                <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+                </div>
+
+                <div className="due">
+                {dueflag ? <h3>下記TODOが期日まで残り3日を切っています</h3>:<></>}
+                {todo.map((value:Todo,key:number)=>{
+                    let duedate = moment(value.duedate).format("YYYYMMDD")
+                    let nowdate = moment(new Date()).format("YYYYMMDD")
+                    let diffdate = Number(duedate)-Number(nowdate)
+                    if(diffdate<=3&&diffdate>=0) {
+                        dueflag ? "":setDueflag(true)
+                    return (
+                        <React.Fragment key={key}>
+                        <ul>
+                            <li>項目: {value.life}&emsp;TODO: {value.list}&emsp;残り日数: {diffdate}日</li>
+                        </ul>
+                        </React.Fragment>
+                    )
+                    }else {
+                        <></>
+                    }
+                })}
+                {excessflag ? <h3>下記TODOが期日を過ぎています</h3>:<></>}
+                {todo.map((value:Todo,key:number)=>{
+                    let duedate = moment(value.duedate).format("YYYYMMDD")
+                    let nowdate = moment(new Date()).format("YYYYMMDD")
+                    let diffdate = Number(duedate)-Number(nowdate)
+                    if(diffdate<=-1) {
+                        excessflag ? "":setExcessflag(true)
+                    return (
+                        <React.Fragment key={key}>
+                        <ul>
+                            <li>項目: {value.life}&emsp;TODO: {value.list}&emsp;経過日数: {Math.abs(diffdate)}日</li>
+                        </ul>
+                        </React.Fragment>
+                    )
+                    }else {
+                        <></>
+                    }
+                })}
+            </div>
+    
+            <div className="main">
+    
+                <div className="content">
+                <table border={1}>
+                <caption>作成したTODOリスト</caption>
+                <tbody>
+                    <tr>
+                        <th>開始日</th><th>期日</th><th>項目</th><th>TODO</th>
+                    </tr>
+            {todo.map((todo:Todo,key:number)=>{
+                return(
+                    <tr key={key}> 
+                        <td>{todo.startdate}</td><td>{todo.duedate}</td><td>{todo.life}</td><td>{todo.list}</td>
+                    </tr>
+                )
+            })}
+            </tbody>
+                </table>
+                </div>
+    
+                <div className="content">
+                <table border={1}>
+                    <caption>投稿した生活情報</caption>
+                    <tbody>
+                    <tr>
+                        <th>タイトル</th><th>項目</th><th>作成日</th>
+                    </tr>
+            {lifepost.map((lifepost:Life,key:number)=>{
+                return(
+                    <tr key={key}>
+                        <td>{lifepost.title}</td><td>{lifepost.lifeitem}</td><td>{moment(lifepost.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                    </tr>
+                )
+            })}
+            </tbody>
+                </table>
+                </div>
+    
+            </div>
+            </MobDiv>
+            </Layout>
+        )
+    }
 }
 
 export default Mypage

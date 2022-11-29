@@ -4,6 +4,11 @@ class LifepostsController < ApplicationController
         @lifepost = Lifepost.all
         render json:@lifepost
     end
+    
+    def show
+        @lifepost = Lifepost.where(user_id: params[:id])
+        render json:@lifepost
+    end
 
     def create
         @user_id = User.find_by(username: session[:user_name]).id
@@ -31,6 +36,7 @@ class LifepostsController < ApplicationController
         @lifepost.destroy
         render json:@lifepost
     end
+
 
     private
 
