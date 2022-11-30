@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
 import {Header} from "./header"
 import DatePicker,{registerLocale} from "react-datepicker"
 import ja from "date-fns/locale/ja"
@@ -757,7 +756,6 @@ export const Todo = ()=>{
     const [dueclass,setDueclass] = useState(false);
     const [startDate, setStartDate] = useState<Date>()
     const [endDate, setEndDate] = useState<Date>()
-    const router=useRouter();
 
     useEffect(()=>{
         if(!env) return

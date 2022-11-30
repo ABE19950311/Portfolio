@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Link from "next/link"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import {FetchData} from "../../components/fetchdata"
 
 const SDiv = styled.div`
@@ -121,9 +121,7 @@ export const Login = ()=>{
                 }
             }).then(res => {
             if(res.data.logged_in) {
-                router.push({
-                    pathname:"/",
-                    });
+                router.push("/");
             }else if(!res.data.logged_in) {
                     setValidationName("ユーザ名またはパスワードが一致しません")
                     setValidationPass("ユーザ名またはパスワードが一致しません")

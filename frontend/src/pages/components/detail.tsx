@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useRouter} from "next/router"
+import {useSearchParams} from "next/navigation"
 import {Layout} from "./layout"
 import { useMediaQuery } from "react-responsive"
 
@@ -359,8 +359,8 @@ export const Detail = ()=>{
     const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const router=useRouter();
-    const query = router.query.state as unknown as string;
+    const search = useSearchParams();
+    const query = search.get("state") as unknown as string
 
     const PCHeya = ()=>{
         return (
@@ -506,13 +506,17 @@ export const Detail = ()=>{
 
     const PCRyouri = ()=>{
         return(
-            <></>
+            <>
+            <h1>料理概要</h1>
+            </>
         )
     }
 
     const PCSentaku =()=>{
         return(
-            <></>
+            <>
+            <h1>洗濯概要</h1>
+            </>
         )
     }
 
@@ -660,13 +664,17 @@ export const Detail = ()=>{
 
     const TabRyouri = ()=>{
         return(
-            <></>
+            <>
+            <h1>料理概要</h1>
+            </>
         )
     }
 
     const TabSentaku =()=>{
         return(
-            <></>
+            <>
+            <h1>洗濯概要</h1>
+            </>
         )
     }
 
@@ -814,13 +822,17 @@ export const Detail = ()=>{
 
     const MobRyouri = ()=>{
         return(
-            <></>
+            <>
+            <h1>料理概要</h1>
+            </>
         )
     }
 
     const MobSentaku =()=>{
         return(
-            <></>
+            <>
+            <h1>洗濯概要</h1>
+            </>
         )
     }
 

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useSearchParams} from "next/navigation"
 import moment from "moment"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
@@ -9,6 +9,7 @@ import ReactPaginate from 'react-paginate';
 import { useMediaQuery } from "react-responsive"
 import { MdSearch } from "react-icons/md";
 import { FaRegLightbulb} from "react-icons/fa";
+import Link from "next/link"
 
 const PCDiv = styled.div`
     
@@ -790,9 +791,8 @@ export const Userlife = ()=>{
     const [iconflag,setIconflag] = useState<any>({})
     const [iconcount,setIconcount] = useState<any>({})
     const [icondata,setIcondata] = useState([])
-    const router = useRouter()
-    const query = router.query.life as unknown as string
-
+    const search = useSearchParams()
+    const query = search.get("life") as unknown as string
 
     useEffect(()=>{
         const id = Number(userid)
@@ -853,13 +853,6 @@ export const Userlife = ()=>{
 
     console.log(icondata)
     console.log(iconcount)
-
-    const lifecontent = (id:number,user_id:number)=>{
-        router.push({
-            pathname:"/components/lifecontent",
-            query:{id:id,user_id:user_id}
-            })
-    }
 
     const dofilterlife = (event:React.ChangeEvent<HTMLSelectElement>)=>{
         setFilterlife(event.target.value)
@@ -935,14 +928,7 @@ export const Userlife = ()=>{
         })
     }
 
-    const doUpdate = (id:number,userid:number)=>{
-        router.push({
-            pathname:"/components/updatelife",
-            query:{id:id,userid:userid}
-            })
-    }
-
-     // クリック時のfunction
+    // クリック時のfunction
     const handlePageChange = (data:any) => {
     let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
     setOffset(page_number*perPage); // offsetを変更し、表示開始するアイテムの番号を変更
@@ -988,8 +974,8 @@ export const Userlife = ()=>{
                 <table key={key}>
                     <tbody>
                     <tr>
-                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        <td className="tdtitle"><Link href={{pathname:"/components/lifecontent",query:{id:life.id,user_id:life.user_id}}}>{life.title}</Link></td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
@@ -1065,8 +1051,8 @@ export const Userlife = ()=>{
                 <table key={key}>
                     <tbody>
                     <tr>
-                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                    <td className="tdtitle"><Link href={{pathname:"/components/lifecontent",query:{id:life.id,user_id:life.user_id}}}>{life.title}</Link></td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
@@ -1142,8 +1128,8 @@ export const Userlife = ()=>{
                 <table key={key}>
                     <tbody>
                     <tr>
-                        <td onClick={()=>lifecontent(life.id,life.user_id)} className="tdtitle">{life.title}</td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><button onClick={()=>doUpdate(life.id,life.user_id)} className="kousinbtn">更新</button></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                    <td className="tdtitle"><Link href={{pathname:"/components/lifecontent",query:{id:life.id,user_id:life.user_id}}}>{life.title}</Link></td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
+                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>

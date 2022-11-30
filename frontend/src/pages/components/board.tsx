@@ -1,11 +1,11 @@
 import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
 import Header from "./header"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
+import Link from "next/link"
 
 type Boardtype = {
     id:number,
@@ -208,7 +208,6 @@ export const Board = ()=>{
     const [content,setContent] = useState("");
     const [flag,setFlag] = useState("");
     const [board,setBoard] = useState([]);
-    const router=useRouter();
 
     useEffect(()=>{
         const id = Number(userid)
@@ -224,7 +223,7 @@ export const Board = ()=>{
             console.log(error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag,env,router])
+    },[flag,env])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
@@ -263,13 +262,6 @@ export const Board = ()=>{
         })
     }
 
-    const doBoard = (content:string,board_id:number,user_id:number,username:string,createdate:string)=>{
-        router.push({
-            pathname:"/components/boardcontent",
-            query:{content:content,board_id:board_id,user_id:user_id,username:username,createdate:createdate,sessionid:sessionid}
-        })
-    }
-    
     const doDelete = (deleteid:number)=>{
         axios.delete(env+`/boards/${deleteid}`)
         .then(res=>{
@@ -278,6 +270,8 @@ export const Board = ()=>{
             console.log(error)
         })
     }
+
+    console.log(content)
 
 
     if(PC) {
@@ -294,7 +288,10 @@ export const Board = ()=>{
                 return (
                     <div className="content" key={key}>
                     <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
-                    <label>タイトル:</label><a onClick={()=>doBoard(board.postcontent,board.id,board.user_id,board.username,board.created_at)} href="#">{board.posttitle}</a>
+                    <label>タイトル:</label><Link href={{
+                                                        pathname:"/components/boardcontent",
+                                                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
+                                            }}>{board.posttitle}</Link>
                     </div>
                 )
             })}
@@ -315,7 +312,10 @@ export const Board = ()=>{
                     return (
                         <div className="content" key={key}>
                         <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
-                        <label>タイトル:</label><a onClick={()=>doBoard(board.postcontent,board.id,board.user_id,board.username,board.created_at)} href="#">{board.posttitle}</a>
+                        <label>タイトル:</label><Link href={{
+                                                        pathname:"/components/boardcontent",
+                                                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
+                                            }}>{board.posttitle}</Link>
                         </div>
                     )
                 })}
@@ -336,7 +336,10 @@ export const Board = ()=>{
                     return (
                         <div className="content" key={key}>
                         <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<br></br>{sessionid===board.user_id ? <button className="delbutton" onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
-                        <label>タイトル:</label><a onClick={()=>doBoard(board.postcontent,board.id,board.user_id,board.username,board.created_at)} href="#">{board.posttitle}</a>
+                        <label>タイトル:</label><Link href={{
+                                                        pathname:"/components/boardcontent",
+                                                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
+                                            }}>{board.posttitle}</Link>
                         </div>
                     )
                 })}

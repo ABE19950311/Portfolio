@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useRouter,useSearchParams} from "next/navigation"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
@@ -494,10 +494,10 @@ export const Updatelife =()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
-
     const router = useRouter()
-    const updateid = router.query.id ? router.query.id as unknown as number:null
-    const updateuser = router.query.userid ? router.query.userid as unknown as number:null
+    const search = useSearchParams()
+    const updateid = search.get("id")
+    const updateuser = search.get("userid")
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
     const checktimer = useRef<NodeJS.Timer|null>(null);
@@ -549,13 +549,15 @@ export const Updatelife =()=>{
             setChecklife({6:true})
         }else if(lifeitem==="その他") {
             setChecklife({7:true})
-        }else if(lifeitem==="項目を選択しない") {
+        }else if(lifeitem==="none") {
             setChecklife({8:true})
         }
     },[lifeitem])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
+
+    console.log(lifeitem)
     
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -694,10 +696,7 @@ export const Updatelife =()=>{
                 checkcontent:jsoncheck
             }
         }).then(res=>{
-            router.push({
-                pathname:"/components/userlife",
-                query:{life:"updatepost"}
-                })
+            router.push("/components/userlife")
         }).catch(error=>{
             console.log(error)
         })

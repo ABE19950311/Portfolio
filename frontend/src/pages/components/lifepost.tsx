@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
@@ -496,10 +496,7 @@ export const Lifepost =()=>{
 
     useEffect(()=>{
         if(formflag===true) {
-            router.push({
-                pathname:"/components/userlife",
-                query:{life:"lifepost"}
-                })
+            router.push("/components/userlife")
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[formflag])

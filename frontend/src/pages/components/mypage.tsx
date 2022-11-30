@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect, ReactNode} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import Layout from "./layout"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
@@ -383,9 +383,7 @@ export const Mypage = ()=>{
     if(isLoading) return <p>lodaing...</p>
 
     const passChange = ()=>{
-        router.push({
-            pathname:"/components/passchange",
-            })
+        router.push("/components/passchange")
     }
 
     if(PC) {

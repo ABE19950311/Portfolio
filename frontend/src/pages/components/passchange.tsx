@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import {FetchData} from "../../components/fetchdata"
 
 const SDiv = styled.div`
@@ -129,9 +129,7 @@ export const Passchange = ()=>{
     }
 
     const doMypage =()=>{
-        router.push({
-            pathname:"/components/mypage",
-            })
+        router.push("/components/mypage")
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
@@ -170,9 +168,7 @@ export const Passchange = ()=>{
                         password_confirmation:passwordconfirm
                     }
                 }).then(res=>{
-                    router.push({
-                        pathname:"/components/mypage",
-                        });
+                    router.push("/components/mypage");
                 }).catch(error=>{
                     console.log(error)
                 })

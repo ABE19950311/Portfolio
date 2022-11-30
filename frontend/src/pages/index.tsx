@@ -1,8 +1,7 @@
 import styled from "styled-components"
-import {useRouter} from "next/router"
 import Image from 'next/legacy/image'
 import {Layout} from "./components/layout"
-
+import Link from "next/link"
 
 const SDiv = styled.div`
     padding: 20px 0px 0px 100px;
@@ -47,14 +46,6 @@ const SDiv = styled.div`
 
 
 export const Dailylifey = ()=>{
-    const router=useRouter();
-
-    const Router = (state:string) =>{
-    router.push({
-        pathname:"/components/detail",
-        query:{state:state}
-        })
-    }
 
     return (
     <Layout>       
@@ -62,32 +53,50 @@ export const Dailylifey = ()=>{
         <div className="item">
             <p><strong>部屋探し・入居</strong></p>
             <Image src="/heya.png" layout="responsive" height="90" width="90" alt="heya"/> 
-            <button onClick={()=>Router("heya")}><span>確認する</span></button>
+            <Link data-testid="heya" href={{
+                pathname:"/components/detail",
+                query:{state:"heya"}
+            }}><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>入居前後の手続き</strong></p>
             <Image src="/nyukyo.png" layout="responsive" height="90" width="90" alt="hikkoshi"/> 
-            <button onClick={()=>Router("hikkoshi")}><span>確認する</span></button>
+            <Link data-testid="hikkoshi" href={{
+                pathname:"/components/detail",
+                query:{state:"hikkoshi"}
+            }}><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>防犯・防災</strong></p>
             <Image src="/bousai.png" layout="responsive" height="90" width="90" alt="bouhan"/> 
-            <button onClick={()=>Router("bouhan")}><span>確認する</span></button>
+            <Link data-testid="bouhan" href={{
+                pathname:"/components/detail",
+                query:{state:"bouhan"}
+            }}><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>掃除</strong></p>
             <Image src="/souzi.png" layout="responsive" height="90" width="90" alt="souzi"/> 
-            <button onClick={()=>Router("souzi")}><span>確認する</span></button>
+            <Link data-testid="souzi" href={{
+                pathname:"/components/detail",
+                query:{state:"souzi"}
+            }}><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>料理</strong></p>
             <Image src="/ryouri.png" layout="responsive" height="90" width="90" alt="ryouri"/> 
-            <button onClick={()=>Router("ryouri")}><span>確認する</span></button>
+            <Link data-testid="ryouri" href={{
+                pathname:"/components/detail",
+                query:{state:"ryouri"}
+            }}><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>洗濯</strong></p>
             <Image src="/sentaku.png" layout="responsive" height="90" width="90" alt="sentaku"/> 
-            <button onClick={()=>Router("sentaku")}><span>確認する</span></button>
+            <Link data-testid="sentaku" href={{
+                pathname:"/components/detail",
+                query:{state:"sentaku"}
+            }}><button><span>確認する</span></button></Link>
         </div>
     </SDiv>
     </Layout>

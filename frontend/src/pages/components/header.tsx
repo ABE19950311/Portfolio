@@ -2,7 +2,7 @@ import styled from "styled-components"
 import Link from "next/link"
 import {useState,useEffect,useLayoutEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useRouter} from "next/navigation"
 import Image from 'next/image'
 import useSWR from "swr"
 import {FetchData} from "../../components/fetchdata"

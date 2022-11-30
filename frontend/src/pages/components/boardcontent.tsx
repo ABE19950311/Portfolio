@@ -1,13 +1,13 @@
 import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useSearchParams} from "next/navigation"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import Header from "./header"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
-
+import Link from "next/link"
 
 type Post = {
     id:number,
@@ -245,16 +245,13 @@ export const Boardcontent = ()=>{
     const [heartdata,setHeartdata] = useState([])
     const [fontcolor,setFontcolor] = useState<any>({})
     const [postcontent,setPostcontent] = useState([])
-    const router=useRouter();
+    const search = useSearchParams();
 
-    const board_id = router.query.board_id as unknown as number;
-    const user_id = router.query.user_id as unknown as number;
-    const username = router.query.username as unknown as string;
-    const createdate = router.query.createdate as unknown as string;
-    const content = router.query.content as unknown as string;
-
-    console.log(heartnumber)
-    console.log(fontcolor)
+    const board_id = search.get("board_id") as unknown as number
+    const user_id = search.get("user_id") as unknown as number
+    const username = search.get("username") as unknown as string
+    const createdate = search.get("createdate") as unknown as string
+    const content = search.get("content") as unknown as string
 
     useEffect(()=>{
         const id = Number(userid)
@@ -315,6 +312,8 @@ export const Boardcontent = ()=>{
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
+    console.log(content)
+
     const doName = (event:{target:HTMLInputElement})=>{
             setName(event.target.value)
     }
@@ -372,19 +371,13 @@ export const Boardcontent = ()=>{
         })
     }
 
-    const doBoard = ()=>{
-        router.push({
-            pathname:"/components/board",
-        })
-    }
-
     if(PC) {
     return (
         <>
             <Header />
             <Container>
             <PCDiv>
-            <button className="returnbtn" onClick={doBoard}>掲示板へ戻る</button>
+            <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
             <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
             <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
             <label></label><button type="submit" onClick={doSubmit}>返信する</button>
@@ -417,7 +410,7 @@ export const Boardcontent = ()=>{
                 <Header />
                 <Container>
                 <TabDiv>
-                <button className="returnbtn" onClick={doBoard}>掲示板へ戻る</button>
+                <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
                 <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
                 <label></label><button type="submit" onClick={doSubmit}>返信する</button><br></br>
@@ -450,7 +443,7 @@ export const Boardcontent = ()=>{
                 <Header />
                 <Container>
                 <MobDiv>
-                <button className="returnbtn" onClick={doBoard}>掲示板へ戻る</button>
+                <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
                 &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} value={post} onChange={doPost}></textarea><br></br>
                 &emsp;<button type="submit" onClick={doSubmit}>返信する</button><br></br>

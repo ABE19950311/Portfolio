@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
+import {useSearchParams} from "next/navigation"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
@@ -561,9 +561,9 @@ export const Lifecontent = ()=>{
     const [offset,setOffset] = useState(0); // 何番目のアイテムから表示するか
     const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
 
-    const router = useRouter()
-    const id = router.query.id as unknown as number
-    const user_id = router.query.user_id as unknown as number
+    const search = useSearchParams()
+    const id = search.get("id") as unknown as number
+    const user_id = search.get("user_id") as unknown as number
 
     useEffect(()=>{
         if(!env) return

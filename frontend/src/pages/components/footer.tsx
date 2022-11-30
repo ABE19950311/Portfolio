@@ -4,7 +4,6 @@ import { useMediaQuery } from "react-responsive"
 import Link from "next/link"
 import React, {useState,useEffect,useLayoutEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/router"
 import Image from 'next/image'
 import useSWR from "swr"
 import { Transition } from '@headlessui/react'
