@@ -53,50 +53,32 @@ export const Dailylifey = ()=>{
         <div className="item">
             <p><strong>部屋探し・入居</strong></p>
             <Image src="/heya.png" layout="responsive" height="90" width="90" alt="heya"/> 
-            <Link data-testid="heya" href={{
-                pathname:"/components/detail",
-                query:{state:"heya"}
-            }}><button><span>確認する</span></button></Link>
+            <Link data-testid="heya" href="/components/detail/heya"><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>入居前後の手続き</strong></p>
             <Image src="/nyukyo.png" layout="responsive" height="90" width="90" alt="hikkoshi"/> 
-            <Link data-testid="hikkoshi" href={{
-                pathname:"/components/detail",
-                query:{state:"hikkoshi"}
-            }}><button><span>確認する</span></button></Link>
+            <Link data-testid="hikkoshi" href="/components/detail/hikkoshi"><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>防犯・防災</strong></p>
             <Image src="/bousai.png" layout="responsive" height="90" width="90" alt="bouhan"/> 
-            <Link data-testid="bouhan" href={{
-                pathname:"/components/detail",
-                query:{state:"bouhan"}
-            }}><button><span>確認する</span></button></Link>
+            <Link data-testid="bouhan" href="/components/detail/bouhan"><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>掃除</strong></p>
             <Image src="/souzi.png" layout="responsive" height="90" width="90" alt="souzi"/> 
-            <Link data-testid="souzi" href={{
-                pathname:"/components/detail",
-                query:{state:"souzi"}
-            }}><button><span>確認する</span></button></Link>
+            <Link data-testid="souzi" href="/components/detail/souzi"><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>料理</strong></p>
             <Image src="/ryouri.png" layout="responsive" height="90" width="90" alt="ryouri"/> 
-            <Link data-testid="ryouri" href={{
-                pathname:"/components/detail",
-                query:{state:"ryouri"}
-            }}><button><span>確認する</span></button></Link>
+            <Link data-testid="ryouri" href="/components/detail/ryouri"><button><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>洗濯</strong></p>
             <Image src="/sentaku.png" layout="responsive" height="90" width="90" alt="sentaku"/> 
-            <Link data-testid="sentaku" href={{
-                pathname:"/components/detail",
-                query:{state:"sentaku"}
-            }}><button><span>確認する</span></button></Link>
+            <Link data-testid="sentaku" href="/components/detail/sentaku"><button><span>確認する</span></button></Link>
         </div>
     </SDiv>
     </Layout>
