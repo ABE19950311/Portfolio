@@ -25,7 +25,7 @@ export const Layout = (props:Props)=>{
     const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
 
     return (
-        <>
+            <html lang="ja">
             <Head>
             <title>Dailylifey</title>
             <meta charSet="utf-8" />
@@ -35,10 +35,10 @@ export const Layout = (props:Props)=>{
             </Head>
             <Wrapper>
             <Header />
-            <main>{props.children}</main>
+            <body>{props.children}</body>
             <Footer />
             </Wrapper>
-        </>
+            </html>
     )
 }
 

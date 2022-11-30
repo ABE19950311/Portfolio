@@ -1,27 +1,30 @@
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen, cleanup } from '@testing-library/react'
-import { getPage } from 'next-page-tester'
-import { initTestHelpers } from 'next-page-tester'
 import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import userEvent from '@testing-library/user-event'
+import {getPage} from "next-page-tester"
 import Dailylifey from "../src/pages/index"
-import Header from "../src/pages/components/header"
 
+jest.mock('next/navigation', () => ({
+    useRouter() {
+        return {
+        route: '/',
+        pathname: '/',
+        query: {},
+        push: jest.fn(),
+    }
+    },
+    useSearchParams() {
+        return {
+            route: '/',
+            get: jest.fn(),
+        }
+    }
+}));
 
 describe("Dailylifey",()=>{
     it("index.tsxレンダリングテスト",()=>{
-        jest.mock('next/navigation', () => ({
-            useRouter() {
-                return {
-                route: '/',
-                pathname: '/',
-                query: {},
-                push: jest.fn(),
-            };
-            },
-        }));
-        render(<Header />)
         render(<Dailylifey />)
     })
 })

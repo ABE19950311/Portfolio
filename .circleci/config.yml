@@ -103,7 +103,7 @@ jobs:
           working_directory: ~/Portfolio/frontend
       - run:
           name: install-packages
-          command: npm install
+          command: npm install --legacy-peer-deps
           no_output_timeout: 30m
           working_directory: ~/Portfolio/frontend
       - save_cache:
