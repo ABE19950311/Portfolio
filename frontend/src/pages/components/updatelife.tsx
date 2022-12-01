@@ -6,7 +6,7 @@ import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 
-const PCSteps = styled.div`
+const PC = styled.div`
 width:800px;
 margin-top:20px;
 margin-left:15vw;
@@ -25,19 +25,19 @@ span {
     font-weight:normal;
 }
 .koumokubtn {
-        border: 0;
-        text-align: center;
-        display: inline-block;
-        padding: 11px;
-        width: 120px;
-        margin: 7px;
-        color: #ffffff;
-        background-color: #36a2eb;
-        border-radius: 8px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: box-shadow 200ms ease-out;
-        cursor:pointer;
+    border: 0;
+    text-align: center;
+    display: inline-block;
+    padding: 11px;
+    width: 120px;
+    margin: 7px;
+    color: #ffffff;
+    background-color: #36a2eb;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    cursor:pointer;
 }
 .sousin {
     cursor: pointer;
@@ -51,29 +51,29 @@ span {
     margin-left:250px;
 }
 .koumoku {
-    width: 50%; /*親要素いっぱい広げる*/
-    padding: 10px 15px; /*ボックスを大きくする*/
+    width: 50%; 
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
 .title {
-        width: 50%; /*親要素いっぱい広げる*/
-        padding: 10px 15px; /*ボックスを大きくする*/
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    width: 50%; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
 .headline {
-        width: 50%; /*親要素いっぱい広げる*/
-        padding: 10px 15px; /*ボックスを大きくする*/
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-        transform: translate(0px,-4px);
+    width: 50%; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
+    transform: translate(0px,-4px);
 }
 .labelnaiyou {
     display: inline-block;
@@ -84,7 +84,6 @@ span {
     display: inline-block;
     transform: translate(0px,-60px);
 }
-
 .check {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -95,9 +94,8 @@ span {
     width:400px;
     background: #fff;
 }
-
 .check:before {
-    content: "CHECK";  /* 好きな文字を記述 */
+    content: "POINT";  
     position: absolute;
     display: block;
     top: -15px;
@@ -107,58 +105,43 @@ span {
     font-weight: bold;
     padding: 0 10px;
 }
-
 .steps {
-/* 連番カウンター名の定義 */
-counter-reset: step-counter;
-/* 縦棒との位置関係に必要 */
-position: relative;
-/* 縦棒と連番のためのスペースを左に確保 */
-padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+    counter-reset: step-counter;
+    position: relative;
+    padding-left: 2rem; 
 }
-/* 縦棒 */
 .steps:before {
-content: "";
-/* 幅と色 */
-background-color: #111111;
-width: 2px;
-/* 位置 */
-position: absolute;
-top: 0.7rem; /* 円のwidthの半分 */
-left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100%); /* 100% - top */
-/* 連番より後ろに表示するため */
-z-index: 0;
+    content: "";
+    background-color: #111111;
+    width: 2px;
+    position: absolute;
+    top: 0.7rem; 
+    left: 0.7rem; 
+    height: calc(100%); 
+    z-index: 0;
 }
 .steps > h2 {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
-/* ①②③など連番 */
 .steps > h2:before {
-/* 連番カウンターの値を表示する */
-content: "";
-/* フォントと色 */
-background: #111111;
-color: white;
-font-size: 0.8rem;
-font-weight: normal;
-/* 文字を中央に表示する */
-line-height: 1.5rem;
-text-align: center;
-/* 円で表示する */
-width: 1.5rem;
-height: 1.5rem;
-border-radius: 1.5rem;
-/* .stepsでmargin-left +2rem したぶん左に戻す */
-position: absolute;
-left: 0;
-/* 縦棒より手前に表示するため */
-z-index: 1;
+    content: "";
+    background: #111111;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    left: 0;
+    z-index: 1;
 }
 `
 
-const TabSteps = styled.div`
+const Tablet = styled.div`
 width:800px;
 margin-top:20px;
 margin-left:75px;
@@ -177,19 +160,19 @@ span {
     font-weight:normal;
 }
 .koumokubtn {
-        border: 0;
-        text-align: center;
-        display: inline-block;
-        padding: 11px;
-        width: 120px;
-        margin: 7px;
-        color: #ffffff;
-        background-color: #36a2eb;
-        border-radius: 8px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: box-shadow 200ms ease-out;
-        cursor:pointer;
+    border: 0;
+    text-align: center;
+    display: inline-block;
+    padding: 11px;
+    width: 120px;
+    margin: 7px;
+    color: #ffffff;
+    background-color: #36a2eb;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    cursor:pointer;
 }
 .sousin {
     cursor: pointer;
@@ -203,29 +186,29 @@ span {
     margin-left:250px;
 }
 .koumoku {
-    width: 50%; /*親要素いっぱい広げる*/
-    padding: 10px 15px; /*ボックスを大きくする*/
+    width: 50%; 
+    padding: 10px 15px; 
     font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
 .title {
-        width: 50%; /*親要素いっぱい広げる*/
-        padding: 10px 15px; /*ボックスを大きくする*/
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    width: 50%; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
 .headline {
-        width: 50%; /*親要素いっぱい広げる*/
-        padding: 10px 15px; /*ボックスを大きくする*/
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-        transform: translate(0px,-4px);
+    width: 50%; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
+    transform: translate(0px,-4px);
 }
 .labelnaiyou {
     display: inline-block;
@@ -236,7 +219,6 @@ span {
     display: inline-block;
     transform: translate(0px,-60px);
 }
-
 .check {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -247,9 +229,8 @@ span {
     width:400px;
     background: #fff;
 }
-
 .check:before {
-    content: "CHECK";  /* 好きな文字を記述 */
+    content: "POINT";  
     position: absolute;
     display: block;
     top: -15px;
@@ -259,58 +240,43 @@ span {
     font-weight: bold;
     padding: 0 10px;
 }
-
 .steps {
-/* 連番カウンター名の定義 */
-counter-reset: step-counter;
-/* 縦棒との位置関係に必要 */
-position: relative;
-/* 縦棒と連番のためのスペースを左に確保 */
-padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+    counter-reset: step-counter;
+    position: relative;
+    padding-left: 2rem; 
 }
-/* 縦棒 */
 .steps:before {
-content: "";
-/* 幅と色 */
-background-color: #111111;
-width: 2px;
-/* 位置 */
-position: absolute;
-top: 0.7rem; /* 円のwidthの半分 */
-left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100%); /* 100% - top */
-/* 連番より後ろに表示するため */
-z-index: 0;
+    content: "";
+    background-color: #111111;
+    width: 2px;
+    position: absolute;
+    top: 0.7rem; 
+    left: 0.7rem; 
+    height: calc(100%); 
+    z-index: 0;
 }
 .steps > h2 {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
-/* ①②③など連番 */
 .steps > h2:before {
-/* 連番カウンターの値を表示する */
-content: "";
-/* フォントと色 */
-background: #111111;
-color: white;
-font-size: 0.8rem;
-font-weight: normal;
-/* 文字を中央に表示する */
-line-height: 1.5rem;
-text-align: center;
-/* 円で表示する */
-width: 1.5rem;
-height: 1.5rem;
-border-radius: 1.5rem;
-/* .stepsでmargin-left +2rem したぶん左に戻す */
-position: absolute;
-left: 0;
-/* 縦棒より手前に表示するため */
-z-index: 1;
+    content: "";
+    background: #111111;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    left: 0;
+    z-index: 1;
 }
 `
 
-const MobSteps = styled.div`
+const Mobile = styled.div`
 width:519px;
 margin-top:20px;
 
@@ -328,20 +294,20 @@ span {
     font-weight:normal;
 }
 .koumokubtn {
-        border: 0;
-        text-align: center;
-        display: inline-block;
-        padding: 11px;
-        width: 120px;
-        margin: 7px;
-        color: #ffffff;
-        background-color: #36a2eb;
-        border-radius: 8px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: box-shadow 200ms ease-out;
-        cursor:pointer;
-        transform: translate(115px,0px);
+    border: 0;
+    text-align: center;
+    display: inline-block;
+    padding: 11px;
+    width: 120px;
+    margin: 7px;
+    color: #ffffff;
+    background-color: #36a2eb;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    cursor:pointer;
+    transform: translate(115px,0px);
 }
 .kousin {
     cursor: pointer;
@@ -355,29 +321,29 @@ span {
     transform: translate(185px,10px);
 }
 .koumoku {
-    width: 50%; /*親要素いっぱい広げる*/
-    padding: 10px 15px; /*ボックスを大きくする*/
+    width: 50%; 
+    padding: 10px 15px; 
     font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
 .title {
-        width: 50%; /*親要素いっぱい広げる*/
-        padding: 10px 15px; /*ボックスを大きくする*/
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    width: 50%; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
 .headline {
-        width: 50%; /*親要素いっぱい広げる*/
-        padding: 10px 15px; /*ボックスを大きくする*/
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-        transform: translate(0px,-4px);
+    width: 50%; 
+    padding: 10px 15px; 
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
+    transform: translate(0px,-4px);
 }
 .labelnaiyou {
     display: inline-block;
@@ -388,7 +354,6 @@ span {
     display: inline-block;
     transform: translate(0px,-60px);
 }
-
 .check {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -399,9 +364,8 @@ span {
     width:400px;
     background: #fff;
 }
-
 .check:before {
-    content: "CHECK";  /* 好きな文字を記述 */
+    content: "POINT";  
     position: absolute;
     display: block;
     top: -15px;
@@ -411,54 +375,39 @@ span {
     font-weight: bold;
     padding: 0 10px;
 }
-
 .steps {
-/* 連番カウンター名の定義 */
-counter-reset: step-counter;
-/* 縦棒との位置関係に必要 */
-position: relative;
-/* 縦棒と連番のためのスペースを左に確保 */
-padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+    counter-reset: step-counter;
+    position: relative;
+    padding-left: 2rem; 
 }
-/* 縦棒 */
 .steps:before {
-content: "";
-/* 幅と色 */
-background-color: #111111;
-width: 2px;
-/* 位置 */
-position: absolute;
-top: 0.7rem; /* 円のwidthの半分 */
-left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100%); /* 100% - top */
-/* 連番より後ろに表示するため */
-z-index: 0;
+    content: "";
+    background-color: #111111;
+    width: 2px;
+    position: absolute;
+    top: 0.7rem; 
+    left: 0.7rem; 
+    height: calc(100%); 
+    z-index: 0;
 }
 .steps > h2 {
-display: flex;
-align-items: center;
+    display: flex;
+    align-items: center;
 }
-/* ①②③など連番 */
 .steps > h2:before {
-/* 連番カウンターの値を表示する */
-content: "";
-/* フォントと色 */
-background: #111111;
-color: white;
-font-size: 0.8rem;
-font-weight: normal;
-/* 文字を中央に表示する */
-line-height: 1.5rem;
-text-align: center;
-/* 円で表示する */
-width: 1.5rem;
-height: 1.5rem;
-border-radius: 1.5rem;
-/* .stepsでmargin-left +2rem したぶん左に戻す */
-position: absolute;
-left: 0;
-/* 縦棒より手前に表示するため */
-z-index: 1;
+    content: "";
+    background: #111111;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    left: 0;
+    z-index: 1;
 }
 `
 
@@ -484,8 +433,8 @@ type Checklife = {
 }
 
 export const Updatelife =()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const {env,isLoading,isError} = FetchData()
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
@@ -494,6 +443,7 @@ export const Updatelife =()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
+    const [formcount,setFormcount] = useState<string[]>([])
     const router = useRouter()
     const search = useSearchParams()
     const updateid = search.get("id")
@@ -501,7 +451,6 @@ export const Updatelife =()=>{
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
     const checktimer = useRef<NodeJS.Timer|null>(null);
-    const [formcount,setFormcount] = useState<string[]>([])
 
     useEffect(()=>{
         if(!env||!updateid||!updateuser) return
@@ -702,10 +651,10 @@ export const Updatelife =()=>{
         })
     }
 
-    if(PC) {
+    if(PCsize) {
         return (
             <Layout>
-                <PCSteps>
+                <PC>
                     <label>投稿タイトル<span>(必須):</span></label><input defaultValue={title} className="title" onChange={doTitle} type={"text"}/>
                     <br></br><br></br>
                     <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
@@ -736,13 +685,13 @@ export const Updatelife =()=>{
                         )
                     })}
     
-                </PCSteps>
+                </PC>
             </Layout>
         )
-        }else if(Tablet) {
+        }else if(Tabletsize) {
             return (
                 <Layout>
-                    <TabSteps>
+                    <Tablet>
                         <label>投稿タイトル<span>(必須):</span></label><input defaultValue={title} className="title" onChange={doTitle} type={"text"}/>
                         <br></br><br></br>
                         <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
@@ -773,13 +722,13 @@ export const Updatelife =()=>{
                             )
                         })}
         
-                    </TabSteps>
+                    </Tablet>
                 </Layout>
             )
         }else {
             return (
                 <Layout>
-                    <MobSteps>
+                    <Mobile>
                         <label>投稿タイトル<span>(必須):</span></label><input defaultValue={title} className="title" onChange={doTitle} type={"text"}/>
                         <br></br><br></br>
                         <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} checked={checklife[1]} onChange={doLifeitem}/><label>部屋探し・入居</label>
@@ -812,7 +761,7 @@ export const Updatelife =()=>{
                             )
                         })}
         
-                    </MobSteps>
+                    </Mobile>
                 </Layout>
             )
         }

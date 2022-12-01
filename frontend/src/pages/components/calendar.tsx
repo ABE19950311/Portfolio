@@ -1,7 +1,7 @@
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {Layout} from "./layout"
-import FullCalendar, { DateSelectArg,EventApi } from "@fullcalendar/react"
+import FullCalendar from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"
 import dayGridPlugin from "@fullcalendar/daygrid"
 import interactionPlugin from "@fullcalendar/interaction"
@@ -46,26 +46,21 @@ export const Calendar = ()=>{
     if(isLoading) return <p>lodaing...</p>
 
     return (
-        <>
         <Layout>
             <FullCalendar
-          plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]} // pluginsにdayGridPluginを設定する
-          headerToolbar={{                          // 追加
+        plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]} 
+        headerToolbar={{                          
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,listWeek',
             }}
-          initialView="dayGridMonth" // 初期表示のモードを設定する
+        initialView="dayGridMonth" 
             locales={[jaLocale]}
             locale="ja"
             events={eventlist}
-            //{[
-             //   {title:`test`, start: '2022-10-17', end: '2022-10-24'}
-            //]} //eventsでカレンダーにイベんとついかできる jsonでいける
             selectable={true}
         />
         </Layout>
-        </>
     )
 }
 

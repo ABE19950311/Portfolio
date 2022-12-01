@@ -1,7 +1,6 @@
 import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {Header} from "./header"
 import DatePicker,{registerLocale} from "react-datepicker"
 import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
@@ -9,19 +8,10 @@ import moment from "moment"
 import { MdSearch } from "react-icons/md";
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
+import Layout from "./layout"
 
-registerLocale("ja",ja);
 
-type Todos = {
-    id:number,
-    user_id:number,
-    list:string,
-    life:string,
-    startdate:String,
-    duedate:String
-}
-
-const PCDiv = styled.div`
+const PC = styled.div`
 line-height: 1.25;
 max-width:1500px;
 margin-bottom:20px;
@@ -32,63 +22,54 @@ h2{
 	border-bottom: double 4px #27acd9;
 	padding: 0.5rem 0;
 }
-
 .datepos {
     margin-left:40%;
 }
-
 .inputpos {
     text-align:center;
 }
-
 .search {
     position: relative;
     display: flex;
     justify-content:center;
 }
-
 .searchicon {
     position: absolute;
     color: #333;
     font-size: 2rem;
     transform: translate(100px,5px);
 }
-
 .datepicker {
-        text-align:left;
-        font-size:16px;
-        padding: 6px 40px; /*ボックスを大きくする*/
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-    }
-
+    text-align:left;
+    font-size:16px;
+    padding: 6px 40px; 
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
+}
 .custominput {
     padding: 10px 100px 10px 10px;
     font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
-
 .todolabel {
     color:red;
 }
-
 .customselect {
-        padding: 10px; 15px;
-        border-radius: 4px;
-        border: none;
-        box-shadow: 0 0 0 1px #ccc inset;
-        cursor: pointer;
-        font-size:16px;
+    padding: 10px; 15px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 0 0 1px #ccc inset;
+    cursor: pointer;
+    font-size:16px;
     
     &::focus {
         outline: 0;
         box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
     }
 }
-
 .custombutton {
     font-weight: 700;
     padding: 0.5rem 1.5rem;
@@ -107,17 +88,15 @@ h2{
     background: #27acd9;
     color: #fff;
 }
-
 .filterselect {
     transform: translate(-25px,0px);
     padding:0 10px;
     outline: none;
     background-color: #FFFFFF;
 }
-
 `
 
-const TabDiv = styled.div`
+const Tablet = styled.div`
 line-height: 1.25;
 max-width:1500px;
 margin-bottom:20px;
@@ -128,63 +107,54 @@ h2{
 	border-bottom: double 4px #27acd9;
 	padding: 0.5rem 0;
 }
-
 .datepos {
     margin-left:40%;
 }
-
 .inputpos {
     text-align:center;
 }
-
 .search {
     position: relative;
     display: flex;
     justify-content:center;
 }
-
 .searchicon {
     position: absolute;
     color: #333;
     font-size: 2rem;
     transform: translate(100px,5px);
 }
-
 .datepicker {
-        text-align:left;
-        font-size:16px;
-        padding: 6px 40px; /*ボックスを大きくする*/
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-    }
-
+    text-align:left;
+    font-size:16px;
+    padding: 6px 40px; 
+    border-radius: 3px; 
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+}
 .custominput {
     padding: 10px 100px 10px 10px;
     font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box; 
 }
-
 .todolabel {
     color:red;
 }
-
 .customselect {
-        padding: 10px; 15px;
-        border-radius: 4px;
-        border: none;
-        box-shadow: 0 0 0 1px #ccc inset;
-        cursor: pointer;
-        font-size:16px;
+    padding: 10px; 15px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 0 0 1px #ccc inset;
+    cursor: pointer;
+    font-size:16px;
     
     &::focus {
         outline: 0;
         box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
     }
 }
-
 .custombutton {
     font-weight: 700;
     padding: 0.5rem 1.5rem;
@@ -203,17 +173,15 @@ h2{
     background: #27acd9;
     color: #fff;
 }
-
 .filterselect {
     transform: translate(-25px,0px);
     padding:0 10px;
     outline: none;
     background-color: #FFFFFF;
 }
-
 `
 
-const MobDiv = styled.div`
+const Mobile = styled.div`
 line-height: 1.25;
 max-width:1500px;
 margin-bottom:20px;
@@ -224,63 +192,54 @@ h2{
 	border-bottom: double 4px #27acd9;
 	padding: 0.5rem 0;
 }
-
 .datepos {
     margin-left:40%;
 }
-
 .inputpos {
     text-align:center;
 }
-
 .search {
     position: relative;
     display: flex;
     justify-content:center;
 }
-
 .searchicon {
     position: absolute;
     color: #333;
     font-size: 2rem;
     transform: translate(25px,5px);
 }
-
 .datepicker {
-        text-align:left;
-        font-size:16px;
-        padding: 6px 40px; /*ボックスを大きくする*/
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
-    }
-
+    text-align:left;
+    font-size:16px;
+    padding: 6px 40px; 
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
+}
 .custominput {
     padding: 10px 100px 10px 10px;
     font-size: 16px;
-    border-radius: 3px; /*ボックス角の丸み*/
-    border: 2px solid #ddd; /*枠線*/
-    box-sizing: border-box; /*横幅の解釈をpadding, borderまでとする*/
+    border-radius: 3px;
+    border: 2px solid #ddd; 
+    box-sizing: border-box; 
 }
-
 .todolabel {
     color:red;
 }
-
 .customselect {
-        padding: 10px; 15px;
-        border-radius: 4px;
-        border: none;
-        box-shadow: 0 0 0 1px #ccc inset;
-        cursor: pointer;
-        font-size:16px;
-    
+    padding: 10px; 15px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 0 0 1px #ccc inset;
+    cursor: pointer;
+    font-size:16px;
+
     &::focus {
         outline: 0;
         box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
     }
 }
-
 .custombutton {
     font-weight: 700;
     padding: 0.5rem 1.5rem;
@@ -299,14 +258,12 @@ h2{
     background: #27acd9;
     color: #fff;
 }
-
 .filterselect {
     transform: translate(-160px,-5px);
     padding:0 10px;
     outline: none;
     background-color: #FFFFFF;
 }
-
 `
 
 const PCTable = styled.table`
@@ -319,12 +276,10 @@ overflow-wrap: break-word;
     text-align:center;
     width:5vw;
 }
-
 .start {
     cursor: pointer;
     position: relative;
 }
-
 .start::before, .start::after {
     content: "";
     height: 0;
@@ -334,22 +289,18 @@ overflow-wrap: break-word;
     right: 10px;
     top: 50%;
 }
-
 .start::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
 }
-
 .start::after {
     border-top-color: #aaa;
     margin-top: 2px;
 }
-
 .due {
     cursor: pointer;
     position: relative;
 }
-
 .due::before, .due::after {
     content: "";
     height: 0;
@@ -359,86 +310,69 @@ overflow-wrap: break-word;
     right: 10px;
     top: 50%;
 }
-
 .due::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
 }
-
 .due::after {
     border-top-color: #aaa;
     margin-top: 2px;
 }
-
 .startasc::before {
     border-bottom-color: #444;
 }
 .startdesc::after {
     border-top-color: #444;
 }
-
 .dueasc::before {
     border-bottom-color: #444;
 }
 .duedesc::after {
     border-top-color: #444;
 }
-
 tr {
-background-color: #fff;
-border: 1px solid #bbb;
-padding: .35em;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    padding: .35em;
 }
-
 th,td {
-padding: 1em 10px 1em 1em;
-border-right: 1px solid #bbb;
+    padding: 1em 10px 1em 1em;
+    border-right: 1px solid #bbb;
 }
-
 thead tr{
-background-color: #eee;
+    background-color: #eee;
 }
-
 .start {
     width:9vw;
 }
-
 .due {
     width:9vw;
 }
-
 .todo {
     width:30vw;
 }
-
 .life {
     width:13vw;
 }
-
 .txt_start{
     text-align: left;
     width:9vw;
 }
-
 .txt_due{
     text-align: left;
     width:9vw;
 }
-
 .txt_todo{
     text-align: left;
     width:30vw;
 }
-
 .txt_life{
     text-align: left;
     width:13vw;
 }
-
 tbody tr:hover{
     background-color: #fffae9;
 }
-
 `
 
 const TabTable = styled.table`
@@ -451,12 +385,10 @@ overflow-wrap: break-word;
 .check {
     text-align:center;
 }
-
 .start {
     cursor: pointer;
     position: relative;
 }
-
 .start::before, .start::after {
     content: "";
     height: 0;
@@ -466,22 +398,18 @@ overflow-wrap: break-word;
     right: 10px;
     top: 50%;
 }
-
 .start::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
 }
-
 .start::after {
     border-top-color: #aaa;
     margin-top: 2px;
 }
-
 .due {
     cursor: pointer;
     position: relative;
 }
-
 .due::before, .due::after {
     content: "";
     height: 0;
@@ -491,102 +419,82 @@ overflow-wrap: break-word;
     right: 10px;
     top: 50%;
 }
-
 .due::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
 }
-
 .due::after {
     border-top-color: #aaa;
     margin-top: 2px;
 }
-
 .startasc::before {
     border-bottom-color: #444;
 }
 .startdesc::after {
     border-top-color: #444;
 }
-
 .dueasc::before {
     border-bottom-color: #444;
 }
 .duedesc::after {
     border-top-color: #444;
 }
-
 tr {
-background-color: #fff;
-border: 1px solid #bbb;
-padding: .35em;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    padding: .35em;
 }
-
 th,td {
-padding: 1em 10px 1em 1em;
-border-right: 1px solid #bbb;
+    padding: 1em 10px 1em 1em;
+    border-right: 1px solid #bbb;
 }
-
 thead tr{
-background-color: #eee;
+    background-color: #eee;
 }
-
 .check {
     width:6vw;
 }
-
 .start {
     width:9vw;
 }
-
 .due {
     width:9vw;
 }
-
 .todo {
     width:30vw;
 }
-
 .life {
     width:14vw;
 }
-
 .txt_check{
     width:100px;
 }
-
 .txt_start{
     text-align: left;
     width:9vw;
     font-size:1.5vw;
 }
-
 .txt_due{
     text-align: left;
     width:9vw;
     font-size:1.5vw;
 }
-
 .txt_todo{
     text-align: left;
     width:30vw;
 }
-
 .txt_life{
     text-align: left;
     width:14vw;
 }
-
 tbody tr:hover{
     background-color: #fffae9;
 }
-
 .tdselect {
     margin-left:5px;
     outline: none;
     background-color: #FFFFFF;
 }
-
 `
 
 const MobTable = styled.table`
@@ -600,7 +508,6 @@ overflow-wrap: break-word;
     cursor: pointer;
     position: relative;
 }
-
 .start::before, .start::after {
     content: "";
     height: 0;
@@ -610,22 +517,18 @@ overflow-wrap: break-word;
     right: 10px;
     top: 50%;
 }
-
 .start::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
 }
-
 .start::after {
     border-top-color: #aaa;
     margin-top: 2px;
 }
-
 .due {
     cursor: pointer;
     position: relative;
 }
-
 .due::before, .due::after {
     content: "";
     height: 0;
@@ -635,115 +538,104 @@ overflow-wrap: break-word;
     right: 10px;
     top: 50%;
 }
-
 .due::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
 }
-
 .due::after {
     border-top-color: #aaa;
     margin-top: 2px;
 }
-
 .startasc::before {
     border-bottom-color: #444;
 }
 .startdesc::after {
     border-top-color: #444;
 }
-
 .dueasc::before {
     border-bottom-color: #444;
 }
 .duedesc::after {
     border-top-color: #444;
 }
-
 tr {
-background-color: #fff;
-border: 1px solid #bbb;
-padding: .35em;
+    background-color: #fff;
+    border: 1px solid #bbb;
+    padding: .35em;
 }
-
 th,td {
-padding: 1em 10px 1em 1em;
-border-right: 1px solid #bbb;
+    padding: 1em 10px 1em 1em;
+    border-right: 1px solid #bbb;
 }
-
 th {
-font-size: .85em;
+    font-size: .85em;
 }
-
 thead tr{
-background-color: #eee;
+    background-color: #eee;
 }
-
 .check {
     width:7vw;
     transform: translate(-6px,5px);
 }
-
 .start {
     font-size:2.5vw;
     width:15vw;
 }
-
 .due {
     font-size:2.5vw;
     width:15vw;
 }
-
 .todo {
     width:30vw;
 }
-
 .life {
     width:15vw;
     font-size:3vw;
 }
-
 .txt_start{
     text-align: left;
     width:15vw;
     font-size:1vw;
 }
-
 .txt_due{
     text-align: left;
     width:15vw;
     font-size:1vw;
 }
-
 .txt_todo{
     text-align: left;
     width:30vw;
 }
-
 .txt_life{
     text-align: left;
     width:15vw;
     font-size:1vw;
 }
-
 tbody tr:hover{
     background-color: #fffae9;
 }
-
 .tdselect {
     margin-left:5px;
     outline: none;
     background-color: #FFFFFF;
 }
-
 `
 
+registerLocale("ja",ja);
+
+type Todos = {
+    id:number,
+    user_id:number,
+    list:string,
+    life:string,
+    startdate:String,
+    duedate:String
+}
 
 export const Todo = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const {env,isLoading,isError} = FetchData()
     const [list,setList] = useState("");
     const [life,setLife] = useState("");
     const [search,setSearch] = useState("");
@@ -966,11 +858,10 @@ const handleChangeEnd = (selectedDate:Date) => {
     }
 
 
-    if(PC) {
+    if(PCsize) {
     return (
-        <>
-        <Header />
-        <PCDiv>
+        <Layout>
+        <PC>
         <h2>TODOリスト作成</h2>
             <div className="datepos">
             {startDate ?  
@@ -1044,7 +935,7 @@ const handleChangeEnd = (selectedDate:Date) => {
             &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
             </div>
             </div>
-        </PCDiv>
+        </PC>
                     <PCTable>
                     <thead className="thead">
                         <tr className="tr">
@@ -1083,13 +974,12 @@ const handleChangeEnd = (selectedDate:Date) => {
                 </PCTable>
                 )
             })}
-        </>
+            </Layout>
     )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return (
-            <>
-            <Header />
-            <TabDiv>
+            <Layout>
+            <Tablet>
             <h2>TODOリスト作成</h2>
                 <div className="datepos">
                 {startDate ?  
@@ -1163,7 +1053,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                 &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
                 </div>
                 </div>
-            </TabDiv>
+            </Tablet>
                         <TabTable>
                         <thead className="thead">
                             <tr className="tr">
@@ -1202,13 +1092,12 @@ const handleChangeEnd = (selectedDate:Date) => {
                     </TabTable>
                     )
                 })}
-            </>
+            </Layout>
         )
     }else {
         return (
-            <>
-            <Header />
-            <MobDiv>
+            <Layout>
+            <Mobile>
             <h2>TODOリスト作成</h2>
                 <div className="datepos">
                 {startDate ?  
@@ -1282,7 +1171,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                 &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
                 </div>
                 </div>
-            </MobDiv>
+            </Mobile>
                         <MobTable>
                         <thead className="thead">
                             <tr className="tr">
@@ -1321,7 +1210,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                     </MobTable>
                     )
                 })}
-            </>
+            </Layout>
         )
     }
 }

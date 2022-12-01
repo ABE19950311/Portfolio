@@ -1,13 +1,10 @@
 import '@testing-library/jest-dom/extend-expect'
 import '@testing-library/jest-dom'
 import { render, screen, cleanup } from '@testing-library/react'
-import { rest } from 'msw'
-import { setupServer } from 'msw/node'
 import userEvent from '@testing-library/user-event'
 import {getPage} from "next-page-tester"
 import Dailylifey from "../src/pages/index"
-import axios from "../src/csrf-axios"
-import { createMemoryHistory } from '@remix-run/router'
+
 
 jest.mock('next/navigation', () => ({
     useRouter() {
@@ -38,7 +35,7 @@ describe("ページ遷移",()=>{
             route: "/",
         })
         render(page)
-        
+
         userEvent.click(screen.getByTestId("heya"))
         expect(await screen.findByText("部屋選びから入居までの流れ")).toBeInTheDocument()
     })

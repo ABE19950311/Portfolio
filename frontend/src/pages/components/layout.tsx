@@ -4,10 +4,6 @@ import {Header} from "./header"
 import {Footer} from "./footer"
 import type {ReactNode} from "react"
 
-type Props = {
-    children: ReactNode;
-}
-
 const Wrapper = styled.div`
 display: flex;
 flex-flow: column;
@@ -15,8 +11,12 @@ min-height: 200vh;
 
 main {
     flex: 1;
-    }
+}
 `
+
+type Props = {
+    children: ReactNode;
+}
 
 export const Layout = (props:Props)=>{
 

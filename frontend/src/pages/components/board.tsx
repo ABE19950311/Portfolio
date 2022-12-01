@@ -1,65 +1,49 @@
 import styled from "styled-components"
 import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import Header from "./header"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import Link from "next/link"
+import Layout from "./layout"
 
-type Boardtype = {
-    id:number,
-    user_id:number,
-    created_at:string,
-    posttitle:string,
-    postcontent:string,
-    username:string
+const PC = styled.div` 
+padding-top:30px;
+padding-bottom:10px;
+padding-left:25%;
+position:relative;
+
+input {
+    width:200px;
 }
-
-const PCDiv = styled.div` 
-    padding-top:30px;
-    padding-bottom:10px;
-    padding-left:25%;
-    position:relative;
-
-    input {
-        width:200px;
-    }
-
-    .post {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-    }
-
-    .sub {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-    }
-
-    .titlelabel {
-        color:red;
-    }
-
-    .postlabel {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-        transform: translate(0px,-70px)
-    }
-
-    input,textarea {
-        margin-left:10px;
-    }
-
-    button {
-        margin:10px 0 0 10px
-    }
-
+.post {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+}
+.sub {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+}
+.titlelabel {
+    color:red;
+}
+.postlabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+    transform: translate(0px,-70px)
+}
+input,textarea {
+    margin-left:10px;
+}
+button {
+    margin:10px 0 0 10px
+}
 .content {
     overflow-wrap:break-word;
     border: solid 1px #000000;
@@ -77,49 +61,42 @@ const PCDiv = styled.div`
 }
 `
 
-const TabDiv = styled.div` 
-    padding-top:30px;
-    padding-bottom:10px;
-    position:relative;
+const Tablet = styled.div` 
+padding-top:30px;
+padding-bottom:10px;
+position:relative;
 
-    input {
-        width:200px;
-    }
-
-    .post {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-    }
-
-    .sub {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-    }
-
-    .titlelabel {
-        color:red;
-    }
-
-    .postlabel {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-        transform: translate(0px,-70px)
-    }
-
-    input,textarea {
-        margin-left:10px;
-    }
-
-    button {
-        margin:10px 0 0 10px
-    }
-
+input {
+    width:200px;
+}
+.post {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+}
+.sub {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+}
+.titlelabel {
+    color:red;
+}
+.postlabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+    transform: translate(0px,-70px)
+}
+input,textarea {
+    margin-left:10px;
+}
+button {
+    margin:10px 0 0 10px
+}
 .content {
     overflow-wrap:break-word;
     border: solid 1px #000000;
@@ -137,49 +114,42 @@ const TabDiv = styled.div`
 }
 `
 
-const MobDiv = styled.div` 
-    padding-top:30px;
-    padding-bottom:10px;
-    position:relative;
+const Mobile = styled.div` 
+padding-top:30px;
+padding-bottom:10px;
+position:relative;
 
-    input {
-        width:200px;
-    }
-
-    .post {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-    }
-
-    .sub {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-    }
-
-    .titlelabel {
-        color:red;
-    }
-
-    .postlabel {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 120px;
-        top: 50%;
-        transform: translate(0px,-70px)
-    }
-
-    input,textarea {
-        margin-left:10px;
-    }
-
-    .delbutton {
-        transform: translate(250px,0px)
-    }
-
+input {
+    width:200px;
+}
+.post {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+}
+.sub {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+}
+.titlelabel {
+    color:red;
+}
+.postlabel {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 120px;
+    top: 50%;
+    transform: translate(0px,-70px)
+}
+input,textarea {
+    margin-left:10px;
+}
+.delbutton {
+    transform: translate(250px,0px)
+}
 .content {
     overflow-wrap:break-word;
     border: solid 1px #000000;
@@ -197,11 +167,19 @@ const MobDiv = styled.div`
 }
 `
 
+type Boardtype = {
+    id:number,
+    user_id:number,
+    created_at:string,
+    posttitle:string,
+    postcontent:string,
+    username:string
+}
+
 export const Board = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("");
     const [title,setTitle] = useState("");
@@ -244,6 +222,7 @@ export const Board = ()=>{
         event.preventDefault();
         
         if(!title||!content) return
+
         axios.post(env+"/boards",
         {
             boards:{
@@ -271,14 +250,10 @@ export const Board = ()=>{
         })
     }
 
-    console.log(content)
-
-
-    if(PC) {
+    if(PCsize) {
     return (
-        <>
-        <Header />
-        <PCDiv>
+        <Layout>
+        <PC>
         <label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
         <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
         <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={content} onChange={doContent}/><br></br>
@@ -288,21 +263,21 @@ export const Board = ()=>{
                 return (
                     <div className="content" key={key}>
                     <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
-                    <label>タイトル:</label><Link href={{
-                                                        pathname:"/components/boardcontent",
-                                                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
-                                            }}>{board.posttitle}</Link>
+                    <label>タイトル:</label>
+                    <Link href={{
+                        pathname:"/components/boardcontent",
+                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
+                                }}>{board.posttitle}</Link>
                     </div>
                 )
             })}
-        </PCDiv>
-        </>
+        </PC>
+        </Layout>
     )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return (
-            <>
-            <Header />
-            <TabDiv>
+            <Layout>
+            <Tablet>
             <label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
             <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
             <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={content} onChange={doContent}/><br></br>
@@ -312,21 +287,21 @@ export const Board = ()=>{
                     return (
                         <div className="content" key={key}>
                         <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;{sessionid===board.user_id ? <button onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
-                        <label>タイトル:</label><Link href={{
-                                                        pathname:"/components/boardcontent",
-                                                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
-                                            }}>{board.posttitle}</Link>
+                        <label>タイトル:</label>
+                        <Link href={{
+                            pathname:"/components/boardcontent",
+                            query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
+                                    }}>{board.posttitle}</Link>
                         </div>
                     )
                 })}
-            </TabDiv>
-            </>
+            </Tablet>
+            </Layout>
         )
     }else {
         return (
-            <>
-            <Header />
-            <MobDiv>
+            <Layout>
+            <Mobile>
             &emsp;<label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
             &emsp;<label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
             &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} value={content} onChange={doContent}/><br></br>
@@ -336,15 +311,16 @@ export const Board = ()=>{
                     return (
                         <div className="content" key={key}>
                         <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<br></br>{sessionid===board.user_id ? <button className="delbutton" onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
-                        <label>タイトル:</label><Link href={{
-                                                        pathname:"/components/boardcontent",
-                                                        query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
-                                            }}>{board.posttitle}</Link>
+                        <label>タイトル:</label>
+                        <Link href={{
+                                pathname:"/components/boardcontent",
+                                query:{content:board.postcontent,board_id:board.id,user_id:board.user_id,username:board.username,createdate:board.created_at,sessionid:sessionid}
+                                    }}>{board.posttitle}</Link>
                         </div>
                     )
                 })}
-            </MobDiv>
-            </>
+            </Mobile>
+            </Layout>
         )
     }
 }

@@ -8,7 +8,7 @@ import { useMediaQuery } from "react-responsive"
 import moment from "moment"
 import ReactPaginate from 'react-paginate'; 
 
-const PCSteps = styled.div`
+const PC = styled.div`
 width:800px;
 margin-left:20vw;
 overflow-wrap:  break-word;
@@ -44,13 +44,12 @@ p {
     background-color:#FFFFCC;
     border: solid 1px #FFFFCC;
 }
-    .content {
-        font-size:16px;
-    }
-
-    .postcomment {
-        font-size:16px;
-    }
+.content {
+    font-size:16px;
+}
+.postcomment {
+    font-size:16px;
+}
 ul {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -62,7 +61,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "CHECK";  /* 好きな文字を記述 */
+    content: "POINT";  /* 好きな文字を記述 */
     position: absolute;
     display: block;
     top: -15px;
@@ -75,87 +74,64 @@ ul:before{
 ul li{
     font-weight: bold;
 }
-
 .steps {
-/* 連番カウンター名の定義 */
-counter-reset: step-counter;
-/* 縦棒との位置関係に必要 */
-position: relative;
-/* 縦棒と連番のためのスペースを左に確保 */
-padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+    counter-reset: step-counter;
+    position: relative;
+    padding-left: 2rem; 
 }
-/* 縦棒 */
 .steps:before {
-content: "";
-/* 幅と色 */
-background-color: #111111;
-width: 2px;
-/* 位置 */
-position: absolute;
-top: 0.7rem; /* 円のwidthの半分 */
-left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100%); /* 100% - top */
-/* 連番より後ろに表示するため */
-z-index: 0;
+    content: "";
+    background-color: #111111;
+    width: 2px;
+    position: absolute;
+    top: 0.7rem; 
+    left: 0.7rem; 
+    height: calc(100%); 
+    z-index: 0;
 }
 .steps > h2 {
-/* 連番カウンターを+1する */
-counter-increment: step-counter;
-/* 連番カウンターを垂直方向に中央揃えで表示する */
-display: flex;
-align-items: center;
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
 }
-/* ①②③など連番 */
 .steps > h2:before {
-/* 連番カウンターの値を表示する */
-content: counter(step-counter);
-/* フォントと色 */
-background: #111111;
-color: white;
-font-size: 0.8rem;
-font-weight: normal;
-/* 文字を中央に表示する */
-line-height: 1.5rem;
-text-align: center;
-/* 円で表示する */
-width: 1.5rem;
-height: 1.5rem;
-border-radius: 1.5rem;
-/* .stepsでmargin-left +2rem したぶん左に戻す */
-position: absolute;
-left: 0;
-/* 縦棒より手前に表示するため */
-z-index: 1;
+    content: counter(step-counter);
+    background: #111111;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    left: 0;
+    z-index: 1;
 }
 .steps > h3 {
     counter-reset: step-counter;
-    /* 連番カウンターを垂直方向に中央揃えで表示する */
     display: flex;
     align-items: center;
 }
 .steps > h3:before {
     content: "";
-    /* フォントと色 */
     background: #111111;
     color: white;
     font-size: 0.8rem;
     font-weight: normal;
-    /* 文字を中央に表示する */
     line-height: 1.5rem;
     text-align: center;
-    /* 円で表示する */
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 1.5rem;
-    /* .stepsでmargin-left +2rem したぶん左に戻す */
     position: absolute;
     left: 0;
-    /* 縦棒より手前に表示するため */
     z-index: 1;
 }
 `
 
-const TabSteps = styled.div`
+const Tablet = styled.div`
 width:800px;
 margin-left:75px;
 overflow-wrap:  break-word;
@@ -191,13 +167,12 @@ p {
     background-color:#FFFFCC;
     border: solid 1px #FFFFCC;
 }
-    .content {
-        font-size:16px;
-    }
-
-    .postcomment {
-        font-size:16px;
-    }
+.content {
+    font-size:16px;
+}
+.postcomment {
+    font-size:16px;
+}
 ul {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -209,7 +184,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "CHECK";  /* 好きな文字を記述 */
+    content: "POINT";  
     position: absolute;
     display: block;
     top: -15px;
@@ -222,87 +197,64 @@ ul:before{
 ul li{
     font-weight: bold;
 }
-
 .steps {
-/* 連番カウンター名の定義 */
-counter-reset: step-counter;
-/* 縦棒との位置関係に必要 */
-position: relative;
-/* 縦棒と連番のためのスペースを左に確保 */
-padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+    counter-reset: step-counter;
+    position: relative;
+    padding-left: 2rem; 
 }
-/* 縦棒 */
 .steps:before {
-content: "";
-/* 幅と色 */
-background-color: #111111;
-width: 2px;
-/* 位置 */
-position: absolute;
-top: 0.7rem; /* 円のwidthの半分 */
-left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100%); /* 100% - top */
-/* 連番より後ろに表示するため */
-z-index: 0;
+    content: "";
+    background-color: #111111;
+    width: 2px;
+    position: absolute;
+    top: 0.7rem; 
+    left: 0.7rem; 
+    height: calc(100%); 
+    z-index: 0;
 }
 .steps > h2 {
-/* 連番カウンターを+1する */
-counter-increment: step-counter;
-/* 連番カウンターを垂直方向に中央揃えで表示する */
-display: flex;
-align-items: center;
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
 }
-/* ①②③など連番 */
 .steps > h2:before {
-/* 連番カウンターの値を表示する */
-content: counter(step-counter);
-/* フォントと色 */
-background: #111111;
-color: white;
-font-size: 0.8rem;
-font-weight: normal;
-/* 文字を中央に表示する */
-line-height: 1.5rem;
-text-align: center;
-/* 円で表示する */
-width: 1.5rem;
-height: 1.5rem;
-border-radius: 1.5rem;
-/* .stepsでmargin-left +2rem したぶん左に戻す */
-position: absolute;
-left: 0;
-/* 縦棒より手前に表示するため */
-z-index: 1;
+    content: counter(step-counter);
+    background: #111111;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    left: 0;
+    z-index: 1;
 }
 .steps > h3 {
     counter-reset: step-counter;
-    /* 連番カウンターを垂直方向に中央揃えで表示する */
     display: flex;
     align-items: center;
 }
 .steps > h3:before {
     content: "";
-    /* フォントと色 */
     background: #111111;
     color: white;
     font-size: 0.8rem;
     font-weight: normal;
-    /* 文字を中央に表示する */
     line-height: 1.5rem;
     text-align: center;
-    /* 円で表示する */
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 1.5rem;
-    /* .stepsでmargin-left +2rem したぶん左に戻す */
     position: absolute;
     left: 0;
-    /* 縦棒より手前に表示するため */
     z-index: 1;
 }
 `
 
-const MobSteps = styled.div`
+const Mobile = styled.div`
 width:490px;
 overflow-wrap:  break-word;
 
@@ -334,13 +286,12 @@ p {
     background-color:#FFFFCC;
     border: solid 1px #FFFFCC;
 }
-    .content {
-        font-size:16px;
-    }
-
-    .postcomment {
-        font-size:16px;
-    }
+.content {
+    font-size:16px;
+}
+.postcomment {
+    font-size:16px;
+}
 ul {
     position: relative;
     padding: 15px 40px 15px 30px;
@@ -352,7 +303,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "CHECK";  /* 好きな文字を記述 */
+    content: "POINT";  
     position: absolute;
     display: block;
     top: -15px;
@@ -365,88 +316,66 @@ ul:before{
 ul li{
     font-weight: bold;
 }
-
 .steps {
-/* 連番カウンター名の定義 */
-counter-reset: step-counter;
-/* 縦棒との位置関係に必要 */
-position: relative;
-/* 縦棒と連番のためのスペースを左に確保 */
-padding-left: 2rem; /* 連番(1.5rem) + 余白 */
+    counter-reset: step-counter;
+    position: relative;
+    padding-left: 2rem; 
 }
-/* 縦棒 */
 .steps:before {
-content: "";
-/* 幅と色 */
-background-color: #111111;
-width: 2px;
-/* 位置 */
-position: absolute;
-top: 0.7rem; /* 円のwidthの半分 */
-left: 0.7rem; /* 円のwidthの半分 */
-height: calc(100%); /* 100% - top */
-/* 連番より後ろに表示するため */
-z-index: 0;
+    content: "";
+    background-color: #111111;
+    width: 2px;
+    position: absolute;
+    top: 0.7rem; 
+    left: 0.7rem; 
+    height: calc(100%); 
+    z-index: 0;
 }
 .steps > h2 {
-/* 連番カウンターを+1する */
-counter-increment: step-counter;
-/* 連番カウンターを垂直方向に中央揃えで表示する */
-display: flex;
-align-items: center;
+    counter-increment: step-counter;
+    display: flex;
+    align-items: center;
 }
-/* ①②③など連番 */
 .steps > h2:before {
-/* 連番カウンターの値を表示する */
-content: counter(step-counter);
-/* フォントと色 */
-background: #111111;
-color: white;
-font-size: 0.8rem;
-font-weight: normal;
-/* 文字を中央に表示する */
-line-height: 1.5rem;
-text-align: center;
-/* 円で表示する */
-width: 1.5rem;
-height: 1.5rem;
-border-radius: 1.5rem;
-/* .stepsでmargin-left +2rem したぶん左に戻す */
-position: absolute;
-left: 0;
-/* 縦棒より手前に表示するため */
-z-index: 1;
+    content: counter(step-counter);
+    background: #111111;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: 1.5rem;
+    position: absolute;
+    left: 0;
+    z-index: 1;
 }
 .steps > h3 {
     counter-reset: step-counter;
-    /* 連番カウンターを垂直方向に中央揃えで表示する */
     display: flex;
     align-items: center;
 }
 .steps > h3:before {
     content: "";
-    /* フォントと色 */
     background: #111111;
     color: white;
     font-size: 0.8rem;
     font-weight: normal;
-    /* 文字を中央に表示する */
     line-height: 1.5rem;
     text-align: center;
-    /* 円で表示する */
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 1.5rem;
-    /* .stepsでmargin-left +2rem したぶん左に戻す */
     position: absolute;
     left: 0;
-    /* 縦棒より手前に表示するため */
     z-index: 1;
 }
 `
 
 const PageContainer = styled.div`
 margin: 24px 0;
+
 & ul {
     display: flex;
     justify-content: center;
@@ -457,8 +386,9 @@ margin: 24px 0;
     margin: 0 4px;
     cursor: pointer;
     transition: opacity 0.2s ease;
+
     &:hover {
-    opacity: 0.6;
+        opacity: 0.6;
     }
 }
 & .previous a, .next a {
@@ -506,11 +436,11 @@ margin: 24px 0;
     margin-top: 13px;
     width: 8px;
     height: 8px;
-    }
+}
     & li:not(.previous,.next) a {
     width: 32px;
     height: 32px;
-    }
+}
 }
 `
 
@@ -542,12 +472,10 @@ type Sort = {
 }
 
 export const Lifecontent = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const {env,userid,isLoading,isError} = FetchData()
     const [usercontent,setUsercontent] = useState<Content>()
-    const [commentflag,setCommentflag] = useState(false)
     const [name,setName] = useState("")
     const [comment,setComment] = useState("")
     const [flag,setFlag] = useState("")
@@ -558,8 +486,8 @@ export const Lifecontent = ()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
-    const [offset,setOffset] = useState(0); // 何番目のアイテムから表示するか
-    const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
+    const [offset,setOffset] = useState(0); 
+    const perPage: number = 5; 
 
     const search = useSearchParams()
     const id = search.get("id") as unknown as number
@@ -637,10 +565,10 @@ export const Lifecontent = ()=>{
     }
 
 
-    if(PC) {
+    if(PCsize) {
     return (
         <Layout>
-            <PCSteps>
+            <PC>
             <h1>{(usercontent as Content).headline}</h1>
             <div className="steps">
             {content.map((content:string[],key:number)=>{
@@ -680,7 +608,7 @@ export const Lifecontent = ()=>{
                     </div>
                 )
             })}
-            </PCSteps>
+            </PC>
             <PageContainer>
                 <ReactPaginate
                     pageCount={Math.ceil(commentdata.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
@@ -710,10 +638,10 @@ export const Lifecontent = ()=>{
                 </PageContainer>
         </Layout>
     )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return (
             <Layout>
-                <TabSteps>
+                <Tablet>
                 <h1>{(usercontent as Content).headline}</h1>
                 <div className="steps">
                 {content.map((content:string[],key:number)=>{
@@ -752,7 +680,7 @@ export const Lifecontent = ()=>{
                     </div>
                 )
                 })}
-                </TabSteps>
+                </Tablet>
                 <PageContainer>
                 <ReactPaginate
                     pageCount={Math.ceil(commentdata.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
@@ -785,7 +713,7 @@ export const Lifecontent = ()=>{
     }else {
         return (
             <Layout>
-                <MobSteps>
+                <Mobile>
                 <h1>{(usercontent as Content).headline}</h1>
                 <div className="steps">
                 {content.map((content:string[],key:number)=>{
@@ -832,7 +760,7 @@ export const Lifecontent = ()=>{
                     </div>
                     )
                 })}
-                </MobSteps>
+                </Mobile>
                 <PageContainer>
                 <ReactPaginate
                     pageCount={Math.ceil(commentdata.length/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。

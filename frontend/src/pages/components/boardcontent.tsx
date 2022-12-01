@@ -4,10 +4,182 @@ import axios from "../../csrf-axios"
 import {useSearchParams} from "next/navigation"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
-import Header from "./header"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import Link from "next/link"
+import Layout from "./layout"
+
+const Container = styled.div`
+max-width:1200px;
+`
+
+const PC = styled.div` 
+padding-top:30px;
+padding-bottom:10px;
+padding-left:25%;
+
+input {
+    width:200px;
+}
+.name {
+    display: inline-block;
+    transform: translate(-110px,0px)
+}
+label {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 140px;
+}
+.titlelabel {
+    color:red;
+}
+.returnbtn {
+    transform: translate(540px,-20px)
+}
+.postlabel {
+    transform: translate(0px,-70px)
+}
+input,textarea {
+    margin-left:10px;
+}
+button {
+    margin:10px 0 0 10px
+}
+.none {
+    display:none;
+}
+.postcontent {
+    overflow-wrap:break-word;
+    width:80%;
+    display:inline-block;
+    padding:10px 0 0 15px;
+    margin-top:20px;
+    border: solid 1px #000000;
+
+    .content {
+        font-size:20px;
+    }
+    .post {
+        font-size:18px;
+    }
+    .setcolor {
+        color:#e2264d;
+    }
+    .noheart {
+        color:initial;
+    }
+}
+`
+
+const Tablet = styled.div` 
+padding-top:30px;
+padding-bottom:10px;
+
+input {
+    width:200px;
+}
+.name {
+    display: inline-block;
+    transform: translate(-110px,0px)
+}
+label {
+    margin-bottom:3px;
+    display: inline-block;
+    width: 140px;
+}
+.titlelabel {
+    color:red;
+}
+.returnbtn {
+    transform: translate(540px,-20px)
+}
+.postlabel {
+    transform: translate(0px,-70px)
+}
+input,textarea {
+    margin-left:10px;
+}
+button {
+    margin:10px 0 0 10px
+}
+.none {
+    display:none;
+}
+.postcontent {
+    overflow-wrap:break-word;
+    width:80%;
+    display:inline-block;
+    padding:10px 0 0 15px;
+    margin-top:20px;
+    border: solid 1px #000000;
+
+    .content {
+        font-size:20px;
+    }
+    .post {
+        font-size:18px;
+    }
+    .setcolor {
+        color:#e2264d;
+    }
+    .noheart {
+        color:initial;
+    }
+}
+`
+
+const Mobile = styled.div` 
+padding-top:30px;
+padding-bottom:10px;
+
+input {
+    width:200px;
+}
+label {
+    margin:0 0 3px 15px;
+    display: inline-block;
+    width: 40px;
+}
+.titlelabel {
+    color:red;
+}
+.returnbtn {
+    margin-left:350px;
+}
+.postlabel {
+    transform: translate(0px,-70px)
+}
+input,textarea {
+    margin-left:10px;
+}
+button {
+    margin:10px 0 0 10px
+}
+.none {
+    display:none;
+}
+.postcontent {
+    overflow-wrap:break-word;
+    width:100%;
+    display:inline-block;
+    padding:10px 0 0 15px;
+    margin-top:20px;
+    border: solid 1px #000000;
+
+    .content {
+        font-size:16px;
+    }
+    .post {
+        font-size:18px;
+    }
+    .setcolor {
+        color:#e2264d;
+    }
+    .noheart {
+        color:initial;
+    }
+}
+`
 
 type Post = {
     id:number,
@@ -24,229 +196,20 @@ type Heart = {
     user_id:number
 }
 
-const Container = styled.div`
-    max-width:1200px;
-`
-
-const PCDiv = styled.div` 
-    padding-top:30px;
-    padding-bottom:10px;
-    padding-left:25%;
-
-    input {
-        width:200px;
-    }
-
-    .name {
-        display: inline-block;
-        transform: translate(-110px,0px)
-    }
-
-    label {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 140px;
-    }
-
-    .titlelabel {
-        color:red;
-    }
-
-    .returnbtn {
-        transform: translate(540px,-20px)
-    }
-
-    .postlabel {
-        transform: translate(0px,-70px)
-    }
-
-    input,textarea {
-        margin-left:10px;
-    }
-
-    button {
-        margin:10px 0 0 10px
-    }
-
-    .none {
-        display:none;
-    }
-
-.postcontent {
-    overflow-wrap:break-word;
-    width:80%;
-    display:inline-block;
-    padding:10px 0 0 15px;
-    margin-top:20px;
-    border: solid 1px #000000;
-
-    .content {
-        font-size:20px;
-    }
-
-    .post {
-        font-size:18px;
-    }
-
-    .setcolor {
-        color:#e2264d;
-    }
-
-    .noheart {
-        color:initial;
-    }
-}
-`
-
-const TabDiv = styled.div` 
-    padding-top:30px;
-    padding-bottom:10px;
-
-    input {
-        width:200px;
-    }
-
-    .name {
-        display: inline-block;
-        transform: translate(-110px,0px)
-    }
-
-    label {
-        margin-bottom:3px;
-        display: inline-block;
-        width: 140px;
-    }
-
-    .titlelabel {
-        color:red;
-    }
-
-    .returnbtn {
-        transform: translate(540px,-20px)
-    }
-
-    .postlabel {
-        transform: translate(0px,-70px)
-    }
-
-    input,textarea {
-        margin-left:10px;
-    }
-
-    button {
-        margin:10px 0 0 10px
-    }
-
-    .none {
-        display:none;
-    }
-
-.postcontent {
-    overflow-wrap:break-word;
-    width:80%;
-    display:inline-block;
-    padding:10px 0 0 15px;
-    margin-top:20px;
-    border: solid 1px #000000;
-
-    .content {
-        font-size:20px;
-    }
-
-    .post {
-        font-size:18px;
-    }
-
-    .setcolor {
-        color:#e2264d;
-    }
-
-    .noheart {
-        color:initial;
-    }
-}
-`
-
-const MobDiv = styled.div` 
-    padding-top:30px;
-    padding-bottom:10px;
-
-    input {
-        width:200px;
-    }
-
-    label {
-        margin:0 0 3px 15px;
-        display: inline-block;
-        width: 40px;
-    }
-
-    .titlelabel {
-        color:red;
-    }
-
-    .returnbtn {
-        margin-left:350px;
-    }
-
-    .postlabel {
-        transform: translate(0px,-70px)
-    }
-
-    input,textarea {
-        margin-left:10px;
-    }
-
-    button {
-        margin:10px 0 0 10px
-    }
-
-    .none {
-        display:none;
-    }
-
-.postcontent {
-    overflow-wrap:break-word;
-    width:100%;
-    display:inline-block;
-    padding:10px 0 0 15px;
-    margin-top:20px;
-    border: solid 1px #000000;
-
-    .content {
-        font-size:16px;
-    }
-
-    .post {
-        font-size:18px;
-    }
-
-    .setcolor {
-        color:#e2264d;
-    }
-
-    .noheart {
-        color:initial;
-    }
-}
-`
-
 export const Boardcontent = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("")
     const [post,setPost] = useState("")
     const [flag,setFlag] = useState("")
     const [heartnumber,setHeartnumber] = useState<any>(0)
     const [heartflag,setHeartflag] = useState("")
-    const [heartdata,setHeartdata] = useState([])
     const [fontcolor,setFontcolor] = useState<any>({})
     const [postcontent,setPostcontent] = useState([])
-    const search = useSearchParams();
 
+    const search = useSearchParams();
     const board_id = search.get("board_id") as unknown as number
     const user_id = search.get("user_id") as unknown as number
     const username = search.get("username") as unknown as string
@@ -274,8 +237,6 @@ export const Boardcontent = ()=>{
         axios.get(env+"/hearts")
         .then(res=>{
             let heartcount:any = {}
-
-            setHeartdata(res.data)
 
             res.data.map((res:Heart)=>{
                 if(sessionid==res.user_id) {
@@ -312,10 +273,8 @@ export const Boardcontent = ()=>{
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
-    console.log(content)
-
     const doName = (event:{target:HTMLInputElement})=>{
-            setName(event.target.value)
+        setName(event.target.value)
     }
 
     const doPost = (event:{target:HTMLTextAreaElement})=>{
@@ -371,12 +330,11 @@ export const Boardcontent = ()=>{
         })
     }
 
-    if(PC) {
+    if(PCsize) {
     return (
-        <>
-            <Header />
+            <Layout>
             <Container>
-            <PCDiv>
+            <PC>
             <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
             <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
             <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
@@ -394,22 +352,22 @@ export const Boardcontent = ()=>{
             ).map((post:Post,key:number)=>{
                 return (
                         <div className="postcontent" key={key}>
-                        <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
+                        <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}
+                                &emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                         <p className="post">{post.postcontent}</p>
                         </div>
                     )
                 })
             }
-            </PCDiv>
+            </PC>
             </Container>
-        </>
+            </Layout>
     )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return (
-            <>
-                <Header />
+                <Layout>
                 <Container>
-                <TabDiv>
+                <Tablet>
                 <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
                 <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
@@ -427,22 +385,22 @@ export const Boardcontent = ()=>{
                 ).map((post:Post,key:number)=>{
                     return (
                             <div className="postcontent" key={key}>
-                            <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
+                            <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}
+                                    &emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                             <p className="post">{post.postcontent}</p>
                             </div>
                         )
                     })
                 }
-                </TabDiv>
+                </Tablet>
                 </Container>
-            </>
+                </Layout>
         )
     }else {
         return (
-            <>
-                <Header />
+                <Layout>
                 <Container>
-                <MobDiv>
+                <Mobile>
                 <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
                 &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} value={post} onChange={doPost}></textarea><br></br>
@@ -460,15 +418,16 @@ export const Boardcontent = ()=>{
                 ).map((post:Post,key:number)=>{
                     return (
                             <div className="postcontent" key={key}>
-                            <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
+                            <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}
+                                    &emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
                             <p className="post">{post.postcontent}</p>
                             </div>
                         )
                     })
                 }
-                </MobDiv>
+                </Mobile>
                 </Container>
-            </>
+                </Layout>
         )
     }
 }

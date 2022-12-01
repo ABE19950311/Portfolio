@@ -11,7 +11,6 @@ const SDiv = styled.div`
     color:red;
     float:right;
 }
-
 .login-page {
     width: 360px;
     padding: 8% 0 0;
@@ -56,12 +55,11 @@ const SDiv = styled.div`
 .form button:hover,.form button:active,.form button:focus {
     background: #005FFF;
 }
-
 `
 
 
 export const Passchange = ()=>{
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const {env,isLoading,isError} = FetchData()
     const [validationPass,setValidationPass] = useState("");
     const [validationNewPass,setValidationNewPass] = useState("");
     const [validationNewPassfilm,setValidationNewPassfilm] = useState("");

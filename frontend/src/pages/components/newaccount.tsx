@@ -12,7 +12,6 @@ const SDiv = styled.div`
     color:red;
     float:right;
 }
-
 .login-page {
     width: 360px;
     padding: 8% 0 0;
@@ -66,12 +65,11 @@ const SDiv = styled.div`
     color: #4CAF50;
     text-decoration: none;
 }
-
 `
 
 
 export const Newaccount = ()=>{
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const {env,isLoading,isError} = FetchData()
     const [validationName,setValidationName] = useState("");
     const [validationPass,setValidationPass] = useState("");
     const [validationPassfilm,setValidationPassfilm] = useState("");

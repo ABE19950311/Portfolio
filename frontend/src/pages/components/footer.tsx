@@ -1,14 +1,9 @@
 import styled from "styled-components"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
-import Link from "next/link"
-import React, {useState,useEffect,useLayoutEffect} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import Image from 'next/image'
-import useSWR from "swr"
-import { Transition } from '@headlessui/react'
-import ReactLoading from 'react-loading';
-import { slide as Menu } from 'react-burger-menu'
 
 const PCFooter = styled.div`
 width: 100%;
@@ -20,12 +15,10 @@ justify-content: space-between;
 textarea  {
     margin:50px 50px 0 0;
 }
-
 span {
     display:inline-block;
     transform: translate(160px,-120px);
 }
-
 button {
     display:block;
     margin-top:5px;
@@ -42,7 +35,6 @@ span {
     display:inline-block;
     transform: translate(160px,-120px);
 }
-
 button {
     display:inline-block;
     margin-bottom:40px;
@@ -58,12 +50,10 @@ bottom: 0; /*下に固定*/
 textarea  {
     margin-left:50px;
 }
-
 span {
     display:inline-block;
     margin-left:50px;
 }
-
 button {
     display:block;
     margin:5px 0 20px 50px;
@@ -83,14 +73,13 @@ text-align:center;
 `
 
 export const Footer = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const [contact,setContact] = useState("")
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState("")
 
-    useLayoutEffect(()=>{
+    useEffect(()=>{
         setSessionid(userid)
     },[userid])
 
@@ -118,7 +107,7 @@ export const Footer = ()=>{
         })
     }
 
-    if(PC) {
+    if(PCsize) {
         return (
             <PCFooter>
                 <SLogo><Image src="/logo.png" width="200" height="200" alt="logo"/></SLogo>
@@ -129,7 +118,7 @@ export const Footer = ()=>{
                 </div>
             </PCFooter>
         )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return (
             <TabFooter>
                 <TabLogo><Image src="/logo.png" width="150" height="150" alt="logo"/></TabLogo>

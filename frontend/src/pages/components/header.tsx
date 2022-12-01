@@ -1,10 +1,9 @@
 import styled from "styled-components"
 import Link from "next/link"
-import {useState,useEffect,useLayoutEffect} from "react"
+import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/navigation"
 import Image from 'next/image'
-import useSWR from "swr"
 import {FetchData} from "../../components/fetchdata"
 import { Transition } from '@headlessui/react'
 import ReactLoading from 'react-loading';
@@ -26,13 +25,13 @@ ul {
 `
 
 const SBurgerMenu = styled.ul`
-        li {
-            margin-bottom:15px;
-        &:hover{
-            color:#ffa500;
-        }
+li {
+    margin-bottom:15px;
+
+    &:hover{
+        color:#ffa500;
     }
-    
+}
 `
 
 const SHeader = styled.div`
@@ -59,86 +58,85 @@ padding:5px 0 0 5px;
 const SMenu = styled.ul`
 display: flex;
 
-        li {
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        span {    
+li {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    span {    
         margin-right:20px;
         font-size:1.3vw;
-        }
-        &:hover{
-            color:#ffa500;
-        }
     }
+    &:hover{
+        color:#ffa500;
+    }
+}
 `
 
 const Sbtn = styled.div`
 cursor:pointer;
+
 &:hover{
-color:#ffa500;
+    color:#ffa500;
 }
 `
 
 const styles = {
-    position:"relative",
+position:"relative",
+
 bmBurgerButton: {
     position: 'absolute',
     width: '36px',
     height: '30px',
     right:"30px",
     top: '36px'
-    },
-    bmBurgerBars: {
+},
+bmBurgerBars: {
     background: '#373a47'
-    },
-    bmBurgerBarsHover: {
+},
+bmBurgerBarsHover: {
     background: '#a90000'
-    },
-    bmCrossButton: {
+},
+bmCrossButton: {
     height: '24px',
     width: '24px'
-    },
-    bmCross: {
+},
+bmCross: {
     background: '#bdc3c7'
-    },
-    bmMenuWrap: {
+},
+bmMenuWrap: {
     position: 'fixed',
     height: '100%'
-    },
-    bmMenu: {
+},
+bmMenu: {
     background: '#373a47',
     padding: '2.5em 1.5em 0',
     fontSize: '1.15em'
-    },
-    bmMorphShape: {
+},
+bmMorphShape: {
     fill: '#373a47'
-    },
-    bmItemList: {
+},
+bmItemList: {
     color: '#b8b7ad',
     padding: '0.8em'
-    },
-    bmItem: {
+},
+bmItem: {
     display: 'inline-block'
-    },
-    bmOverlay: {
+},
+bmOverlay: {
     background: 'rgba(0, 0, 0, 0.3)'
-    }
+}
 }
 
 export const Header = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const router = useRouter();
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
-    const [sessionid,setSessionid] = useState("")
+    const {env,loginstate,isLoading,isError} = FetchData()
     const [loginflag,setLoginflag] = useState("")
 
-    useLayoutEffect(()=>{
-        setSessionid(userid)
+    useEffect(()=>{
         setLoginflag(loginstate)
-    },[userid,loginstate])
+    },[loginstate])
 
     if(isError) return <p>error</p>
     if(isLoading||loginflag=="") return (
@@ -159,14 +157,13 @@ export const Header = ()=>{
         axios.delete(env+"/logout" as string)
         .then(res=> {
             router.push("/");
-            setSessionid("")
             setLoginflag("logout")
         }).catch(error=>{
             console.log("logouterror",error);
         })
     }
 
-    if(PC) {
+    if(PCsize) {
         return (  
             <SHeader>
             <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
@@ -220,7 +217,7 @@ export const Header = ()=>{
             </SBurgerMenu>
             </Menu> 
             }
-        </BeargerHeader>
+            </BeargerHeader>
         )
     }
 }

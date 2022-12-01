@@ -11,680 +11,612 @@ import { MdSearch } from "react-icons/md";
 import { FaRegLightbulb} from "react-icons/fa";
 import Link from "next/link"
 
-const PCDiv = styled.div`
-    
-    margin:70px 0 0 80px;
-    overflow-wrap: break-word;
+const PC = styled.div`
+margin:70px 0 0 80px;
+overflow-wrap: break-word;
 
-    caption {
-        text-align:left;
-    }
-
-    select {
-        padding:10px;
-    }
-
-    .filter {
-        margin-left:30vw;
-        margin-bottom:5px;
-    }
-
-    .sankouicon {
-        font-size: 1.5rem;
-        cursor:pointer;
-    }
-
-    .seticoncolor {
-        font-size: 1.5rem;
-        cursor:pointer;
-        color:#FFCC00;
-    }
-
-    .custominput {
-        padding: 7px 100px 7px 10px;
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box;
-        margin-left:30vw;
-    }
-
-    .searchicon {
-        position: absolute;
-        color: #333;
-        font-size: 2rem;
-        transform: translate(245px,3px);
-        margin-left:30vw;
-    }
-
-    .custombutton {
-        padding: 3px 5px;
-    }
-
-    .kousinbtn {
-        font-size:1.5vw;
-        font-weight: 700;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
-        text-align: center;
-        vertical-align: middle;
-        text-decoration: none;
-        border-radius: 0.5rem;
-        border: 2px solid #27acd9;
-        background: #27acd9;
-        color: #fff;
-    }
-
-    .delbtn {
-        font-size:1.5vw;
-        font-weight: 700;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
-        text-align: center;
-        vertical-align: middle;
-        text-decoration: none;
-        border-radius: 0.5rem;
-        border: 2px solid #FF9933;
-        background: #FF9933;
-        color: #fff;
-    }
-
-    table {
+caption {
+    text-align:left;
+}
+select {
+    padding:10px;
+}
+.filter {
+    margin-left:30vw;
+    margin-bottom:5px;
+}
+.sankouicon {
+    font-size: 1.5rem;
+    cursor:pointer;
+}
+.seticoncolor {
+    font-size: 1.5rem;
+    cursor:pointer;
+    color:#FFCC00;
+}
+.custominput {
+    padding: 7px 100px 7px 10px;
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box;
+    margin-left:30vw;
+}
+.searchicon {
+    position: absolute;
+    color: #333;
+    font-size: 2rem;
+    transform: translate(245px,3px);
+    margin-left:30vw;
+}
+.custombutton {
+    padding: 3px 5px;
+}
+.kousinbtn {
+    font-size:1.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #27acd9;
+    background: #27acd9;
+    color: #fff;
+}
+.delbtn {
+    font-size:1.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #FF9933;
+    background: #FF9933;
+    color: #fff;
+}
+table {
     overflow-wrap:break-word;
     text-align:center;
     border-collapse: collapse;
     border-spacing: 0;
-    }
-    th {
+}
+th {
     padding: 10px;
     background: #FFCC66;
     border: solid 1px #666666;
     color: #222222;
-    }
-    td {
+}
+td {
     padding: 10px;
     border: solid 1px #666666;
-    }
-    td:first-child {
+}
+td:first-child {
     cursor:pointer;
     color:blue;
     text-decoration : underline;
     background: #e9faf9;
-    }
-    .thtitle {
-        width:30vw;
-    }
-    .thhead {
-        width:14vw;
-    }
-    .none {
-        width:7.5vw;
-    }
-    .tdtitle {
-        font-size:1.7vw;
-        width:30vw;
-    }
-    .tdhead {
-        font-size:1.5vw;
-        width:14vw;
-    }
-    .tdcreate {
-        font-size:1.2vw;
-        width:15vw;
-    }
-    .tdupdate {
-        font-size:1.2vw;
-        width:15vw;
-    }
-
-    .create {
-        width:15vw;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .create::before, .create::after {
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border: 5px solid transparent;
-        right: 10px;
-        top: 50%;
-    }
-    
-    .create::before {
-        border-bottom-color: #aaa;
-        margin-top: -10px;
-    }
-    
-    .create::after {
-        border-top-color: #aaa;
-        margin-top: 2px;
-    }
-    
-    .update {
-        width:15vw;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .update::before, .update::after {
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border: 5px solid transparent;
-        right: 10px;
-        top: 50%;
-    }
-    
-    .update::before {
-        border-bottom-color: #aaa;
-        margin-top: -10px;
-    }
-    
-    .update::after {
-        border-top-color: #aaa;
-        margin-top: 2px;
-    }
-    
-    .createdesc::before {
-        border-bottom-color: #444;
-    }
-    .createasc::after {
-        border-top-color: #444;
-    }
-    
-    .updatedesc::before {
-        border-bottom-color: #444;
-    }
-    .updateasc::after {
-        border-top-color: #444;
-    }
-
-    .pagination {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        gap: 20px 6px;
-    }
-    
-    
-    .page-item,
-    .page-link {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 30px;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 16px;
-        height: 40px;
-        width: 40px;
-    }
+}
+.thtitle {
+    width:30vw;
+}
+.thhead {
+    width:14vw;
+}
+.none {
+    width:7.5vw;
+}
+.tdtitle {
+    font-size:1.7vw;
+    width:30vw;
+}
+.tdhead {
+    font-size:1.5vw;
+    width:14vw;
+}
+.tdcreate {
+    font-size:1.2vw;
+    width:15vw;
+}
+.tdupdate {
+    font-size:1.2vw;
+    width:15vw;
+}
+.create {
+    width:15vw;
+    cursor: pointer;
+    position: relative;
+}    
+.create::before, .create::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}    
+.create::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}    
+.create::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}    
+.update {
+    width:15vw;
+    cursor: pointer;
+    position: relative;
+}    
+.update::before, .update::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}    
+.update::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}    
+.update::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}    
+.createdesc::before {
+    border-bottom-color: #444;
+}
+.createasc::after {
+    border-top-color: #444;
+}    
+.updatedesc::before {
+    border-bottom-color: #444;
+}
+.updateasc::after {
+    border-top-color: #444;
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 20px 6px;
+}
+.page-item,
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 30px;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    height: 40px;
+    width: 40px;
+}
 `
 
-const TabDiv = styled.div`
-    
-    margin:70px 0 0 0;
-    overflow-wrap: break-word;
+const Tablet = styled.div`
+margin:70px 0 0 0;
+overflow-wrap: break-word;
 
-    caption {
-        text-align:left;
-    }
-    .filter {
-        margin-left:30vw;
-        margin-bottom:5px;
-    }
-    .sankouicon {
-        font-size: 1.5rem;
-        cursor:pointer;
-    }
-
-    .seticoncolor {
-        font-size: 1.5rem;
-        cursor:pointer;
-        color:#FFCC00;
-    }
-    select {
-        padding:10px;
-    }
-
-    .custominput {
-        padding: 7px 100px 7px 10px;
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box;
-        margin-left:10vw;
-    }
-
-    .searchicon {
-        position: absolute;
-        color: #333;
-        font-size: 2rem;
-        transform: translate(245px,3px);
-        margin-left:10vw;
-    }
-
-    .custombutton {
-        padding: 3px 5px;
-    }
-
-    .kousinbtn {
-        font-size:1.5vw;
-        font-weight: 700;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
-        text-align: center;
-        vertical-align: middle;
-        text-decoration: none;
-        border-radius: 0.5rem;
-        border: 2px solid #27acd9;
-        background: #27acd9;
-        color: #fff;
-    }
-
-    .delbtn {
-        font-size:1.5vw;
-        font-weight: 700;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
-        text-align: center;
-        vertical-align: middle;
-        text-decoration: none;
-        border-radius: 0.5rem;
-        border: 2px solid #FF9933;
-        background: #FF9933;
-        color: #fff;
-    }
-
-    table {
+caption {
+    text-align:left;
+}
+.filter {
+    margin-left:30vw;
+    margin-bottom:5px;
+}
+.sankouicon {
+    font-size: 1.5rem;
+    cursor:pointer;
+}
+.seticoncolor {
+    font-size: 1.5rem;
+    cursor:pointer;
+    color:#FFCC00;
+}
+select {
+    padding:10px;
+}
+.custominput {
+    padding: 7px 100px 7px 10px;
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box;
+    margin-left:10vw;
+}
+.searchicon {
+    position: absolute;
+    color: #333;
+    font-size: 2rem;
+    transform: translate(245px,3px);
+    margin-left:10vw;
+}
+.custombutton {
+    padding: 3px 5px;
+}
+.kousinbtn {
+    font-size:1.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #27acd9;
+    background: #27acd9;
+    color: #fff;
+}
+.delbtn {
+    font-size:1.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #FF9933;
+    background: #FF9933;
+    color: #fff;
+}
+table {
     overflow-wrap:break-word;
     text-align:center;
     border-collapse: collapse;
     border-spacing: 0;
-    }
-    th {
+}
+th {
     padding: 10px;
     background: #FFCC66;
     border: solid 1px #666666;
     color: #222222;
-    }
-    td {
+}
+td {
     padding: 10px;
     border: solid 1px #666666;
-    }
-    td:first-child {
+}
+td:first-child {
     cursor:pointer;
     color:blue;
     text-decoration : underline;
     background: #e9faf9;
-    }
-    .thtitle {
-        width:30vw;
-    }
-    .thhead {
-        width:14vw;
-    }
-    .none {
-        width:7.5vw;
-    }
-    .tdtitle {
-        font-size:1.7vw;
-        width:30vw;
-    }
-    .tdhead {
-        font-size:1.5vw;
-        width:14vw;
-    }
-    .tdcreate {
-        font-size:1.2vw;
-        width:15vw;
-    }
-    .tdupdate {
-        font-size:1.2vw;
-        width:15vw;
-    }
-
-    .create {
-        width:15vw;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .create::before, .create::after {
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border: 5px solid transparent;
-        right: 10px;
-        top: 50%;
-    }
-    
-    .create::before {
-        border-bottom-color: #aaa;
-        margin-top: -10px;
-    }
-    
-    .create::after {
-        border-top-color: #aaa;
-        margin-top: 2px;
-    }
-    
-    .update {
-        width:15vw;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .update::before, .update::after {
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border: 5px solid transparent;
-        right: 10px;
-        top: 50%;
-    }
-    
-    .update::before {
-        border-bottom-color: #aaa;
-        margin-top: -10px;
-    }
-    
-    .update::after {
-        border-top-color: #aaa;
-        margin-top: 2px;
-    }
-    
-    .createdesc::before {
-        border-bottom-color: #444;
-    }
-    .createasc::after {
-        border-top-color: #444;
-    }
-    
-    .updatedesc::before {
-        border-bottom-color: #444;
-    }
-    .updateasc::after {
-        border-top-color: #444;
-    }
-
-    .pagination {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        gap: 20px 6px;
-    }
-    
-    
-    .page-item,
-    .page-link {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 30px;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 16px;
-        height: 40px;
-        width: 40px;
-    }
+}
+.thtitle {
+    width:30vw;
+}
+.thhead {
+    width:14vw;
+}
+.none {
+    width:7.5vw;
+}
+.tdtitle {
+    font-size:1.7vw;
+    width:30vw;
+}
+.tdhead {
+    font-size:1.5vw;
+    width:14vw;
+}
+.tdcreate {
+    font-size:1.2vw;
+    width:15vw;
+}
+.tdupdate {
+    font-size:1.2vw;
+    width:15vw;
+}
+.create {
+    width:15vw;
+    cursor: pointer;
+    position: relative;
+}    
+.create::before, .create::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}    
+.create::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}    
+.create::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}    
+.update {
+    width:15vw;
+    cursor: pointer;
+    position: relative;
+}    
+.update::before, .update::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}    
+.update::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}    
+.update::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}    
+.createdesc::before {
+    border-bottom-color: #444;
+}
+.createasc::after {
+    border-top-color: #444;
+}    
+.updatedesc::before {
+    border-bottom-color: #444;
+}
+.updateasc::after {
+    border-top-color: #444;
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 20px 6px;
+}    
+.page-item,
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 30px;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    height: 40px;
+    width: 40px;
+}
 `
 
-const MobDiv = styled.div`
-    
-    margin:70px 0 0 0;
-    overflow-wrap: break-word;
+const Mobile = styled.div`
+margin:70px 0 0 0;
+overflow-wrap: break-word;
 
-    caption {
-        text-align:left;
-    }
-    .filter {
-        margin-bottom:5px;
-    }
-    .sankouicon {
-        font-size: 1rem;
-        cursor:pointer;
-    }
-
-    .seticoncolor {
-        font-size: 1rem;
-        cursor:pointer;
-        color:#FFCC00;
-    }
-    select {
-        padding:10px;
-    }
-
-    .custominput {
-        padding: 7px 100px 7px 10px;
-        font-size: 16px;
-        border-radius: 3px; /*ボックス角の丸み*/
-        border: 2px solid #ddd; /*枠線*/
-        box-sizing: border-box;
-        margin-left:10vw;
-    }
-
-    .searchicon {
-        position: absolute;
-        color: #333;
-        font-size: 2rem;
-        transform: translate(245px,3px);
-        margin-left:10vw;
-    }
-
-    .custombutton {
-        padding: 3px 5px;
-    }
-
-    .kousinbtn {
-        font-size:1.5vw;
-        font-weight: 700;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
-        text-align: center;
-        vertical-align: middle;
-        text-decoration: none;
-        border-radius: 0.5rem;
-        border: 2px solid #27acd9;
-        background: #27acd9;
-        color: #fff;
-    }
-
-    .delbtn {
-        font-size:1.5vw;
-        font-weight: 700;
-        cursor: pointer;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        -webkit-transition: all 0.3s;
-        transition: all 0.3s;
-        text-align: center;
-        vertical-align: middle;
-        text-decoration: none;
-        border-radius: 0.5rem;
-        border: 2px solid #FF9933;
-        background: #FF9933;
-        color: #fff;
-    }
-
-    table {
+caption {
+    text-align:left;
+}
+.filter {
+    margin-bottom:5px;
+}
+.sankouicon {
+    font-size: 1rem;
+    cursor:pointer;
+}
+.seticoncolor {
+    font-size: 1rem;
+    cursor:pointer;
+    color:#FFCC00;
+}
+select {
+    padding:10px;
+}
+.custominput {
+    padding: 7px 100px 7px 10px;
+    font-size: 16px;
+    border-radius: 3px; 
+    border: 2px solid #ddd; 
+    box-sizing: border-box;
+    margin-left:10vw;
+}
+.searchicon {
+    position: absolute;
+    color: #333;
+    font-size: 2rem;
+    transform: translate(245px,3px);
+    margin-left:10vw;
+}
+.custombutton {
+    padding: 3px 5px;
+}
+.kousinbtn {
+    font-size:1.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #27acd9;
+    background: #27acd9;
+    color: #fff;
+}
+.delbtn {
+    font-size:1.5vw;
+    font-weight: 700;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    border: 2px solid #FF9933;
+    background: #FF9933;
+    color: #fff;
+}
+table {
     overflow-wrap:break-word;
     text-align:center;
     border-collapse: collapse;
     border-spacing: 0;
-    }
-    th {
+}
+th {
     padding: 10px;
     background: #FFCC66;
     border: solid 1px #666666;
     color: #222222;
-    }
-    td {
+}
+td {
     padding: 10px;
     border: solid 1px #666666;
-    }
-    td:first-child {
+}
+td:first-child {
     cursor:pointer;
     color:blue;
     text-decoration : underline;
     background: #e9faf9;
-    }
-    .thtitle {
-        font-size:2.5vw;
-        width:30vw;
-    }
-    .thhead {
-        font-size:2.5vw;
-        width:14vw;
-    }
-    .none {
-        width:7.5vw;
-    }
-    .tdtitle {
-        font-size:2.5vw;
-        width:30vw;
-    }
-    .tdhead {
-        font-size:2vw;
-        width:14vw;
-    }
-    .tdcreate {
-        font-size:1.2vw;
-        width:15vw;
-    }
-    .tdupdate {
-        font-size:1.2vw;
-        width:18vw;
-    }
-
-    .create {
-        width:15vw;
-        font-size:2.5vw;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .create::before, .create::after {
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border: 5px solid transparent;
-        right: 10px;
-        top: 50%;
-    }
-    
-    .create::before {
-        border-bottom-color: #aaa;
-        margin-top: -10px;
-    }
-    
-    .create::after {
-        border-top-color: #aaa;
-        margin-top: 2px;
-    }
-    
-    .update {
-        width:18vw;
-        font-size:2.5vw;
-        cursor: pointer;
-        position: relative;
-    }
-    
-    .update::before, .update::after {
-        content: "";
-        height: 0;
-        width: 0;
-        position: absolute;
-        border: 5px solid transparent;
-        right: 10px;
-        top: 50%;
-    }
-    
-    .update::before {
-        border-bottom-color: #aaa;
-        margin-top: -10px;
-    }
-    
-    .update::after {
-        border-top-color: #aaa;
-        margin-top: 2px;
-    }
-    
-    .createdesc::before {
-        border-bottom-color: #444;
-    }
-    .createasc::after {
-        border-top-color: #444;
-    }
-    
-    .updatedesc::before {
-        border-bottom-color: #444;
-    }
-    .updateasc::after {
-        border-top-color: #444;
-    }
-
-    .pagination {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        gap: 20px 6px;
-    }
-    
-    
-    .page-item,
-    .page-link {
-        display: inline-flex;
-        align-items: center;
-        border-radius: 30px;
-        justify-content: center;
-        font-weight: 700;
-        font-size: 16px;
-        height: 40px;
-        width: 40px;
-    }
+}
+.thtitle {
+    font-size:2.5vw;
+    width:30vw;
+}
+.thhead {
+    font-size:2.5vw;
+    width:14vw;
+}
+.none {
+    width:7.5vw;
+}
+.tdtitle {
+    font-size:2.5vw;
+    width:30vw;
+}
+.tdhead {
+    font-size:2vw;
+    width:14vw;
+}
+.tdcreate {
+    font-size:1.2vw;
+    width:15vw;
+}
+.tdupdate {
+    font-size:1.2vw;
+    width:18vw;
+}
+.create {
+    width:15vw;
+    font-size:2.5vw;
+    cursor: pointer;
+    position: relative;
+}    
+.create::before, .create::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}    
+.create::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}    
+.create::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}    
+.update {
+    width:18vw;
+    font-size:2.5vw;
+    cursor: pointer;
+    position: relative;
+}    
+.update::before, .update::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border: 5px solid transparent;
+    right: 10px;
+    top: 50%;
+}    
+.update::before {
+    border-bottom-color: #aaa;
+    margin-top: -10px;
+}    
+.update::after {
+    border-top-color: #aaa;
+    margin-top: 2px;
+}    
+.createdesc::before {
+    border-bottom-color: #444;
+}
+.createasc::after {
+    border-top-color: #444;
+}    
+.updatedesc::before {
+    border-bottom-color: #444;
+}
+.updateasc::after {
+    border-top-color: #444;
+}
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    gap: 20px 6px;
+}
+.page-item,
+.page-link {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 30px;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 16px;
+    height: 40px;
+    width: 40px;
+}
 `
-
-
-
 
 const PageContainer = styled.div`
 margin: 24px 0;
+
 & ul {
     display: flex;
     justify-content: center;
@@ -741,13 +673,13 @@ margin: 24px 0;
 }
 @media (max-width: 600px) {
     & .previous a, .next a {
-    margin-top: 13px;
-    width: 8px;
-    height: 8px;
+        margin-top: 13px;
+        width: 8px;
+        height: 8px;
     }
     & li:not(.previous,.next) a {
-    width: 32px;
-    height: 32px;
+        width: 32px;
+        height: 32px;
     }
 }
 `
@@ -773,10 +705,9 @@ type Icon = {
 
 
 export const Userlife = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [lifepost,setLifepost] = useState([])
     const [flag,setFlag] = useState("")
@@ -784,8 +715,8 @@ export const Userlife = ()=>{
     const [filterlife,setFilterlife] = useState("")
     const [filtertitle,setFiltertitle] = useState("")
     const [titledata,setTitledata] = useState([])
-    const [offset,setOffset] = useState(0); // 何番目のアイテムから表示するか
-    const perPage: number = 5; // 1ページあたりに表示したいアイテムの数
+    const [offset,setOffset] = useState(0)
+    const perPage: number = 5; 
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
     const [iconflag,setIconflag] = useState<any>({})
@@ -928,17 +859,16 @@ export const Userlife = ()=>{
         })
     }
 
-    // クリック時のfunction
     const handlePageChange = (data:any) => {
-    let page_number = data['selected']; // クリックした部分のページ数が{selected: 2}のような形で返ってくる
-    setOffset(page_number*perPage); // offsetを変更し、表示開始するアイテムの番号を変更
+    let page_number = data['selected']
+    setOffset(page_number*perPage)
     setCurrentpage(page_number+1)
     }
 
-    if(PC) {
+    if(PCsize) {
     return (
         <Layout>
-        <PCDiv>
+        <PC>
         <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
         <table border={1}>
         <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
@@ -981,7 +911,7 @@ export const Userlife = ()=>{
                 </table>
             )
         })}
-        </PCDiv>
+        </PC>
 
         <PageContainer>
             <ReactPaginate
@@ -1012,10 +942,10 @@ export const Userlife = ()=>{
             </PageContainer>
         </Layout>
     )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return (
             <Layout>
-            <TabDiv>
+            <Tablet>
             <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
             <table border={1}>
             <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
@@ -1058,7 +988,7 @@ export const Userlife = ()=>{
                 </table>
                 )
             })}
-            </TabDiv>
+            </Tablet>
     
             <PageContainer>
                 <ReactPaginate
@@ -1092,7 +1022,7 @@ export const Userlife = ()=>{
     }else {
         return (
             <Layout>
-            <MobDiv>
+            <Mobile>
             <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
             <table border={1}>
             <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
@@ -1135,7 +1065,7 @@ export const Userlife = ()=>{
                 </table>
                 )
             })}
-            </MobDiv>
+            </Mobile>
     
             <PageContainer>
                 <ReactPaginate

@@ -12,13 +12,11 @@ const SDiv = styled.div`
     padding: 8% 0 0;
     margin: auto;
 }
-
 .validation {
     font-size:12px;
     color:red;
     float:right;
 }
-
 .form {
     position: relative;
     z-index: 1;
@@ -70,12 +68,11 @@ const SDiv = styled.div`
 .form .register-form {
     display: none;
 }
-
 `
 
 
 export const Login = ()=>{
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const {env,isLoading,isError} = FetchData()
     const [validationName,setValidationName] = useState("");
     const [validationPass,setValidationPass] = useState("");
     const [username,setUsername] = useState("");

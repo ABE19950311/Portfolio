@@ -1,11 +1,296 @@
 import styled from "styled-components"
-import React, {useState,useEffect, ReactNode} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/navigation"
 import Layout from "./layout"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
+
+
+const PC = styled.div`
+overflow-wrap: break-word;
+
+.due {
+    margin-left:20px;
+}
+ul {
+    list-style:none;
+    width:70%;
+    background: #fcfcfc;
+    padding: 0.1em 0 0.1em 0.5em;
+    border: solid 1px gray;
+}    
+ul li {
+    padding: 0.5em 0; 
+}
+.topmain {
+    display:flex;
+    justify-content:space-between;
+
+    h2 {
+        position: relative;
+        display: inline-block;
+        padding: 0 65px;
+        text-align: center;
+        margin:30px 0 5px 40px;
+    }    
+    h2:before,
+    h2:after {
+        position: absolute;
+        top: calc(50% - 3px);
+        width: 50px;
+        height: 6px;
+        content: '';
+        border-top: solid 2px #000;
+        border-bottom: solid 2px #000;
+    }    
+    h2:before {
+        left: 0;
+    }
+    h2:after {
+        right: 0;
+    }
+    button {
+        margin:30px 50px 0 0;
+        font-weight: 700;
+        padding: 0.5rem 1.5rem;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+    }
+}
+.main {
+    display: flex;
+    justify-content:space-between;
+        
+    .content {
+        text-align: center;
+
+        table {
+            width:40vw;
+            margin:0 35px;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        caption {
+            margin-top:20px;
+            font-size:18px;
+            background-color: lightyellow;
+            border: solid 1px #333;
+        }
+        th {
+            padding: 10px;
+            background: #e3faf8;
+            border: solid 1px #748ca5;
+        }
+        td {
+            font-size:1.5vw;
+            padding: 10px;
+            border: solid 1px #748ca5;
+            background-color:white;
+        }
+    }
+}
+`
+
+const Tablet = styled.div`
+overflow-wrap: break-word;
+
+ul {
+    list-style:none;
+    width:100%;
+    background: #fcfcfc;
+    padding: 0.1em 0 0.1em 0.5em;
+    border: solid 1px gray;
+}
+ul li {
+    padding: 0.5em 0; 
+}
+.topmain {
+    display:flex;
+    justify-content:space-between;
+
+    h2 {
+        font-size:3.5vw;
+        position: relative;
+        display: inline-block;
+        padding: 0 65px;
+        text-align: center;
+        margin:30px 0 5px 0;
+    }
+    h2:before,
+    h2:after {
+        position: absolute;
+        top: calc(50% - 3px);
+        width: 50px;
+        height: 6px;
+        content: '';
+        border-top: solid 2px #000;
+        border-bottom: solid 2px #000;
+    }
+    h2:before {
+        left: 0;
+    }
+    h2:after {
+        right: 0;
+    }
+    button {
+        margin:30px 0 0 0;
+        font-weight: 700;
+        padding: 0.5rem 1.5rem;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+    }
+}
+.main {
+    display: flex;
+    justify-content:space-between;
+
+    .content {
+        text-align: center;
+
+        table {
+            width:40vw;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        caption {
+            margin-top:20px;
+            font-size:18px;
+            background-color: lightyellow;
+            border: solid 1px #333;
+        }
+        th {
+            font-size:1.5vw;
+            padding: 10px;
+            background: #e3faf8;
+            border: solid 1px #748ca5;
+        }
+        td {
+            font-size:1.5vw;
+            padding: 10px;
+            border: solid 1px #748ca5;
+            background-color:white;
+        }
+    }
+}
+`
+
+const Mobile = styled.div`
+overflow-wrap: break-word;
+
+ul {
+    list-style:none;
+    width:100%;
+    background: #fcfcfc;
+    padding: 0.1em 0 0.1em 0.5em;
+    border: solid 1px gray;
+}
+ul li {
+    padding: 0.5em 0; 
+}
+.topmain {
+    display:flex;
+    flex-wrap:wrap;
+
+    h2 {
+        position: relative;
+        display: inline-block;
+        padding: 0 65px;
+        text-align: center;
+        margin:30px 0 5px 65px;
+    }    
+    h2:before,
+    h2:after {
+        position: absolute;
+        top: calc(50% - 3px);
+        width: 50px;
+        height: 6px;
+        content: '';
+        border-top: solid 2px #000;
+        border-bottom: solid 2px #000;
+    }    
+    h2:before {
+        left: 0;
+    }   
+    h2:after {
+        right: 0;
+    }
+    button {
+        margin:30px 0 20px 285px;
+        font-weight: 700;
+        padding: 0.5rem 1.5rem;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        -webkit-transition: all 0.3s;
+        transition: all 0.3s;
+        text-align: center;
+        vertical-align: middle;
+        text-decoration: none;
+        border-radius: 0.5rem;
+        border: 2px solid #27acd9;
+        background: #27acd9;
+        color: #fff;
+    }
+}
+.main {
+    .content {
+        text-align: center;
+
+        table {
+            width:450px;
+            margin:0 0 20px 20px;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        caption {
+            margin-top:20px;
+            font-size:18px;
+            background-color: lightyellow;
+            border: solid 1px #333;
+        }
+        th {
+            font-size:1.5vw;
+            padding: 10px;
+            background: #e3faf8;
+            border: solid 1px #748ca5;
+        }
+        td {
+            font-size:1.5vw;
+            padding: 10px;
+            border: solid 1px #748ca5;
+            background-color:white;
+        }
+    }
+}
+`
 
 type Todo = {
     id:number,
@@ -29,321 +314,10 @@ type Life = {
     checkcontent:string[]
 }
 
-const PCDiv = styled.div`
-    overflow-wrap: break-word;
-
-    .due {
-        margin-left:20px;
-    }
-
-    ul {
-        list-style:none;
-        width:70%;
-        background: #fcfcfc;
-        padding: 0.1em 0 0.1em 0.5em;
-        border: solid 1px gray;
-    }
-    
-    ul li {
-        padding: 0.5em 0; 
-    }
-
-    .topmain {
-        display:flex;
-        justify-content:space-between;
-
-        h2 {
-            position: relative;
-            display: inline-block;
-            padding: 0 65px;
-            text-align: center;
-            margin:30px 0 5px 40px;
-        }
-        
-        h2:before,
-        h2:after {
-            position: absolute;
-            top: calc(50% - 3px);
-            width: 50px;
-            height: 6px;
-            content: '';
-            border-top: solid 2px #000;
-            border-bottom: solid 2px #000;
-        }
-        
-        h2:before {
-            left: 0;
-        }
-        
-        h2:after {
-            right: 0;
-        }
-
-        button {
-            margin:30px 50px 0 0;
-            font-weight: 700;
-            padding: 0.5rem 1.5rem;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-transition: all 0.3s;
-            transition: all 0.3s;
-            text-align: center;
-            vertical-align: middle;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            border: 2px solid #27acd9;
-            background: #27acd9;
-            color: #fff;
-        }
-    }
-
-    .main {
-        display: flex;
-        justify-content:space-between;
-        
-        .content {
-            text-align: center;
-
-            table {
-                width:40vw;
-                margin:0 35px;
-                text-align: center;
-                border-collapse: collapse;
-            }
-            caption {
-                margin-top:20px;
-                font-size:18px;
-                background-color: lightyellow;
-                border: solid 1px #333;
-            }
-            th {
-                padding: 10px;
-                background: #e3faf8;
-                border: solid 1px #748ca5;
-            }
-            td {
-                font-size:1.5vw;
-                padding: 10px;
-                border: solid 1px #748ca5;
-                background-color:white;
-            }
-        }
-    }
-
-`
-
-const TabDiv = styled.div`
-    overflow-wrap: break-word;
-
-    ul {
-        list-style:none;
-        width:100%;
-        background: #fcfcfc;
-        padding: 0.1em 0 0.1em 0.5em;
-        border: solid 1px gray;
-    }
-    
-    ul li {
-        padding: 0.5em 0; 
-    }
-
-    .topmain {
-        display:flex;
-        justify-content:space-between;
-
-        h2 {
-            font-size:3.5vw;
-            position: relative;
-            display: inline-block;
-            padding: 0 65px;
-            text-align: center;
-            margin:30px 0 5px 0;
-        }
-        
-        h2:before,
-        h2:after {
-            position: absolute;
-            top: calc(50% - 3px);
-            width: 50px;
-            height: 6px;
-            content: '';
-            border-top: solid 2px #000;
-            border-bottom: solid 2px #000;
-        }
-        
-        h2:before {
-            left: 0;
-        }
-        
-        h2:after {
-            right: 0;
-        }
-
-        button {
-            margin:30px 0 0 0;
-            font-weight: 700;
-            padding: 0.5rem 1.5rem;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-transition: all 0.3s;
-            transition: all 0.3s;
-            text-align: center;
-            vertical-align: middle;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            border: 2px solid #27acd9;
-            background: #27acd9;
-            color: #fff;
-        }
-    }
-
-    .main {
-        display: flex;
-        justify-content:space-between;
-
-        .content {
-            text-align: center;
-
-            table {
-                width:40vw;
-                text-align: center;
-                border-collapse: collapse;
-            }
-            caption {
-                margin-top:20px;
-                font-size:18px;
-                background-color: lightyellow;
-                border: solid 1px #333;
-            }
-            th {
-                font-size:1.5vw;
-                padding: 10px;
-                background: #e3faf8;
-                border: solid 1px #748ca5;
-            }
-            td {
-                font-size:1.5vw;
-                padding: 10px;
-                border: solid 1px #748ca5;
-                background-color:white;
-            }
-        }
-    }
-
-`
-
-const MobDiv = styled.div`
-    overflow-wrap: break-word;
-
-    ul {
-        list-style:none;
-        width:100%;
-        background: #fcfcfc;
-        padding: 0.1em 0 0.1em 0.5em;
-        border: solid 1px gray;
-    }
-    
-    ul li {
-        padding: 0.5em 0; 
-    }
-
-    .topmain {
-        display:flex;
-        flex-wrap:wrap;
-
-        h2 {
-            position: relative;
-            display: inline-block;
-            padding: 0 65px;
-            text-align: center;
-            margin:30px 0 5px 65px;
-        }
-        
-        h2:before,
-        h2:after {
-            position: absolute;
-            top: calc(50% - 3px);
-            width: 50px;
-            height: 6px;
-            content: '';
-            border-top: solid 2px #000;
-            border-bottom: solid 2px #000;
-        }
-        
-        h2:before {
-            left: 0;
-        }
-        
-        h2:after {
-            right: 0;
-        }
-
-        button {
-            margin:30px 0 20px 285px;
-            font-weight: 700;
-            padding: 0.5rem 1.5rem;
-            cursor: pointer;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            -webkit-transition: all 0.3s;
-            transition: all 0.3s;
-            text-align: center;
-            vertical-align: middle;
-            text-decoration: none;
-            border-radius: 0.5rem;
-            border: 2px solid #27acd9;
-            background: #27acd9;
-            color: #fff;
-        }
-    }
-
-    .main {
-
-        .content {
-            text-align: center;
-
-            table {
-                width:450px;
-                margin:0 0 20px 20px;
-                text-align: center;
-                border-collapse: collapse;
-            }
-            caption {
-                margin-top:20px;
-                font-size:18px;
-                background-color: lightyellow;
-                border: solid 1px #333;
-            }
-            th {
-                font-size:1.5vw;
-                padding: 10px;
-                background: #e3faf8;
-                border: solid 1px #748ca5;
-            }
-            td {
-                font-size:1.5vw;
-                padding: 10px;
-                border: solid 1px #748ca5;
-                background-color:white;
-            }
-        }
-    }
-
-`
-
 export const Mypage = ()=>{
-    const PC:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const Tablet:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    const Mobile:boolean = useMediaQuery({query: '(max-width: 519px)'})
-    const {env,userid,loginstate,isLoading,isError} = FetchData()
+    const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
+    const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
+    const {env,userid,isLoading,isError} = FetchData()
     const [id,setId] = useState("")
     const [todo,setTodo] = useState([])
     const [lifepost,setLifepost] = useState([])
@@ -386,10 +360,10 @@ export const Mypage = ()=>{
         router.push("/components/passchange")
     }
 
-    if(PC) {
+    if(PCsize) {
     return(
         <Layout>
-        <PCDiv>
+        <PC>
             <div className="topmain">
             <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
             </div>
@@ -472,13 +446,13 @@ export const Mypage = ()=>{
             </div>
 
         </div>
-        </PCDiv>
+        </PC>
         </Layout>
     )
-    }else if(Tablet) {
+    }else if(Tabletsize) {
         return(
             <Layout>
-            <TabDiv>
+            <Tablet>
                 <div className="topmain">
                 <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
                 </div>
@@ -523,7 +497,6 @@ export const Mypage = ()=>{
             </div>
     
             <div className="main">
-    
                 <div className="content">
                 <table border={1}>
                 <caption>作成したTODOリスト</caption>
@@ -561,13 +534,13 @@ export const Mypage = ()=>{
                 </div>
     
             </div>
-            </TabDiv>
+            </Tablet>
             </Layout>
         )
     }else {
         return(
             <Layout>
-            <MobDiv>
+            <Mobile>
                 <div className="topmain">
                 <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
                 </div>
@@ -612,7 +585,6 @@ export const Mypage = ()=>{
             </div>
     
             <div className="main">
-    
                 <div className="content">
                 <table border={1}>
                 <caption>作成したTODOリスト</caption>
@@ -650,7 +622,7 @@ export const Mypage = ()=>{
                 </div>
     
             </div>
-            </MobDiv>
+            </Mobile>
             </Layout>
         )
     }
