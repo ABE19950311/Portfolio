@@ -530,8 +530,8 @@ export const Lifepost =()=>{
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
-        const value= event.target.value
-        const nullflag = value.trim() ? false : true
+        const value= event.target.value.split("\n")
+        const nullflag = event.target.value.trim() ? false : true
         const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(detailtimer.current) clearTimeout(detailtimer.current)
@@ -550,8 +550,8 @@ export const Lifepost =()=>{
 
     const doCheckcontent = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
-        const value = event.target.value
-        const nullflag = value.trim() ? false : true
+        const value = event.target.value.split("\n")
+        const nullflag = event.target.value.trim() ? false : true
         const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(checktimer.current) clearTimeout(checktimer.current)

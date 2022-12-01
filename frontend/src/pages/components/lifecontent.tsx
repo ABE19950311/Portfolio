@@ -72,6 +72,7 @@ ul:before{
     padding: 0 10px;
 }
 ul li{
+    list-style:none;
     font-weight: bold;
 }
 .steps {
@@ -128,6 +129,9 @@ ul li{
     position: absolute;
     left: 0;
     z-index: 1;
+}
+.none {
+    display:none;
 }
 `
 
@@ -195,6 +199,7 @@ ul:before{
     padding: 0 10px;
 }
 ul li{
+    list-style:none;
     font-weight: bold;
 }
 .steps {
@@ -314,6 +319,7 @@ ul:before{
     padding: 0 10px;
 }
 ul li{
+    list-style:none;
     font-weight: bold;
 }
 .steps {
@@ -471,6 +477,7 @@ type Sort = {
     sortid:number
 }
 
+
 export const Lifecontent = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
@@ -563,8 +570,7 @@ export const Lifecontent = ()=>{
         let page_number = data['selected']
         setOffset(page_number*perPage)
     }
-
-
+    
     if(PCsize) {
     return (
         <Layout>
@@ -575,20 +581,22 @@ export const Lifecontent = ()=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
-                        {detail.map((detail:string[],sekey:number)=>{
-                            return(
-                                <React.Fragment key={sekey}>
-                                <p>{detail[key+1]}</p>
-                                </React.Fragment>
-                            )
-                        })}
-                        {checkcontent.map((checkcontent:string[],thkey:number)=>{
-                            return(
-                                <React.Fragment key={thkey}>
-                                {checkcontent[key+1] ? <h4>{checkcontent[key+1]}</h4>:<></>}
-                                </React.Fragment>
-                            )
-                        })}
+                            {detail[key][key+1].map((detdata:string[],detkey:number)=>{
+                                return (
+                                    <React.Fragment key={detkey}>
+                                        <p>{detdata}</p>
+                                    </React.Fragment>
+                                )
+                            })}
+                            <ul>
+                                {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                                    return (
+                                        <React.Fragment key={checkkey}>
+                                            <li>{checkdata}</li>
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </ul>
                         </React.Fragment>
                     )
             })}
@@ -648,20 +656,22 @@ export const Lifecontent = ()=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
-                        {detail.map((detail:string[],sekey:number)=>{
-                            return(
-                                <React.Fragment key={sekey}>
-                                <p>{detail[key+1]}</p>
-                                </React.Fragment>
-                            )
-                        })}
-                        {checkcontent.map((checkcontent:string[],thkey:number)=>{
-                            return(
-                                <React.Fragment key={thkey}>
-                                {checkcontent[key+1] ? <h4>{checkcontent[key+1]}</h4>:<></>}
-                                </React.Fragment>
-                            )
-                        })}
+                            {detail[key][key+1].map((detdata:string[],detkey:number)=>{
+                                return (
+                                    <React.Fragment key={detkey}>
+                                        <p>{detdata}</p>
+                                    </React.Fragment>
+                                )
+                            })}
+                            <ul>
+                                {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                                    return (
+                                        <React.Fragment key={checkkey}>
+                                            <li>{checkdata}</li>
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </ul>
                         </React.Fragment>
                     )
                 })}
@@ -720,20 +730,22 @@ export const Lifecontent = ()=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
-                        {detail.map((detail:string[],sekey:number)=>{
-                            return(
-                                <React.Fragment key={sekey}>
-                                <p>{detail[key+1]}</p>
-                                </React.Fragment>
-                            )
-                        })}
-                        {checkcontent.map((checkcontent:string[],thkey:number)=>{
-                            return(
-                                <React.Fragment key={thkey}>
-                                {checkcontent[key+1] ? <h4>{checkcontent[key+1]}</h4>:<></>}
-                                </React.Fragment>
-                            )
-                        })}
+                            {detail[key][key+1].map((detdata:string[],detkey:number)=>{
+                                return (
+                                    <React.Fragment key={detkey}>
+                                        <p>{detdata}</p>
+                                    </React.Fragment>
+                                )
+                            })}
+                            <ul>
+                                {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                                    return (
+                                        <React.Fragment key={checkkey}>
+                                            <li>{checkdata}</li>
+                                        </React.Fragment>
+                                    )
+                                })}
+                            </ul>
                         </React.Fragment>
                     )
                 })}

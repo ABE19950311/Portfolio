@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect,useRef} from "react"
+import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useRouter,useSearchParams} from "next/navigation"
 import Layout from "./layout"
@@ -411,25 +411,18 @@ span {
 }
 `
 
-type Life = {
-    id:number,
-    user_id:number,
-    title:string,
-    lifeitem:string,
-    headline:string,
-    created_at:Date,
-    updated_at:Date,
-    content:string[],
-    detail:string[],
-    checkcontent:string[]
-}
-
 type Sort = {
     sortid:number
 }
 
 type Checklife = {
     [id:number]:boolean
+}
+
+type Life = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
 }
 
 export const Updatelife =()=>{
@@ -444,6 +437,8 @@ export const Updatelife =()=>{
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
     const [formcount,setFormcount] = useState<string[]>([])
+    const [defaultdetail,setDefaultdetail] = useState<any[]>([])
+    const [defaultcheck,setDefaultcheck] = useState<any[]>([])
     const router = useRouter()
     const search = useSearchParams()
     const updateid = search.get("id")
@@ -467,7 +462,9 @@ export const Updatelife =()=>{
                 setLifeitem(res.data.lifeitem)
                 setContent(JSON.parse(res.data.content).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                 setDetail(JSON.parse(res.data.detail).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+                setDefaultdetail(JSON.parse(res.data.detail).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                 setCheckcontent(JSON.parse(res.data.checkcontent).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+                setDefaultcheck(JSON.parse(res.data.checkcontent).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                     if(!formcount.length) {
                     JSON.parse(res.data.content).forEach(()=>{
                     setFormcount((formcount)=>([
@@ -505,8 +502,6 @@ export const Updatelife =()=>{
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
-
-    console.log(lifeitem)
     
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)
@@ -584,8 +579,8 @@ export const Updatelife =()=>{
 
     const doDetail =(event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
-        const value= event.target.value
-        const nullflag = value.trim() ? false : true
+        const value= event.target.value.split("\n")
+        const nullflag = event.target.value.trim() ? false : true
         const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(detailtimer.current) clearTimeout(detailtimer.current)
@@ -604,8 +599,8 @@ export const Updatelife =()=>{
 
     const doCheckcontent = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
         const id = event.target.tabIndex
-        const value = event.target.value
-        const nullflag = value.trim() ? false : true
+        const value = event.target.value.split("\n")
+        const nullflag = event.target.value.trim() ? false : true
         const obj = {[id]:value,sortid:id,nullflag:nullflag}
 
         if(checktimer.current) clearTimeout(checktimer.current)
@@ -621,6 +616,7 @@ export const Updatelife =()=>{
         if(find==-1) return
         checkcontent.splice(find,1)
     }
+
 
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
@@ -677,9 +673,9 @@ export const Updatelife =()=>{
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
-                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={detail[key+0]?.[key+1]} onChange={doDetail} />
+                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultdetail[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doDetail} />
                                 <br></br>
-                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doCheckcontent} />
                                 <h2></h2>
                             </div>   
                         )
@@ -714,9 +710,9 @@ export const Updatelife =()=>{
                                 <div className="steps" key={key}>
                                     <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
-                                    <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={detail[key+0]?.[key+1]} tabIndex={key+1} onChange={doDetail} />
+                                    <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={defaultdetail[key+0]?.[key+1].toString().replace(/,/g,"\n")} tabIndex={key+1} onChange={doDetail} />
                                     <br></br>
-                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
@@ -753,9 +749,9 @@ export const Updatelife =()=>{
                                 <div className="steps" key={key}>
                                     <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
-                                    内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={detail[key+0]?.[key+1]} onChange={doDetail} />
+                                    内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultdetail[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doDetail} />
                                     <br></br>
-                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={checkcontent[key+0]?.[key+1]} onChange={doCheckcontent} />
+                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultcheck[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
