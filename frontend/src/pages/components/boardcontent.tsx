@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect} from "react"
+import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useSearchParams} from "next/navigation"
 import moment from "moment"
@@ -202,20 +202,20 @@ export const Boardcontent = ()=>{
     const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("")
-    const [post,setPost] = useState("")
+    const [post,setPost] = useState<any[]>([])
     const [flag,setFlag] = useState("")
     const [heartnumber,setHeartnumber] = useState<any>(0)
     const [heartflag,setHeartflag] = useState("")
     const [fontcolor,setFontcolor] = useState<any>({})
-    const [postcontent,setPostcontent] = useState([])
+    const [postdata,setPostData] = useState<any>([])
 
     const search = useSearchParams();
     const board_id = search.get("board_id") as unknown as number
     const user_id = search.get("user_id") as unknown as number
     const username = search.get("username") as unknown as string
     const createdate = search.get("createdate") as unknown as string
-    const content = search.get("content") as unknown as string
-
+    const getcontent = search.get("content") 
+    
     useEffect(()=>{
         const id = Number(userid)
         setSessionid(id)
@@ -225,7 +225,7 @@ export const Boardcontent = ()=>{
         if(!env) return
         axios.get(env+"/posts")
         .then(res=>{
-            setPostcontent(res.data)
+            setPostData(res.data)
         }).catch(error=>{
             console.log(error)
         })
@@ -272,13 +272,17 @@ export const Boardcontent = ()=>{
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
+    if(!getcontent) return
+
+    const content:string[] = JSON.parse(getcontent)
 
     const doName = (event:{target:HTMLInputElement})=>{
         setName(event.target.value)
     }
 
     const doPost = (event:{target:HTMLTextAreaElement})=>{
-        setPost(event.target.value)
+        const value = event.target.value.split("\n")
+        setPost(value)
         if(sessionid==user_id) {
             setName(username)
         }
@@ -312,19 +316,20 @@ export const Boardcontent = ()=>{
         event.preventDefault()
         
         if(!post) return
+
+        const jsonpost = JSON.stringify(post)
+
         axios.post(env+"/posts",
         {
             posts: {
-                username:name ? name:"名無しさん",
-                postcontent:post,
+                username:name ? name:"匿名さん",
+                postcontent:jsonpost,
                 board_id:board_id,
                 user_id:sessionid
             }
         }).then(res=>{
-            console.log(res.data)
             setFlag(res.data)
             setName("")
-            setPost("")
         }).catch(error=>{
             console.log(error)
         })
@@ -337,14 +342,20 @@ export const Boardcontent = ()=>{
             <PC>
             <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
             <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
+            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} onChange={doPost}></textarea><br></br>
             <label></label><button type="submit" onClick={doSubmit}>返信する</button>
     
             <div className="postcontent">
                 <span className="content">投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</span>
-                <p className="post">{content}</p>
+                {content.map((value:string,key:number)=>{
+                    return (
+                    <React.Fragment key={key}>
+                        <p className="post">{value}</p>
+                    </React.Fragment>
+                    )
+                })} 
             </div>
-            {postcontent.filter((posts:Post)=>{
+            {postdata.filter((posts:Post)=>{
                     if(board_id==posts.board_id) {
                         return posts;
                     }
@@ -354,7 +365,13 @@ export const Boardcontent = ()=>{
                         <div className="postcontent" key={key}>
                         <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}
                                 &emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
-                        <p className="post">{post.postcontent}</p>
+                            {JSON.parse(postdata[key].postcontent).map((value:string,valkey:number)=>{
+                                return (
+                                <React.Fragment key={valkey}>
+                                    <p className="post">{value}</p>
+                                </React.Fragment>
+                                )
+                            })}
                         </div>
                     )
                 })
@@ -370,14 +387,20 @@ export const Boardcontent = ()=>{
                 <Tablet>
                 <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-                <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={post} onChange={doPost}></textarea><br></br>
+                <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} onChange={doPost}></textarea><br></br>
                 <label></label><button type="submit" onClick={doSubmit}>返信する</button><br></br>
         
                 <div className="postcontent">
                     <span className="content">投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</span>
-                    <p className="post">{content}</p>
+                    {content.map((value:string,key:number)=>{
+                    return (
+                    <React.Fragment key={key}>
+                        <p className="post">{value}</p>
+                    </React.Fragment>
+                    )
+                    })} 
                 </div>
-                {postcontent.filter((posts:Post)=>{
+                {postdata.filter((posts:Post)=>{
                         if(board_id==posts.board_id) {
                             return posts;
                         }
@@ -387,7 +410,13 @@ export const Boardcontent = ()=>{
                             <div className="postcontent" key={key}>
                             <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}
                                     &emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
-                            <p className="post">{post.postcontent}</p>
+                            {JSON.parse(postdata[key].postcontent).map((value:string,valkey:number)=>{
+                                return (
+                                <React.Fragment key={valkey}>
+                                    <p className="post">{value}</p>
+                                </React.Fragment>
+                                )
+                            })}
                             </div>
                         )
                     })
@@ -403,14 +432,20 @@ export const Boardcontent = ()=>{
                 <Mobile>
                 <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-                &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} value={post} onChange={doPost}></textarea><br></br>
+                &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} onChange={doPost}></textarea><br></br>
                 &emsp;<button type="submit" onClick={doSubmit}>返信する</button><br></br>
         
                 <div className="postcontent">
                     <span className="content">投稿者:{username}&emsp;投稿日:{moment(createdate).format("YYYY-MM-DD h:mm:ss")}</span>
-                    <p className="post">{content}</p>
+                    {content.map((value:string,key:number)=>{
+                    return (
+                    <React.Fragment key={key}>
+                        <p className="post">{value}</p>
+                    </React.Fragment>
+                    )
+                    })} 
                 </div>
-                {postcontent.filter((posts:Post)=>{
+                {postdata.filter((posts:Post)=>{
                         if(board_id==posts.board_id) {
                             return posts;
                         }
@@ -420,7 +455,13 @@ export const Boardcontent = ()=>{
                             <div className="postcontent" key={key}>
                             <span className="content" onClick={()=>setcolorflag(post.id)} >{key+1}&nbsp;投稿者:{post.username}&emsp;投稿日:{moment(post.created_at).format("YYYY-MM-DD h:mm:ss")}
                                     &emsp;<FaHeart size={25} className={fontcolor[post.id] ? "setcolor":"noheart"} />{heartnumber ? heartnumber["heartcount"][post.id]:0}</span>
-                            <p className="post">{post.postcontent}</p>
+                            {JSON.parse(postdata[key].postcontent).map((value:string,valkey:number)=>{
+                                return (
+                                <React.Fragment key={valkey}>
+                                    <p className="post">{value}</p>
+                                </React.Fragment>
+                                )
+                            })}
                             </div>
                         )
                     })

@@ -183,7 +183,7 @@ export const Board = ()=>{
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("");
     const [title,setTitle] = useState("");
-    const [content,setContent] = useState("");
+    const [content,setContent] = useState<any[]>([]);
     const [flag,setFlag] = useState("");
     const [board,setBoard] = useState([]);
 
@@ -215,7 +215,8 @@ export const Board = ()=>{
     }
 
     const doContent = (event:{target:HTMLTextAreaElement})=>{
-        setContent(event.target.value)
+        const value = event.target.value.split("\n")
+        setContent(value)
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
@@ -223,18 +224,19 @@ export const Board = ()=>{
         
         if(!title||!content) return
 
+        const jsoncontent = JSON.stringify(content)
+
         axios.post(env+"/boards",
         {
             boards:{
                 posttitle:title,
-                postcontent:content,
-                username:name ? name:"名無しさん"
+                postcontent:jsoncontent,
+                username:name ? name:"匿名さん"
             }
         }).then(res=>{
             console.log(res.data)
             setFlag(res.data)
             setName("")
-            setContent("")
             setTitle("")
         }).catch(error=>{
             console.log(error)
@@ -256,7 +258,7 @@ export const Board = ()=>{
         <PC>
         <label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
         <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
-        <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={content} onChange={doContent}/><br></br>
+        <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} onChange={doContent}/><br></br>
         <label className="sub"></label><button type="submit" onClick={doSubmit}>投稿する</button><br></br>
         
             {board.map((board:Boardtype,key:number)=>{
@@ -280,7 +282,7 @@ export const Board = ()=>{
             <Tablet>
             <label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
             <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
-            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} value={content} onChange={doContent}/><br></br>
+            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} onChange={doContent}/><br></br>
             <label className="sub"></label><button type="submit" onClick={doSubmit}>投稿する</button><br></br>
             
                 {board.map((board:Boardtype,key:number)=>{
@@ -304,7 +306,7 @@ export const Board = ()=>{
             <Mobile>
             &emsp;<label className="post">名前:</label><input type="text" value={name} onChange={doName}/><br></br>
             &emsp;<label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input type="text" value={title} onChange={doTitle}/><br></br>
-            &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} value={content} onChange={doContent}/><br></br>
+            &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} onChange={doContent}/><br></br>
             <button type="submit" onClick={doSubmit}>投稿する</button><br></br>
             
                 {board.map((board:Boardtype,key:number)=>{

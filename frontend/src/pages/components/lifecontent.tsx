@@ -484,9 +484,9 @@ export const Lifecontent = ()=>{
     const {env,userid,isLoading,isError} = FetchData()
     const [usercontent,setUsercontent] = useState<Content>()
     const [name,setName] = useState("")
-    const [comment,setComment] = useState("")
+    const [comment,setComment] = useState<string[]>([])
     const [flag,setFlag] = useState("")
-    const [commentdata,setCommentdata] = useState([])
+    const [commentdata,setCommentdata] = useState<any[]>([])
     const [rescontent,setRescontent] = useState<any[]>([])
     const [resdetail,setResdetail] = useState<any[]>([])
     const [rescheckcontent,setRescheckcontent] = useState<any[]>([])
@@ -543,24 +543,26 @@ export const Lifecontent = ()=>{
     }
 
     const doComment = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
-        setComment(event.target.value)
+        const value = event.target.value.split("\n")
+        setComment(value)
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
+
+        const jsoncomment = JSON.stringify(comment)
 
         axios.post(env+"/comments",
         {
             comments: {
                 lifepost_id:id,
                 user_id:userid,
-                comment:comment,
+                comment:jsoncomment,
                 commentuser:name ? name:"匿名さん"
             }
         }).then(res=>{
             setFlag(res.data)
             setName("")
-            setComment("")
         }).catch(error=>{
             console.log(error)
         })
@@ -588,15 +590,19 @@ export const Lifecontent = ()=>{
                                     </React.Fragment>
                                 )
                             })}
+                            {checkcontent[key][key+1] ?
                             <ul>
-                                {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
-                                    return (
-                                        <React.Fragment key={checkkey}>
-                                            <li>{checkdata}</li>
-                                        </React.Fragment>
-                                    )
-                                })}
+                            {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                                return (
+                                    <React.Fragment key={checkkey}>
+                                        <li>{checkdata}</li>
+                                    </React.Fragment>
+                                )
+                            })}
                             </ul>
+                            :
+                            <></>
+                            }
                         </React.Fragment>
                     )
             })}
@@ -604,7 +610,7 @@ export const Lifecontent = ()=>{
             </div>
             <br></br>
             <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
-            <label className="commentlabel">コメント内容:</label><textarea  value={comment} rows={8} cols={70} onChange={doComment} /><br></br>
+            <label className="commentlabel">コメント内容:</label><textarea rows={8} cols={70} onChange={doComment} /><br></br>
             <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
 
             {commentdata.slice(offset,offset+perPage)
@@ -612,7 +618,13 @@ export const Lifecontent = ()=>{
                 return (
                     <div className="comment" key={key}>
                     <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
-                    <p className="postcomment">{value.comment}</p>
+                    {JSON.parse(commentdata[key].comment).map((value:string,comkey:number)=>{
+                        return (
+                            <React.Fragment key={comkey}>
+                            <p className="postcomment">{value}</p>
+                            </React.Fragment>
+                        )
+                    })}
                     </div>
                 )
             })}
@@ -663,22 +675,26 @@ export const Lifecontent = ()=>{
                                     </React.Fragment>
                                 )
                             })}
+                            {checkcontent[key][key+1] ?
                             <ul>
-                                {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
-                                    return (
-                                        <React.Fragment key={checkkey}>
-                                            <li>{checkdata}</li>
-                                        </React.Fragment>
-                                    )
-                                })}
+                            {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                                return (
+                                    <React.Fragment key={checkkey}>
+                                        <li>{checkdata}</li>
+                                    </React.Fragment>
+                                )
+                            })}
                             </ul>
+                            :
+                            <></>
+                            }
                         </React.Fragment>
                     )
                 })}
                 <h3></h3>
                 </div>
                 <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
-                <label className="commentlabel">コメント内容:</label><textarea  value={comment} rows={8} cols={70} onChange={doComment} /><br></br>
+                <label className="commentlabel">コメント内容:</label><textarea rows={8} cols={70} onChange={doComment} /><br></br>
                 <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
     
                 {commentdata.slice(offset,offset+perPage)
@@ -686,7 +702,13 @@ export const Lifecontent = ()=>{
                 return (
                     <div className="comment" key={key}>
                     <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
-                    <p className="postcomment">{value.comment}</p>
+                    {JSON.parse(commentdata[key].comment).map((value:string,comkey:number)=>{
+                        return (
+                            <React.Fragment key={comkey}>
+                            <p className="postcomment">{value}</p>
+                            </React.Fragment>
+                        )
+                    })}
                     </div>
                 )
                 })}
@@ -737,15 +759,19 @@ export const Lifecontent = ()=>{
                                     </React.Fragment>
                                 )
                             })}
+                            {checkcontent[key][key+1] ?
                             <ul>
-                                {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
-                                    return (
-                                        <React.Fragment key={checkkey}>
-                                            <li>{checkdata}</li>
-                                        </React.Fragment>
-                                    )
-                                })}
+                            {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                                return (
+                                    <React.Fragment key={checkkey}>
+                                        <li>{checkdata}</li>
+                                    </React.Fragment>
+                                )
+                            })}
                             </ul>
+                            :
+                            <></>
+                            }
                         </React.Fragment>
                     )
                 })}
@@ -757,7 +783,7 @@ export const Lifecontent = ()=>{
                 <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} />
                 <br></br>
                 <br></br>
-                <label className="commentlabel">コメント内容:</label><textarea  value={comment} rows={8} cols={60} onChange={doComment} />
+                <label className="commentlabel">コメント内容:</label><textarea rows={8} cols={60} onChange={doComment} />
                 <br></br>
                 <br></br>
                 <button type={"submit"} onClick={doSubmit} >コメントする</button>
@@ -768,7 +794,13 @@ export const Lifecontent = ()=>{
                 return (
                     <div className="comment" key={key}>
                     <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
-                    <p className="postcomment">{value.comment}</p>
+                    {JSON.parse(commentdata[key].comment).map((value:string,comkey:number)=>{
+                        return (
+                            <React.Fragment key={comkey}>
+                            <p className="postcomment">{value}</p>
+                            </React.Fragment>
+                        )
+                    })}
                     </div>
                     )
                 })}

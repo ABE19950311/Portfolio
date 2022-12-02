@@ -671,11 +671,11 @@ export const Updatelife =()=>{
                     {formcount.map((count:string,key:number)=>{
                         return (
                             <div className="steps" key={key}>
-                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key][key+1]} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
-                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultdetail[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doDetail} />
+                                <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultdetail[key][key+1].join("<br>").replace(/<br>/g,"\n")} onChange={doDetail} />
                                 <br></br>
-                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doCheckcontent} />
+                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key][key+1] ? defaultcheck[key][key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
                                 <h2></h2>
                             </div>   
                         )
@@ -708,11 +708,11 @@ export const Updatelife =()=>{
                         {formcount.map((count:string,key:number)=>{
                             return (
                                 <div className="steps" key={key}>
-                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key][key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
-                                    <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={defaultdetail[key+0]?.[key+1].toString().replace(/,/g,"\n")} tabIndex={key+1} onChange={doDetail} />
+                                    <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={defaultdetail[key][key+1].join("<br>").replace(/<br>/g,"\n")} tabIndex={key+1} onChange={doDetail} />
                                     <br></br>
-                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doCheckcontent} />
+                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key][key+1] ? defaultcheck[key][key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
@@ -747,11 +747,11 @@ export const Updatelife =()=>{
                         {formcount.map((count:string,key:number)=>{
                             return (
                                 <div className="steps" key={key}>
-                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key+0]?.[key+1]} onChange={doContent} type={"text"}/></h2>
+                                    <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key][key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
-                                    内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultdetail[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doDetail} />
+                                    内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultdetail[key][key+1].join("<br>").replace(/<br>/g,"\n")} onChange={doDetail} />
                                     <br></br>
-                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultcheck[key+0]?.[key+1].toString().replace(/,/g,"\n")} onChange={doCheckcontent} />
+                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultcheck[key][key+1] ? defaultcheck[key][key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
