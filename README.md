@@ -1,4 +1,4 @@
-##■ポートフォリオ名
+## ■ポートフォリオ名
 　Dailylifey　URL:https://dailylifey.com
 
 ##テスト用アカウント
