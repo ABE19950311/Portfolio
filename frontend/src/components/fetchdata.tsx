@@ -20,6 +20,8 @@ export const FetchData = ()=>{
                 setError(error)
             })
         }else{
+            console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+            console.log(process.env.NEXT_PUBLIC_ADDRESS)
             setEnv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessionid")
             .then(res=>{
