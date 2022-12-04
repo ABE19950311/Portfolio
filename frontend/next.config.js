@@ -14,9 +14,6 @@ module.exports = withTM({
     compiler: {
       styledComponents: true,
     },
-    env: {
-      BASE_URL: process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS,
-    }
 });
 
 
