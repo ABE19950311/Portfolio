@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState,useEffect} from "react"
+import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useSearchParams} from "next/navigation"
 import moment from "moment"
@@ -209,7 +209,8 @@ export const Boardcontent = ()=>{
     const [fontcolor,setFontcolor] = useState<any>({})
     const [postdata,setPostData] = useState<any>([])
 
-    const search = useSearchParams();
+    const formRef = useRef<HTMLTextAreaElement>(null)
+    const search = useSearchParams()
     const board_id = search.get("board_id") as unknown as number
     const user_id = search.get("user_id") as unknown as number
     const username = search.get("username") as unknown as string
@@ -281,7 +282,7 @@ export const Boardcontent = ()=>{
     }
 
     const doPost = (event:{target:HTMLTextAreaElement})=>{
-        const value = event.target.value.split("\n")
+        const value = event.target.value.trim().split("\n")
         setPost(value)
         if(sessionid==user_id) {
             setName(username)
@@ -314,9 +315,15 @@ export const Boardcontent = ()=>{
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
-        
-        if(!post) return
 
+        const existpostcheck = post.filter((value:string)=>{
+            if(value) {
+                return value
+            }
+        })
+
+        if(!existpostcheck.length) return
+        
         const jsonpost = JSON.stringify(post)
 
         axios.post(env+"/posts",
@@ -330,10 +337,15 @@ export const Boardcontent = ()=>{
         }).then(res=>{
             setFlag(res.data)
             setName("")
+            setPost([])
+            if(!formRef.current) return
+            formRef.current.value=""
         }).catch(error=>{
             console.log(error)
         })
     }
+
+    console.log(post)
 
     if(PCsize) {
     return (
@@ -342,7 +354,7 @@ export const Boardcontent = ()=>{
             <PC>
             <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
             <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} onChange={doPost}></textarea><br></br>
+            <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea ref={formRef} rows={8} cols={70} onChange={doPost}></textarea><br></br>
             <label></label><button type="submit" onClick={doSubmit}>返信する</button>
     
             <div className="postcontent">
@@ -387,7 +399,7 @@ export const Boardcontent = ()=>{
                 <Tablet>
                 <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <span className={sessionid==user_id ? "none":"name"}>名前:</span><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-                <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea rows={8} cols={70} onChange={doPost}></textarea><br></br>
+                <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea ref={formRef} rows={8} cols={70} onChange={doPost}></textarea><br></br>
                 <label></label><button type="submit" onClick={doSubmit}>返信する</button><br></br>
         
                 <div className="postcontent">
@@ -432,7 +444,7 @@ export const Boardcontent = ()=>{
                 <Mobile>
                 <Link href="/components/board"><button className="returnbtn">掲示板へ戻る</button></Link>
                 <label className={sessionid==user_id ? "none":""}>名前:</label><input type="text" className={sessionid==user_id ? "none":""} value={name} onChange={doName}/><br></br>
-                &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea rows={8} cols={60} onChange={doPost}></textarea><br></br>
+                &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea ref={formRef} rows={8} cols={60} onChange={doPost}></textarea><br></br>
                 &emsp;<button type="submit" onClick={doSubmit}>返信する</button><br></br>
         
                 <div className="postcontent">

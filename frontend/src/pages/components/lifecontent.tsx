@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import React, {useState,useEffect} from "react"
+import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
 import {useSearchParams} from "next/navigation"
 import Layout from "./layout"
@@ -25,15 +25,18 @@ p {
 .namelabel {
     margin-bottom:3px;
     display: inline-block;
-    width: 110px;
+    width: 150px;
     top: 50%;
 }
 .commentlabel {
     margin-bottom:3px;
     display: inline-block;
-    width: 110px;
+    width: 150px;
     top: 50%;
     transform: translate(0px,-70px)
+}
+.commentspan {
+    color:red;
 }
 .comment {
     overflow-wrap:break-word;
@@ -49,6 +52,12 @@ p {
 }
 .postcomment {
     font-size:16px;
+}
+.nologin {
+    color: #364e96;
+    padding: 0.5em 0;
+    border-top: solid 3px #364e96;
+    border-bottom: solid 3px #364e96;
 }
 ul {
     position: relative;
@@ -162,6 +171,9 @@ p {
     top: 50%;
     transform: translate(0px,-70px)
 }
+.commentspan {
+    color:red;
+}
 .comment {
     overflow-wrap:break-word;
     width:80%;
@@ -176,6 +188,12 @@ p {
 }
 .postcomment {
     font-size:16px;
+}
+.nologin {
+    color: #364e96;
+    padding: 0.5em 0;
+    border-top: solid 3px #364e96;
+    border-bottom: solid 3px #364e96;
 }
 ul {
     position: relative;
@@ -282,6 +300,9 @@ p {
     display: inline-block;
     transform: translate(0px,0px)
 }
+.commentspan {
+    color:red;
+}
 .comment {
     overflow-wrap:break-word;
     width:95%;
@@ -296,6 +317,12 @@ p {
 }
 .postcomment {
     font-size:16px;
+}
+.nologin {
+    color: #364e96;
+    padding: 0.5em 0;
+    border-top: solid 3px #364e96;
+    border-bottom: solid 3px #364e96;
 }
 ul {
     position: relative;
@@ -486,16 +513,18 @@ export const Lifecontent = ()=>{
     const [name,setName] = useState("")
     const [comment,setComment] = useState<string[]>([])
     const [flag,setFlag] = useState("")
-    const [commentdata,setCommentdata] = useState<any[]>([])
+    const [commentdata,setCommentdata] = useState<Comment[]>([])
     const [rescontent,setRescontent] = useState<any[]>([])
     const [resdetail,setResdetail] = useState<any[]>([])
     const [rescheckcontent,setRescheckcontent] = useState<any[]>([])
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
+    const [commentSlice,setCommentSlice] = useState<Comment[]>([])
     const [offset,setOffset] = useState(0); 
     const perPage: number = 5; 
 
+    const formRef = useRef<HTMLTextAreaElement>(null)
     const search = useSearchParams()
     const id = search.get("id") as unknown as number
     const user_id = search.get("user_id") as unknown as number
@@ -534,6 +563,11 @@ export const Lifecontent = ()=>{
         setCheckcontent(rescheckcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
     },[rescontent,resdetail,rescheckcontent])
 
+    useEffect(()=>{
+        const slicedata = commentdata.slice(offset,offset+perPage)
+        setCommentSlice(slicedata)
+    },[commentdata,offset])
+
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
     if(usercontent==undefined) return
@@ -543,13 +577,21 @@ export const Lifecontent = ()=>{
     }
 
     const doComment = (event:React.ChangeEvent<HTMLTextAreaElement>)=>{
-        const value = event.target.value.split("\n")
+        const value = event.target.value.trim().split("\n")
         setComment(value)
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
 
+        const existcommentcheck = comment.filter((value:string)=>{
+            if(value) {
+                return value
+            }
+        })
+
+        if(!existcommentcheck.length) return
+    
         const jsoncomment = JSON.stringify(comment)
 
         axios.post(env+"/comments",
@@ -563,6 +605,9 @@ export const Lifecontent = ()=>{
         }).then(res=>{
             setFlag(res.data)
             setName("")
+            setComment([])
+            if(!formRef.current) return
+            formRef.current.value=""
         }).catch(error=>{
             console.log(error)
         })
@@ -609,16 +654,25 @@ export const Lifecontent = ()=>{
             <h3></h3>
             </div>
             <br></br>
-            <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
-            <label className="commentlabel">コメント内容:</label><textarea rows={8} cols={70} onChange={doComment} /><br></br>
-            <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
 
-            {commentdata.slice(offset,offset+perPage)
-            .map((value:Comment,key:number)=>{
+            {userid ?
+            <>
+            <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
+            <label className="commentlabel">コメント内容<span className="commentspan">(必須)</span>:</label><textarea ref={formRef} rows={8} cols={70} onChange={doComment} /><br></br>
+            <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
+            </>
+            :
+            <>
+            <h3 className="nologin">コメントするにはログインをお願い致します</h3>
+            <br></br>
+            </>
+            }
+        
+            {commentSlice.map((value:Comment,key:number)=>{
                 return (
                     <div className="comment" key={key}>
                     <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
-                    {JSON.parse(commentdata[key].comment).map((value:string,comkey:number)=>{
+                    {JSON.parse(commentSlice[key].comment).map((value:string,comkey:number)=>{
                         return (
                             <React.Fragment key={comkey}>
                             <p className="postcomment">{value}</p>
@@ -693,16 +747,26 @@ export const Lifecontent = ()=>{
                 })}
                 <h3></h3>
                 </div>
+
+                {userid ?
+                <>
                 <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} /><br></br>
-                <label className="commentlabel">コメント内容:</label><textarea rows={8} cols={70} onChange={doComment} /><br></br>
+                <label className="commentlabel">コメント内容:<span className="commentspan">(必須)</span></label><textarea ref={formRef} rows={8} cols={70} onChange={doComment} /><br></br>
                 <button type={"submit"} onClick={doSubmit} >コメントする</button><br></br>
+                </>
+                :
+                <>
+                <br></br>
+                <h3 className="nologin">コメントするにはログインをお願い致します</h3>
+                <br></br>
+                </>
+                }
     
-                {commentdata.slice(offset,offset+perPage)
-                .map((value:Comment,key:number)=>{
+                {commentSlice.map((value:Comment,key:number)=>{
                 return (
                     <div className="comment" key={key}>
                     <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
-                    {JSON.parse(commentdata[key].comment).map((value:string,comkey:number)=>{
+                    {JSON.parse(commentSlice[key].comment).map((value:string,comkey:number)=>{
                         return (
                             <React.Fragment key={comkey}>
                             <p className="postcomment">{value}</p>
@@ -778,23 +842,32 @@ export const Lifecontent = ()=>{
                 <h3></h3>
                 </div>
                 <br></br>
+
+                {userid ?
+                <>
                 <br></br>
                 <br></br>
                 <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} />
                 <br></br>
                 <br></br>
-                <label className="commentlabel">コメント内容:</label><textarea rows={8} cols={60} onChange={doComment} />
+                <label className="commentlabel">コメント内容:<span className="commentspan">(必須)</span></label><textarea ref={formRef} rows={8} cols={60} onChange={doComment} />
                 <br></br>
                 <br></br>
                 <button type={"submit"} onClick={doSubmit} >コメントする</button>
+                </>
+                :
+                <>
+                <h3 className="nologin">コメントするにはログインをお願い致します</h3>
+                </>
+                }
+                
                 <br></br>
 
-                {commentdata.slice(offset,offset+perPage)
-                .map((value:Comment,key:number)=>{
+                {commentSlice.map((value:Comment,key:number)=>{
                 return (
                     <div className="comment" key={key}>
                     <span className="content">&nbsp;{value.commentuser}&emsp;&emsp;{moment(value.created_at).format("YYYY-MM-DD h:mm:ss")}</span>
-                    {JSON.parse(commentdata[key].comment).map((value:string,comkey:number)=>{
+                    {JSON.parse(commentSlice[key].comment).map((value:string,comkey:number)=>{
                         return (
                             <React.Fragment key={comkey}>
                             <p className="postcomment">{value}</p>

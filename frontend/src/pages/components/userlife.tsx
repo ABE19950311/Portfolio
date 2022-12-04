@@ -34,6 +34,9 @@ select {
     cursor:pointer;
     color:#FFCC00;
 }
+.notloginicon {
+    font-size: 1.5rem;
+}
 .custominput {
     padding: 7px 100px 7px 10px;
     font-size: 16px;
@@ -230,6 +233,9 @@ caption {
     font-size: 1.5rem;
     cursor:pointer;
     color:#FFCC00;
+}
+.notloginicon {
+    font-size: 1.5rem;
 }
 select {
     padding:10px;
@@ -429,6 +435,9 @@ caption {
     font-size: 1rem;
     cursor:pointer;
     color:#FFCC00;
+}
+.notloginicon {
+    font-size: 1.5rem;
 }
 select {
     padding:10px;
@@ -905,7 +914,7 @@ export const Userlife = ()=>{
                     <tbody>
                     <tr>
                         <td className="tdtitle"><Link href={{pathname:"/components/lifecontent",query:{id:life.id,user_id:life.user_id}}}>{life.title}</Link></td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                        <td><FaRegLightbulb  onClick={sessionid ? ()=>seticonflag(life.id):()=>""} className={sessionid ? iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon":"notloginicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
@@ -982,7 +991,7 @@ export const Userlife = ()=>{
                     <tbody>
                     <tr>
                     <td className="tdtitle"><Link href={{pathname:"/components/lifecontent",query:{id:life.id,user_id:life.user_id}}}>{life.title}</Link></td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                    <td><FaRegLightbulb  onClick={sessionid ? ()=>seticonflag(life.id):()=>""} className={sessionid ? iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon":"notloginicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
@@ -1059,7 +1068,7 @@ export const Userlife = ()=>{
                     <tbody>
                     <tr>
                     <td className="tdtitle"><Link href={{pathname:"/components/lifecontent",query:{id:life.id,user_id:life.user_id}}}>{life.title}</Link></td><td className="tdhead">{life.lifeitem}</td><td className="tdupdate">{moment(life.updated_at).format("YYYY-MM-DD h:mm:ss")}</td>
-                        <td><FaRegLightbulb onClick={()=>seticonflag(life.id)} className={iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
+                    <td><FaRegLightbulb  onClick={sessionid ? ()=>seticonflag(life.id):()=>""} className={sessionid ? iconflag[`${life.id}${sessionid}`] ? "seticoncolor":"sankouicon":"notloginicon"}/>{iconcount[life.id] ? iconcount[life.id]:0}</td>{sessionid==life.user_id ? <><td><Link href={{pathname:"/components/updatelife",query:{id:life.id,userid:life.user_id}}}><button className="kousinbtn">更新</button></Link></td><td><button className="delbtn" onClick={()=>doDelete(life.id)}>削除</button></td></>:<></>}
                     </tr>
                     </tbody>
                 </table>
