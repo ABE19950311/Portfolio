@@ -138,6 +138,8 @@ export const Header = ()=>{
         setLoginflag(loginstate)
     },[loginstate])
 
+    console.log(env)
+
     if(isError) return <p>error</p>
     if(isLoading||loginflag=="") return (
         <Transition

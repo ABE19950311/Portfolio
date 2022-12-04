@@ -7,9 +7,13 @@ export const FetchData = ()=>{
     const [error,setError] = useState("")
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState("")
+    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+            console.log(process.env.NEXT_PUBLIC_ADDRESS)
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
+            console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+            console.log(process.env.NEXT_PUBLIC_ADDRESS)
             setEnv(process.env.NEXT_PUBLIC_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
             .then(res=>{
