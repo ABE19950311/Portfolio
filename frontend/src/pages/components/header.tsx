@@ -4,7 +4,7 @@ import {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
 import {useRouter} from "next/navigation"
 import Image from 'next/image'
-//import {FetchData} from "../../components/fetchdata"
+import {FetchData} from "../../components/fetchdata"
 import { Transition } from '@headlessui/react'
 import ReactLoading from 'react-loading';
 import { useMediaQuery } from "react-responsive"
@@ -131,103 +131,98 @@ bmOverlay: {
 export const Header = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const router = useRouter();
-    //const {env,loginstate,isLoading,isError} = FetchData()
+    const {env,loginstate,isLoading,isError} = FetchData()
     const [loginflag,setLoginflag] = useState("")
 
-    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+    useEffect(()=>{
+        setLoginflag(loginstate)
+    },[loginstate])
 
-    return (
-        <></>
+    console.log(env)
+            console.log(process.env.NEXT_PUBLIC_ADDRESS)
+
+    if(isError) return <p>error</p>
+    if(isLoading||loginflag=="") return (
+        <Transition
+            show={isLoading||loginflag==""}
+            enter="transition-opacity duration-75 delay-500"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="transition-opacity duration-150"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+        >
+            <SHeader><SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo><ReactLoading type="spin" /></SHeader>
+        </Transition>
     )
 
-    // useEffect(()=>{
-    //     setLoginflag(loginstate)
-    // },[loginstate])
+    const logout = ()=>{
+        axios.delete(env+"/logout" as string)
+        .then(res=> {
+            router.push("/");
+            setLoginflag("logout")
+        }).catch(error=>{
+            console.log("logouterror",error);
+        })
+    }
 
-    // console.log(env)
-
-    // if(isError) return <p>error</p>
-    // if(isLoading||loginflag=="") return (
-    //     <Transition
-    //         show={isLoading||loginflag==""}
-    //         enter="transition-opacity duration-75 delay-500"
-    //         enterFrom="opacity-0"
-    //         enterTo="opacity-100"
-    //         leave="transition-opacity duration-150"
-    //         leaveFrom="opacity-100"
-    //         leaveTo="opacity-0"
-    //     >
-    //         <SHeader><SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo><ReactLoading type="spin" /></SHeader>
-    //     </Transition>
-    // )
-
-    // const logout = ()=>{
-    //     axios.delete(env+"/logout" as string)
-    //     .then(res=> {
-    //         router.push("/");
-    //         setLoginflag("logout")
-    //     }).catch(error=>{
-    //         console.log("logouterror",error);
-    //     })
-    // }
-
-    // if(PCsize) {
-    //     return (  
-    //         <SHeader>
-    //         <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
-    //         {loginflag=="login" ? 
-    //         <SMenu>
-    //             <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
-    //             <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
-    //             <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
-    //             <Link href="/components/todo"><li><span><strong>TODOリスト</strong></span></li></Link>
-    //             <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
-    //             <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
-    //             <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
-    //             <Sbtn onClick={logout}><li><span><strong>ログアウト</strong></span></li></Sbtn>
-    //         </SMenu>
-    //         :
-    //         <SMenu>
-    //             <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
-    //             <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
-    //             <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
-    //             <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
-    //             <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
-    //         </SMenu>
-    //         } 
-    //         </SHeader>
-    //     )
-    // }else{
-    //     return (
-    //         <BeargerHeader>
-    //         <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
-    //         {loginflag=="login" ?
-    //         <Menu right styles={styles}>
-    //         <SBurgerMenu>
-    //             <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
-    //             <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
-    //             <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
-    //             <Link href="/components/todo"><li><span><strong>TODOリスト</strong></span></li></Link>
-    //             <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
-    //             <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
-    //             <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
-    //             <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
-    //         </SBurgerMenu>
-    //         </Menu> 
-    //         :
-    //         <Menu right styles={styles}>
-    //         <SBurgerMenu>
-    //             <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
-    //             <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
-    //             <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
-    //             <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
-    //             <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
-    //         </SBurgerMenu>
-    //         </Menu> 
-    //         }
-    //         </BeargerHeader>
-    //     )
-    // }
+    if(PCsize) {
+        return (  
+            <SHeader>
+            <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
+            {loginflag=="login" ? 
+            <SMenu>
+                <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/todo"><li><span><strong>TODOリスト</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
+                <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
+                <Sbtn onClick={logout}><li><span><strong>ログアウト</strong></span></li></Sbtn>
+            </SMenu>
+            :
+            <SMenu>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
+                <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
+            </SMenu>
+            } 
+            </SHeader>
+        )
+    }else{
+        return (
+            <BeargerHeader>
+            <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
+            {loginflag=="login" ?
+            <Menu right styles={styles}>
+            <SBurgerMenu>
+                <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/todo"><li><span><strong>TODOリスト</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/board"><li><span><strong>掲示板</strong></span></li></Link>
+                <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
+                <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
+            </SBurgerMenu>
+            </Menu> 
+            :
+            <Menu right styles={styles}>
+            <SBurgerMenu>
+                <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
+                <Link href="/mappage"><li><span><strong>ハザードマップ</strong></span></li></Link>
+                <Link href="/components/calendar"><li><span><strong>カレンダー</strong></span></li></Link>
+                <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
+                <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
+            </SBurgerMenu>
+            </Menu> 
+            }
+            </BeargerHeader>
+        )
+    }
 }
 
 export default Header

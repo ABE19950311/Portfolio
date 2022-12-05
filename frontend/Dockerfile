@@ -1,9 +1,11 @@
 FROM node:18-slim
+ARG NEXT_PUBLIC_PRODUCTION_ADDRESS
 WORKDIR /frontapp
 COPY package.json /frontapp/
-RUN npm install --legacy-peer-deps next
+COPY yarn.lock /frontapp/
+RUN yarn install --legacy-peer-deps next
 COPY . /frontapp/
-RUN npm run build
+RUN yarn build
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+CMD ["yarn", "start"]
 
