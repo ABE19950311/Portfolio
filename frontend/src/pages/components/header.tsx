@@ -139,7 +139,7 @@ export const Header = ()=>{
     },[loginstate])
 
     console.log(env)
-            console.log(process.env.NEXT_PUBLIC_ADDRESS)
+    
             console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
 
     if(isError) return <p>error</p>
