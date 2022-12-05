@@ -140,6 +140,8 @@ export const Header = ()=>{
 
     console.log(env)
             console.log(process.env.NEXT_PUBLIC_ADDRESS)
+            console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+            console.log(react-env-production)
 
     if(isError) return <p>error</p>
     if(isLoading||loginflag=="") return (
