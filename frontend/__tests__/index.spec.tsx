@@ -6,22 +6,29 @@ import {getPage} from "next-page-tester"
 import Dailylifey from "../src/pages/index"
 
 
-// jest.mock('next/navigation', () => ({
-//     useRouter() {
-//         return {
-//         route: '/',
-//         pathname: '/',
-//         query: {},
-//         push: jest.fn(),
-//     }
-//     },
-//     useSearchParams() {
-//         return {
-//             route: '/',
-//             get: jest.fn(),
-//         }
-//     }
-// }));
+jest.mock('next/navigation', () => ({
+    useRouter() {
+        return {
+        route: '/',
+        pathname: '/',
+        query: {},
+        push: jest.fn(),
+    }
+    },
+    useSearchParams() {
+        return {
+            route: '/',
+            get: jest.fn(),
+        }
+    }
+}));
+
+describe('たし算', () => {
+  it('1+3', () => {
+    const result = 1 + 3;
+    expect(result).toBe(4);
+  });
+});
 
 // describe("Dailylifey",()=>{
 //     it("index.tsxレンダリングテスト",()=>{
