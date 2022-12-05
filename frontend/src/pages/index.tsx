@@ -3,9 +3,6 @@ import Image from 'next/legacy/image'
 import {Layout} from "./components/layout"
 import Link from "next/link"
 
-import {useState,useEffect} from "react"
-import axios from "../csrf-axios"
-
 const SDiv = styled.div`
 padding: 20px 0px 0px 100px;
 display: flex;
@@ -47,43 +44,6 @@ button {
 
 
 export const Dailylifey = ()=>{
-    const [env,setEnv] = useState("")
-    const [error,setError] = useState("")
-    const [userid,setUserid] = useState("")
-    const [loginstate,setLoginstate] = useState("")
-    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
-            console.log(process.env.NEXT_PUBLIC_ADDRESS)
-
-            console.log(env)
-
-
-    useEffect(()=>{
-        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
-            console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
-            console.log(process.env.NEXT_PUBLIC_ADDRESS)
-            setEnv(process.env.NEXT_PUBLIC_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
-            .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-                setUserid(res.data.id)
-                setLoginstate(res.data.state)
-            }).catch(error=>{
-                setError(error)
-            })
-        }else{
-            console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
-            console.log(process.env.NEXT_PUBLIC_ADDRESS)
-            setEnv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
-            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessionid")
-            .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
-                setUserid(res.data.id)
-                setLoginstate(res.data.state)
-            }).catch(error=>{
-                setError(error)
-            })
-        }
-    },[])
 
     return (
     <Layout>       
