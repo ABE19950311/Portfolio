@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/navigation"
+import {useRouter} from "next/router"
 import Layout from "./layout"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"

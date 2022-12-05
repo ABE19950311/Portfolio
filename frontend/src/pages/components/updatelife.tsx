@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useRouter,useSearchParams} from "next/navigation"
+import {useRouter} from "next/router"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
@@ -440,9 +440,8 @@ export const Updatelife =()=>{
     const [defaultdetail,setDefaultdetail] = useState<any[]>([])
     const [defaultcheck,setDefaultcheck] = useState<any[]>([])
     const router = useRouter()
-    const search = useSearchParams()
-    const updateid = search.get("id")
-    const updateuser = search.get("userid")
+    const updateid = router.query.id as unknown as number
+    const updateuser = router.query.userid as unknown as number
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
     const checktimer = useRef<NodeJS.Timer|null>(null);

@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useRouter} from "next/navigation"
+import {useRouter} from "next/router"
 import {FetchData} from "../../components/fetchdata"
 
 const SDiv = styled.div`

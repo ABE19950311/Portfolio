@@ -1,6 +1,6 @@
 import styled from "styled-components"
-import Image from 'next/legacy/image'
-//import {Layout} from "./components/layout"
+import Image from 'next/image'
+import {Layout} from "./components/layout"
 import Link from "next/link"
 
 const SDiv = styled.div`
@@ -46,7 +46,7 @@ button {
 export const Dailylifey = ()=>{
 
     return (
-    //<Layout>       
+    <Layout>       
     <SDiv>
         <div className="item">
             <p><strong>部屋探し・入居</strong></p>
@@ -79,7 +79,7 @@ export const Dailylifey = ()=>{
             <Link data-testid="sentaku" href="/components/detail/sentaku"><button><span>確認する</span></button></Link>
         </div>
     </SDiv>
-    //</Layout>
+    </Layout>
     )
 }
 

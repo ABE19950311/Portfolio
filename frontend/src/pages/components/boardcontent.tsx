@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useSearchParams} from "next/navigation"
+import {useRouter} from "next/router"
 import moment from "moment"
 import { FaHeart } from "react-icons/fa";
 import {FetchData} from "../../components/fetchdata"
@@ -210,12 +210,12 @@ export const Boardcontent = ()=>{
     const [postdata,setPostData] = useState<any>([])
 
     const formRef = useRef<HTMLTextAreaElement>(null)
-    const search = useSearchParams()
-    const board_id = search.get("board_id") as unknown as number
-    const user_id = search.get("user_id") as unknown as number
-    const username = search.get("username") as unknown as string
-    const createdate = search.get("createdate") as unknown as string
-    const getcontent = search.get("content") 
+    const router = useRouter()
+    const board_id = router.query.board_id as unknown as number
+    const user_id = router.query.user_id as unknown as number
+    const username = router.query.username as unknown as string 
+    const createdate = router.query.createdate as unknown as string 
+    const getcontent = router.query.content as string
     
     useEffect(()=>{
         const id = Number(userid)

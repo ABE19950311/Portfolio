@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect,useRef} from "react"
 import axios from "../../csrf-axios"
-import {useSearchParams} from "next/navigation"
+import {useRouter} from "next/router"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
@@ -525,9 +525,9 @@ export const Lifecontent = ()=>{
     const perPage: number = 5; 
 
     const formRef = useRef<HTMLTextAreaElement>(null)
-    const search = useSearchParams()
-    const id = search.get("id") as unknown as number
-    const user_id = search.get("user_id") as unknown as number
+    const router = useRouter()
+    const id = router.query.id as unknown as number 
+    const user_id = router.query.user_id as unknown as number
 
     useEffect(()=>{
         if(!env) return

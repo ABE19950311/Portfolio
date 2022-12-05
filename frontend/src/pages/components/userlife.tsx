@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
 import axios from "../../csrf-axios"
-import {useSearchParams} from "next/navigation"
+import {useRouter} from "next/router"
 import moment from "moment"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
@@ -731,8 +731,8 @@ export const Userlife = ()=>{
     const [iconflag,setIconflag] = useState<any>({})
     const [iconcount,setIconcount] = useState<any>({})
     const [icondata,setIcondata] = useState([])
-    const search = useSearchParams()
-    const query = search.get("life") as unknown as string
+    const router = useRouter()
+    const query = router.query.life as unknown as string 
 
     useEffect(()=>{
         const id = Number(userid)
