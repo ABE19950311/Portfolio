@@ -8,7 +8,7 @@ export const FetchData = ()=>{
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState("")
     console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
-            console.log(process.env.NEXT_PUBLIC_ADDRESS)
+
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
