@@ -3,13 +3,13 @@ import axios from "../csrf-axios"
 
 
 export const FetchData = ()=>{
-    let PRODUCTION_ADDRESS = ""
     const [env,setEnv] = useState("")
     const [error,setError] = useState("")
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState("")
 
-    console.log(PRODUCTION_ADDRESS)
+    console.log(process.env.PRODUCTION_ADDRESS)
+    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
@@ -23,8 +23,9 @@ export const FetchData = ()=>{
                 setError(error)
             })
         }else{
-            setEnv(PRODUCTION_ADDRESS)
-            axios.get(PRODUCTION_ADDRESS+"/sessionid")
+            if(!process.env.PRODUCTION_ADDRESS) return
+            setEnv(process.env.PRODUCTION_ADDRESS)
+            axios.get(process.env.PRODUCTION_ADDRESS+"/sessionid")
             .then(res=>{
                 axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
                 setUserid(res.data.id)
@@ -33,7 +34,7 @@ export const FetchData = ()=>{
                 setError(error)
             })
         }
-    },[PRODUCTION_ADDRESS])
+    },[])
 
 
     return {
