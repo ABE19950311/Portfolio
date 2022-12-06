@@ -13,6 +13,9 @@ import { slide as Menu } from 'react-burger-menu'
 const BeargerHeader = styled.div`
 background-color: white;
 
+span {
+    cursor:pointer;
+}
 a {
     color: inherit;
     text-decoration: none;
@@ -40,6 +43,9 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 
+span {
+    cursor:pointer;
+}
 a {
     color: inherit;
     text-decoration: none;
@@ -137,10 +143,6 @@ export const Header = ()=>{
     useEffect(()=>{
         setLoginflag(loginstate)
     },[loginstate])
-
-    console.log(env)
-    
-            console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
 
     if(isError) return <p>error</p>
     if(isLoading||loginflag=="") return (

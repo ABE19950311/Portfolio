@@ -92,6 +92,7 @@ jobs:
       - image: cimg/node:18.0.0
         environment:
           NODE_ENV: test
+          PRODUCTION_ADDRESS: $PRODUCTION_ADDRESS
 
     working_directory: ~/Portfolio
 

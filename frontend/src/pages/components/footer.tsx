@@ -11,11 +11,12 @@ background-color: white;
 bottom: 0; /*下に固定*/
 display:flex;
 justify-content: space-between;
+align-items: center;
 
 textarea  {
     margin:50px 50px 0 0;
 }
-span {
+.contact {
     display:inline-block;
     transform: translate(160px,-120px);
 }
@@ -31,7 +32,7 @@ width: 100%;
 background-color: white;
 bottom: 0; /*下に固定*/
 
-span {
+.contact {
     display:inline-block;
     transform: translate(160px,-120px);
 }
@@ -50,7 +51,7 @@ bottom: 0; /*下に固定*/
 textarea  {
     margin-left:50px;
 }
-span {
+.contact {
     display:inline-block;
     margin-left:50px;
 }
@@ -60,16 +61,12 @@ button {
 }
 `
 
-const SLogo = styled.div`
-transform: translate(50px,5px);
-`
-
 const TabLogo = styled.div`
-text-align:center;
+    text-align:center;
 `
 
 const MobLogo = styled.div`
-text-align:center;
+    text-align:center;
 `
 
 export const Footer = ()=>{
@@ -110,9 +107,9 @@ export const Footer = ()=>{
     if(PCsize) {
         return (
             <PCFooter>
-                <SLogo><Image src="/logo.png" width="200" height="200" alt="logo"/></SLogo>
+                <Image className="logo" src="/logo.png" width="200" height="200" alt="logo"/>
                 <div>
-                <span>お問い合わせはこちら</span>
+                <span className="contact">お問い合わせはこちら</span>
                 <textarea rows={6} cols={50} value={contact} onChange={doContact}></textarea>
                 <button onClick={doSubmit}>送信する</button>
                 </div>
@@ -123,7 +120,7 @@ export const Footer = ()=>{
             <TabFooter>
                 <TabLogo><Image src="/logo.png" width="150" height="150" alt="logo"/></TabLogo>
                 <div>
-                <span>お問い合わせはこちら</span>
+                <span className="contact">お問い合わせはこちら</span>
                 <textarea rows={6} cols={50} value={contact} onChange={doContact}></textarea>
                 <button onClick={doSubmit}>送信する</button>
                 </div>
@@ -134,7 +131,7 @@ export const Footer = ()=>{
             <MobFooter>
             <MobLogo><Image src="/logo.png" width="150" height="150" alt="logo"/></MobLogo>
             <div>
-            <span>お問い合わせはこちら</span>
+            <span className="contact">お問い合わせはこちら</span>
             <textarea rows={6} cols={50} value={contact} onChange={doContact}></textarea>
             <button onClick={doSubmit}>送信する</button>
             </div>
