@@ -9,6 +9,8 @@ export const FetchData = ()=>{
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState("")
 
+    console.log(PRODUCTION_ADDRESS)
+
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
             setEnv(process.env.NEXT_PUBLIC_ADDRESS as string)
