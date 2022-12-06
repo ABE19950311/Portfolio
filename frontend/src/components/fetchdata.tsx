@@ -3,7 +3,7 @@ import axios from "../csrf-axios"
 
 
 export const FetchData = ()=>{
-    const PRODUCTION_ADDRESS = ""
+    let PRODUCTION_ADDRESS = ""
     const [env,setEnv] = useState("")
     const [error,setError] = useState("")
     const [userid,setUserid] = useState("")
@@ -31,7 +31,7 @@ export const FetchData = ()=>{
                 setError(error)
             })
         }
-    },[])
+    },[PRODUCTION_ADDRESS])
 
 
     return {
