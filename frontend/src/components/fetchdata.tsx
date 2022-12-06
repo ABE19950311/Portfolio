@@ -10,6 +10,8 @@ export const FetchData = ()=>{
 
     console.log(process.env.PRODUCTION_ADDRESS)
     console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+    console.log(process.env.TEST)
+    console.log(process.env.NEXT_PUBLIC_TEST)
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
