@@ -2,7 +2,7 @@ import styled from "styled-components"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import React, {useState,useEffect} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import Image from 'next/image'
 
 const PCFooter = styled.div`

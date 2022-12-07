@@ -6,37 +6,24 @@ import {getPage} from "next-page-tester"
 import Dailylifey from "../src/pages/index"
 
 
-// jest.mock('next/navigation', () => ({
-//     useRouter() {
-//         return {
-//         route: '/',
-//         pathname: '/',
-//         query: {},
-//         push: jest.fn(),
-//     }
-//     },
-//     useSearchParams() {
-//         return {
-//             route: '/',
-//             get: jest.fn(),
-//         }
-//     }
-// }));
+jest.mock('next/router', () => ({
+    useRouter() {
+        return {
+        route: '/',
+        pathname: '/',
+        query: {},
+        push: jest.fn(),
+    }
+    },
+}));
 
-describe('たし算', () => {
-  it('1+3', () => {
-    const result = 1 + 3;
-    expect(result).toBe(4);
-  });
-});
 
-// describe("Dailylifey",()=>{
-//     it("index.tsxレンダリングテスト",()=>{
-//         render(<Dailylifey />)
-//     })
-// })
+describe("Test Dailylifey Component",()=>{
+    it("index.tsxレンダリングテスト",()=>{
+        render(<Dailylifey />)
+    })
 
-// describe("ページ遷移",()=>{
+    // describe("ページ遷移",()=>{
 //     it("ページ遷移のテスト",async()=>{
 //         const {page} = await getPage({
 //             route: "/",
@@ -108,4 +95,9 @@ describe('たし算', () => {
 //         expect(await screen.findByText("洗濯概要")).toBeInTheDocument()
 //     })
 // })
+
+
+})
+
+
 

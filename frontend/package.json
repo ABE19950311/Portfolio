@@ -18,7 +18,6 @@
     "@fullcalendar/react": "^5.11.3",
     "@fullcalendar/timegrid": "^5.11.3",
     "@headlessui/react": "^1.7.4",
-    "@testing-library/react-hooks": "^8.0.1",
     "axios": "^1.2.0",
     "axios-cookiejar-support": "^4.0.3",
     "babel-plugin-transform-require-ignore": "^0.1.1",
@@ -45,6 +44,7 @@
     "@testing-library/dom": "^8.19.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^14.4.3",
     "@types/jest": "^29.2.3",
     "@types/leaflet": "^1.9.0",
@@ -66,6 +66,7 @@
     "msw": "^0.49.1",
     "next-page-tester": "^0.33.0",
     "prettier": "^2.8.0",
+    "react-test-renderer": "^18.2.0",
     "ts-jest": "^29.0.3",
     "typescript": "4.9.3"
   }

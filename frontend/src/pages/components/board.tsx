@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import moment from "moment"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"

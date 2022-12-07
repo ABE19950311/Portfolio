@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
@@ -434,20 +434,12 @@ export const Lifepost =()=>{
     const [content,setContent] = useState<any[]>([])
     const [detail,setDetail] = useState<any[]>([])
     const [checkcontent,setCheckcontent] = useState<any[]>([])
-    const [formflag,setFormflag] = useState(false)
     const [formcount,setFormcount] = useState<string[]>(["1"])
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
     const checktimer = useRef<NodeJS.Timer|null>(null);
 
     const router = useRouter()
-
-    useEffect(()=>{
-        if(formflag===true) {
-            router.push("/components/userlife")
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[formflag])
 
     useEffect(()=>{
         const initial = 1
@@ -580,8 +572,6 @@ export const Lifepost =()=>{
         const jsondetail = JSON.stringify(detail)
         const jsoncheck = JSON.stringify(checkcontent)
 
-        setFormflag(true)
-
         axios.post(env+"/lifeposts",
         {   
             lifepost: {
@@ -593,7 +583,7 @@ export const Lifepost =()=>{
                 checkcontent:jsoncheck
             }
         }).then(res=>{
-            setFormflag(true)
+            router.push("/components/userlife")
         }).catch(error=>{
             console.log(error)
         })

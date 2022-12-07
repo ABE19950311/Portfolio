@@ -1,12 +1,15 @@
 import styled from "styled-components"
 import Link from "next/link"
 import {useState,useEffect} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import {FetchData} from "../../components/fetchdata"
 
 const SDiv = styled.div`
 
+span {
+    cursor:pointer;
+}
 .login-page {
     width: 360px;
     padding: 8% 0 0;
@@ -138,7 +141,7 @@ export const Login = ()=>{
         <form className="login-form" onSubmit={doSubmit}>
             <input type="text" onChange={doName}  value={username} placeholder="ユーザ名"/><span className="validation">{validationName}</span>
             <input type="password" onChange={doPass} value={password} placeholder="パスワード"/><span className="validation">{validationPass}</span>
-            <button type="submit">ログイン</button>
+            <button data-testid="submit" type="submit">ログイン</button>
             <Link href="/"><p className="message"><span>トップページへ戻る</span></p></Link>
             </form>
         </div>

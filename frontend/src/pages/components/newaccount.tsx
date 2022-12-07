@@ -1,12 +1,15 @@
 import styled from "styled-components"
 import Link from "next/link"
 import {useState,useEffect,useRef} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import {FetchData} from "../../components/fetchdata"
 
 const SDiv = styled.div`
 
+span {
+    cursor:pointer;
+}
 .validation {
     font-size:12px;
     color:red;

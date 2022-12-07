@@ -1,5 +1,5 @@
 import {useState,useEffect} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import {Layout} from "./layout"
 import FullCalendar from "@fullcalendar/react"
 import timeGridPlugin from "@fullcalendar/timegrid"

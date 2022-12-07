@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import {useState,useEffect,useRef} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import {FetchData} from "../../components/fetchdata"
 

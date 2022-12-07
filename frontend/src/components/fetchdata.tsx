@@ -1,5 +1,5 @@
 import {useState,useEffect} from "react"
-import axios from "../csrf-axios"
+import axios from "../setting-axios"
 
 
 export const FetchData = ()=>{

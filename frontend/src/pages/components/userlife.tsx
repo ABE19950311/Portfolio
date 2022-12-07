@@ -1,6 +1,6 @@
 import styled from "styled-components"
 import React, {useState,useEffect} from "react"
-import axios from "../../csrf-axios"
+import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import moment from "moment"
 import Layout from "./layout"
