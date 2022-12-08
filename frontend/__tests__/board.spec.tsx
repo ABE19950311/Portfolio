@@ -7,15 +7,26 @@ import {getPage} from "next-page-tester"
 import Board from "../src/pages/components/board"
 
 
-describe("test",()=>{
+describe("Test Board Component",()=>{
     it("render",()=>{
         render(<Board />)
     })
+
+    it("post check",async()=>{
+        render(<Board />)
+        const name = await screen.findByTestId("nametest")
+        const title = await screen.findByTestId("titletest")
+        const content = await screen.findByTestId("contenttest")
+        const submitbutton = await screen.findByTestId("submit")
+        userEvent.type(name,"name")
+        userEvent.type(title,"title")
+        userEvent.type(content,"content")
+        userEvent.click(submitbutton)
+        expect(await screen.findByText("投稿者:")).toBeInTheDocument()
+        expect(await screen.findByText("タイトル:")).toBeInTheDocument(
+        )
+    })
+
+
 })
 
-// describe("useeffect",()=>{
-//     it("hook",()=>{
-//         //const {result} = renderHook(()=>Board())//カスタムフックテストの場合renderHook使用？
-
-//     })
-// })

@@ -6,7 +6,7 @@ export const FetchData = ()=>{
     const [env,setEnv] = useState("")
     const [error,setError] = useState("")
     const [userid,setUserid] = useState("")
-    const [loginstate,setLoginstate] = useState("")
+    const [loginstate,setLoginstate] = useState(process.env.NEXT_PUBLIC_TEST_ADDRESS ? "testlogin":"")
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
@@ -31,8 +31,7 @@ export const FetchData = ()=>{
             })
         }
     },[])
-
-
+    
     return {
         env: env,
         loginstate: loginstate,

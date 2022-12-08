@@ -5,6 +5,14 @@ import { renderHook, act } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event'
 import {getPage} from "next-page-tester"
 import Login from "../src/pages/components/login"
+import axios from "axios"
+
+// jest.mock("axios")
+// const axiosMock = axios as jest.Mocked<typeof axios>
+
+// afterEach(() => {
+//     jest.restoreAllMocks()
+// });
 
 describe("Test Login Component",()=>{
     it("render button",async()=>{
@@ -24,6 +32,37 @@ describe("Test Login Component",()=>{
         expect(await screen.findByText("ユーザ名が空欄です")).toBeInTheDocument()
         expect(await screen.findByText("パスワードが空欄です")).toBeInTheDocument()
     })
+
+//     it("axios test",async()=>{
+//         render(<Login />)
+//         const submitbutton = screen.getByTestId("submit")
+//         const username = screen.getByPlaceholderText("ユーザ名")
+//         const password = screen.getByPlaceholderText("パスワード")
+//         userEvent.type(username,"testuser")
+//         userEvent.type(password,"testpass")
+
+//         const users = {
+//             user: {
+//                 username:username,
+//                 password:password
+//             }
+//         }
+
+//         axiosMock.post.mockImplementation(()=>{
+//             return Promise.resolve(users)
+//         })
+
+//         userEvent.click(submitbutton)
+//         expect(axios.post).toHaveBeenCalledTimes(1)
+//         expect(axios.post).toStrictEqual(users)
+            
+
+//     //axiosMock.post.mockResolvedValue(users);
+
+//   // or you could use the following depending on your use case:
+//   // axios.get.mockImplementation(() => Promise.resolve(resp))
+
+//     })
 
 })
 
