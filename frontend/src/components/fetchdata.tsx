@@ -12,7 +12,7 @@ export const FetchData = ()=>{
     
 
     useEffect(()=>{
-        if(process.env.NEXT_PUBLIC_ADDRESS!==undefined) {
+        if(process.env.NEXT_PUBLIC_ADDRESS) {
             setEnv(process.env.NEXT_PUBLIC_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
             .then(res=>{
@@ -22,9 +22,9 @@ export const FetchData = ()=>{
             }).catch(error=>{
                 setError(error)
             })
-        }else{
-            setEnv("https://backend.dailylifey.com")
-            axios.get("https://backend.dailylifey.com/sessionid")
+        }else if(process.env.PRODUCTION_ADDRESS){
+            setEnv(process.env.PRODUCTION_ADDRESS)
+            axios.get(process.env.PRODUCTION_ADDRESS)
             .then(res=>{
                 axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
                 setUserid(res.data.id)
