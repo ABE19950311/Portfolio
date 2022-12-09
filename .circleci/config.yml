@@ -102,21 +102,13 @@ jobs:
     steps:
       - checkout
       - run:
-          command: echo NODE_ENV
+          command: echo $test_address1
       - run:
-          command: echo $NODE_ENV
+          command: echo $test_address2
       - run:
-          command: echo ${NODE_ENV}
+          command: echo $test_address3
       - run:
-          command: echo '${NODE_ENV}'
-      - run:
-          command: echo test_address1
-      - run:
-          command: echo test_address2
-      - run:
-          command: echo test_address3
-      - run:
-          command: echo test_address4
+          command: echo $test_address4
       
       - restore_cache:
           keys:
