@@ -11,11 +11,7 @@ import renderer from "react-test-renderer";
 describe("Test Board Component",()=>{
 
     it("スナップショット",async()=>{
-        const {page} = await getPage({
-                        route: "/components/board",
-                    })
-        const snap = renderer.create(page).toJSON()
-        expect(snap).toMatchSnapshot()
+        render(<Board />)
         // const name = await screen.findByTestId("nametest")
         // const title = await screen.findByTestId("titletest")
         // const content = await screen.findByTestId("contenttest")
