@@ -104,7 +104,6 @@ export const Newaccount = ()=>{
     },[password,passwordconfirm])
 
     if(isError) return <p>error</p>
-    if(isLoading) return 
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);

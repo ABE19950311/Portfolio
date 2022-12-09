@@ -92,7 +92,6 @@ export const Login = ()=>{
     },[username,password])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <></>
 
     const doName = (event:{target:HTMLInputElement})=>{
         setUsername(event.target.value);

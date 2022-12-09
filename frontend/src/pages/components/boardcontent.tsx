@@ -272,7 +272,6 @@ export const Boardcontent = ()=>{
     },[heartflag,env,sessionid])
 
     if(isError) return <p>error</p>
-    if(isLoading) return 
     if(!getcontent) return
 
     const content:string[] = JSON.parse(getcontent)

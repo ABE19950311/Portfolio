@@ -354,7 +354,6 @@ export const Mypage = ()=>{
     },[router,env,id])
 
     if(isError) return <p>error</p>
-    if(isLoading) return 
 
     const passChange = ()=>{
         router.push("/components/passchange")

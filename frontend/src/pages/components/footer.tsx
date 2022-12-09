@@ -81,7 +81,6 @@ export const Footer = ()=>{
     },[userid])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <></>
     
     const doContact = (event:{target:HTMLTextAreaElement})=>{
         setContact(event.target.value)

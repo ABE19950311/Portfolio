@@ -789,10 +789,6 @@ export const Userlife = ()=>{
     },[icondata])
 
     if(isError) return <p>error</p>
-    if(isLoading) return 
-
-    console.log(icondata)
-    console.log(iconcount)
 
     const dofilterlife = (event:React.ChangeEvent<HTMLSelectElement>)=>{
         setFilterlife(event.target.value)
