@@ -8,7 +8,7 @@ export const FetchData = ()=>{
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState(process.env.NEXT_PUBLIC_TEST_ADDRESS ? "testlogin":"")
 
-    console.log(process.env.PRODUCTION_ADDRESS)
+    console.log(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
     
 
     useEffect(()=>{
@@ -22,9 +22,9 @@ export const FetchData = ()=>{
             }).catch(error=>{
                 setError(error)
             })
-        }else if(process.env.PRODUCTION_ADDRESS){
-            setEnv(process.env.PRODUCTION_ADDRESS)
-            axios.get(process.env.PRODUCTION_ADDRESS)
+        }else if(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS){
+            setEnv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+            axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
             .then(res=>{
                 axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
                 setUserid(res.data.id)
