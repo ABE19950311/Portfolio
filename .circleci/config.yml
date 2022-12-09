@@ -101,6 +101,7 @@ jobs:
           name: build image
           command: |
             docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
+          working_directory: ~/Portfolio/frontend
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "~/Portfolio/frontend/package.json" }}
