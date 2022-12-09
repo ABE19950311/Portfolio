@@ -7,6 +7,8 @@ export const FetchData = ()=>{
     const [error,setError] = useState("")
     const [userid,setUserid] = useState("")
     const [loginstate,setLoginstate] = useState(process.env.NEXT_PUBLIC_TEST_ADDRESS ? "testlogin":"")
+
+    console.log(process.env.PRODUCTION_ADDRESS)
     
 
     useEffect(()=>{

@@ -99,8 +99,6 @@ jobs:
     steps:
       - checkout
       - run:
-          command: echo PRODUCTION_ADDRESS
-      - run:
           command: echo $PRODUCTION_ADDRESS
       - run:
           command: echo ${PRODUCTION_ADDRESS}
