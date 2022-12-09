@@ -500,6 +500,7 @@ export const Updatelife =()=>{
     },[lifeitem])
 
     if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
     
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)

@@ -569,6 +569,7 @@ export const Lifecontent = ()=>{
     },[commentdata,offset])
 
     if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
     if(usercontent==undefined) return
 
     const doName= (event:React.ChangeEvent<HTMLInputElement>)=>{

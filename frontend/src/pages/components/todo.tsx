@@ -661,6 +661,7 @@ export const Todo = ()=>{
     },[flag,env]);
 
     if(isError) return <p>error</p>
+    if(isLoading) return <p>lodaing...</p>
 
     const doList = (event:{target:HTMLInputElement}) => {
         setList(event.target.value);
