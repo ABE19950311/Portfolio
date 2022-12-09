@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Newaccount Component スナップショット 1`] = `
+<div
+  className="sc-3783c48d-0 lKisF"
+>
+  <div
+    className="login-page"
+  >
+    <div
+      className="form"
+    >
+      <form
+        className="login-form"
+        onSubmit={[Function]}
+      >
+        <input
+          onChange={[Function]}
+          placeholder="ユーザ名"
+          type="text"
+        />
+        <span
+          className="validation"
+        />
+        <input
+          onChange={[Function]}
+          placeholder="パスワード"
+          type="password"
+        />
+        <span
+          className="validation"
+        />
+        <input
+          onChange={[Function]}
+          placeholder="パスワード再入力"
+          type="password"
+        />
+        <span
+          className="validation"
+        />
+        <button
+          type="submit"
+        >
+          新規登録
+        </button>
+        <p
+          className="message"
+          onClick={[Function]}
+          onMouseEnter={[Function]}
+          onTouchStart={[Function]}
+        >
+          <span>
+            トップページへ戻る
+          </span>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>
+`;
