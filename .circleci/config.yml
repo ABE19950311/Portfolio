@@ -92,24 +92,14 @@ jobs:
       - image: cimg/node:18.0.0
         environment:
           NODE_ENV: test
-          test_address1: PRODUCTION_ADDRESS
-          test_address2: $PRODUCTION_ADDRESS
-          test_address3: ${PRODUCTION_ADDRESS}
-          test_address4: '${PRODUCTION_ADDRESS}'
+          PRODUCTION_ADDRESS: "testurl"
 
     working_directory: ~/Portfolio
 
     steps:
       - checkout
       - run:
-          command: echo $test_address1
-      - run:
-          command: echo $test_address2
-      - run:
-          command: echo $test_address3
-      - run:
-          command: echo $test_address4
-      
+          command: echo $PRODUCTION_ADDRESS      
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "~/Portfolio/frontend/package.json" }}
