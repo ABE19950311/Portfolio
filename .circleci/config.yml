@@ -115,23 +115,7 @@ jobs:
           name: test
           command: npm run test
           working_directory: ~/Portfolio/frontend
-  
-  set_env:
-    docker:
-      - image: cimg/base:2022.12
-    steps:
-      - setup_remote_docker
-      - checkout
-      - run:
-          name: Docker Build
-          command: |
-            docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
-      - run:
-          name: Docker Push
-          command: |
-            docker push ~/Portfolio/frontend
 
-    
 
 workflows:
   version: 2
@@ -145,10 +129,6 @@ workflows:
           requires:
             - build
       - jest:
-          filters:
-            branches:
-              only: main
-      - set_env:
           filters:
             branches:
               only: main
@@ -186,6 +166,7 @@ workflows:
           repo: "portfolio-frontend"
           tag: "latest"
           path: ./frontend/
+          extra-build-args: --build-arg PRODUCTION_ADDRESS=${PRODUCTION_ADDRESS}
       - aws-ecr/build-and-push-image:
           name: "ecr-push-nginx"
           requires:
