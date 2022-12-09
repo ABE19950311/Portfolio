@@ -158,7 +158,7 @@ exports[`Test Lifepost Component スナップショット 1`] = `
   </div>
   <main>
     <div
-      className="sc-9c0f73c4-2 gAStoK"
+      className="sc-639943a3-2 cRIRuJ"
     >
       <label>
         投稿タイトル
@@ -335,10 +335,10 @@ exports[`Test Lifepost Component スナップショット 1`] = `
     </div>
   </main>
   <div
-    className="sc-52a0c020-2 btAUAi"
+    className="sc-7b192845-2 kxLkGH"
   >
     <div
-      className="sc-52a0c020-4 jpFdJL"
+      className="sc-7b192845-4 hitDvm"
     >
       <span
         style={

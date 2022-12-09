@@ -789,7 +789,7 @@ export const Userlife = ()=>{
     },[icondata])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <p>lodaing...</p>
+    if(isLoading) return 
 
     console.log(icondata)
     console.log(iconcount)

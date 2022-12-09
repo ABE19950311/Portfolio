@@ -103,7 +103,7 @@ export const Passchange = ()=>{
     },[password,passwordconfirm])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <p>lodaing...</p>
+    if(isLoading) return 
 
     const doPass = (event:{target:HTMLInputElement})=>{
         setOldpass(event.target.value);

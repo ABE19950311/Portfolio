@@ -449,7 +449,7 @@ export const Lifepost =()=>{
     },[])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <p>lodaing...</p>
+    if(isLoading) return 
 
     const doTitle = (event:{target:HTMLInputElement})=>{
         setTitle(event.target.value)

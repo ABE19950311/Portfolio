@@ -158,7 +158,7 @@ exports[`Test Updatelife Component スナップショット 1`] = `
   </div>
   <main>
     <div
-      className="sc-cf352139-2 fRaJar"
+      className="sc-d441a560-2 nYBjO"
     >
       <label>
         投稿タイトル
@@ -295,10 +295,10 @@ exports[`Test Updatelife Component スナップショット 1`] = `
     </div>
   </main>
   <div
-    className="sc-52a0c020-2 btAUAi"
+    className="sc-7b192845-2 kxLkGH"
   >
     <div
-      className="sc-52a0c020-4 jpFdJL"
+      className="sc-7b192845-4 hitDvm"
     >
       <span
         style={

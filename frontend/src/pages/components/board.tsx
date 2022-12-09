@@ -205,7 +205,7 @@ export const Board = ()=>{
     },[flag,env])
 
     if(isError) return <p>error</p>
-    if(isLoading) return <p>lodaing...</p>
+    if(isLoading) return 
 
     const doName = (event:{target:HTMLInputElement})=>{
         setName(event.target.value)
