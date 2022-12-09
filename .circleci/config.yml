@@ -92,13 +92,18 @@ jobs:
       - image: cimg/node:18.0.0
         environment:
           NODE_ENV: test
+          PRODUCTION_ADDRESS: PRODUCTION_ADDRESS
 
     working_directory: ~/Portfolio
 
     steps:
       - checkout
       - run:
-          command: echo "export PRODUCTION_ADDRESS='$(PRODUCTION_ADDRESS)'" >> $BASH_ENV
+          command: echo PRODUCTION_ADDRESS
+      - run:
+          command: echo $PRODUCTION_ADDRESS
+      - run:
+          command: echo ${PRODUCTION_ADDRESS}
       - run:
           command: echo "${PRODUCTION_ADDRESS}"
       - restore_cache:
