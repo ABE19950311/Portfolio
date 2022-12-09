@@ -125,7 +125,7 @@ jobs:
           name: build image
           command: |
             docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
-          working_directory: ~/Portfolio/frontend
+          working_directory: ~/Portfolio/frontend/Dockerfile
     
 
 workflows:
