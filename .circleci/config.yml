@@ -120,12 +120,17 @@ jobs:
     docker:
       - image: cimg/base:2022.12
     steps:
+      - setup_remote_docker
       - checkout
       - run:
-          name: build image
+          name: Docker Build
           command: |
             docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
-          working_directory: ~/Portfolio/frontend/Dockerfile
+      - run:
+          name: Docker Push
+          command: |
+            docker push ~/Portfolio/frontend
+
     
 
 workflows:
