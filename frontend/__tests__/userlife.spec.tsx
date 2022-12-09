@@ -7,24 +7,13 @@ import {getPage} from "next-page-tester"
 import Board from "../src/pages/components/board"
 import renderer from "react-test-renderer";
 
-
-describe("Test Board Component",()=>{
+describe("Test Userlife Component",()=>{
 
     it("スナップショット",async()=>{
         const {page} = await getPage({
-                        route: "/components/board",
+                        route: "/components/userlife",
                     })
         const snap = renderer.create(page).toJSON()
         expect(snap).toMatchSnapshot()
-        // const name = await screen.findByTestId("nametest")
-        // const title = await screen.findByTestId("titletest")
-        // const content = await screen.findByTestId("contenttest")
-        // const submitbutton = await screen.findByTestId("submit")
-        // userEvent.type(name,"name")
-        // userEvent.type(title,"title")
-        // userEvent.type(content,"content")
-        // userEvent.click(submitbutton)
     })
-
 })
-

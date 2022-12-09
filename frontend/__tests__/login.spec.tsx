@@ -6,6 +6,7 @@ import userEvent from '@testing-library/user-event'
 import {getPage} from "next-page-tester"
 import Login from "../src/pages/components/login"
 import axios from "axios"
+import renderer from "react-test-renderer";
 
 // jest.mock("axios")
 // const axiosMock = axios as jest.Mocked<typeof axios>

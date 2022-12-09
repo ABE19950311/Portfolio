@@ -4,6 +4,7 @@ import { render, screen, cleanup } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import {getPage} from "next-page-tester"
 import Dailylifey from "../src/pages/index"
+import renderer from "react-test-renderer";
 
 
 jest.mock('next/router', () => ({

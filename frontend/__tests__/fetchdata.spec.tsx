@@ -7,6 +7,7 @@ import {getPage} from "next-page-tester"
 import FetchData from '../src/components/fetchdata';
 import axios from "axios"
 import {useState as useStateMock} from "react"
+import renderer from "react-test-renderer";
 
 jest.mock('react', () => ({
     ...jest.requireActual('react'),

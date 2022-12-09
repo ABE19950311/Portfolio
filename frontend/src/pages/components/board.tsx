@@ -241,7 +241,6 @@ export const Board = ()=>{
                 username:name ? name:"匿名さん"
             }
         }).then(res=>{
-            console.log(res.data)
             setFlag(res.data)
             setName("")
             setTitle("")

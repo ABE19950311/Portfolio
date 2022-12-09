@@ -1,0 +1,719 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Test Board Component post check 1`] = `
+<div
+  className="sc-582e3d6d-0 cJaJlQ"
+>
+  <div>
+    <div
+      className="sc-aef58be3-2 WuDHU"
+    >
+      <div
+        className="sc-aef58be3-3 gEClkv"
+      >
+        <span
+          style={
+            {
+              "background": "none",
+              "border": 0,
+              "boxSizing": "border-box",
+              "display": "inline-block",
+              "height": "initial",
+              "margin": 0,
+              "maxWidth": "100%",
+              "opacity": 1,
+              "overflow": "hidden",
+              "padding": 0,
+              "position": "relative",
+              "width": "initial",
+            }
+          }
+        >
+          <span
+            style={
+              {
+                "background": "none",
+                "border": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": "initial",
+                "margin": 0,
+                "maxWidth": "100%",
+                "opacity": 1,
+                "padding": 0,
+                "width": "initial",
+              }
+            }
+          >
+            <img
+              alt=""
+              aria-hidden={true}
+              src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27100%27%20height=%27100%27/%3e"
+              style={
+                {
+                  "background": "none",
+                  "border": 0,
+                  "display": "block",
+                  "height": "initial",
+                  "margin": 0,
+                  "maxWidth": "100%",
+                  "opacity": 1,
+                  "padding": 0,
+                  "width": "initial",
+                }
+              }
+            />
+          </span>
+          <img
+            alt="logo"
+            data-nimg="intrinsic"
+            decoding="async"
+            onClick={[Function]}
+            onError={[Function]}
+            onLoad={[Function]}
+            onMouseEnter={[Function]}
+            onTouchStart={[Function]}
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            style={
+              {
+                "border": "none",
+                "bottom": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": 0,
+                "left": 0,
+                "margin": "auto",
+                "maxHeight": "100%",
+                "maxWidth": "100%",
+                "minHeight": "100%",
+                "minWidth": "100%",
+                "objectFit": undefined,
+                "objectPosition": undefined,
+                "padding": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "width": 0,
+              }
+            }
+          />
+          <noscript>
+            <img
+              alt="logo"
+              data-nimg="intrinsic"
+              decoding="async"
+              loading="lazy"
+              onClick={[Function]}
+              onMouseEnter={[Function]}
+              onTouchStart={[Function]}
+              src="/_next/image?url=%2Flogo.png&w=256&q=75"
+              srcSet="/_next/image?url=%2Flogo.png&w=128&q=75 1x, /_next/image?url=%2Flogo.png&w=256&q=75 2x"
+              style={
+                {
+                  "border": "none",
+                  "bottom": 0,
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "height": 0,
+                  "left": 0,
+                  "margin": "auto",
+                  "maxHeight": "100%",
+                  "maxWidth": "100%",
+                  "minHeight": "100%",
+                  "minWidth": "100%",
+                  "objectFit": undefined,
+                  "objectPosition": undefined,
+                  "padding": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                  "width": 0,
+                }
+              }
+            />
+          </noscript>
+        </span>
+      </div>
+      <div
+        dangerouslySetInnerHTML={
+          {
+            "__html": "<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <path opacity=".25" d="M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"/>
+  <path d="M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z">
+    <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="0.8s" repeatCount="indefinite" />
+  </path>
+</svg>
+",
+          }
+        }
+        style={
+          {
+            "fill": "#fff",
+            "height": 64,
+            "width": 64,
+          }
+        }
+      />
+    </div>
+  </div>
+  <main>
+    <div
+      className="sc-c3662f6a-2 jhRYDB"
+    >
+       
+      <label
+        className="post"
+      >
+        名前:
+      </label>
+      <input
+        data-testid="nametest"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+      <br />
+       
+      <label
+        className="post"
+      >
+        タイトル:
+        <span
+          className="titlelabel"
+        >
+          (必須)
+        </span>
+      </label>
+      <input
+        data-testid="titletest"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+      <br />
+       投稿内容:
+      <span
+        className="titlelabel"
+      >
+        (必須)
+      </span>
+      <textarea
+        cols={60}
+        data-testid="contenttest"
+        onChange={[Function]}
+        rows={8}
+      />
+      <br />
+      <button
+        data-testid="submit"
+        onClick={[Function]}
+        type="submit"
+      >
+        投稿する
+      </button>
+      <br />
+    </div>
+  </main>
+  <div
+    className="sc-52a0c020-2 btAUAi"
+  >
+    <div
+      className="sc-52a0c020-4 jpFdJL"
+    >
+      <span
+        style={
+          {
+            "background": "none",
+            "border": 0,
+            "boxSizing": "border-box",
+            "display": "inline-block",
+            "height": "initial",
+            "margin": 0,
+            "maxWidth": "100%",
+            "opacity": 1,
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "relative",
+            "width": "initial",
+          }
+        }
+      >
+        <span
+          style={
+            {
+              "background": "none",
+              "border": 0,
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": "initial",
+              "margin": 0,
+              "maxWidth": "100%",
+              "opacity": 1,
+              "padding": 0,
+              "width": "initial",
+            }
+          }
+        >
+          <img
+            alt=""
+            aria-hidden={true}
+            src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27150%27%20height=%27150%27/%3e"
+            style={
+              {
+                "background": "none",
+                "border": 0,
+                "display": "block",
+                "height": "initial",
+                "margin": 0,
+                "maxWidth": "100%",
+                "opacity": 1,
+                "padding": 0,
+                "width": "initial",
+              }
+            }
+          />
+        </span>
+        <img
+          alt="logo"
+          data-nimg="intrinsic"
+          decoding="async"
+          onError={[Function]}
+          onLoad={[Function]}
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          style={
+            {
+              "border": "none",
+              "bottom": 0,
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": 0,
+              "left": 0,
+              "margin": "auto",
+              "maxHeight": "100%",
+              "maxWidth": "100%",
+              "minHeight": "100%",
+              "minWidth": "100%",
+              "objectFit": undefined,
+              "objectPosition": undefined,
+              "padding": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "width": 0,
+            }
+          }
+        />
+        <noscript>
+          <img
+            alt="logo"
+            data-nimg="intrinsic"
+            decoding="async"
+            loading="lazy"
+            src="/_next/image?url=%2Flogo.png&w=384&q=75"
+            srcSet="/_next/image?url=%2Flogo.png&w=256&q=75 1x, /_next/image?url=%2Flogo.png&w=384&q=75 2x"
+            style={
+              {
+                "border": "none",
+                "bottom": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": 0,
+                "left": 0,
+                "margin": "auto",
+                "maxHeight": "100%",
+                "maxWidth": "100%",
+                "minHeight": "100%",
+                "minWidth": "100%",
+                "objectFit": undefined,
+                "objectPosition": undefined,
+                "padding": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "width": 0,
+              }
+            }
+          />
+        </noscript>
+      </span>
+    </div>
+    <div>
+      <span
+        className="contact"
+      >
+        お問い合わせはこちら
+      </span>
+      <textarea
+        cols={50}
+        onChange={[Function]}
+        rows={6}
+        value=""
+      />
+      <button
+        onClick={[Function]}
+      >
+        送信する
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Test Board Component スナップショット 1`] = `
+<div
+  className="sc-582e3d6d-0 cJaJlQ"
+>
+  <div>
+    <div
+      className="sc-aef58be3-2 WuDHU"
+    >
+      <div
+        className="sc-aef58be3-3 gEClkv"
+      >
+        <span
+          style={
+            {
+              "background": "none",
+              "border": 0,
+              "boxSizing": "border-box",
+              "display": "inline-block",
+              "height": "initial",
+              "margin": 0,
+              "maxWidth": "100%",
+              "opacity": 1,
+              "overflow": "hidden",
+              "padding": 0,
+              "position": "relative",
+              "width": "initial",
+            }
+          }
+        >
+          <span
+            style={
+              {
+                "background": "none",
+                "border": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": "initial",
+                "margin": 0,
+                "maxWidth": "100%",
+                "opacity": 1,
+                "padding": 0,
+                "width": "initial",
+              }
+            }
+          >
+            <img
+              alt=""
+              aria-hidden={true}
+              src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27100%27%20height=%27100%27/%3e"
+              style={
+                {
+                  "background": "none",
+                  "border": 0,
+                  "display": "block",
+                  "height": "initial",
+                  "margin": 0,
+                  "maxWidth": "100%",
+                  "opacity": 1,
+                  "padding": 0,
+                  "width": "initial",
+                }
+              }
+            />
+          </span>
+          <img
+            alt="logo"
+            data-nimg="intrinsic"
+            decoding="async"
+            onClick={[Function]}
+            onError={[Function]}
+            onLoad={[Function]}
+            onMouseEnter={[Function]}
+            onTouchStart={[Function]}
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+            style={
+              {
+                "border": "none",
+                "bottom": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": 0,
+                "left": 0,
+                "margin": "auto",
+                "maxHeight": "100%",
+                "maxWidth": "100%",
+                "minHeight": "100%",
+                "minWidth": "100%",
+                "objectFit": undefined,
+                "objectPosition": undefined,
+                "padding": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "width": 0,
+              }
+            }
+          />
+          <noscript>
+            <img
+              alt="logo"
+              data-nimg="intrinsic"
+              decoding="async"
+              loading="lazy"
+              onClick={[Function]}
+              onMouseEnter={[Function]}
+              onTouchStart={[Function]}
+              src="/_next/image?url=%2Flogo.png&w=256&q=75"
+              srcSet="/_next/image?url=%2Flogo.png&w=128&q=75 1x, /_next/image?url=%2Flogo.png&w=256&q=75 2x"
+              style={
+                {
+                  "border": "none",
+                  "bottom": 0,
+                  "boxSizing": "border-box",
+                  "display": "block",
+                  "height": 0,
+                  "left": 0,
+                  "margin": "auto",
+                  "maxHeight": "100%",
+                  "maxWidth": "100%",
+                  "minHeight": "100%",
+                  "minWidth": "100%",
+                  "objectFit": undefined,
+                  "objectPosition": undefined,
+                  "padding": 0,
+                  "position": "absolute",
+                  "right": 0,
+                  "top": 0,
+                  "width": 0,
+                }
+              }
+            />
+          </noscript>
+        </span>
+      </div>
+      <div
+        dangerouslySetInnerHTML={
+          {
+            "__html": "<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <path opacity=".25" d="M16 0 A16 16 0 0 0 16 32 A16 16 0 0 0 16 0 M16 4 A12 12 0 0 1 16 28 A12 12 0 0 1 16 4"/>
+  <path d="M16 0 A16 16 0 0 1 32 16 L28 16 A12 12 0 0 0 16 4z">
+    <animateTransform attributeName="transform" type="rotate" from="0 16 16" to="360 16 16" dur="0.8s" repeatCount="indefinite" />
+  </path>
+</svg>
+",
+          }
+        }
+        style={
+          {
+            "fill": "#fff",
+            "height": 64,
+            "width": 64,
+          }
+        }
+      />
+    </div>
+  </div>
+  <main>
+    <div
+      className="sc-c3662f6a-2 jhRYDB"
+    >
+       
+      <label
+        className="post"
+      >
+        名前:
+      </label>
+      <input
+        data-testid="nametest"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+      <br />
+       
+      <label
+        className="post"
+      >
+        タイトル:
+        <span
+          className="titlelabel"
+        >
+          (必須)
+        </span>
+      </label>
+      <input
+        data-testid="titletest"
+        onChange={[Function]}
+        type="text"
+        value=""
+      />
+      <br />
+       投稿内容:
+      <span
+        className="titlelabel"
+      >
+        (必須)
+      </span>
+      <textarea
+        cols={60}
+        data-testid="contenttest"
+        onChange={[Function]}
+        rows={8}
+      />
+      <br />
+      <button
+        data-testid="submit"
+        onClick={[Function]}
+        type="submit"
+      >
+        投稿する
+      </button>
+      <br />
+    </div>
+  </main>
+  <div
+    className="sc-52a0c020-2 btAUAi"
+  >
+    <div
+      className="sc-52a0c020-4 jpFdJL"
+    >
+      <span
+        style={
+          {
+            "background": "none",
+            "border": 0,
+            "boxSizing": "border-box",
+            "display": "inline-block",
+            "height": "initial",
+            "margin": 0,
+            "maxWidth": "100%",
+            "opacity": 1,
+            "overflow": "hidden",
+            "padding": 0,
+            "position": "relative",
+            "width": "initial",
+          }
+        }
+      >
+        <span
+          style={
+            {
+              "background": "none",
+              "border": 0,
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": "initial",
+              "margin": 0,
+              "maxWidth": "100%",
+              "opacity": 1,
+              "padding": 0,
+              "width": "initial",
+            }
+          }
+        >
+          <img
+            alt=""
+            aria-hidden={true}
+            src="data:image/svg+xml,%3csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20version=%271.1%27%20width=%27150%27%20height=%27150%27/%3e"
+            style={
+              {
+                "background": "none",
+                "border": 0,
+                "display": "block",
+                "height": "initial",
+                "margin": 0,
+                "maxWidth": "100%",
+                "opacity": 1,
+                "padding": 0,
+                "width": "initial",
+              }
+            }
+          />
+        </span>
+        <img
+          alt="logo"
+          data-nimg="intrinsic"
+          decoding="async"
+          onError={[Function]}
+          onLoad={[Function]}
+          src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+          style={
+            {
+              "border": "none",
+              "bottom": 0,
+              "boxSizing": "border-box",
+              "display": "block",
+              "height": 0,
+              "left": 0,
+              "margin": "auto",
+              "maxHeight": "100%",
+              "maxWidth": "100%",
+              "minHeight": "100%",
+              "minWidth": "100%",
+              "objectFit": undefined,
+              "objectPosition": undefined,
+              "padding": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+              "width": 0,
+            }
+          }
+        />
+        <noscript>
+          <img
+            alt="logo"
+            data-nimg="intrinsic"
+            decoding="async"
+            loading="lazy"
+            src="/_next/image?url=%2Flogo.png&w=384&q=75"
+            srcSet="/_next/image?url=%2Flogo.png&w=256&q=75 1x, /_next/image?url=%2Flogo.png&w=384&q=75 2x"
+            style={
+              {
+                "border": "none",
+                "bottom": 0,
+                "boxSizing": "border-box",
+                "display": "block",
+                "height": 0,
+                "left": 0,
+                "margin": "auto",
+                "maxHeight": "100%",
+                "maxWidth": "100%",
+                "minHeight": "100%",
+                "minWidth": "100%",
+                "objectFit": undefined,
+                "objectPosition": undefined,
+                "padding": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+                "width": 0,
+              }
+            }
+          />
+        </noscript>
+      </span>
+    </div>
+    <div>
+      <span
+        className="contact"
+      >
+        お問い合わせはこちら
+      </span>
+      <textarea
+        cols={50}
+        onChange={[Function]}
+        rows={6}
+        value=""
+      />
+      <button
+        onClick={[Function]}
+      >
+        送信する
+      </button>
+    </div>
+  </div>
+</div>
+`;
