@@ -1,4 +1,6 @@
 FROM node:18-slim
+ARG PRODUCTION_ADDRESS
+ENV PRODUCTION_ADDRESS $PRODUCTION_ADDRESS
 WORKDIR /frontapp
 COPY package.json /frontapp/
 RUN npm install --legacy-peer-deps next

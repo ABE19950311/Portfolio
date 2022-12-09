@@ -92,14 +92,15 @@ jobs:
       - image: cimg/node:18.0.0
         environment:
           NODE_ENV: test
-          PRODUCTION_ADDRESS: "testurl"
 
     working_directory: ~/Portfolio
 
     steps:
       - checkout
       - run:
-          command: echo $PRODUCTION_ADDRESS      
+          name: build image
+          command: |
+            docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "~/Portfolio/frontend/package.json" }}
