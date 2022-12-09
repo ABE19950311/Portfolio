@@ -143,6 +143,10 @@ workflows:
           filters:
             branches:
               only: main
+      - set_env:
+          filters:
+            branches:
+              only: main
       - aws-ecr/build-and-push-image:
           name: "ecr-push-rails"
           requires:
