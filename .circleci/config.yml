@@ -97,11 +97,6 @@ jobs:
 
     steps:
       - checkout
-      - run:
-          name: build image
-          command: |
-            docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
-          working_directory: ~/Portfolio/frontend
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "~/Portfolio/frontend/package.json" }}
@@ -120,6 +115,18 @@ jobs:
           name: test
           command: npm run test
           working_directory: ~/Portfolio/frontend
+  
+  set_env:
+    docker:
+      - image: cimg/base:2022.12
+    steps:
+      - checkout
+      - run:
+          name: build image
+          command: |
+            docker build --build-arg PRODUCTION_ADDRESS=$PRODUCTION_ADDRESS .
+          working_directory: ~/Portfolio/frontend
+    
 
 workflows:
   version: 2
