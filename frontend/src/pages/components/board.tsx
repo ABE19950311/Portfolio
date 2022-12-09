@@ -265,7 +265,7 @@ export const Board = ()=>{
     return (
         <Layout>
         <PC>
-        <label className="post">名前:</label><input type="text" data-testid="nametest" value={name} onChange={doName}/><br></br>
+        <label className="post">名前test:</label><input type="text" data-testid="nametest" value={name} onChange={doName}/><br></br>
         <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input data-testid="titletest" type="text" value={title} onChange={doTitle}/><br></br>
         <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea data-testid="contenttest" ref={formRef} rows={8} cols={70} onChange={doContent}/><br></br>
         <label className="sub"></label><button data-testid="submit" type="submit" onClick={doSubmit}>投稿する</button><br></br>
