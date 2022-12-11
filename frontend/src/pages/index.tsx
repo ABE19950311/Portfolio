@@ -44,6 +44,7 @@ button {
 
 
 export const Dailylifey = ()=>{
+    console.log("test")
 
     return (
     <Layout>       
