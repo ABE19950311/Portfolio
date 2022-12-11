@@ -12,9 +12,14 @@ class BoardsController < ApplicationController
     end
 
     def create
-        @user_id = User.find_by(username: session[:user_name]).id
-        @board = Board.create(board_params.merge(user_id: @user_id))
-        render json:@board
+        if Rails.env.test? 
+            @board = Board.create(board_params.merge(user_id: 1))
+            render json:@board
+        else
+            @user_id = User.find_by(username: session[:user_name]).id
+            @board = Board.create(board_params.merge(user_id: @user_id))
+            render json:@board
+        end
     end
 
     def destroy

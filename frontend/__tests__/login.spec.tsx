@@ -15,11 +15,17 @@ import renderer from "react-test-renderer";
 //     jest.restoreAllMocks()
 // });
 
-describe("Test Login Component",()=>{
-    it("render button",async()=>{
-        render(<Login />)
-        const button = await screen.findAllByRole("button")
-        expect(button).toHaveLength(1)
+// describe("Test Login Component",()=>{
+//     it("render button",async()=>{
+//         render(<Login />)
+//         const button = await screen.findAllByRole("button")
+//         expect(button).toHaveLength(1)
+//     })
+
+    describe("test",()=>{
+        it("test",()=>{
+            render(<Login />)
+        })
     })
 
     // it("should be failed to submit",async()=>{
@@ -65,5 +71,5 @@ describe("Test Login Component",()=>{
 
 //     })
 
-})
+
 

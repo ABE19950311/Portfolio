@@ -6,3 +6,5 @@ FactoryBot.define do
         password_confirmation {"testpass"}
     end
 end
+
+
