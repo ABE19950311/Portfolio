@@ -41,7 +41,7 @@ class LifepostsController < ApplicationController
     private
 
     def life_params
-        params.require(:lifepost).permit(:title,:lifeitem,:headline,:content,:detail,:checkcontent)
+        params.require(:lifepost).permit(:title,:lifeitem,:headline,:image,:content,:detail,:checkcontent)
     end
 
     def user_params

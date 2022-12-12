@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import {useState,useEffect,useRef} from "react"
+import React, {useState,useEffect,useRef} from "react"
 import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import Layout from "./layout"
@@ -23,6 +23,15 @@ p {
 span {
     color:red;
     font-weight:normal;
+}
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
 }
 .koumokubtn {
     border: 0;
@@ -159,6 +168,15 @@ span {
     color:red;
     font-weight:normal;
 }
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
+}
 .koumokubtn {
     border: 0;
     text-align: center;
@@ -293,6 +311,15 @@ span {
     color:red;
     font-weight:normal;
 }
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
+}
 .koumokubtn {
     border: 0;
     text-align: center;
@@ -411,17 +438,27 @@ span {
 }
 `
 
-type Life = {
-    id:number,
-    user_id:number,
-    title:string,
-    lifeitem:string,
-    headline:string,
-    created_at:Date,
-    updated_at:Date,
-    content:string[],
-    detail:string[],
-    checkcontent:string[]
+type Content = {
+    [id:number]:string,
+    sortid:number,
+    nullflag:boolean
+}
+
+type Detail = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
+}
+
+type Checkcontent = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
+}
+
+type Image = {
+    [id:number]:string,
+    sortid:number
 }
 
 export const Lifepost =()=>{
@@ -431,9 +468,10 @@ export const Lifepost =()=>{
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
     const [headline,setHeadline] = useState("")
-    const [content,setContent] = useState<any[]>([])
-    const [detail,setDetail] = useState<any[]>([])
-    const [checkcontent,setCheckcontent] = useState<any[]>([])
+    const [image,setImage] = useState<Image[]>([])
+    const [content,setContent] = useState<Content[]>([])
+    const [detail,setDetail] = useState<Detail[]>([])
+    const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [formcount,setFormcount] = useState<string[]>(["1"])
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
@@ -444,8 +482,8 @@ export const Lifepost =()=>{
     useEffect(()=>{
         const initial = 1
         setContent([{[initial]:"",sortid:initial,nullflag:true}])
-        setDetail([{[initial]:"",sortid:initial,nullflag:true}])
-        setCheckcontent([{[initial]:"",sortid:initial,nullflag:true}])
+        setDetail([{[initial]:[],sortid:initial,nullflag:true}])
+        setCheckcontent([{[initial]:[],sortid:initial,nullflag:true}])
     },[])
 
     if(isError) return <p>error</p>
@@ -475,11 +513,11 @@ export const Lifepost =()=>{
         ]))
         setDetail((detail)=>([
             ...detail,
-            {[length+1]:"",sortid:length+1,nullflag:true}
+            {[length+1]:[],sortid:length+1,nullflag:true}
         ]))
         setCheckcontent((checkcontent)=>([
             ...checkcontent,
-            {[length+1]:"",sortid:length+1,nullflag:true}
+            {[length+1]:[],sortid:length+1,nullflag:true}
         ]))
     }
     
@@ -490,13 +528,33 @@ export const Lifepost =()=>{
         setFormcount(count)
 
         const contentfind = content.findIndex((content)=>content[length]||content[length]=="")
-        const detailfind = detail.findIndex((detail)=>detail[length]||detail[length]=="")
-        const checkfind = checkcontent.findIndex((value)=>value[length]||value[length]=="")
+        const detailfind = detail.findIndex((detail)=>detail[length])
+        const checkfind = checkcontent.findIndex((value)=>value[length])
+        const imagefind = image.findIndex((image)=>image[length])
     
         content.splice(contentfind,1)
         detail.splice(detailfind,1)
         checkcontent.splice(checkfind,1)
+        image.splice(imagefind,1)
     }
+
+    const doSetimage = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        if(!event.target.files) return
+        const images = window.URL.createObjectURL(event.target.files[0])
+        const id = Number(event.target.max)
+        const obj = {[id]:images,sortid:id}
+
+
+        setImage((image)=>([
+            ...image,
+            obj
+        ]))
+    }
+
+
+    console.log(detail)
+    console.log(checkcontent)
+
 
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
         const id = event.target.max
@@ -535,7 +593,7 @@ export const Lifepost =()=>{
         ]))
         },200)
 
-        const find = detail.findIndex((detail)=>detail[id]||detail[id]=="")
+        const find = detail.findIndex((detail)=>detail[id])
         if(find==-1) return
         detail.splice(find,1)
     }
@@ -555,9 +613,18 @@ export const Lifepost =()=>{
         ]))
         },200)
 
-        const find = checkcontent.findIndex((value)=>value[id]||value[id]=="")
+        const find = checkcontent.findIndex((value)=>value[id])
         if(find==-1) return
         checkcontent.splice(find,1)
+    }
+
+    const doDeleteimage = (delid:number)=>{
+        const filter = image.filter((value)=>{
+            if(!value[delid]) {
+                return value
+            }
+        })
+        setImage(filter)
     }
     
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
@@ -568,6 +635,7 @@ export const Lifepost =()=>{
     
         if(!title.trim()||!headline.trim()||nullcontent||nulldetail) return
 
+        const jsonimage = JSON.stringify(image)
         const jsoncontent = JSON.stringify(content)
         const jsondetail = JSON.stringify(detail)
         const jsoncheck = JSON.stringify(checkcontent)
@@ -578,6 +646,7 @@ export const Lifepost =()=>{
                 title:title,
                 lifeitem:lifeitem==""||lifeitem=="項目を選択しない" ? "none":lifeitem,
                 headline:headline,
+                image:jsonimage,
                 content:jsoncontent,
                 detail:jsondetail,
                 checkcontent:jsoncheck
@@ -588,7 +657,6 @@ export const Lifepost =()=>{
             console.log(error)
         })
     }
-
 
     if(PCsize) {
     return (
@@ -615,6 +683,18 @@ export const Lifepost =()=>{
                     return (
                         <div className="steps" key={key}>
                             <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
+                            <br></br>
+                            <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                            <br></br>
+                            {image.map((value:any,seckey:number)=>{
+                                return (    
+                                    <React.Fragment key={seckey}>
+                                        <div className="setimage">
+                                        <img src={value[key+1]}/>
+                                        </div>
+                                    </React.Fragment>
+                                )
+                            })}
                             <br></br>
                             <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
                             <br></br>
@@ -652,6 +732,18 @@ export const Lifepost =()=>{
                         return (
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
+                                <br></br>
+                                <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                <br></br>
+                                {image.map((value:any,seckey:number)=>{
+                                    return (    
+                                        <React.Fragment key={seckey}>
+                                            <div className="setimage">
+                                            <img src={value[key+1]}/>
+                                            </div>
+                                        </React.Fragment>
+                                    )
+                                })}
                                 <br></br>
                                 <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
                                 <br></br>
@@ -691,6 +783,18 @@ export const Lifepost =()=>{
                         return (
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
+                                <br></br>
+                                <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                <br></br>
+                                {image.map((value:any,seckey:number)=>{
+                                    return (    
+                                        <React.Fragment key={seckey}>
+                                            <div className="setimage">
+                                            <img src={value[key+1]}/>
+                                            </div>
+                                        </React.Fragment>
+                                    )
+                                })}
                                 <br></br>
                                 内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} onChange={doDetail} />
                                 <br></br>

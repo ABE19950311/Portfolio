@@ -63,6 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_27_105345) do
     t.string "title", null: false
     t.string "lifeitem", null: false
     t.string "headline", null: false
+    t.binary "image"
     t.string "content", null: false
     t.string "detail", null: false
     t.string "checkcontent"
