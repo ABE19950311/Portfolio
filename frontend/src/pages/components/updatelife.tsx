@@ -411,6 +411,24 @@ span {
 }
 `
 
+type Content = {
+    [id:number]:string,
+    sortid:number,
+    nullflag:boolean
+}
+
+type Detail = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
+}
+
+type Checkcontent = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
+}
+
 type Sort = {
     sortid:number
 }
@@ -433,9 +451,9 @@ export const Updatelife =()=>{
     const [lifeitem,setLifeitem] = useState("")
     const [checklife,setChecklife] = useState<Checklife>({})
     const [headline,setHeadline] = useState("")
-    const [content,setContent] = useState<any[]>([])
-    const [detail,setDetail] = useState<any[]>([])
-    const [checkcontent,setCheckcontent] = useState<any[]>([])
+    const [content,setContent] = useState<Content[]>([])
+    const [detail,setDetail] = useState<Detail[]>([])
+    const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [formcount,setFormcount] = useState<string[]>([])
     const [defaultdetail,setDefaultdetail] = useState<any[]>([])
     const [defaultcheck,setDefaultcheck] = useState<any[]>([])
@@ -530,11 +548,11 @@ export const Updatelife =()=>{
         ]))
         setDetail((detail)=>([
             ...detail,
-            {[length+1]:"",sortid:length+1,nullflag:true}
+            {[length+1]:[],sortid:length+1,nullflag:true}
         ]))
         setCheckcontent((checkcontent)=>([
             ...checkcontent,
-            {[length+1]:"",sortid:length+1,nullflag:true}
+            {[length+1]:[],sortid:length+1,nullflag:true}
         ]))
     }
     
@@ -545,8 +563,8 @@ export const Updatelife =()=>{
         setFormcount(count)
 
         const contentfind = content.findIndex((content)=>content[length]||content[length]=="")
-        const detailfind = detail.findIndex((detail)=>detail[length]||detail[length]=="")
-        const checkfind = checkcontent.findIndex((check)=>check[length]||check[length]=="")
+        const detailfind = detail.findIndex((detail)=>detail[length])
+        const checkfind = checkcontent.findIndex((check)=>check[length])
 
         const defaultdetailfind = defaultdetail.findIndex((detail)=>detail[length]||detail[length]=="")
         const defaultcheckfind = defaultcheck.findIndex((check)=>check[length]||check[length]=="")
@@ -597,7 +615,7 @@ export const Updatelife =()=>{
         ]))
         },200)
 
-        const find = detail.findIndex((detail)=>detail[id]||detail[id]=="")
+        const find = detail.findIndex((detail)=>detail[id])
         if(find==-1) return
         detail.splice(find,1)
     }
@@ -617,7 +635,7 @@ export const Updatelife =()=>{
         ]))
         },200)
 
-        const find = checkcontent.findIndex((value)=>value[id]||value[id]=="")
+        const find = checkcontent.findIndex((value)=>value[id])
         if(find==-1) return
         checkcontent.splice(find,1)
     }

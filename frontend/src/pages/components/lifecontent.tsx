@@ -477,7 +477,7 @@ margin: 24px 0;
 }
 `
 
-type Content = {
+type Contents = {
     id:number,
     user_id:number,
     title:string,
@@ -488,6 +488,29 @@ type Content = {
     content:string,
     detail:string,
     checkcontent:string
+}
+
+type Content = {
+    [id:number]:string,
+    sortid:number,
+    nullflag:boolean
+}
+
+type Detail = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
+}
+
+type Checkcontent = {
+    [id:number]:string[],
+    sortid:number,
+    nullflag:boolean
+}
+
+type Image = {
+    [id:number]:string,
+    sortid:number
 }
 
 type Comment = {
@@ -509,17 +532,15 @@ export const Lifecontent = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const {env,userid,isLoading,isError} = FetchData()
-    const [usercontent,setUsercontent] = useState<Content>()
+    const [usercontent,setUsercontent] = useState<Contents>()
     const [name,setName] = useState("")
     const [comment,setComment] = useState<string[]>([])
     const [flag,setFlag] = useState("")
     const [commentdata,setCommentdata] = useState<Comment[]>([])
-    const [rescontent,setRescontent] = useState<any[]>([])
-    const [resdetail,setResdetail] = useState<any[]>([])
-    const [rescheckcontent,setRescheckcontent] = useState<any[]>([])
-    const [content,setContent] = useState<any[]>([])
-    const [detail,setDetail] = useState<any[]>([])
-    const [checkcontent,setCheckcontent] = useState<any[]>([])
+    const [image,setImage] = useState<Image[]>([])
+    const [content,setContent] = useState<Content[]>([])
+    const [detail,setDetail] = useState<Detail[]>([])
+    const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [commentSlice,setCommentSlice] = useState<Comment[]>([])
     const [offset,setOffset] = useState(0); 
     const perPage: number = 5; 
@@ -539,9 +560,10 @@ export const Lifecontent = ()=>{
             }
         }).then(res=>{
             setUsercontent(res.data)
-            setRescontent(JSON.parse(res.data.content))
-            setResdetail(JSON.parse(res.data.detail))
-            setRescheckcontent(JSON.parse(res.data.checkcontent))
+            setImage(JSON.parse(res.data.image).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+            setContent(JSON.parse(res.data.content).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+            setDetail(JSON.parse(res.data.detail).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
+            setCheckcontent(JSON.parse(res.data.checkcontent).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
         }).catch(error=>{
             console.log(error)
         })
@@ -556,12 +578,6 @@ export const Lifecontent = ()=>{
             console.log(error)
         })
     },[id,env,flag])
-    
-    useEffect(()=>{
-        setContent(rescontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
-        setDetail(resdetail.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
-        setCheckcontent(rescheckcontent.sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
-    },[rescontent,resdetail,rescheckcontent])
 
     useEffect(()=>{
         const slicedata = commentdata.slice(offset,offset+perPage)
@@ -622,13 +638,13 @@ export const Lifecontent = ()=>{
     return (
         <Layout>
             <PC>
-            <h1>{(usercontent as Content).headline}</h1>
+            <h1>{(usercontent as Contents).headline}</h1>
             <div className="steps">
-            {content.map((content:string[],key:number)=>{
+            {content.map((content:Content,key:number)=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
-                            {detail[key][key+1].map((detdata:string[],detkey:number)=>{
+                            {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
                                         <p>{detdata}</p>
@@ -637,7 +653,7 @@ export const Lifecontent = ()=>{
                             })}
                             {checkcontent[key][key+1] ?
                             <ul>
-                            {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                            {checkcontent[key][key+1].map((checkdata:string,checkkey:number)=>{
                                 return (
                                     <React.Fragment key={checkkey}>
                                         <li>{checkdata}</li>
@@ -716,13 +732,13 @@ export const Lifecontent = ()=>{
         return (
             <Layout>
                 <Tablet>
-                <h1>{(usercontent as Content).headline}</h1>
+                <h1>{(usercontent as Contents).headline}</h1>
                 <div className="steps">
-                {content.map((content:string[],key:number)=>{
+                {content.map((content:Content,key:number)=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
-                            {detail[key][key+1].map((detdata:string[],detkey:number)=>{
+                            {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
                                         <p>{detdata}</p>
@@ -731,7 +747,7 @@ export const Lifecontent = ()=>{
                             })}
                             {checkcontent[key][key+1] ?
                             <ul>
-                            {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                            {checkcontent[key][key+1].map((checkdata:string,checkkey:number)=>{
                                 return (
                                     <React.Fragment key={checkkey}>
                                         <li>{checkdata}</li>
@@ -810,13 +826,13 @@ export const Lifecontent = ()=>{
         return (
             <Layout>
                 <Mobile>
-                <h1>{(usercontent as Content).headline}</h1>
+                <h1>{(usercontent as Contents).headline}</h1>
                 <div className="steps">
-                {content.map((content:string[],key:number)=>{
+                {content.map((content:Content,key:number)=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
-                            {detail[key][key+1].map((detdata:string[],detkey:number)=>{
+                            {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
                                         <p>{detdata}</p>
@@ -825,7 +841,7 @@ export const Lifecontent = ()=>{
                             })}
                             {checkcontent[key][key+1] ?
                             <ul>
-                            {checkcontent[key][key+1].map((checkdata:string[],checkkey:number)=>{
+                            {checkcontent[key][key+1].map((checkdata:string,checkkey:number)=>{
                                 return (
                                     <React.Fragment key={checkkey}>
                                         <li>{checkdata}</li>
