@@ -22,6 +22,15 @@ h1 {
 p {
     font-size:20px;
 }
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
+}
 .namelabel {
     margin-bottom:3px;
     display: inline-block;
@@ -158,6 +167,15 @@ h1 {
 p {
     font-size:20px;
 }
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
+}
 .namelabel {
     margin-bottom:3px;
     display: inline-block;
@@ -289,6 +307,15 @@ h1 {
 }
 p {
     font-size:18px;
+}
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
 }
 .namelabel {
     margin-bottom:3px;
@@ -633,6 +660,8 @@ export const Lifecontent = ()=>{
         let page_number = data['selected']
         setOffset(page_number*perPage)
     }
+
+    console.log(image)
     
     if(PCsize) {
     return (
@@ -644,6 +673,15 @@ export const Lifecontent = ()=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
+                            {image.map((image:Image,imgkey:number)=>{
+                                return (
+                                    <React.Fragment key={imgkey}>
+                                        <div className="setimage">
+                                        <img src={image[key+1]}/>
+                                        </div>
+                                    </React.Fragment>
+                                )
+                            })}
                             {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
@@ -738,6 +776,15 @@ export const Lifecontent = ()=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
+                            {image.map((image:Image,imgkey:number)=>{
+                                return (
+                                    <React.Fragment key={imgkey}>
+                                        <div className="setimage">
+                                        <img src={image[key+1]}/>
+                                        </div>
+                                    </React.Fragment>
+                                )
+                            })}
                             {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
@@ -832,6 +879,15 @@ export const Lifecontent = ()=>{
                 return (
                         <React.Fragment key={key}>
                             <h2>{content[key+1]}</h2>
+                            {image.map((image:Image,imgkey:number)=>{
+                                return (
+                                    <React.Fragment key={imgkey}>
+                                        <div className="setimage">
+                                        <img src={image[key+1]}/>
+                                        </div>
+                                    </React.Fragment>
+                                )
+                            })}
                             {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>

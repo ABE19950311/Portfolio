@@ -12,7 +12,6 @@ bottom: 0; /*下に固定*/
 display:flex;
 justify-content: space-between;
 align-items: center;
-
 textarea  {
     margin:50px 50px 0 0;
 }
@@ -31,7 +30,6 @@ const TabFooter = styled.div`
 width: 100%;
 background-color: white;
 bottom: 0; /*下に固定*/
-
 .contact {
     display:inline-block;
     transform: translate(160px,-120px);
@@ -47,7 +45,6 @@ const MobFooter = styled.div`
 width: 100%;
 background-color: white;
 bottom: 0; /*下に固定*/
-
 textarea  {
     margin-left:50px;
 }

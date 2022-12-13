@@ -530,12 +530,17 @@ export const Lifepost =()=>{
         const contentfind = content.findIndex((content)=>content[length]||content[length]=="")
         const detailfind = detail.findIndex((detail)=>detail[length])
         const checkfind = checkcontent.findIndex((value)=>value[length])
-        const imagefind = image.findIndex((image)=>image[length])
     
         content.splice(contentfind,1)
         detail.splice(detailfind,1)
         checkcontent.splice(checkfind,1)
-        image.splice(imagefind,1)
+
+        const imagefilter = image.filter((value)=>{
+            if(!value[length]) {
+                return value
+            }
+        })
+        setImage(imagefilter)
     }
 
     const doSetimage = (event:React.ChangeEvent<HTMLInputElement>)=>{
@@ -698,7 +703,7 @@ export const Lifepost =()=>{
                             <br></br>
                             <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
                             <br></br>
-                            <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
+                            <label className="labelmatome">ポイント(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
                             <h2></h2>
                         </div>   
                     )
@@ -747,7 +752,7 @@ export const Lifepost =()=>{
                                 <br></br>
                                 <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doDetail} />
                                 <br></br>
-                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
+                                <label className="labelmatome">ポイント(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
                                 <h2></h2>
                             </div>   
                         )
@@ -798,7 +803,7 @@ export const Lifepost =()=>{
                                 <br></br>
                                 内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} onChange={doDetail} />
                                 <br></br>
-                                項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} onChange={doCheckcontent} />
+                                ポイント(任意)<textarea rows={8} cols={60} tabIndex={key+1} onChange={doCheckcontent} />
                                 <h2></h2>
                             </div>   
                         )

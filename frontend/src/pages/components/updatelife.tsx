@@ -20,6 +20,15 @@ h1 {
 p {
     line-height:0.5;
 }
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
+}
 span {
     color:red;
     font-weight:normal;
@@ -155,6 +164,15 @@ h1 {
 p {
     line-height:0.5;
 }
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
+}
 span {
     color:red;
     font-weight:normal;
@@ -288,6 +306,15 @@ margin-top:20px;
 }
 p {
     line-height:0.5;
+}
+.setimage {
+    display: flex;
+    justify-content: flex-start;
+
+    img {
+        height:auto;
+        width:50%;
+    }
 }
 span {
     color:red;
@@ -429,6 +456,11 @@ type Checkcontent = {
     nullflag:boolean
 }
 
+type Image = {
+    [id:number]:string,
+    sortid:number
+}
+
 type Sort = {
     sortid:number
 }
@@ -451,6 +483,7 @@ export const Updatelife =()=>{
     const [lifeitem,setLifeitem] = useState("")
     const [checklife,setChecklife] = useState<Checklife>({})
     const [headline,setHeadline] = useState("")
+    const [image,setImage] = useState<Image[]>([])
     const [content,setContent] = useState<Content[]>([])
     const [detail,setDetail] = useState<Detail[]>([])
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
@@ -477,6 +510,7 @@ export const Updatelife =()=>{
                 setLifeitem(res.data.lifeitem)
                 setHeadline(res.data.headline)
                 setLifeitem(res.data.lifeitem)
+                setImage(JSON.parse(res.data.image).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                 setContent(JSON.parse(res.data.content).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                 setDetail(JSON.parse(res.data.detail).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
                 setDefaultdetail(JSON.parse(res.data.detail).sort((a:Sort,b:Sort)=>a.sortid - b.sortid))
@@ -575,8 +609,27 @@ export const Updatelife =()=>{
 
         defaultdetail.splice(defaultdetailfind,1)
         defaultcheck.splice(defaultcheckfind,1)
+
+        const imagefilter = image.filter((value)=>{
+            if(!value[length]) {
+                return value
+            }
+        })
+        setImage(imagefilter)
     }
 
+    const doSetimage = (event:React.ChangeEvent<HTMLInputElement>)=>{
+        if(!event.target.files) return
+        const images = window.URL.createObjectURL(event.target.files[0])
+        const id = Number(event.target.max)
+        const obj = {[id]:images,sortid:id}
+
+
+        setImage((image)=>([
+            ...image,
+            obj
+        ]))
+    }
 
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
         const id = event.target.max
@@ -640,6 +693,14 @@ export const Updatelife =()=>{
         checkcontent.splice(find,1)
     }
 
+    const doDeleteimage = (delid:number)=>{
+        const filter = image.filter((value)=>{
+            if(!value[delid]) {
+                return value
+            }
+        })
+        setImage(filter)
+    }
 
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
@@ -648,7 +709,8 @@ export const Updatelife =()=>{
         const nulldetail = detail.find((value)=>value.nullflag)
     
         if(!title.trim()||!headline.trim()||nullcontent||nulldetail) return
-        
+
+        const jsonimage = JSON.stringify(image)
         const jsoncontent = JSON.stringify(content)
         const jsondetail = JSON.stringify(detail)
         const jsoncheck = JSON.stringify(checkcontent)
@@ -659,6 +721,7 @@ export const Updatelife =()=>{
                 title:title,
                 lifeitem:lifeitem==""||lifeitem=="項目を選択しない" ? "none":lifeitem,
                 headline:headline,
+                image:jsonimage,
                 content:jsoncontent,
                 detail:jsondetail,
                 checkcontent:jsoncheck
@@ -696,9 +759,21 @@ export const Updatelife =()=>{
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
+                                <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                <br></br>
+                                {image.map((value:any,seckey:number)=>{
+                                    return (    
+                                        <React.Fragment key={seckey}>
+                                            <div className="setimage">
+                                            <img src={value[key+1]}/>
+                                            </div>
+                                        </React.Fragment>
+                                    )
+                                })}
+                                <br></br>
                                 <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultdetail[key]?.[key+1].join("<br>").replace(/<br>/g,"\n")} onChange={doDetail} />
                                 <br></br>
-                                <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key]?.[key+1] ? defaultcheck[key]?.[key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
+                                <label className="labelmatome">ポイント(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key]?.[key+1] ? defaultcheck[key]?.[key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
                                 <h2></h2>
                             </div>   
                         )
@@ -733,9 +808,21 @@ export const Updatelife =()=>{
                                 <div className="steps" key={key}>
                                     <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
+                                    <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                    <br></br>
+                                    {image.map((value:any,seckey:number)=>{
+                                    return (    
+                                        <React.Fragment key={seckey}>
+                                            <div className="setimage">
+                                            <img src={value[key+1]}/>
+                                            </div>
+                                        </React.Fragment>
+                                        )
+                                    })}
+                                    <br></br>
                                     <label className="labelnaiyou">内容<span>(必須):</span></label><textarea rows={8} cols={70} defaultValue={defaultdetail[key]?.[key+1].join("<br>").replace(/<br>/g,"\n")} tabIndex={key+1} onChange={doDetail} />
                                     <br></br>
-                                    <label className="labelmatome">項目のまとめ(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key]?.[key+1] ? defaultcheck[key]?.[key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
+                                    <label className="labelmatome">ポイント(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} defaultValue={defaultcheck[key]?.[key+1] ? defaultcheck[key]?.[key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
@@ -772,9 +859,21 @@ export const Updatelife =()=>{
                                 <div className="steps" key={key}>
                                     <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} defaultValue={content[key]?.[key+1]} onChange={doContent} type={"text"}/></h2>
                                     <br></br>
+                                    <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                    <br></br>
+                                    {image.map((value:any,seckey:number)=>{
+                                        return (    
+                                            <React.Fragment key={seckey}>
+                                                <div className="setimage">
+                                                <img src={value[key+1]}/>
+                                                </div>
+                                            </React.Fragment>
+                                        )
+                                    })}
+                                    <br></br>
                                     内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultdetail[key]?.[key+1].join("<br>").replace(/<br>/g,"\n")} onChange={doDetail} />
                                     <br></br>
-                                    項目のまとめ(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultcheck[key]?.[key+1] ? defaultcheck[key]?.[key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
+                                    ポイント(任意)<textarea rows={8} cols={60} tabIndex={key+1} defaultValue={defaultcheck[key]?.[key+1] ? defaultcheck[key]?.[key+1].join("<br>").replace(/<br>/g,"\n"):""} onChange={doCheckcontent} />
                                     <h2></h2>
                                 </div>   
                             )
