@@ -176,6 +176,7 @@ type Boardtype = {
     username:string
 }
 
+
 export const Board = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})

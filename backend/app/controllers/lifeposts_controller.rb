@@ -26,7 +26,8 @@ class LifepostsController < ApplicationController
         @updatelife.update(
             title: life_params[:title],lifeitem: life_params[:lifeitem],
             headline: life_params[:headline],content: life_params[:content],
-            detail: life_params[:detail],checkcontent: life_params[:checkcontent]
+            detail: life_params[:detail],checkcontent: life_params[:checkcontent],
+            image: life_params[:image]
         )
         render json:@updatelife
     end

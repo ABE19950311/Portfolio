@@ -23,11 +23,11 @@
 ・カレンダー表示機能　  
 ・ユーザ新規登録機能  
 ・ユーザログイン/ログアウト機能  
-・DBテーブルのリレーション管理  
-・DBトランザクションの制御機能  
+・DBテーブルのリレーション設計   
 ・レスポンシブ対応  
 #### 以下ログインにより追加される機能  
 ・記事投稿機能  
+・画像投稿機能  
 ・投稿記事更新機能  
 ・投稿記事削除機能  
 ・参考になったボタン(いいね)機能  
@@ -43,20 +43,21 @@
 ・Javascript  
 ・Typescript: 4.9.3  
 ・React: 18.2.0  
+・Next.js: 12.3.4  
 ・styled-components: 5.3.6  
 ・ruby: 3.1.2  
 ・Rails: 7.0.4  
 ・MySQL: 8.0.30  
 ・Puma  
 ・Nginx  
-・AWS(IAM,RDS,ECR,ECS)  
+・AWS(IAM,RDS,ECR,ECS,Route 53)  
 ・Docker/Docker-compose  
 ・CircleCi  
 ・Jest  
 ・RSpec  
 
 ## ■ER図
-![portfolio-ER図 drawio](https://user-images.githubusercontent.com/108403430/205438121-6c75e90e-fd66-48a3-b0f5-3cb9c083be09.png)
+![portfolio-ER図 drawio](https://user-images.githubusercontent.com/108403430/207268427-c39653a9-66bd-4b32-b542-51e503593cbd.png)
 
 
 
