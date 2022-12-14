@@ -661,8 +661,8 @@ export const Lifecontent = ()=>{
         setOffset(page_number*perPage)
     }
 
-    console.log(image)
-    
+    console.log(checkcontent)
+
     if(PCsize) {
     return (
         <Layout>
@@ -689,7 +689,7 @@ export const Lifecontent = ()=>{
                                     </React.Fragment>
                                 )
                             })}
-                            {checkcontent[key][key+1] ?
+                            {checkcontent[key].nullflag===false ?
                             <ul>
                             {checkcontent[key][key+1].map((checkdata:string,checkkey:number)=>{
                                 return (
@@ -792,7 +792,7 @@ export const Lifecontent = ()=>{
                                     </React.Fragment>
                                 )
                             })}
-                            {checkcontent[key][key+1] ?
+                            {checkcontent[key].nullflag===false ?
                             <ul>
                             {checkcontent[key][key+1].map((checkdata:string,checkkey:number)=>{
                                 return (
@@ -895,7 +895,7 @@ export const Lifecontent = ()=>{
                                     </React.Fragment>
                                 )
                             })}
-                            {checkcontent[key][key+1] ?
+                            {checkcontent[key].nullflag===false ?
                             <ul>
                             {checkcontent[key][key+1].map((checkdata:string,checkkey:number)=>{
                                 return (

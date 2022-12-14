@@ -5,6 +5,7 @@ import {useRouter} from "next/router"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
+import {compressImage} from "../../image-compression"
 
 const PC = styled.div`
 width:800px;
@@ -32,6 +33,20 @@ span {
         height:auto;
         width:50%;
     }
+}
+.filebutton {
+    border: 0;
+    text-align: center;
+    display: inline-block;
+    padding: 8px;
+    width: 100px;
+    margin: 7px;
+    color: #ffffff;
+    background-color: #FF9933;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    cursor:pointer;
 }
 .koumokubtn {
     border: 0;
@@ -87,7 +102,7 @@ span {
 .labelnaiyou {
     display: inline-block;
     transform: translate(0px,-60px);
-    margin-left:64px;
+    margin-left:32px;
 }
 .labelmatome {
     display: inline-block;
@@ -177,6 +192,20 @@ span {
         width:50%;
     }
 }
+.filebutton {
+    border: 0;
+    text-align: center;
+    display: inline-block;
+    padding: 8px;
+    width: 100px;
+    margin: 7px;
+    color: #ffffff;
+    background-color: #FF9933;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    cursor:pointer;
+}
 .koumokubtn {
     border: 0;
     text-align: center;
@@ -231,7 +260,7 @@ span {
 .labelnaiyou {
     display: inline-block;
     transform: translate(0px,-60px);
-    margin-left:64px;
+    margin-left:32px;
 }
 .labelmatome {
     display: inline-block;
@@ -319,6 +348,20 @@ span {
         height:auto;
         width:50%;
     }
+}
+.filebutton {
+    border: 0;
+    text-align: center;
+    display: inline-block;
+    padding: 8px;
+    width: 100px;
+    margin: 7px;
+    color: #ffffff;
+    background-color: #FF9933;
+    font-weight: 600;
+    text-decoration: none;
+    transition: box-shadow 200ms ease-out;
+    cursor:pointer;
 }
 .koumokubtn {
     border: 0;
@@ -457,7 +500,7 @@ type Checkcontent = {
 }
 
 type Image = {
-    [id:number]:string,
+    [id:number]:any,
     sortid:number
 }
 
@@ -473,9 +516,11 @@ export const Lifepost =()=>{
     const [detail,setDetail] = useState<Detail[]>([])
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [formcount,setFormcount] = useState<string[]>(["1"])
+    const [currentContentid,setCurrentContentid] = useState(0)
     const contenttimer = useRef<NodeJS.Timer|null>(null);
     const detailtimer = useRef<NodeJS.Timer|null>(null);
     const checktimer = useRef<NodeJS.Timer|null>(null);
+    const inputRef = useRef<HTMLInputElement>(null)
 
     const router = useRouter()
 
@@ -499,6 +544,12 @@ export const Lifepost =()=>{
 
     const doHeadline = (event:{target:HTMLInputElement})=>{
         setHeadline(event.target.value)
+    }
+
+    const inputClick = (currentid:number)=>{
+        if(!inputRef.current) return
+        setCurrentContentid(currentid)
+        inputRef.current.click()
     }
 
     const doFormplus = ()=>{
@@ -543,23 +594,26 @@ export const Lifepost =()=>{
         setImage(imagefilter)
     }
 
-    const doSetimage = (event:React.ChangeEvent<HTMLInputElement>)=>{
+    const doSetimage = async(event:React.ChangeEvent<HTMLInputElement>)=>{
         if(!event.target.files) return
-        const images = window.URL.createObjectURL(event.target.files[0])
-        const id = Number(event.target.max)
-        const obj = {[id]:images,sortid:id}
+        const reader = new FileReader()
+        const id = currentContentid
 
+        reader.onloadend = () => {
+            const obj = {[id]:reader.result,sortid:id}
+            setImage((image)=>([
+                ...image,
+                obj
+            ]))
+        }  
 
-        setImage((image)=>([
-            ...image,
-            obj
-        ]))
+        if(event.target.files[0]) {
+        const compressimage = await compressImage(event.target.files[0])
+        reader.readAsDataURL(compressimage)
+        }
     }
 
-
-    console.log(detail)
-    console.log(checkcontent)
-
+    console.log(image)
 
     const doContent =(event:React.ChangeEvent<HTMLInputElement>)=>{
         const id = event.target.max
@@ -689,13 +743,15 @@ export const Lifepost =()=>{
                         <div className="steps" key={key}>
                             <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
                             <br></br>
-                            <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                            <button className="filebutton" onClick={()=>inputClick(key+1)}>画像を選択</button>
+                            <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>   
+                            <button className="filebutton" onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
                             <br></br>
                             {image.map((value:any,seckey:number)=>{
                                 return (    
                                     <React.Fragment key={seckey}>
                                         <div className="setimage">
-                                        <img src={value[key+1]}/>
+                                        <img src={value[key+1]} />
                                         </div>
                                     </React.Fragment>
                                 )
@@ -738,7 +794,9 @@ export const Lifepost =()=>{
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
-                                <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                <button className="filebutton" onClick={()=>inputClick(key+1)}>画像を選択</button>
+                                <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>   
+                                <button className="filebutton" onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
                                 <br></br>
                                 {image.map((value:any,seckey:number)=>{
                                     return (    
@@ -789,7 +847,9 @@ export const Lifepost =()=>{
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
-                                <input name={"file"} type={"file"} max={key+1} onChange={doSetimage}/> <button onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
+                                <button className="filebutton" onClick={()=>inputClick(key+1)}>画像を選択</button>
+                                <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>   
+                                <button className="filebutton" onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
                                 <br></br>
                                 {image.map((value:any,seckey:number)=>{
                                     return (    
