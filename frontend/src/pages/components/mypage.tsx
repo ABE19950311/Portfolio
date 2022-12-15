@@ -20,9 +20,9 @@ ul {
     background: #fcfcfc;
     padding: 0.1em 0 0.1em 0.5em;
     border: solid 1px gray;
-}    
+}
 ul li {
-    padding: 0.5em 0; 
+    padding: 0.5em 0;
 }
 .topmain {
     display:flex;
@@ -34,7 +34,7 @@ ul li {
         padding: 0 65px;
         text-align: center;
         margin:30px 0 5px 40px;
-    }    
+    }
     h2:before,
     h2:after {
         position: absolute;
@@ -44,7 +44,7 @@ ul li {
         content: '';
         border-top: solid 2px #000;
         border-bottom: solid 2px #000;
-    }    
+    }
     h2:before {
         left: 0;
     }
@@ -74,7 +74,7 @@ ul li {
 .main {
     display: flex;
     justify-content:space-between;
-        
+
     .content {
         text-align: center;
 
@@ -116,7 +116,7 @@ ul {
     border: solid 1px gray;
 }
 ul li {
-    padding: 0.5em 0; 
+    padding: 0.5em 0;
 }
 .topmain {
     display:flex;
@@ -211,21 +211,21 @@ ul {
     border: solid 1px gray;
 }
 ul li {
-    padding: 0.5em 0; 
+    padding: 0.5em 0;
 }
 .topmain {
     display:flex;
     flex-wrap:wrap;
 
-    h2 {
+    h3 {
         position: relative;
         display: inline-block;
         padding: 0 65px;
         text-align: center;
-        margin:30px 0 5px 65px;
-    }    
-    h2:before,
-    h2:after {
+        margin:30px 0 5px 0px;
+    }
+    h3:before,
+    h3:after {
         position: absolute;
         top: calc(50% - 3px);
         width: 50px;
@@ -233,15 +233,15 @@ ul li {
         content: '';
         border-top: solid 2px #000;
         border-bottom: solid 2px #000;
-    }    
-    h2:before {
+    }
+    h3:before {
         left: 0;
-    }   
-    h2:after {
+    }
+    h3:after {
         right: 0;
     }
     button {
-        margin:30px 0 20px 285px;
+        margin:30px 0 20px 185px;
         font-weight: 700;
         padding: 0.5rem 1.5rem;
         cursor: pointer;
@@ -265,8 +265,8 @@ ul li {
         text-align: center;
 
         table {
-            width:450px;
-            margin:0 0 20px 20px;
+            width:315px;
+            margin:0 0 20px 0;
             text-align: center;
             border-collapse: collapse;
         }
@@ -415,10 +415,10 @@ export const Mypage = ()=>{
                 <tr>
                     <th>開始日</th><th>期日</th><th>項目</th><th>TODO</th>
                 </tr>
-                
+
         {todo.map((todo:Todo,key:number)=>{
             return(
-                <tr key={key}> 
+                <tr key={key}>
                     <td>{todo.startdate}</td><td>{todo.duedate}</td><td>{todo.life}</td><td>{todo.list}</td>
                 </tr>
             )
@@ -495,7 +495,7 @@ export const Mypage = ()=>{
                     }
                 })}
             </div>
-    
+
             <div className="main">
                 <div className="content">
                 <table border={1}>
@@ -506,7 +506,7 @@ export const Mypage = ()=>{
                     </tr>
             {todo.map((todo:Todo,key:number)=>{
                 return(
-                    <tr key={key}> 
+                    <tr key={key}>
                         <td>{todo.startdate}</td><td>{todo.duedate}</td><td>{todo.life}</td><td>{todo.list}</td>
                     </tr>
                 )
@@ -514,7 +514,7 @@ export const Mypage = ()=>{
             </tbody>
                 </table>
                 </div>
-    
+
                 <div className="content">
                 <table border={1}>
                     <caption>投稿した生活情報</caption>
@@ -532,7 +532,7 @@ export const Mypage = ()=>{
             </tbody>
                 </table>
                 </div>
-    
+
             </div>
             </Tablet>
             </Layout>
@@ -542,11 +542,11 @@ export const Mypage = ()=>{
             <Layout>
             <Mobile>
                 <div className="topmain">
-                <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+                <div><h3>{sessionname}様のマイページ</h3></div><div><button onClick={passChange}>パスワードを変更する</button></div>
                 </div>
 
                 <div className="due">
-                {dueflag ? <h3>下記TODOが期日まで残り3日を切っています</h3>:<></>}
+                {dueflag ? <h4>下記TODOが期日まで残り3日を切っています</h4>:<></>}
                 {todo.map((value:Todo,key:number)=>{
                     let duedate = moment(value.duedate).format("YYYYMMDD")
                     let nowdate = moment(new Date()).format("YYYYMMDD")
@@ -564,7 +564,7 @@ export const Mypage = ()=>{
                         <></>
                     }
                 })}
-                {excessflag ? <h3>下記TODOが期日を過ぎています</h3>:<></>}
+                {excessflag ? <h4>下記TODOが期日を過ぎています</h4>:<></>}
                 {todo.map((value:Todo,key:number)=>{
                     let duedate = moment(value.duedate).format("YYYYMMDD")
                     let nowdate = moment(new Date()).format("YYYYMMDD")
@@ -583,7 +583,7 @@ export const Mypage = ()=>{
                     }
                 })}
             </div>
-    
+
             <div className="main">
                 <div className="content">
                 <table border={1}>
@@ -594,7 +594,7 @@ export const Mypage = ()=>{
                     </tr>
             {todo.map((todo:Todo,key:number)=>{
                 return(
-                    <tr key={key}> 
+                    <tr key={key}>
                         <td>{todo.startdate}</td><td>{todo.duedate}</td><td>{todo.life}</td><td>{todo.list}</td>
                     </tr>
                 )
@@ -602,7 +602,7 @@ export const Mypage = ()=>{
             </tbody>
                 </table>
                 </div>
-    
+
                 <div className="content">
                 <table border={1}>
                     <caption>投稿した生活情報</caption>
@@ -620,7 +620,7 @@ export const Mypage = ()=>{
             </tbody>
                 </table>
                 </div>
-    
+
             </div>
             </Mobile>
             </Layout>

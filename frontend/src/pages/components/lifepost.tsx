@@ -6,6 +6,7 @@ import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import {compressImage} from "../../image-compression"
+import Image from "next/image"
 
 const PC = styled.div`
 width:800px;
@@ -24,15 +25,6 @@ p {
 span {
     color:red;
     font-weight:normal;
-}
-.setimage {
-    display: flex;
-    justify-content: flex-start;
-
-    img {
-        height:auto;
-        width:50%;
-    }
 }
 .filebutton {
     border: 0;
@@ -75,28 +67,28 @@ span {
     margin-left:250px;
 }
 .koumoku {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 50%;
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .title {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 50%;
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .headline {
     width: 50%;
-    padding: 10px 15px; 
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
     transform: translate(0px,-4px);
 }
 .labelnaiyou {
@@ -119,7 +111,7 @@ span {
     background: #fff;
 }
 .check:before {
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -132,7 +124,7 @@ span {
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
@@ -140,8 +132,8 @@ span {
     width: 2px;
     position: absolute;
     top: 0.7rem;
-    left: 0.7rem; 
-    height: calc(100%); 
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -183,15 +175,6 @@ span {
     color:red;
     font-weight:normal;
 }
-.setimage {
-    display: flex;
-    justify-content: flex-start;
-
-    img {
-        height:auto;
-        width:50%;
-    }
-}
 .filebutton {
     border: 0;
     text-align: center;
@@ -233,28 +216,28 @@ span {
     margin-left:250px;
 }
 .koumoku {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 50%;
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .title {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 50%;
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .headline {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 50%;
+    padding: 10px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
     transform: translate(0px,-4px);
 }
 .labelnaiyou {
@@ -277,7 +260,7 @@ span {
     background: #fff;
 }
 .check:before {
-    content: "POINT"; 
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -290,16 +273,16 @@ span {
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -324,9 +307,12 @@ span {
 `
 
 const Mobile = styled.div`
-width:519px;
+width:340px;
 margin-top:20px;
 
+label {
+    white-space: nowrap;
+}
 .head {
     padding: 1rem 1rem;
     border-left: 5px solid #ff9800;
@@ -339,15 +325,6 @@ p {
 span {
     color:red;
     font-weight:normal;
-}
-.setimage {
-    display: flex;
-    justify-content: flex-start;
-
-    img {
-        height:auto;
-        width:50%;
-    }
 }
 .filebutton {
     border: 0;
@@ -362,6 +339,7 @@ span {
     text-decoration: none;
     transition: box-shadow 200ms ease-out;
     cursor:pointer;
+    transform: translate(0px,5px);
 }
 .koumokubtn {
     border: 0;
@@ -377,7 +355,7 @@ span {
     text-decoration: none;
     transition: box-shadow 200ms ease-out;
     cursor:pointer;
-    transform: translate(115px,0px);
+    transform: translate(35px,20px);
 }
 .sousin {
     cursor: pointer;
@@ -388,31 +366,31 @@ span {
     padding: 0.5rem 2rem;
     border-image-slice: 1;
     border-image-Creator: linear-gradient(to left, #743ad5, #d53a9d);
-    transform: translate(185px,10px);
+    transform: translate(105px,5px);
 }
 .koumoku {
-    width: 50%; 
-    padding: 10px 15px; 
+    padding: 8px 50px 8px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+    transform: translate(-160px,35px);
 }
 .title {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 80%;
+    padding: 8px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .headline {
-    width: 50%; 
-    padding: 10px 15px; 
+    width: 90%;
+    padding: 8px 15px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
     transform: translate(0px,-4px);
 }
 .labelnaiyou {
@@ -435,7 +413,7 @@ span {
     background: #fff;
 }
 .check:before {
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -448,23 +426,23 @@ span {
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
-.steps > h2 {
+.steps > h3 {
     display: flex;
     align-items: center;
 }
-.steps > h2:before {
+.steps > h3:before {
     content: "";
     background: #111111;
     color: white;
@@ -499,7 +477,7 @@ type Checkcontent = {
     nullflag:boolean
 }
 
-type Image = {
+type Images = {
     [id:number]:any,
     sortid:number
 }
@@ -511,7 +489,7 @@ export const Lifepost =()=>{
     const [title,setTitle] = useState("")
     const [lifeitem,setLifeitem] = useState("")
     const [headline,setHeadline] = useState("")
-    const [image,setImage] = useState<Image[]>([])
+    const [image,setImage] = useState<Images[]>([])
     const [content,setContent] = useState<Content[]>([])
     const [detail,setDetail] = useState<Detail[]>([])
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
@@ -571,7 +549,7 @@ export const Lifepost =()=>{
             {[length+1]:[],sortid:length+1,nullflag:true}
         ]))
     }
-    
+
     const doFormminus = ()=>{
         const length = formcount.length
         if(length==1) return
@@ -581,7 +559,7 @@ export const Lifepost =()=>{
         const contentfind = content.findIndex((content)=>content[length]||content[length]=="")
         const detailfind = detail.findIndex((detail)=>detail[length])
         const checkfind = checkcontent.findIndex((value)=>value[length])
-    
+
         content.splice(contentfind,1)
         detail.splice(detailfind,1)
         checkcontent.splice(checkfind,1)
@@ -605,7 +583,7 @@ export const Lifepost =()=>{
                 ...image,
                 obj
             ]))
-        }  
+        }
 
         if(event.target.files[0]) {
         const compressimage = await compressImage(event.target.files[0])
@@ -621,7 +599,7 @@ export const Lifepost =()=>{
         const value= event.target.value
         const nullflag = value.trim() ? false : true
         const obj = {[numberid]:value,sortid:numberid,nullflag:nullflag}
-        
+
         if(contenttimer.current) clearTimeout(contenttimer.current)
 
         contenttimer.current = setTimeout(()=>{
@@ -685,13 +663,13 @@ export const Lifepost =()=>{
         })
         setImage(filter)
     }
-    
+
     const doSubmit =(event:React.MouseEvent<HTMLButtonElement>)=>{
         event.preventDefault()
 
         const nullcontent = content.find((value)=>value.nullflag)
         const nulldetail = detail.find((value)=>value.nullflag)
-    
+
         if(!title.trim()||!headline.trim()||nullcontent||nulldetail) return
 
         const jsonimage = JSON.stringify(image)
@@ -700,7 +678,7 @@ export const Lifepost =()=>{
         const jsoncheck = JSON.stringify(checkcontent)
 
         axios.post(env+"/lifeposts",
-        {   
+        {
             lifepost: {
                 title:title,
                 lifeitem:lifeitem==""||lifeitem=="項目を選択しない" ? "none":lifeitem,
@@ -734,7 +712,7 @@ export const Lifepost =()=>{
 
                 <br></br>
                 <h1><label>見出しの文章<span>(必須):</span></label><input className="headline" onChange={doHeadline} type={"text"}/></h1>
-        
+
                 <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>送信する</button>
                 <br></br>
 
@@ -744,16 +722,17 @@ export const Lifepost =()=>{
                             <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
                             <br></br>
                             <button className="filebutton" onClick={()=>inputClick(key+1)}>画像を選択</button>
-                            <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>   
+                            <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>
                             <button className="filebutton" onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
                             <br></br>
                             {image.map((value:any,seckey:number)=>{
-                                return (    
+                                return (
+                                    value[key+1] ?
                                     <React.Fragment key={seckey}>
-                                        <div className="setimage">
-                                        <img src={value[key+1]} />
-                                        </div>
+                                        <Image src={value[key+1]} height="400" width="400" alt=""/>
                                     </React.Fragment>
+                                    :
+                                    <></>
                                 )
                             })}
                             <br></br>
@@ -761,7 +740,7 @@ export const Lifepost =()=>{
                             <br></br>
                             <label className="labelmatome">ポイント(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
                             <h2></h2>
-                        </div>   
+                        </div>
                     )
                 })}
 
@@ -782,29 +761,30 @@ export const Lifepost =()=>{
                     <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
                     <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
                     <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
-    
+
                     <br></br>
                     <h1><label>見出しの文章<span>(必須):</span></label><input className="headline" onChange={doHeadline} type={"text"}/></h1>
-            
+
                     <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><button className="sousin" onClick={doSubmit}>送信する</button>
                     <br></br>
-    
+
                     {formcount.map((count:string,key:number)=>{
                         return (
                             <div className="steps" key={key}>
                                 <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
                                 <br></br>
                                 <button className="filebutton" onClick={()=>inputClick(key+1)}>画像を選択</button>
-                                <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>   
+                                <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>
                                 <button className="filebutton" onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
                                 <br></br>
                                 {image.map((value:any,seckey:number)=>{
-                                    return (    
+                                    return (
+                                        value[key+1] ?
                                         <React.Fragment key={seckey}>
-                                            <div className="setimage">
-                                            <img src={value[key+1]}/>
-                                            </div>
+                                            <Image src={value[key+1]} height="400" width="400" alt=""/>
                                         </React.Fragment>
+                                        :
+                                        <></>
                                     )
                                 })}
                                 <br></br>
@@ -812,10 +792,10 @@ export const Lifepost =()=>{
                                 <br></br>
                                 <label className="labelmatome">ポイント(任意):</label><textarea rows={8} cols={70} tabIndex={key+1} onChange={doCheckcontent} />
                                 <h2></h2>
-                            </div>   
+                            </div>
                         )
                     })}
-    
+
                 </Tablet>
             </Layout>
         )
@@ -823,52 +803,54 @@ export const Lifepost =()=>{
         return (
             <Layout>
                 <Mobile>
-                    <label>投稿タイトル<span>(必須):</span></label><input className="title"onChange={doTitle} type={"text"}/>
+                    <label>投稿タイトル<span>(必須):</span></label><br></br><input className="title"onChange={doTitle} type={"text"}/>
                     <br></br><br></br>
-                    <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>
-                    <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label>
-                    <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>
-                    <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>
+                    <input type={"radio"} id={"1"} name={"Life"} value={"部屋探し・入居"} onChange={doLifeitem}/><label>部屋探し・入居</label>&emsp;
+                    <input type={"radio"} id={"2"} name={"Life"} value={"入居前後の手続き"} onChange={doLifeitem}/><label>入居前後の手続き</label><br></br>
+                    <input type={"radio"} id={"3"} name={"Life"} value={"防犯・防災"} onChange={doLifeitem}/><label>防犯・防災</label>&emsp;
+                    <input type={"radio"} id={"4"} name={"Life"} value={"掃除"} onChange={doLifeitem}/><label>掃除</label>&emsp;
                     <input type={"radio"} id={"5"} name={"Life"} value={"料理"} onChange={doLifeitem}/><label>料理</label><br></br>
-                    <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>
-                    <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>
+                    <input type={"radio"} id={"6"} name={"Life"} value={"洗濯"} onChange={doLifeitem}/><label>洗濯</label>&emsp;
+                    <input type={"radio"} id={"7"} name={"Life"} value={"その他"} onChange={doLifeitem}/><label>その他</label>&emsp;
                     <input type={"radio"} id={"8"} name={"Life"} value={"項目を選択しない"} defaultChecked onChange={doLifeitem}/><label>項目を選択しない</label>
-    
+
                     <br></br>
                     <h2 className="head"><label>見出しの文章<span>(必須):</span></label><input className="headline" onChange={doHeadline} type={"text"}/></h2>
-            
-                    <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button><br></br>
-                    <button className="sousin" onClick={doSubmit}>送信する</button>
+
+                    <button className="sousin" onClick={doSubmit}>送信する</button><br></br>
+                    <button className="koumokubtn" onClick={doFormplus}>項目を増やす</button><button className="koumokubtn" onClick={doFormminus}>項目を減らす</button>
+
                     <br></br>
                     <br></br>
-    
+
                     {formcount.map((count:string,key:number)=>{
                         return (
                             <div className="steps" key={key}>
-                                <h2><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h2>
+                                <h3><label>{key+1}つ目の項目<span>(必須)</span>:</label><input className="koumoku" max={key+1} onChange={doContent} type={"text"}/></h3>
                                 <br></br>
                                 <button className="filebutton" onClick={()=>inputClick(key+1)}>画像を選択</button>
-                                <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>   
+                                <input ref={inputRef} type={"file"} accept="image/*" style={{display:"none"}} onChange={doSetimage}/>
                                 <button className="filebutton" onClick={()=>doDeleteimage(key+1)}>画像を消す</button>
                                 <br></br>
                                 {image.map((value:any,seckey:number)=>{
-                                    return (    
+                                    return (
+                                        value[key+1] ?
                                         <React.Fragment key={seckey}>
-                                            <div className="setimage">
-                                            <img src={value[key+1]}/>
-                                            </div>
+                                            <Image src={value[key+1]} layout="responsive" height="90" width="90" alt=""/>
                                         </React.Fragment>
+                                        :
+                                        <></>
                                     )
                                 })}
                                 <br></br>
-                                内容<span>(必須)</span><textarea rows={8} cols={60} tabIndex={key+1} onChange={doDetail} />
+                                内容<span>(必須)</span><textarea rows={6} cols={40} tabIndex={key+1} onChange={doDetail} />
                                 <br></br>
-                                ポイント(任意)<textarea rows={8} cols={60} tabIndex={key+1} onChange={doCheckcontent} />
-                                <h2></h2>
-                            </div>   
+                                ポイント(任意)<textarea rows={6} cols={40} tabIndex={key+1} onChange={doCheckcontent} />
+                                <h3></h3>
+                            </div>
                         )
                     })}
-    
+
                 </Mobile>
             </Layout>
         )

@@ -27,7 +27,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -43,16 +43,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -121,7 +121,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -137,16 +137,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -192,17 +192,17 @@ ul li{
 `
 
 const Mobile = styled.div`
-width:490px;
+width:340px;
 overflow-wrap:  break-word;
 
-h1 {
-    padding: 1rem 1rem;
+.headline {
+    padding: 1rem 0.2rem;
     border-left: 5px solid #ff9800;
     background: #ffe0b2;
     color: #f57c00;
 }
 p {
-    font-size:18px;
+    font-size:15px;
 }
 ul {
     position: relative;
@@ -211,11 +211,11 @@ ul {
     border: solid 2px #adcce8;
     border-radius:8px;
     color: #448ccb;
-    width:400px;
+    width:305px;
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -231,24 +231,24 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
-.steps > h2 {
+.steps > h3 {
     counter-increment: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h2:before {
+.steps > h3:before {
     content: counter(step-counter);
     background: #111111;
     color: white;
@@ -263,12 +263,12 @@ ul li{
     left: 0;
     z-index: 1;
 }
-.steps > h3 {
+.steps > h4 {
     counter-reset: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h3:before {
+.steps > h4:before {
     content: "";
     background: #111111;
     color: white;
@@ -288,7 +288,7 @@ ul li{
 export const Bouhan = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    
+
     if(PCsize) {
         return (
         <Layout>
@@ -369,9 +369,9 @@ export const Bouhan = ()=>{
         return (
         <Layout>
             <Mobile>
-            <h1>防犯・防災のための心がけ</h1>
+            <h2 className="headline">防犯・防災のための心がけ</h2>
             <div className="steps">
-                <h2>家の周辺環境を確認する</h2>
+                <h3>家の周辺環境を確認する</h3>
                 <p>ゴミ・タバコの放置、壁の落書き等が存在している場合、治安が芳しくない可能性あり</p>
                     <ul>
                         <li>道路のゴミ</li>
@@ -380,7 +380,7 @@ export const Bouhan = ()=>{
                         <li>街灯が十分にあるか</li>
                         <li>夜の人通り</li>
                     </ul>
-                <h2>空き巣・不審者対策</h2>
+                <h3>空き巣・不審者対策</h3>
                 <p>家の中外関係なく、基本に忠実に細心の注意を払う</p>
                     <ul>
                         <li>来訪者は必ず確認</li>
@@ -390,7 +390,7 @@ export const Bouhan = ()=>{
                         <li>近所の写真をSNSにアップしない</li>
                         <li>留守を悟られないよう小さい照明をつける</li>
                     </ul>
-                <h2>地震・台風等自然災害の備え</h2>
+                <h3>地震・台風等自然災害の備え</h3>
                 <p>非常時用の備蓄・避難場所を日頃から意識する</p>
                     <ul>
                         <li>大きな家具は固定する</li>
@@ -398,7 +398,7 @@ export const Bouhan = ()=>{
                         <li>ハザードマップで周辺を確認</li>
                         <li>停電に備え枕元に懐中電灯を用意しておく</li>
                     </ul>
-                <h3></h3>
+                <h4></h4>
             </div>
             </Mobile>
         </Layout>

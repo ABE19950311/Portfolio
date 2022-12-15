@@ -143,7 +143,7 @@ export const Newaccount = ()=>{
             setValidationPass("パスワードが空欄です")
             setValidationPassfilm("")
         }
-    
+
         if(validationPass||!username.trim()||!password.trim()||!passwordconfirm.trim()) return
         axios.post(env+"/signup" as string,
             {

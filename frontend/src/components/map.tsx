@@ -49,50 +49,50 @@ const Map =()=>{
             scrollWheelZoom={true}
             style={{height:"100vh",width:"100%"}}
         >
-            <TileLayer 
+            <TileLayer
                     attribution='Google マップ'
                     url="https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}"/>
 
             <LayersControl position="topright">
 
                 <LayersControl.Overlay name="ハザードマップ 洪水浸水想定区域">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/01_flood_l2_shinsuishin_data/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ハザードマップ 浸水継続時間">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/01_flood_l2_keizoku_data/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ハザードマップ 高潮浸水想定区域">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/03_hightide_l2_shinsuishin_data/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ハザードマップ 津波浸水想定">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/04_tsunami_newlegend_data/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ハザードマップ 土石流">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/05_dosekiryukeikaikuiki/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ハザードマップ 急傾斜地の崩壊">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/05_kyukeishakeikaikuiki/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
 
                 <LayersControl.Overlay name="ハザードマップ 地すべり">
-                <TileLayer 
+                <TileLayer
                     opacity={0.5}
                     url="https://disaportaldata.gsi.go.jp/raster/05_jisuberikeikaikuiki/{z}/{x}/{y}.png"/>
                 </LayersControl.Overlay>
@@ -100,7 +100,7 @@ const Map =()=>{
             </LayersControl>
 
             <LocationMarker />
-    
+
         </MapContainer>
         </>
     )

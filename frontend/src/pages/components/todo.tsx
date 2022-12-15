@@ -37,22 +37,22 @@ h2{
     position: absolute;
     color: #333;
     font-size: 2rem;
-    transform: translate(100px,5px);
+    transform: translate(140px,5px);
 }
 .datepicker {
     text-align:left;
     font-size:16px;
-    padding: 6px 40px; 
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    padding: 6px 40px;
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .custominput {
     padding: 10px 100px 10px 10px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .todolabel {
     color:red;
@@ -64,7 +64,7 @@ h2{
     box-shadow: 0 0 0 1px #ccc inset;
     cursor: pointer;
     font-size:16px;
-    
+
     &::focus {
         outline: 0;
         box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
@@ -122,13 +122,13 @@ h2{
     position: absolute;
     color: #333;
     font-size: 2rem;
-    transform: translate(100px,5px);
+    transform: translate(140px,5px);
 }
 .datepicker {
     text-align:left;
     font-size:16px;
-    padding: 6px 40px; 
-    border-radius: 3px; 
+    padding: 6px 40px;
+    border-radius: 3px;
     border: 2px solid #ddd;
     box-sizing: border-box;
 }
@@ -137,7 +137,7 @@ h2{
     font-size: 16px;
     border-radius: 3px;
     border: 2px solid #ddd;
-    box-sizing: border-box; 
+    box-sizing: border-box;
 }
 .todolabel {
     color:red;
@@ -149,7 +149,7 @@ h2{
     box-shadow: 0 0 0 1px #ccc inset;
     cursor: pointer;
     font-size:16px;
-    
+
     &::focus {
         outline: 0;
         box-shadow: 0 0 0 2px rgb(33, 150, 243) inset;
@@ -183,10 +183,11 @@ h2{
 
 const Mobile = styled.div`
 line-height: 1.25;
-max-width:1500px;
 margin-bottom:20px;
+width:340px;
 
 h2{
+    width:320px;
     text-align:center;
     border-top: double 4px #27acd9;
 	border-bottom: double 4px #27acd9;
@@ -212,17 +213,25 @@ h2{
 .datepicker {
     text-align:left;
     font-size:16px;
-    padding: 6px 40px; 
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    padding: 6px 40px;
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+    transform: translate(-80px,0px);
 }
 .custominput {
-    padding: 10px 100px 10px 10px;
+    padding: 8px 70px 8px 10px;
     font-size: 16px;
     border-radius: 3px;
-    border: 2px solid #ddd; 
-    box-sizing: border-box; 
+    border: 2px solid #ddd;
+    box-sizing: border-box;
+    transform: translate(10px,0px);
+}
+.searchinput {
+    font-size: 16px;
+    border-radius: 3px;
+    border: 2px solid #ddd;
+    box-sizing: border-box;
 }
 .todolabel {
     color:red;
@@ -242,7 +251,7 @@ h2{
 }
 .custombutton {
     font-weight: 700;
-    padding: 0.5rem 1.5rem;
+    padding: 0.3rem 1.0rem;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -259,7 +268,7 @@ h2{
     color: #fff;
 }
 .filterselect {
-    transform: translate(-160px,-5px);
+    transform: translate(-55px,-5px);
     padding:0 10px;
     outline: none;
     background-color: #FFFFFF;
@@ -500,7 +509,7 @@ tbody tr:hover{
 const MobTable = styled.table`
 border-collapse: collapse;
 margin: 0 auto;
-width: 520px;
+width: 320px;
 table-layout: fixed;
 overflow-wrap: break-word;
 
@@ -575,7 +584,7 @@ thead tr{
 }
 .check {
     width:7vw;
-    transform: translate(-6px,5px);
+    transform: translate(-10px,5px);
 }
 .start {
     font-size:2.5vw;
@@ -681,7 +690,7 @@ export const Todo = ()=>{
 
     const startdateasc = () => {
         setStartclass(!startclass)
-        const sorttodo = 
+        const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
                 if(a.startdate<b.startdate) return -1;
                 if(a.startdate>b.startdate) return 1;
@@ -694,7 +703,7 @@ export const Todo = ()=>{
 
     const startdatedesc = () => {
         setStartclass(!startclass)
-        const sorttodo = 
+        const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
                 if(a.startdate<b.startdate) return 1;
                 if(a.startdate>b.startdate) return -1;
@@ -708,7 +717,7 @@ export const Todo = ()=>{
     const duedateasc = () => {
         setDueclass(!dueclass)
         console.log("asc")
-        const sorttodo = 
+        const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
                 if(a.duedate<b.duedate) return -1;
                 if(a.duedate>b.duedate) return 1;
@@ -722,7 +731,7 @@ export const Todo = ()=>{
     const duedatedesc = () => {
         setDueclass(!dueclass)
         console.log("desc")
-        const sorttodo = 
+        const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
                 if(a.duedate<b.duedate) return 1;
                 if(a.duedate>b.duedate) return -1;
@@ -769,13 +778,13 @@ export const Todo = ()=>{
             setList("");
             setLife("");
             setStartDate(undefined)
-            setEndDate(undefined)       
+            setEndDate(undefined)
         }).catch(error=> {
             console.log("response error",error);
         })
     }
     }
-    
+
     const doDelete = ()=>{
         deleteid.forEach((id)=>{
             axios.delete(env+`/todos/${id}` as string)
@@ -864,7 +873,7 @@ const handleChangeEnd = (selectedDate:Date) => {
         <PC>
         <h2>TODOリスト作成</h2>
             <div className="datepos">
-            {startDate ?  
+            {startDate ?
                 <DatePicker
                     className="datepicker"
                     dateFormat="yyyy-MM-dd"
@@ -885,7 +894,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                     placeholderText="開始日"
                 />
             }
-            {endDate ? 
+            {endDate ?
                 <DatePicker
                     className="datepicker"
                     dateFormat="yyyy-MM-dd"
@@ -932,7 +941,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                                     <option value="洗濯">洗濯</option>
             </select>
             <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
-            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+            &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>削除</button>
             </div>
             </div>
         </PC>
@@ -982,7 +991,7 @@ const handleChangeEnd = (selectedDate:Date) => {
             <Tablet>
             <h2>TODOリスト作成</h2>
                 <div className="datepos">
-                {startDate ?  
+                {startDate ?
                     <DatePicker
                         className="datepicker"
                         dateFormat="yyyy-MM-dd"
@@ -1003,7 +1012,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                         placeholderText="開始日"
                     />
                 }
-                {endDate ? 
+                {endDate ?
                     <DatePicker
                         className="datepicker"
                         dateFormat="yyyy-MM-dd"
@@ -1050,7 +1059,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                                         <option value="洗濯">洗濯</option>
                 </select>
                 <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
-                &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+                &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>削除</button>
                 </div>
                 </div>
             </Tablet>
@@ -1100,7 +1109,7 @@ const handleChangeEnd = (selectedDate:Date) => {
             <Mobile>
             <h2>TODOリスト作成</h2>
                 <div className="datepos">
-                {startDate ?  
+                {startDate ?
                     <DatePicker
                         className="datepicker"
                         dateFormat="yyyy-MM-dd"
@@ -1121,7 +1130,7 @@ const handleChangeEnd = (selectedDate:Date) => {
                         placeholderText="開始日"
                     />
                 }
-                {endDate ? 
+                {endDate ?
                     <DatePicker
                         className="datepicker"
                         dateFormat="yyyy-MM-dd"
@@ -1146,7 +1155,9 @@ const handleChangeEnd = (selectedDate:Date) => {
                 <div className="inputpos">
                 <br></br>
                 <label>TODO内容入力<span className="todolabel">(必須)</span>:</label><input className="custominput" type={"text"} value={list} onChange={doList}/>
-                <br></br><label>&emsp;項目を選択:</label><select className="customselect" onChange={doLife} value={life}>
+                <br></br>
+                <br></br>
+                <label>&emsp;項目を選択:</label><select className="customselect" onChange={doLife} value={life}>
                     <option value="none">none</option>
                     <option value="部屋探し・入居">部屋探し・入居</option>
                     <option value="入居前後の手続き">入居前後の手続き</option>
@@ -1155,6 +1166,8 @@ const handleChangeEnd = (selectedDate:Date) => {
                     <option value="料理">料理</option>
                     <option value="洗濯">洗濯</option>
                 </select>
+                <br></br>
+                <br></br>
                 &emsp;&emsp;<button className="custombutton" type={"submit"} onClick={doSubmit}>リスト作成</button><br></br><br></br><br></br>
                 <select className="filterselect" onChange={doSeleclife}>
                                         <option value="フィルター項目">フィルター項目</option>
@@ -1167,8 +1180,8 @@ const handleChangeEnd = (selectedDate:Date) => {
                                         <option value="洗濯">洗濯</option>
                 </select><br></br>
                 <div className="search">
-                <MdSearch className="searchicon"/><input className="custominput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
-                &emsp;&emsp;<button className="custombutton" type={"button"} onClick={doDelete}>チェック項目削除</button>
+                <MdSearch className="searchicon"/><input className="searchinput" type={"text"} placeholder={"TODO内容を検索"} onChange={doSearch}/>
+                &emsp;&emsp;<br></br><br></br><button className="custombutton" type={"button"} onClick={doDelete}>削除</button>
                 </div>
                 </div>
             </Mobile>

@@ -5,7 +5,7 @@ import {useRouter} from "next/router"
 import moment from "moment"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
-import ReactPaginate from 'react-paginate'; 
+import ReactPaginate from 'react-paginate';
 import { useMediaQuery } from "react-responsive"
 import { MdSearch } from "react-icons/md";
 import { FaRegLightbulb} from "react-icons/fa";
@@ -40,8 +40,8 @@ select {
 .custominput {
     padding: 7px 100px 7px 10px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
     box-sizing: border-box;
     margin-left:30vw;
 }
@@ -142,7 +142,7 @@ td:first-child {
     width:15vw;
     cursor: pointer;
     position: relative;
-}    
+}
 .create::before, .create::after {
     content: "";
     height: 0;
@@ -151,20 +151,20 @@ td:first-child {
     border: 5px solid transparent;
     right: 10px;
     top: 50%;
-}    
+}
 .create::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
-}    
+}
 .create::after {
     border-top-color: #aaa;
     margin-top: 2px;
-}    
+}
 .update {
     width:15vw;
     cursor: pointer;
     position: relative;
-}    
+}
 .update::before, .update::after {
     content: "";
     height: 0;
@@ -173,21 +173,21 @@ td:first-child {
     border: 5px solid transparent;
     right: 10px;
     top: 50%;
-}    
+}
 .update::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
-}    
+}
 .update::after {
     border-top-color: #aaa;
     margin-top: 2px;
-}    
+}
 .createdesc::before {
     border-bottom-color: #444;
 }
 .createasc::after {
     border-top-color: #444;
-}    
+}
 .updatedesc::before {
     border-bottom-color: #444;
 }
@@ -243,8 +243,8 @@ select {
 .custominput {
     padding: 7px 100px 7px 10px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
     box-sizing: border-box;
     margin-left:10vw;
 }
@@ -345,7 +345,7 @@ td:first-child {
     width:15vw;
     cursor: pointer;
     position: relative;
-}    
+}
 .create::before, .create::after {
     content: "";
     height: 0;
@@ -354,20 +354,20 @@ td:first-child {
     border: 5px solid transparent;
     right: 10px;
     top: 50%;
-}    
+}
 .create::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
-}    
+}
 .create::after {
     border-top-color: #aaa;
     margin-top: 2px;
-}    
+}
 .update {
     width:15vw;
     cursor: pointer;
     position: relative;
-}    
+}
 .update::before, .update::after {
     content: "";
     height: 0;
@@ -376,21 +376,21 @@ td:first-child {
     border: 5px solid transparent;
     right: 10px;
     top: 50%;
-}    
+}
 .update::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
-}    
+}
 .update::after {
     border-top-color: #aaa;
     margin-top: 2px;
-}    
+}
 .createdesc::before {
     border-bottom-color: #444;
 }
 .createasc::after {
     border-top-color: #444;
-}    
+}
 .updatedesc::before {
     border-bottom-color: #444;
 }
@@ -403,7 +403,7 @@ td:first-child {
     justify-content: center;
     margin-bottom: 10px;
     gap: 20px 6px;
-}    
+}
 .page-item,
 .page-link {
     display: inline-flex;
@@ -425,7 +425,7 @@ caption {
     text-align:left;
 }
 .filter {
-    margin-bottom:5px;
+    margin:5px 0 5px 0;
 }
 .sankouicon {
     font-size: 1rem;
@@ -445,8 +445,8 @@ select {
 .custominput {
     padding: 7px 100px 7px 10px;
     font-size: 16px;
-    border-radius: 3px; 
-    border: 2px solid #ddd; 
+    border-radius: 3px;
+    border: 2px solid #ddd;
     box-sizing: border-box;
     margin-left:10vw;
 }
@@ -459,6 +459,7 @@ select {
 }
 .custombutton {
     padding: 3px 5px;
+    margin:5px 0 10px 120px;
 }
 .kousinbtn {
     font-size:1.5vw;
@@ -550,7 +551,7 @@ td:first-child {
     font-size:2.5vw;
     cursor: pointer;
     position: relative;
-}    
+}
 .create::before, .create::after {
     content: "";
     height: 0;
@@ -559,21 +560,21 @@ td:first-child {
     border: 5px solid transparent;
     right: 10px;
     top: 50%;
-}    
+}
 .create::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
-}    
+}
 .create::after {
     border-top-color: #aaa;
     margin-top: 2px;
-}    
+}
 .update {
     width:18vw;
     font-size:2.5vw;
     cursor: pointer;
     position: relative;
-}    
+}
 .update::before, .update::after {
     content: "";
     height: 0;
@@ -582,21 +583,21 @@ td:first-child {
     border: 5px solid transparent;
     right: 10px;
     top: 50%;
-}    
+}
 .update::before {
     border-bottom-color: #aaa;
     margin-top: -10px;
-}    
+}
 .update::after {
     border-top-color: #aaa;
     margin-top: 2px;
-}    
+}
 .createdesc::before {
     border-bottom-color: #444;
 }
 .createasc::after {
     border-top-color: #444;
-}    
+}
 .updatedesc::before {
     border-bottom-color: #444;
 }
@@ -725,14 +726,14 @@ export const Userlife = ()=>{
     const [filtertitle,setFiltertitle] = useState("")
     const [titledata,setTitledata] = useState([])
     const [offset,setOffset] = useState(0)
-    const perPage: number = 5; 
+    const perPage: number = 5;
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
     const [iconflag,setIconflag] = useState<any>({})
     const [iconcount,setIconcount] = useState<any>({})
     const [icondata,setIcondata] = useState([])
     const router = useRouter()
-    const query = router.query.life as unknown as string 
+    const query = router.query.life as unknown as string
 
     useEffect(()=>{
         const id = Number(userid)
@@ -784,7 +785,7 @@ export const Userlife = ()=>{
             let data:Icon = icondata[i]
             iconcount[data.lifepost_id] = iconcount[data.lifepost_id] ? iconcount[data.lifepost_id]+1:1
         }
-        
+
         setIconcount(iconcount)
     },[icondata])
 
@@ -930,7 +931,7 @@ export const Userlife = ()=>{
                 pageLinkClassName="page-link rounded-full" // a
                 activeClassName="active" // active.li
                 activeLinkClassName="active" // active.li < a
-                
+
                 // 戻る・進む関連
                 previousClassName="page-item" // li
                 nextClassName="page-item" // li
@@ -974,7 +975,7 @@ export const Userlife = ()=>{
             </tr>
             </tbody>
             </table>
-    
+
             {titledata.filter((value:Life,index,self)=>{
                 if(value.lifeitem.includes(filterlife)) {
                     return value
@@ -995,7 +996,7 @@ export const Userlife = ()=>{
                 )
             })}
             </Tablet>
-    
+
             <PageContainer>
                 <ReactPaginate
                     pageCount={Math.ceil(postlength/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
@@ -1007,7 +1008,7 @@ export const Userlife = ()=>{
                     pageLinkClassName="page-link rounded-full" // a
                     activeClassName="active" // active.li
                     activeLinkClassName="active" // active.li < a
-                    
+
                     // 戻る・進む関連
                     previousClassName="page-item" // li
                     nextClassName="page-item" // li
@@ -1051,7 +1052,7 @@ export const Userlife = ()=>{
             </tr>
             </tbody>
             </table>
-    
+
             {titledata.filter((value:Life,index,self)=>{
                 if(value.lifeitem.includes(filterlife)) {
                     return value
@@ -1072,7 +1073,7 @@ export const Userlife = ()=>{
                 )
             })}
             </Mobile>
-    
+
             <PageContainer>
                 <ReactPaginate
                     pageCount={Math.ceil(postlength/perPage)} // 全部のページ数。端数の場合も考えて切り上げに。
@@ -1084,7 +1085,7 @@ export const Userlife = ()=>{
                     pageLinkClassName="page-link rounded-full" // a
                     activeClassName="active" // active.li
                     activeLinkClassName="active" // active.li < a
-                    
+
                     // 戻る・進む関連
                     previousClassName="page-item" // li
                     nextClassName="page-item" // li

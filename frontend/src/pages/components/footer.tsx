@@ -45,8 +45,9 @@ const MobFooter = styled.div`
 width: 100%;
 background-color: white;
 bottom: 0; /*下に固定*/
-textarea  {
-    margin-left:50px;
+
+textarea {
+    margin-left:20px;
 }
 .contact {
     display:inline-block;
@@ -79,7 +80,7 @@ export const Footer = ()=>{
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
-    
+
     const doContact = (event:{target:HTMLTextAreaElement})=>{
         setContact(event.target.value)
     }
@@ -129,7 +130,7 @@ export const Footer = ()=>{
             <MobLogo><Image src="/logo.png" width="150" height="150" alt="logo"/></MobLogo>
             <div>
             <span className="contact">お問い合わせはこちら</span>
-            <textarea rows={6} cols={50} value={contact} onChange={doContact}></textarea>
+            <textarea rows={6} cols={40} value={contact} onChange={doContact}></textarea>
             <button onClick={doSubmit}>送信する</button>
             </div>
             </MobFooter>

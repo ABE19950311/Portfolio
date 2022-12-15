@@ -6,7 +6,8 @@ import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import moment from "moment"
-import ReactPaginate from 'react-paginate'; 
+import ReactPaginate from 'react-paginate';
+import Image from "next/image"
 
 const PC = styled.div`
 width:800px;
@@ -21,15 +22,6 @@ h1 {
 }
 p {
     font-size:20px;
-}
-.setimage {
-    display: flex;
-    justify-content: flex-start;
-
-    img {
-        height:auto;
-        width:50%;
-    }
 }
 .namelabel {
     margin-bottom:3px;
@@ -96,16 +88,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -167,15 +159,6 @@ h1 {
 p {
     font-size:20px;
 }
-.setimage {
-    display: flex;
-    justify-content: flex-start;
-
-    img {
-        height:auto;
-        width:50%;
-    }
-}
 .namelabel {
     margin-bottom:3px;
     display: inline-block;
@@ -224,7 +207,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -241,16 +224,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -296,26 +279,17 @@ ul li{
 `
 
 const Mobile = styled.div`
-width:490px;
+width:340px;
 overflow-wrap:  break-word;
 
-h1 {
-    padding: 1rem 1rem;
+.headline {
+    padding: 1rem 0.2rem;
     border-left: 5px solid #ff9800;
     background: #ffe0b2;
     color: #f57c00;
 }
 p {
     font-size:18px;
-}
-.setimage {
-    display: flex;
-    justify-content: flex-start;
-
-    img {
-        height:auto;
-        width:50%;
-    }
 }
 .namelabel {
     margin-bottom:3px;
@@ -358,11 +332,11 @@ ul {
     border: solid 2px #adcce8;
     border-radius:8px;
     color: #448ccb;
-    width:400px;
+    width:305px;
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -379,24 +353,24 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
-.steps > h2 {
+.steps > h3 {
     counter-increment: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h2:before {
+.steps > h3:before {
     content: counter(step-counter);
     background: #111111;
     color: white;
@@ -411,12 +385,12 @@ ul li{
     left: 0;
     z-index: 1;
 }
-.steps > h3 {
+.steps > h4 {
     counter-reset: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h3:before {
+.steps > h4:before {
     content: "";
     background: #111111;
     color: white;
@@ -569,12 +543,12 @@ export const Lifecontent = ()=>{
     const [detail,setDetail] = useState<Detail[]>([])
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [commentSlice,setCommentSlice] = useState<Comment[]>([])
-    const [offset,setOffset] = useState(0); 
-    const perPage: number = 5; 
+    const [offset,setOffset] = useState(0);
+    const perPage: number = 5;
 
     const formRef = useRef<HTMLTextAreaElement>(null)
     const router = useRouter()
-    const id = router.query.id as unknown as number 
+    const id = router.query.id as unknown as number
     const user_id = router.query.user_id as unknown as number
 
     useEffect(()=>{
@@ -634,7 +608,7 @@ export const Lifecontent = ()=>{
         })
 
         if(!existcommentcheck.length) return
-    
+
         const jsoncomment = JSON.stringify(comment)
 
         axios.post(env+"/comments",
@@ -675,13 +649,14 @@ export const Lifecontent = ()=>{
                             <h2>{content[key+1]}</h2>
                             {image.map((image:Image,imgkey:number)=>{
                                 return (
+                                    image[key+1] ?
                                     <React.Fragment key={imgkey}>
-                                        <div className="setimage">
-                                        <img src={image[key+1]}/>
-                                        </div>
+                                        <Image src={image[key+1]} height="400" width="400" alt=""/>
                                     </React.Fragment>
-                                )
-                            })}
+                                    :
+                                    <></>
+                                    )
+                                })}
                             {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
@@ -721,7 +696,7 @@ export const Lifecontent = ()=>{
             <br></br>
             </>
             }
-        
+
             {commentSlice.map((value:Comment,key:number)=>{
                 return (
                     <div className="comment" key={key}>
@@ -748,7 +723,7 @@ export const Lifecontent = ()=>{
                     pageLinkClassName="page-link rounded-full" // a
                     activeClassName="active" // active.li
                     activeLinkClassName="active" // active.li < a
-                    
+
                     // 戻る・進む関連
                     previousClassName="page-item" // li
                     nextClassName="page-item" // li
@@ -778,13 +753,14 @@ export const Lifecontent = ()=>{
                             <h2>{content[key+1]}</h2>
                             {image.map((image:Image,imgkey:number)=>{
                                 return (
+                                    image[key+1] ?
                                     <React.Fragment key={imgkey}>
-                                        <div className="setimage">
-                                        <img src={image[key+1]}/>
-                                        </div>
+                                        <Image src={image[key+1]} height="400" width="400" alt=""/>
                                     </React.Fragment>
-                                )
-                            })}
+                                    :
+                                    <></>
+                                    )
+                                })}
                             {detail[key][key+1].map((detdata:string,detkey:number)=>{
                                 return (
                                     <React.Fragment key={detkey}>
@@ -824,7 +800,7 @@ export const Lifecontent = ()=>{
                 <br></br>
                 </>
                 }
-    
+
                 {commentSlice.map((value:Comment,key:number)=>{
                 return (
                     <div className="comment" key={key}>
@@ -851,7 +827,7 @@ export const Lifecontent = ()=>{
                     pageLinkClassName="page-link rounded-full" // a
                     activeClassName="active" // active.li
                     activeLinkClassName="active" // active.li < a
-                    
+
                     // 戻る・進む関連
                     previousClassName="page-item" // li
                     nextClassName="page-item" // li
@@ -873,19 +849,20 @@ export const Lifecontent = ()=>{
         return (
             <Layout>
                 <Mobile>
-                <h1>{(usercontent as Contents).headline}</h1>
+                <h2 className="headline">{(usercontent as Contents).headline}</h2>
                 <div className="steps">
                 {content.map((content:Content,key:number)=>{
                 return (
                         <React.Fragment key={key}>
-                            <h2>{content[key+1]}</h2>
+                            <h3>{content[key+1]}</h3>
                             {image.map((image:Image,imgkey:number)=>{
                                 return (
+                                    image[key+1] ?
                                     <React.Fragment key={imgkey}>
-                                        <div className="setimage">
-                                        <img src={image[key+1]}/>
-                                        </div>
+                                        <Image src={image[key+1]} layout="responsive" height="90" width="90" alt=""/>
                                     </React.Fragment>
+                                    :
+                                    <></>
                                 )
                             })}
                             {detail[key][key+1].map((detdata:string,detkey:number)=>{
@@ -911,7 +888,7 @@ export const Lifecontent = ()=>{
                         </React.Fragment>
                     )
                 })}
-                <h3></h3>
+                <h4></h4>
                 </div>
                 <br></br>
 
@@ -922,7 +899,7 @@ export const Lifecontent = ()=>{
                 <label className="namelabel">名前:</label><input type={"text"} value={name} onChange={doName} />
                 <br></br>
                 <br></br>
-                <label className="commentlabel">コメント内容:<span className="commentspan">(必須)</span></label><textarea ref={formRef} rows={8} cols={60} onChange={doComment} />
+                <label className="commentlabel">コメント内容:<span className="commentspan">(必須)</span></label><textarea ref={formRef} rows={8} cols={40} onChange={doComment} />
                 <br></br>
                 <br></br>
                 <button type={"submit"} onClick={doSubmit} >コメントする</button>
@@ -932,7 +909,7 @@ export const Lifecontent = ()=>{
                 <h3 className="nologin">コメントするにはログインをお願い致します</h3>
                 </>
                 }
-                
+
                 <br></br>
 
                 {commentSlice.map((value:Comment,key:number)=>{
@@ -961,7 +938,7 @@ export const Lifecontent = ()=>{
                     pageLinkClassName="page-link rounded-full" // a
                     activeClassName="active" // active.li
                     activeLinkClassName="active" // active.li < a
-                    
+
                     // 戻る・進む関連
                     previousClassName="page-item" // li
                     nextClassName="page-item" // li

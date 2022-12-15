@@ -48,13 +48,13 @@ export const Calendar = ()=>{
     return (
         <Layout>
             <FullCalendar
-        plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]} 
-        headerToolbar={{                          
+        plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin,listPlugin]}
+        headerToolbar={{
             left: 'prev,next today',
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,listWeek',
             }}
-        initialView="dayGridMonth" 
+        initialView="dayGridMonth"
             locales={[jaLocale]}
             locale="ja"
             events={eventlist}
