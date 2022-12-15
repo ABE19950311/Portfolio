@@ -46,36 +46,36 @@ button {
 export const Dailylifey = ()=>{
 
     return (
-    <Layout>       
+    <Layout>
     <SDiv>
         <div className="item">
             <p><strong>部屋探し・入居</strong></p>
-            <Image src="/heya.png" layout="responsive" height="90" width="90" alt="heya"/> 
+            <Image src="/heya.png" layout="responsive" height="90" width="90" alt="heya"/>
             <Link href="/components/detail/heya"><button data-testid="heya"><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>入居前後の手続き</strong></p>
-            <Image src="/nyukyo.png" layout="responsive" height="90" width="90" alt="hikkoshi"/> 
+            <Image src="/nyukyo.png" layout="responsive" height="90" width="90" alt="hikkoshi"/>
             <Link href="/components/detail/hikkoshi"><button data-testid="hikkoshi"><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>防犯・防災</strong></p>
-            <Image src="/bousai.png" layout="responsive" height="90" width="90" alt="bouhan"/> 
+            <Image src="/bousai.png" layout="responsive" height="90" width="90" alt="bouhan"/>
             <Link href="/components/detail/bouhan"><button data-testid="bouhan"><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>掃除</strong></p>
-            <Image src="/souzi.png" layout="responsive" height="90" width="90" alt="souzi"/> 
+            <Image src="/souzi.png" layout="responsive" height="90" width="90" alt="souzi"/>
             <Link href="/components/detail/souzi"><button data-testid="souzi"><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>料理</strong></p>
-            <Image src="/ryouri.png" layout="responsive" height="90" width="90" alt="ryouri"/> 
+            <Image src="/ryouri.png" layout="responsive" height="90" width="90" alt="ryouri"/>
             <Link href="/components/detail/ryouri"><button data-testid="ryouri"><span>確認する</span></button></Link>
         </div>
         <div className="item">
             <p><strong>洗濯</strong></p>
-            <Image src="/sentaku.png" layout="responsive" height="90" width="90" alt="sentaku"/> 
+            <Image src="/sentaku.png" layout="responsive" height="90" width="90" alt="sentaku"/>
             <Link href="/components/detail/sentaku"><button data-testid="sentaku"><span>確認する</span></button></Link>
         </div>
     </SDiv>

@@ -27,7 +27,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -43,16 +43,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -121,7 +121,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -137,16 +137,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -192,17 +192,17 @@ ul li{
 `
 
 const Mobile = styled.div`
-width:490px;
+width:340px;
 overflow-wrap:  break-word;
 
-h1 {
-    padding: 1rem 1rem;
+.headline {
+    padding: 1rem 0.2rem;
     border-left: 5px solid #ff9800;
     background: #ffe0b2;
     color: #f57c00;
 }
 p {
-    font-size:18px;
+    font-size:15px;
 }
 ul {
     position: relative;
@@ -211,11 +211,11 @@ ul {
     border: solid 2px #adcce8;
     border-radius:8px;
     color: #448ccb;
-    width:400px;
+    width:305px;
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -231,24 +231,24 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
-.steps > h2 {
+.steps > h3 {
     counter-increment: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h2:before {
+.steps > h3:before {
     content: counter(step-counter);
     background: #111111;
     color: white;
@@ -263,12 +263,12 @@ ul li{
     left: 0;
     z-index: 1;
 }
-.steps > h3 {
+.steps > h4 {
     counter-reset: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h3:before {
+.steps > h4:before {
     content: "";
     background: #111111;
     color: white;
@@ -288,7 +288,7 @@ ul li{
 export const Souzi = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    
+
     if(PCsize) {
         return (
         <Layout>
@@ -315,7 +315,7 @@ export const Souzi = ()=>{
                     <p>→防カビ剤を定期的にたいて防止する。洗面台や浴室ドアは汚れがたまりやすいため</p>
                     <p> マスキングテープを貼って保護。</p>
                 <h3></h3>
-                
+
             </div>
             </PC>
         </Layout>
@@ -346,7 +346,7 @@ export const Souzi = ()=>{
                     <p>→防カビ剤を定期的にたいて防止する。洗面台や浴室ドアは汚れがたまりやすいため</p>
                     <p> マスキングテープを貼って保護。</p>
                 <h3></h3>
-                
+
             </div>
             </Tablet>
         </Layout>
@@ -355,9 +355,9 @@ export const Souzi = ()=>{
         return (
         <Layout>
             <Mobile>
-            <h1>掃除・片付け概要</h1>
+            <h2 className="headline">掃除・片付け概要</h2>
             <div className="steps">
-                <h2>掃除道具の用意</h2>
+                <h3>掃除道具の用意</h3>
                     <p>一人暮らしであれば、コスト・置き場所等の観点から最低限用意</p>
                     <ul>
                         <li>スポンジ</li>
@@ -369,15 +369,15 @@ export const Souzi = ()=>{
                         <li>粘着クリーナー</li>
                         <li>etc</li>
                     </ul>
-                <h2>汚れ・カビ対策</h2>
+                <h3>汚れ・カビ対策</h3>
                     <p>汚れが定着してしまう前に日頃から予防掃除が大切</p>
                     <p>クローゼット・押入れ</p>
                     <p>→湿気がたまりやすく、カビが生えやすい。定期的な換気と除湿剤を入れておく</p>
                     <p>風呂・水回り</p>
                     <p>→防カビ剤を定期的にたいて防止する。洗面台や浴室ドアは汚れがたまりやすいため</p>
                     <p> マスキングテープを貼って保護。</p>
-                <h3></h3>
-                
+                <h4></h4>
+
             </div>
             </Mobile>
         </Layout>

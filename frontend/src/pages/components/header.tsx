@@ -69,7 +69,7 @@ li {
     justify-content: center;
     text-align: center;
 
-    span {    
+    span {
         margin-right:20px;
         font-size:1.3vw;
     }
@@ -170,10 +170,10 @@ export const Header = ()=>{
     }
 
     if(PCsize) {
-        return (  
+        return (
             <SHeader>
             <SLogo><Link href="/"><Image src="/logo.png" width="100" height="100" alt="logo"/></Link></SLogo>
-            {loginflag=="login" ? 
+            {loginflag=="login" ?
             <SMenu>
                 <Link href="/components/lifepost"><li><span><strong>生活情報を投稿する</strong></span></li></Link>
                 <Link href="/components/userlife"><li><span><strong>投稿された内容を確認</strong></span></li></Link>
@@ -192,7 +192,7 @@ export const Header = ()=>{
                 <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
                 <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
             </SMenu>
-            } 
+            }
             </SHeader>
         )
     }else{
@@ -211,7 +211,7 @@ export const Header = ()=>{
                 <Link href="/components/mypage"><li><span><strong>マイページ</strong></span></li></Link>
                 <Sbtn onClick={logout}><a href="#"><span><strong>ログアウト</strong></span></a></Sbtn>
             </SBurgerMenu>
-            </Menu> 
+            </Menu>
             :
             <Menu right styles={styles}>
             <SBurgerMenu>
@@ -221,7 +221,7 @@ export const Header = ()=>{
                 <Link href="/components/newaccount"><li><span><strong>新規登録</strong></span></li></Link>
                 <Link href="/components/login"><li><span><strong>ログイン</strong></span></li></Link>
             </SBurgerMenu>
-            </Menu> 
+            </Menu>
             }
             </BeargerHeader>
         )

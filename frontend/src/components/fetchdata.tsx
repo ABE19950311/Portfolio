@@ -31,7 +31,7 @@ export const FetchData = ()=>{
             })
         }
     },[])
-    
+
     return {
         env: env,
         loginstate: loginstate,

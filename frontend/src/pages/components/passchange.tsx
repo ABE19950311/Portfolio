@@ -78,7 +78,7 @@ export const Passchange = ()=>{
         }).catch(error=>{
             console.log(error)
         })
-    },[router,env])    
+    },[router,env])
 
     useEffect(()=>{
         if(oldpass.trim()) {

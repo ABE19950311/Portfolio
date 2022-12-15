@@ -27,7 +27,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -43,16 +43,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -121,7 +121,7 @@ ul {
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -137,16 +137,16 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
 .steps > h2 {
@@ -191,18 +191,18 @@ ul li{
 }
 `
 
-const MobSteps = styled.div`
-width:490px;
+const Mobile = styled.div`
+width:340px;
 overflow-wrap:  break-word;
 
-h1 {
-    padding: 1rem 1rem;
+.headline {
+    padding: 1rem 0.2rem;
     border-left: 5px solid #ff9800;
     background: #ffe0b2;
     color: #f57c00;
 }
 p {
-    font-size:18px;
+    font-size:15px;
 }
 ul {
     position: relative;
@@ -211,11 +211,11 @@ ul {
     border: solid 2px #adcce8;
     border-radius:8px;
     color: #448ccb;
-    width:400px;
+    width:305px;
     background: #fff;
 }
 ul:before{
-    content: "POINT";  
+    content: "POINT";
     position: absolute;
     display: block;
     top: -15px;
@@ -231,24 +231,24 @@ ul li{
 .steps {
     counter-reset: step-counter;
     position: relative;
-    padding-left: 2rem; 
+    padding-left: 2rem;
 }
 .steps:before {
     content: "";
     background-color: #111111;
     width: 2px;
     position: absolute;
-    top: 0.7rem; 
-    left: 0.7rem; 
-    height: calc(100%); 
+    top: 0.7rem;
+    left: 0.7rem;
+    height: calc(100%);
     z-index: 0;
 }
-.steps > h2 {
+.steps > h3 {
     counter-increment: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h2:before {
+.steps > h3:before {
     content: counter(step-counter);
     background: #111111;
     color: white;
@@ -263,12 +263,12 @@ ul li{
     left: 0;
     z-index: 1;
 }
-.steps > h3 {
+.steps > h4 {
     counter-reset: step-counter;
     display: flex;
     align-items: center;
 }
-.steps > h3:before {
+.steps > h4:before {
     content: "";
     background: #111111;
     color: white;
@@ -288,7 +288,7 @@ ul li{
 export const Sentaku = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
-    
+
     if(PCsize) {
         return (
         <Layout>
@@ -309,7 +309,7 @@ export const Sentaku = ()=>{
         return (
         <Layout>
             <>
-            <h1>洗濯概要</h1>
+            <h2 className="headline">洗濯概要</h2>
             </>
         </Layout>
         )

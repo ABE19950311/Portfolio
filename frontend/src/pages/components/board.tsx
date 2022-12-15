@@ -7,7 +7,7 @@ import { useMediaQuery } from "react-responsive"
 import Link from "next/link"
 import Layout from "./layout"
 
-const PC = styled.div` 
+const PC = styled.div`
 padding-top:30px;
 padding-bottom:10px;
 padding-left:25%;
@@ -61,7 +61,7 @@ button {
 }
 `
 
-const Tablet = styled.div` 
+const Tablet = styled.div`
 padding-top:30px;
 padding-bottom:10px;
 position:relative;
@@ -114,7 +114,7 @@ button {
 }
 `
 
-const Mobile = styled.div` 
+const Mobile = styled.div`
 padding-top:30px;
 padding-bottom:10px;
 position:relative;
@@ -148,7 +148,7 @@ input,textarea {
     margin-left:10px;
 }
 .delbutton {
-    transform: translate(250px,0px)
+    transform: translate(235px,-27px)
 }
 .content {
     overflow-wrap:break-word;
@@ -229,7 +229,7 @@ export const Board = ()=>{
                 return value
             }
         })
-        
+
         if(!title||!existcontentcheck.length) return
 
         const jsoncontent = JSON.stringify(content)
@@ -270,7 +270,7 @@ export const Board = ()=>{
         <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input data-testid="titletest" type="text" value={title} onChange={doTitle}/><br></br>
         <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea data-testid="contenttest" ref={formRef} rows={8} cols={70} onChange={doContent}/><br></br>
         <label className="sub"></label><button data-testid="submit" type="submit" onClick={doSubmit}>投稿する</button><br></br>
-        
+
             {board.map((board:Boardtype,key:number)=>{
                 return (
                     <div className="content" key={key}>
@@ -294,7 +294,7 @@ export const Board = ()=>{
             <label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input data-testid="titletest" type="text" value={title} onChange={doTitle}/><br></br>
             <label className="postlabel">投稿内容:<span className="titlelabel">(必須)</span></label><textarea data-testid="contenttest" ref={formRef} rows={8} cols={70} onChange={doContent}/><br></br>
             <label className="sub"></label><button data-testid="submit" type="submit" onClick={doSubmit}>投稿する</button><br></br>
-            
+
                 {board.map((board:Boardtype,key:number)=>{
                     return (
                         <div className="content" key={key}>
@@ -315,14 +315,14 @@ export const Board = ()=>{
             <Layout>
             <Mobile>
             &emsp;<label className="post">名前:</label><input type="text" data-testid="nametest" value={name} onChange={doName}/><br></br>
-            &emsp;<label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input data-testid="titletest" type="text" value={title} onChange={doTitle}/><br></br>
-            &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea data-testid="contenttest" ref={formRef} rows={8} cols={60} onChange={doContent}/><br></br>
+            &emsp;<label className="post">タイトル:<span className="titlelabel">(必須)</span></label><input data-testid="titletest" type="text" value={title} onChange={doTitle}/><br></br><br></br>
+            &emsp;投稿内容:<span className="titlelabel">(必須)</span><textarea data-testid="contenttest" ref={formRef} rows={8} cols={40} onChange={doContent}/><br></br>
             <button data-testid="submit" type="submit" onClick={doSubmit}>投稿する</button><br></br>
-            
+
                 {board.map((board:Boardtype,key:number)=>{
                     return (
                         <div className="content" key={key}>
-                        <p>投稿者:{board.username}&emsp;投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}&emsp;<br></br>{sessionid===board.user_id ? <button className="delbutton" onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
+                        <p>投稿者:{board.username}&emsp;<br></br>投稿日:{moment(board.created_at).format("YYYY-MM-DD h:mm:ss")}{sessionid===board.user_id ? <button className="delbutton" onClick={()=>doDelete(board.id)}>削除する</button>:<></>}</p>
                         <label>タイトル:</label>
                         <Link href={{
                                 pathname:"/components/boardcontent",
