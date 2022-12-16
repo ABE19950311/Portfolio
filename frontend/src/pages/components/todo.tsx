@@ -211,11 +211,11 @@ h2{
 .datepicker {
     text-align:left;
     font-size:16px;
-    padding: 6px 40px;
+    padding: 6px 40px 6px 0;
     border-radius: 3px;
     border: 2px solid #ddd;
     box-sizing: border-box;
-    transform: translate(-130px,0px);
+    transform: translate(-60px,0px);
 }
 .custominput {
     padding: 8px 70px 8px 10px;

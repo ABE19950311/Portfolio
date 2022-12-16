@@ -45,6 +45,9 @@ select {
     box-sizing: border-box;
     margin-left:30vw;
 }
+.search {
+    position: relative;
+}
 .searchicon {
     position: absolute;
     color: #333;
@@ -248,6 +251,9 @@ select {
     box-sizing: border-box;
     margin-left:10vw;
 }
+.search {
+    position: relative;
+}
 .searchicon {
     position: absolute;
     color: #333;
@@ -443,12 +449,14 @@ select {
     padding:10px;
 }
 .custominput {
-    padding: 7px 100px 7px 10px;
+    padding: 7px 80px 7px 10px;
     font-size: 16px;
+    margin-left:50px;
     border-radius: 3px;
     border: 2px solid #ddd;
-    box-sizing: border-box;
-    margin-left:40px;
+}
+.search {
+    position: relative;
 }
 .searchicon {
     position: absolute;
@@ -876,7 +884,9 @@ export const Userlife = ()=>{
     return (
         <Layout>
         <PC>
+        <div className="search">
         <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
+        </div>
         <table border={1}>
         <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
         <caption>
@@ -953,7 +963,9 @@ export const Userlife = ()=>{
         return (
             <Layout>
             <Tablet>
+            <div className="search">
             <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
+            </div>
             <table border={1}>
             <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
             <caption>
@@ -1030,7 +1042,9 @@ export const Userlife = ()=>{
         return (
             <Layout>
             <Mobile>
+            <div className="search">
             <MdSearch className="searchicon"/><input placeholder="タイトルを入力" onChange={dofiltertitle} value={filtertitle} className="custominput"/><button onClick={dosettitle} className="custombutton">タイトル検索</button>
+            </div>
             <table border={1}>
             <caption>投稿件数:{postlength}件</caption><caption>{postlength===0 ? 0:currentpage}/{Math.ceil(postlength/perPage)}ページ</caption>
             <caption>
