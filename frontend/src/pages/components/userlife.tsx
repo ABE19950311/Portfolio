@@ -448,7 +448,7 @@ select {
     border-radius: 3px;
     border: 2px solid #ddd;
     box-sizing: border-box;
-    margin-left:10vw;
+    margin-left:40px;
 }
 .searchicon {
     position: absolute;

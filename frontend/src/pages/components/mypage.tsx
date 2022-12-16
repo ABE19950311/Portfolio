@@ -365,7 +365,7 @@ export const Mypage = ()=>{
         <Layout>
         <PC>
             <div className="topmain">
-            <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+            <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワード変更</button></div>
             </div>
 
             <div className="due">
@@ -454,7 +454,7 @@ export const Mypage = ()=>{
             <Layout>
             <Tablet>
                 <div className="topmain">
-                <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+                <div><h2>{sessionname}様のマイページ</h2></div><div><button onClick={passChange}>パスワード変更</button></div>
                 </div>
 
                 <div className="due">
@@ -542,7 +542,7 @@ export const Mypage = ()=>{
             <Layout>
             <Mobile>
                 <div className="topmain">
-                <div><h3>{sessionname}様のマイページ</h3></div><div><button onClick={passChange}>パスワードを変更する</button></div>
+                <div><h3>{sessionname}様のマイページ</h3></div><div><button onClick={passChange}>パスワード変更</button></div>
                 </div>
 
                 <div className="due">

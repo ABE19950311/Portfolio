@@ -184,10 +184,8 @@ h2{
 const Mobile = styled.div`
 line-height: 1.25;
 margin-bottom:20px;
-width:340px;
 
 h2{
-    width:320px;
     text-align:center;
     border-top: double 4px #27acd9;
 	border-bottom: double 4px #27acd9;
@@ -217,7 +215,7 @@ h2{
     border-radius: 3px;
     border: 2px solid #ddd;
     box-sizing: border-box;
-    transform: translate(-80px,0px);
+    transform: translate(-130px,0px);
 }
 .custominput {
     padding: 8px 70px 8px 10px;
