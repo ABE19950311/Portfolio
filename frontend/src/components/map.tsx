@@ -1,11 +1,11 @@
 import Header from "../pages/components/header"
 import {useState} from "react"
-import { LayersControl, MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from "leaflet";
-import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
-import markerIcon from "leaflet/dist/images/marker-icon.png";
-import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { LayersControl, MapContainer, Marker, Popup, TileLayer, useMapEvents } from "react-leaflet"
+import "leaflet/dist/leaflet.css"
+import L from "leaflet"
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png"
+import markerIcon from "leaflet/dist/images/marker-icon.png"
+import markerShadow from "leaflet/dist/images/marker-shadow.png"
 
 /* eslint-disable */
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -106,4 +106,4 @@ const Map =()=>{
     )
 }
 
-export default Map;
+export default Map

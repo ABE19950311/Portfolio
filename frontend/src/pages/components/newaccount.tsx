@@ -73,14 +73,14 @@ span {
 
 export const Newaccount = ()=>{
     const {env,isLoading,isError} = FetchData()
-    const [validationName,setValidationName] = useState("");
-    const [validationPass,setValidationPass] = useState("");
-    const [validationPassfilm,setValidationPassfilm] = useState("");
-    const [username,setUsername] = useState("");
-    const [password,setPassword] = useState("");
-    const [passwordconfirm,setPasswordconfirm] = useState("");
-    const router = useRouter();
-    const processtimer = useRef<NodeJS.Timer|null>(null);
+    const [validationName,setValidationName] = useState("")
+    const [validationPass,setValidationPass] = useState("")
+    const [validationPassfilm,setValidationPassfilm] = useState("")
+    const [username,setUsername] = useState("")
+    const [password,setPassword] = useState("")
+    const [passwordconfirm,setPasswordconfirm] = useState("")
+    const router = useRouter()
+    const processtimer = useRef<NodeJS.Timer|null>(null)
 
 
     useEffect(()=>{
@@ -107,19 +107,19 @@ export const Newaccount = ()=>{
     if(isLoading) return <p>lodaing...</p>
 
     const doName = (event:{target:HTMLInputElement})=>{
-        setUsername(event.target.value);
+        setUsername(event.target.value)
     }
 
     const doPass = (event:{target:HTMLInputElement})=>{
-        setPassword(event.target.value);
+        setPassword(event.target.value)
     }
 
     const doPassconfirm = (event:{target:HTMLInputElement})=>{
-        setPasswordconfirm(event.target.value);
+        setPasswordconfirm(event.target.value)
     }
 
     const debounce = (event:React.MouseEvent<HTMLFormElement>)=>{
-        event.preventDefault();
+        event.preventDefault()
         if(processtimer.current) clearTimeout(processtimer.current)
 
         processtimer.current = setTimeout(()=>{
@@ -128,7 +128,7 @@ export const Newaccount = ()=>{
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
-        event.preventDefault();
+        event.preventDefault()
 
         if(!username.trim()) {
             setValidationName("ユーザ名が空欄です")
@@ -181,4 +181,4 @@ export const Newaccount = ()=>{
     )
 }
 
-export default Newaccount;
+export default Newaccount

@@ -6,7 +6,7 @@ import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import moment from "moment"
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from 'react-paginate'
 import Image from "next/image"
 
 const PC = styled.div`
@@ -543,8 +543,8 @@ export const Lifecontent = ()=>{
     const [detail,setDetail] = useState<Detail[]>([])
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [commentSlice,setCommentSlice] = useState<Comment[]>([])
-    const [offset,setOffset] = useState(0);
-    const perPage: number = 5;
+    const [offset,setOffset] = useState(0)
+    const perPage: number = 5
 
     const formRef = useRef<HTMLTextAreaElement>(null)
     const router = useRouter()
@@ -635,7 +635,6 @@ export const Lifecontent = ()=>{
         setOffset(page_number*perPage)
     }
 
-    console.log(checkcontent)
 
     if(PCsize) {
     return (

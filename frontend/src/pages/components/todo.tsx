@@ -5,7 +5,7 @@ import DatePicker,{registerLocale} from "react-datepicker"
 import ja from "date-fns/locale/ja"
 import "react-datepicker/dist/react-datepicker.css"
 import moment from "moment"
-import { MdSearch } from "react-icons/md";
+import { MdSearch } from "react-icons/md"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import Layout from "./layout"
@@ -628,7 +628,7 @@ tbody tr:hover{
 }
 `
 
-registerLocale("ja",ja);
+registerLocale("ja",ja)
 
 type Todos = {
     id:number,
@@ -639,20 +639,24 @@ type Todos = {
     duedate:String
 }
 
+type Checkdata  = {
+    [id:number]:boolean
+}
+
 export const Todo = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const {env,isLoading,isError} = FetchData()
-    const [list,setList] = useState("");
-    const [life,setLife] = useState("");
-    const [search,setSearch] = useState("");
-    const [todos,setTodos] = useState([]);
-    const [flag,setFlag] = useState("");
-    const [selectlife,setSelectlife] = useState("");
-    const [deleteid,setDeleteid] = useState<string[]>([]);
-    const [checkdata,setCheckdata] = useState<any>({});
-    const [startclass,setStartclass] = useState(false);
-    const [dueclass,setDueclass] = useState(false);
+    const [list,setList] = useState("")
+    const [life,setLife] = useState("")
+    const [search,setSearch] = useState("")
+    const [todos,setTodos] = useState([])
+    const [flag,setFlag] = useState("")
+    const [selectlife,setSelectlife] = useState("")
+    const [deleteid,setDeleteid] = useState<string[]>([])
+    const [checkdata,setCheckdata] = useState<Checkdata>({})
+    const [startclass,setStartclass] = useState(false)
+    const [dueclass,setDueclass] = useState(false)
     const [startDate, setStartDate] = useState<Date>()
     const [endDate, setEndDate] = useState<Date>()
 
@@ -660,41 +664,41 @@ export const Todo = ()=>{
         if(!env) return
         axios.get(env+"/todos" as string
         ).then(res=> {
-            setTodos(res.data);
+            setTodos(res.data)
         }).catch(error=> {
-            console.log("response error",error);
+            console.log("response error",error)
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[flag,env]);
+    },[flag,env])
 
     if(isError) return <p>error</p>
     if(isLoading) return <p>lodaing...</p>
 
     const doList = (event:{target:HTMLInputElement}) => {
-        setList(event.target.value);
+        setList(event.target.value)
     }
 
     const doLife = (event:{target:HTMLSelectElement}) => {
-        setLife(event.target.value);
+        setLife(event.target.value)
     }
 
     const doSearch = (event:{target:HTMLInputElement}) => {
-        setSearch(event.target.value);
+        setSearch(event.target.value)
     }
 
     const doSeleclife = (event:{target:HTMLSelectElement}) => {
-        setSelectlife(event.target.value);
+        setSelectlife(event.target.value)
     }
 
     const startdateasc = () => {
         setStartclass(!startclass)
         const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
-                if(a.startdate<b.startdate) return -1;
-                if(a.startdate>b.startdate) return 1;
-                if(a.duedate==null) return 1;
-                if(b.duedate==null) return -1;
-                return 0;
+                if(a.startdate<b.startdate) return -1
+                if(a.startdate>b.startdate) return 1
+                if(a.duedate==null) return 1
+                if(b.duedate==null) return -1
+                return 0
             })
             setTodos(sorttodo)
     }
@@ -703,11 +707,11 @@ export const Todo = ()=>{
         setStartclass(!startclass)
         const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
-                if(a.startdate<b.startdate) return 1;
-                if(a.startdate>b.startdate) return -1;
-                if(a.duedate==null) return 1;
-                if(b.duedate==null) return -1;
-                return 0;
+                if(a.startdate<b.startdate) return 1
+                if(a.startdate>b.startdate) return -1
+                if(a.duedate==null) return 1
+                if(b.duedate==null) return -1
+                return 0
             })
             setTodos(sorttodo)
     }
@@ -717,11 +721,11 @@ export const Todo = ()=>{
         console.log("asc")
         const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
-                if(a.duedate<b.duedate) return -1;
-                if(a.duedate>b.duedate) return 1;
-                if(a.duedate==null) return 1;
-                if(b.duedate==null) return -1;
-                return 0;
+                if(a.duedate<b.duedate) return -1
+                if(a.duedate>b.duedate) return 1
+                if(a.duedate==null) return 1
+                if(b.duedate==null) return -1
+                return 0
             })
             setTodos(sorttodo)
     }
@@ -731,11 +735,11 @@ export const Todo = ()=>{
         console.log("desc")
         const sorttodo =
                 todos.sort((a:Todos,b:Todos)=>{
-                if(a.duedate<b.duedate) return 1;
-                if(a.duedate>b.duedate) return -1;
-                if(a.duedate==null) return 1;
-                if(b.duedate==null) return -1;
-                return 0;
+                if(a.duedate<b.duedate) return 1
+                if(a.duedate>b.duedate) return -1
+                if(a.duedate==null) return 1
+                if(b.duedate==null) return -1
+                return 0
             })
             setTodos(sorttodo)
     }
@@ -743,7 +747,7 @@ export const Todo = ()=>{
     const doCheck = (event:{target:HTMLInputElement})=>{
         let check = event.target.checked
         let id = (event.target.value) as string
-        setCheckdata((checkdata:any)=>({
+        setCheckdata((checkdata)=>({
             ...checkdata,
             [id]:check
         }))
@@ -759,7 +763,7 @@ export const Todo = ()=>{
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
+        event.preventDefault()
         if(list!=="") {
         axios.post(env+"/todos" as string,
             {
@@ -771,14 +775,14 @@ export const Todo = ()=>{
                 },
             },
         ).then(res=> {
-            console.log(res.data);
-            setFlag(res.data);
-            setList("");
-            setLife("");
+            console.log(res.data)
+            setFlag(res.data)
+            setList("")
+            setLife("")
             setStartDate(undefined)
             setEndDate(undefined)
         }).catch(error=> {
-            console.log("response error",error);
+            console.log("response error",error)
         })
     }
     }
@@ -787,9 +791,9 @@ export const Todo = ()=>{
         deleteid.forEach((id)=>{
             axios.delete(env+`/todos/${id}` as string)
             .then(res => {
-                setFlag(res.data);
+                setFlag(res.data)
             }).catch(error=> {
-                console.log("response error",error);
+                console.log("response error",error)
             })
             setDeleteid([])
             setCheckdata({})
@@ -811,7 +815,7 @@ export const Todo = ()=>{
 
     const setCheck = (id:number)=>{
         let todoid = String(id)
-        setCheckdata((checkdata:any)=>({
+        setCheckdata((checkdata)=>({
             ...checkdata,
             [todoid]:true
         }))
@@ -823,12 +827,12 @@ export const Todo = ()=>{
 
     const delCheck = (id:number)=>{
         let todoid = String(id)
-        setCheckdata((checkdata:any)=>({
+        setCheckdata((checkdata)=>({
             ...checkdata,
             [todoid]:false
         }))
-        setDeleteid((deleteid:any)=>(
-                deleteid.filter((list:any)=>{
+        setDeleteid((deleteid:string[])=>(
+                deleteid.filter((list)=>{
                 return !list.includes(todoid)
             }))
         )
@@ -1226,4 +1230,4 @@ const handleChangeEnd = (selectedDate:Date) => {
     }
 }
 
-export default Todo;
+export default Todo

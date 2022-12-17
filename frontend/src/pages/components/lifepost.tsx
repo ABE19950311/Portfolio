@@ -495,9 +495,9 @@ export const Lifepost =()=>{
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [formcount,setFormcount] = useState<string[]>(["1"])
     const [currentContentid,setCurrentContentid] = useState(0)
-    const contenttimer = useRef<NodeJS.Timer|null>(null);
-    const detailtimer = useRef<NodeJS.Timer|null>(null);
-    const checktimer = useRef<NodeJS.Timer|null>(null);
+    const contenttimer = useRef<NodeJS.Timer|null>(null)
+    const detailtimer = useRef<NodeJS.Timer|null>(null)
+    const checktimer = useRef<NodeJS.Timer|null>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
     const router = useRouter()
