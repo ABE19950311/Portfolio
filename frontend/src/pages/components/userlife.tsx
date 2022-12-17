@@ -5,10 +5,10 @@ import {useRouter} from "next/router"
 import moment from "moment"
 import Layout from "./layout"
 import {FetchData} from "../../components/fetchdata"
-import ReactPaginate from 'react-paginate';
+import ReactPaginate from 'react-paginate'
 import { useMediaQuery } from "react-responsive"
-import { MdSearch } from "react-icons/md";
-import { FaRegLightbulb} from "react-icons/fa";
+import { MdSearch } from "react-icons/md"
+import { FaRegLightbulb} from "react-icons/fa"
 import Link from "next/link"
 
 const PC = styled.div`
@@ -721,6 +721,14 @@ type Icon = {
     lifepost_id:number
 }
 
+type Iconflag = {
+    [id:string]:boolean
+}
+
+type Iconcount = {
+    [id:number]:number
+}
+
 
 export const Userlife = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
@@ -734,12 +742,12 @@ export const Userlife = ()=>{
     const [filtertitle,setFiltertitle] = useState("")
     const [titledata,setTitledata] = useState([])
     const [offset,setOffset] = useState(0)
-    const perPage: number = 5;
+    const perPage: number = 5
     const [postlength,setPostlength] = useState(0)
     const [currentpage,setCurrentpage] = useState(1)
-    const [iconflag,setIconflag] = useState<any>({})
-    const [iconcount,setIconcount] = useState<any>({})
-    const [icondata,setIcondata] = useState([])
+    const [iconflag,setIconflag] = useState<Iconflag>({})
+    const [iconcount,setIconcount] = useState<Iconcount>({})
+    const [icondata,setIcondata] = useState<Icon[]>([])
     const router = useRouter()
     const query = router.query.life as unknown as string
 
@@ -783,7 +791,7 @@ export const Userlife = ()=>{
     useEffect(()=>{
         let iconcount:any = {}
         icondata.forEach((value:Icon)=>{
-            setIconflag((iconflag:any)=>({
+            setIconflag((iconflag)=>({
                 ...iconflag,
                 [`${value.lifepost_id}${value.user_id}`]:true
             }))
@@ -833,7 +841,7 @@ export const Userlife = ()=>{
     }
 
     const seticonflag = (id:number)=>{
-        const find:any = icondata.find((value:Icon)=>value.lifepost_id===id&&value.user_id===sessionid)
+        const find = icondata.find((value:Icon)=>value.lifepost_id===id&&value.user_id===sessionid)
 
         if(find) {
             axios.delete(`${env}/helpfuls/${find.id}`)
@@ -842,7 +850,7 @@ export const Userlife = ()=>{
             }).catch(error=>{
                 console.log(error)
             })
-            setIconflag((iconflag:any)=>({
+            setIconflag((iconflag)=>({
                 ...iconflag,
                 [`${id}${sessionid}`]:false
             }))
@@ -858,7 +866,7 @@ export const Userlife = ()=>{
             }).catch(error=>{
                 console.log(error)
             })
-            setIconflag((iconflag:any)=>({
+            setIconflag((iconflag)=>({
                 ...iconflag,
                 [`${id}${sessionid}`]:true
             }))

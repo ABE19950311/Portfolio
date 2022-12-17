@@ -527,15 +527,15 @@ export const Updatelife =()=>{
     const [detail,setDetail] = useState<Detail[]>([])
     const [checkcontent,setCheckcontent] = useState<Checkcontent[]>([])
     const [formcount,setFormcount] = useState<string[]>([])
-    const [defaultdetail,setDefaultdetail] = useState<any[]>([])
-    const [defaultcheck,setDefaultcheck] = useState<any[]>([])
+    const [defaultdetail,setDefaultdetail] = useState<Detail[]>([])
+    const [defaultcheck,setDefaultcheck] = useState<Checkcontent[]>([])
     const [currentContentid,setCurrentContentid] = useState(0)
     const router = useRouter()
     const updateid = router.query.id as unknown as number
     const updateuser = router.query.userid as unknown as number
-    const contenttimer = useRef<NodeJS.Timer|null>(null);
-    const detailtimer = useRef<NodeJS.Timer|null>(null);
-    const checktimer = useRef<NodeJS.Timer|null>(null);
+    const contenttimer = useRef<NodeJS.Timer|null>(null)
+    const detailtimer = useRef<NodeJS.Timer|null>(null)
+    const checktimer = useRef<NodeJS.Timer|null>(null)
     const inputRef = useRef<HTMLInputElement>(null)
 
     useEffect(()=>{
@@ -648,8 +648,8 @@ export const Updatelife =()=>{
         const detailfind = detail.findIndex((detail)=>detail[length])
         const checkfind = checkcontent.findIndex((check)=>check[length])
 
-        const defaultdetailfind = defaultdetail.findIndex((detail)=>detail[length]||detail[length]=="")
-        const defaultcheckfind = defaultcheck.findIndex((check)=>check[length]||check[length]=="")
+        const defaultdetailfind = defaultdetail.findIndex((detail)=>detail[length])
+        const defaultcheckfind = defaultcheck.findIndex((check)=>check[length])
 
         content.splice(contentfind,1)
         detail.splice(detailfind,1)

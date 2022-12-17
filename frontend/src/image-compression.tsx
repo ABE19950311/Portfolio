@@ -1,13 +1,11 @@
 import imageCompression from "browser-image-compression"
 
 export type compressImageType = {
-    maxSizeMB: number;
-    useWebWorker: boolean;
-    initialQuality: number;
-};
+    maxSizeMB: number
+    useWebWorker: boolean
+    initialQuality: number
+}
 
-// optionsは必要に応じて調整する
-// https://github.com/Donaldcwl/browser-image-compression#api
 export const compressImage = async (
     file: File,
     options: compressImageType = {

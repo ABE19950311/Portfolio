@@ -6,24 +6,24 @@ export const FetchData = ()=>{
     const [env,setEnv] = useState("")
     const [error,setError] = useState("")
     const [userid,setUserid] = useState("")
-    const [loginstate,setLoginstate] = useState(process.env.NEXT_PUBLIC_TEST_ADDRESS ? "testlogin":"")
+    const [loginstate,setLoginstate] = useState("")
 
     useEffect(()=>{
         if(process.env.NEXT_PUBLIC_ADDRESS) {
             setEnv(process.env.NEXT_PUBLIC_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_ADDRESS+"/sessionid")
             .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token']
                 setUserid(res.data.id)
                 setLoginstate(res.data.state)
             }).catch(error=>{
                 setError(error)
             })
         }else if(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS){
-            setEnv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS)
+            setEnv(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS as string)
             axios.get(process.env.NEXT_PUBLIC_PRODUCTION_ADDRESS+"/sessionid")
             .then(res=>{
-                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token'];
+                axios.defaults.headers.common['X-CSRF-Token'] = res.headers['x-csrf-token']
                 setUserid(res.data.id)
                 setLoginstate(res.data.state)
             }).catch(error=>{

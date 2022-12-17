@@ -3,7 +3,7 @@ import React, {useState,useEffect,useRef} from "react"
 import axios from "../../setting-axios"
 import {useRouter} from "next/router"
 import moment from "moment"
-import { FaHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa"
 import {FetchData} from "../../components/fetchdata"
 import { useMediaQuery } from "react-responsive"
 import Link from "next/link"
@@ -196,18 +196,28 @@ type Heart = {
     user_id:number
 }
 
+type Heartnumber = {
+    "heartcount":{
+    [id:number]:number
+    }
+}
+
+type Fontcolor = {
+    [id:number]:boolean
+}
+
 export const Boardcontent = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
     const [name,setName] = useState("")
-    const [post,setPost] = useState<any[]>([])
+    const [post,setPost] = useState<string[]>([])
     const [flag,setFlag] = useState("")
-    const [heartnumber,setHeartnumber] = useState<any>(0)
+    const [heartnumber,setHeartnumber] = useState<Heartnumber>()
     const [heartflag,setHeartflag] = useState("")
-    const [fontcolor,setFontcolor] = useState<any>({})
-    const [postdata,setPostData] = useState<any>([])
+    const [fontcolor,setFontcolor] = useState<Fontcolor>({})
+    const [postdata,setPostData] = useState<Post[]>([])
 
     const formRef = useRef<HTMLTextAreaElement>(null)
     const router = useRouter()
@@ -241,7 +251,7 @@ export const Boardcontent = ()=>{
 
             res.data.map((res:Heart)=>{
                 if(sessionid==res.user_id) {
-                setFontcolor((fontcolor:any)=>({
+                setFontcolor((fontcolor)=>({
                     ...fontcolor,
                     [res.post_id]:true
                 }))
@@ -251,15 +261,15 @@ export const Boardcontent = ()=>{
             if(res.data.length) {
             for(let i=0;i<res.data.length;i++) {
                 let elm = res.data[i]
-                heartcount[elm.post_id] = heartcount[elm.post_id] ? heartcount[elm.post_id]+1:1;
-                setHeartnumber((heartnumber:any)=>({
+                heartcount[elm.post_id] = heartcount[elm.post_id] ? heartcount[elm.post_id]+1:1
+                setHeartnumber((heartnumber)=>({
                     ...heartnumber,
                     heartcount
                 }))
             }
             }else if(!res.data.length) {
                 heartcount = {}
-                setHeartnumber((heartnumber:any)=>({
+                setHeartnumber((heartnumber)=>({
                     ...heartnumber,
                     heartcount
                 }))
@@ -298,12 +308,12 @@ export const Boardcontent = ()=>{
             }).then(res=>{
                 setHeartflag(res.data)
                 if(res.data.status=="created") {
-                setFontcolor((fontcolor:any)=>({
+                setFontcolor((fontcolor)=>({
                     ...fontcolor,
                     [postid]:true
                 }))
                 }else if(res.data.status==="none") {
-                    setFontcolor((fontcolor:any)=>({
+                    setFontcolor((fontcolor)=>({
                         ...fontcolor,
                         [postid]:false
                     }))
@@ -345,7 +355,6 @@ export const Boardcontent = ()=>{
         })
     }
 
-    console.log(post)
 
     if(PCsize) {
     return (

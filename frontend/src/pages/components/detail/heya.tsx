@@ -331,7 +331,6 @@ export const Heya = ()=>{
                     <li>電気/ガス等が問題なく使用できるか確認</li>
                 </ul>
             <h3></h3>
-
         </div>
         </PC>
         </Layout>
@@ -378,7 +377,6 @@ export const Heya = ()=>{
                         <li>電気/ガス等が問題なく使用できるか確認</li>
                     </ul>
                 <h3></h3>
-
             </div>
             </Tablet>
             </Layout>
@@ -425,7 +423,6 @@ export const Heya = ()=>{
                         <li>電気/ガス等が問題なく使用できるか確認</li>
                     </ul>
                 <h4></h4>
-
             </div>
             </Mobile>
             </Layout>

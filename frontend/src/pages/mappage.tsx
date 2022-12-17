@@ -1,5 +1,5 @@
-import dynamic from "next/dynamic";
-import React from "react";
+import dynamic from "next/dynamic"
+import React from "react"
 
 function MapPage() {
     const Map = React.useMemo(
@@ -10,7 +10,7 @@ function MapPage() {
         }),
     []
     );
-    return <Map />;
+    return <Map />
 }
 
-export default MapPage;
+export default MapPage

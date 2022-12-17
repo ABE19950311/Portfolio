@@ -76,11 +76,11 @@ span {
 
 export const Login = ()=>{
     const {env,isLoading,isError} = FetchData()
-    const [validationName,setValidationName] = useState("");
-    const [validationPass,setValidationPass] = useState("");
-    const [username,setUsername] = useState("");
-    const [password,setPassword] = useState("");
-    const router = useRouter();
+    const [validationName,setValidationName] = useState("")
+    const [validationPass,setValidationPass] = useState("")
+    const [username,setUsername] = useState("")
+    const [password,setPassword] = useState("")
+    const router = useRouter()
 
     useEffect(()=>{
         if(username.trim()) {
@@ -95,15 +95,15 @@ export const Login = ()=>{
     if(isLoading) return <p>lodaing...</p>
 
     const doName = (event:{target:HTMLInputElement})=>{
-        setUsername(event.target.value);
+        setUsername(event.target.value)
     }
 
     const doPass = (event:{target:HTMLInputElement})=>{
-        setPassword(event.target.value);
+        setPassword(event.target.value)
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
-        event.preventDefault();
+        event.preventDefault()
 
         if(!username.trim()) {
             setValidationName("ユーザ名が空欄です")
@@ -150,4 +150,4 @@ export const Login = ()=>{
     )
 }
 
-export default Login;
+export default Login

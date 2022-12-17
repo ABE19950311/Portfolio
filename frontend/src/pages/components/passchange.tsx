@@ -60,15 +60,15 @@ const SDiv = styled.div`
 
 export const Passchange = ()=>{
     const {env,isLoading,isError} = FetchData()
-    const [validationPass,setValidationPass] = useState("");
-    const [validationNewPass,setValidationNewPass] = useState("");
-    const [validationNewPassfilm,setValidationNewPassfilm] = useState("");
-    const [username,setUsername] = useState("");
-    const [oldpass,setOldpass] = useState("");
-    const [password,setPassword] = useState("");
-    const [passwordconfirm,setPasswordconfirm] = useState("");
-    const router = useRouter();
-    const processtimer = useRef<NodeJS.Timer|null>(null);
+    const [validationPass,setValidationPass] = useState("")
+    const [validationNewPass,setValidationNewPass] = useState("")
+    const [validationNewPassfilm,setValidationNewPassfilm] = useState("")
+    const [username,setUsername] = useState("")
+    const [oldpass,setOldpass] = useState("")
+    const [password,setPassword] = useState("")
+    const [passwordconfirm,setPasswordconfirm] = useState("")
+    const router = useRouter()
+    const processtimer = useRef<NodeJS.Timer|null>(null)
 
     useEffect(()=>{
         if(!env) return
@@ -106,19 +106,19 @@ export const Passchange = ()=>{
     if(isLoading) return <p>lodaing...</p>
 
     const doPass = (event:{target:HTMLInputElement})=>{
-        setOldpass(event.target.value);
+        setOldpass(event.target.value)
     }
 
     const doNewPass = (event:{target:HTMLInputElement})=>{
-        setPassword(event.target.value);
+        setPassword(event.target.value)
     }
 
     const doNewPassconfirm = (event:{target:HTMLInputElement})=>{
-        setPasswordconfirm(event.target.value);
+        setPasswordconfirm(event.target.value)
     }
 
     const debounce = (event:React.MouseEvent<HTMLFormElement>)=>{
-        event.preventDefault();
+        event.preventDefault()
         if(processtimer.current) clearTimeout(processtimer.current)
 
         processtimer.current = setTimeout(()=>{
@@ -131,7 +131,7 @@ export const Passchange = ()=>{
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLFormElement>)=>{
-        event.preventDefault();
+        event.preventDefault()
 
         if(!oldpass.trim()) {
             setValidationPass("パスワードが空欄です")
@@ -166,7 +166,7 @@ export const Passchange = ()=>{
                         password_confirmation:passwordconfirm
                     }
                 }).then(res=>{
-                    router.push("/components/mypage");
+                    router.push("/components/mypage")
                 }).catch(error=>{
                     console.log(error)
                 })
@@ -194,4 +194,4 @@ export const Passchange = ()=>{
     )
 }
 
-export default Passchange;
+export default Passchange

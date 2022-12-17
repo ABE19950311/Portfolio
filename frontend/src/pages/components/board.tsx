@@ -182,11 +182,11 @@ export const Board = ()=>{
     const Tabletsize:boolean = useMediaQuery({query:'(min-width: 520px) and (max-width: 959px)'})
     const {env,userid,isLoading,isError} = FetchData()
     const [sessionid,setSessionid] = useState<number>()
-    const [name,setName] = useState("");
-    const [title,setTitle] = useState("");
-    const [content,setContent] = useState<any[]>([]);
-    const [flag,setFlag] = useState("");
-    const [board,setBoard] = useState([]);
+    const [name,setName] = useState("")
+    const [title,setTitle] = useState("")
+    const [content,setContent] = useState<string[]>([])
+    const [flag,setFlag] = useState("")
+    const [board,setBoard] = useState([])
     const formRef = useRef<HTMLTextAreaElement>(null)
 
     useEffect(()=>{
@@ -222,7 +222,7 @@ export const Board = ()=>{
     }
 
     const doSubmit = (event:React.MouseEvent<HTMLButtonElement>)=>{
-        event.preventDefault();
+        event.preventDefault()
 
         const existcontentcheck = content.filter((value:string)=>{
             if(value) {

@@ -6,7 +6,7 @@ import {useRouter} from "next/router"
 import Image from 'next/image'
 import {FetchData} from "../../components/fetchdata"
 import { Transition } from '@headlessui/react'
-import ReactLoading from 'react-loading';
+import ReactLoading from 'react-loading'
 import { useMediaQuery } from "react-responsive"
 import { slide as Menu } from 'react-burger-menu'
 
@@ -136,7 +136,7 @@ bmOverlay: {
 
 export const Header = ()=>{
     const PCsize:boolean = useMediaQuery({query:'(min-width: 960px)'})
-    const router = useRouter();
+    const router = useRouter()
     const {env,loginstate,isLoading,isError} = FetchData()
     const [loginflag,setLoginflag] = useState("")
 
@@ -162,10 +162,10 @@ export const Header = ()=>{
     const logout = ()=>{
         axios.delete(env+"/logout" as string)
         .then(res=> {
-            router.push("/");
+            router.push("/")
             setLoginflag("logout")
         }).catch(error=>{
-            console.log("logouterror",error);
+            console.log("logouterror",error)
         })
     }
 

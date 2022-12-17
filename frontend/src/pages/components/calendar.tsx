@@ -20,15 +20,15 @@ type Todo = {
 export const Calendar = ()=>{
     const {env,isLoading,isError} = FetchData()
     const [event,setEvent] = useState([]);
-    const [eventlist,setEventlist] = useState({});
+    const [eventlist,setEventlist] = useState({})
 
     useEffect(()=>{
         if(!env) return
         axios.get(env+"/todos" as string)
             .then(res => {
-                setEvent(res.data);
+                setEvent(res.data)
             }).catch(error=> {
-                console.log("response error",error);
+                console.log("response error",error)
             })
             // eslint-disable-next-line react-hooks/exhaustive-deps
     },[env])
@@ -39,7 +39,7 @@ export const Calendar = ()=>{
                 return {title:`${events.list}`,start:`${events.startdate}`,end:`${events.duedate}`}
             })
         }
-        setEventlist(schedule);
+        setEventlist(schedule)
     },[event])
 
     if(isError) return <p>error</p>
@@ -64,4 +64,4 @@ export const Calendar = ()=>{
     )
 }
 
-export default Calendar;
+export default Calendar
