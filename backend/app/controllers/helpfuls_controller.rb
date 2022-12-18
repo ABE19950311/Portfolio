@@ -1,6 +1,6 @@
 class HelpfulsController < ApplicationController
 
-    def index 
+    def index
         @helpful = Helpful.all
         render json:@helpful
     end

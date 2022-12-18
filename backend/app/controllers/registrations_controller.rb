@@ -1,10 +1,10 @@
 class RegistrationsController < ApplicationController
-    
+
     def index
         @user = User.all
         render json:@user
     end
-    
+
     def signup
         @user = User.new(registrations_params)
 
@@ -22,7 +22,7 @@ class RegistrationsController < ApplicationController
     end
 
     private
-    
+
     def registrations_params
         params.require(:user).permit(:username, :password, :password_confirmation)
     end

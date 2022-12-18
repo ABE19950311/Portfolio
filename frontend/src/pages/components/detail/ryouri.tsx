@@ -2,7 +2,7 @@ import styled from "styled-components"
 import {Layout} from "../layout"
 import { useMediaQuery } from "react-responsive"
 
-const PCSteps = styled.div`
+const PC = styled.div`
 width:800px;
 margin-left:20vw;
 overflow-wrap:  break-word;
@@ -97,7 +97,7 @@ ul li{
 }
 `
 
-const TabSteps = styled.div`
+const Tablet = styled.div`
 width:800px;
 overflow-wrap:  break-word;
 
@@ -292,25 +292,91 @@ export const Ryouri = ()=>{
     if(PCsize) {
         return (
         <Layout>
-            <>
-            <h1>料理概要</h1>
-            </>
+            <PC>
+            <h1>揃えたいキッチングッズ</h1>
+            <div className="steps">
+                <h2>調理道具</h2>
+                    <ul>
+                        <li>包丁、まないた</li>
+                        <li>菜箸</li>
+                        <li>鍋</li>
+                        <li>フライ返し、お玉</li>
+                    </ul>
+                <h2>調理家電</h2>
+                    <ul>
+                        <li>電子レンジ</li>
+                        <li>炊飯器</li>
+                    </ul>
+                <h2>食器</h2>
+                    <ul>
+                        <li>茶碗</li>
+                        <li>グラス、マグカップ</li>
+                        <li>どんぶり</li>
+                        <li>箸、スプーン、フォーク、ナイフ</li>
+                    </ul>
+                <h3></h3>
+            </div>
+            </PC>
         </Layout>
         )
     }else if(Tabletsize) {
         return (
         <Layout>
-            <>
-            <h1>料理概要</h1>
-            </>
+            <Tablet>
+            <h1>揃えたいキッチングッズ</h1>
+            <div className="steps">
+                <h2>調理道具</h2>
+                    <ul>
+                        <li>包丁、まないた</li>
+                        <li>菜箸</li>
+                        <li>鍋</li>
+                        <li>フライ返し、お玉</li>
+                    </ul>
+                <h2>調理家電</h2>
+                    <ul>
+                        <li>電子レンジ</li>
+                        <li>炊飯器</li>
+                    </ul>
+                <h2>食器</h2>
+                    <ul>
+                        <li>茶碗</li>
+                        <li>グラス、マグカップ</li>
+                        <li>どんぶり</li>
+                        <li>箸、スプーン、フォーク、ナイフ</li>
+                    </ul>
+                <h3></h3>
+            </div>
+            </Tablet>
         </Layout>
         )
     }else {
         return (
         <Layout>
-            <>
-            <h2 className="headline">料理概要</h2>
-            </>
+            <Mobile>
+            <h2 className="headline">揃えたいキッチングッズ</h2>
+            <div className="steps">
+                <h3>調理道具</h3>
+                    <ul>
+                        <li>包丁、まないた</li>
+                        <li>菜箸</li>
+                        <li>鍋</li>
+                        <li>フライ返し、お玉</li>
+                    </ul>
+                <h3>調理家電</h3>
+                    <ul>
+                        <li>電子レンジ</li>
+                        <li>炊飯器</li>
+                    </ul>
+                <h3>食器</h3>
+                    <ul>
+                        <li>茶碗</li>
+                        <li>グラス、マグカップ</li>
+                        <li>どんぶり</li>
+                        <li>箸、スプーン、フォーク、ナイフ</li>
+                    </ul>
+                <h4></h4>
+            </div>
+            </Mobile>
         </Layout>
         )
     }

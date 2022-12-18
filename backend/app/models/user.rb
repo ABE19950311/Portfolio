@@ -1,7 +1,7 @@
 class User < ApplicationRecord
     has_secure_password
     has_one :mypage
-    has_many :todos #子モデル（多に該当するので複数形）
+    has_many :todos
     has_many :boards
     has_many :contacts
     has_many :posts
@@ -13,6 +13,5 @@ class User < ApplicationRecord
     has_many :helpfuls, dependent: :destroy
     has_many :lifeposts, through: :helpfuls
 
-    # 重複登録NG
     validates :username, uniqueness: true
 end

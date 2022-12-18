@@ -4,5 +4,4 @@ class Lifepost < ApplicationRecord
     has_many :users, through: :comments
     has_many :helpfuls, dependent: :destroy
     has_many :users, through: :helpfuls
-
 end

@@ -4,7 +4,7 @@ class LifepostsController < ApplicationController
         @lifepost = Lifepost.all
         render json:@lifepost
     end
-    
+
     def show
         @lifepost = Lifepost.where(user_id: params[:id])
         render json:@lifepost
@@ -32,7 +32,7 @@ class LifepostsController < ApplicationController
         render json:@updatelife
     end
 
-    def destroy 
+    def destroy
         @lifepost = Lifepost.find(params[:id])
         @lifepost.destroy
         render json:@lifepost
