@@ -23,7 +23,7 @@ class HeartsController < ApplicationController
             render json:{status: :created,heart: @heart}
         end
     end
-    
+
     private
 
     def heart_params

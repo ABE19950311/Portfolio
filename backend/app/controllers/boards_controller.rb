@@ -12,7 +12,7 @@ class BoardsController < ApplicationController
     end
 
     def create
-        if Rails.env.test? 
+        if Rails.env.test?
             @board = Board.create(board_params.merge(user_id: 1))
             render json:@board
         else
@@ -27,7 +27,7 @@ class BoardsController < ApplicationController
         @board.destroy
         render json:@board
     end
-    
+
     private
 
     def board_params

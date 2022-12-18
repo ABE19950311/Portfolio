@@ -1,6 +1,6 @@
 class ContactsController < ApplicationController
 
-    def show 
+    def show
         @contact = Contact.where(user_id: contact_params[:user_id])
         render json:@contact
     end

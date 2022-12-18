@@ -2,7 +2,7 @@ import styled from "styled-components"
 import {Layout} from "../layout"
 import { useMediaQuery } from "react-responsive"
 
-const PCSteps = styled.div`
+const PC = styled.div`
 width:800px;
 margin-left:20vw;
 overflow-wrap:  break-word;
@@ -97,7 +97,7 @@ ul li{
 }
 `
 
-const TabSteps = styled.div`
+const Tablet = styled.div`
 width:800px;
 overflow-wrap:  break-word;
 
@@ -292,25 +292,55 @@ export const Sentaku = ()=>{
     if(PCsize) {
         return (
         <Layout>
-            <>
-            <h1>洗濯概要</h1>
-            </>
+            <PC>
+            <h1>汚れや菌をためこまない方法</h1>
+            <div className="steps">
+                <h2>洗濯槽の中にためこまない</h2>
+                    <p>湿気がこもって雑菌の繁殖が進んでしまい、臭くなる</p>
+                <h2>脱水をしたらすぐに干す</h2>
+                    <p>放置すればするほど菌が繁殖する</p>
+                    <p>シワの原因にもなる</p>
+                <h2>食べこぼし等のシミを放置しない</h2>
+                    <p>時間が経つと落ちにくくなるため、気づいた時点で対応を</p>
+                <h3></h3>
+            </div>
+            </PC>
         </Layout>
         )
     }else if(Tabletsize) {
         return (
         <Layout>
-            <>
-            <h1>洗濯概要</h1>
-            </>
+            <Tablet>
+            <h1>汚れや菌をためこまない方法</h1>
+            <div className="steps">
+                <h2>洗濯槽の中にためこまない</h2>
+                    <p>湿気がこもって雑菌の繁殖が進んでしまい、臭くなる</p>
+                <h2>脱水をしたらすぐに干す</h2>
+                    <p>放置すればするほど菌が繁殖する</p>
+                    <p>シワの原因にもなる</p>
+                <h2>食べこぼし等のシミを放置しない</h2>
+                    <p>時間が経つと落ちにくくなるため、気づいた時点で対応を</p>
+                <h3></h3>
+            </div>
+            </Tablet>
         </Layout>
         )
     }else {
         return (
         <Layout>
-            <>
-            <h2 className="headline">洗濯概要</h2>
-            </>
+            <Mobile>
+            <h2 className="headline">汚れや菌をためこまない方法</h2>
+            <div className="steps">
+                <h3>洗濯槽の中にためこまない</h3>
+                    <p>湿気がこもって雑菌の繁殖が進んでしまい、臭くなる</p>
+                <h3>脱水をしたらすぐに干す</h3>
+                    <p>放置すればするほど菌が繁殖する</p>
+                    <p>シワの原因にもなる</p>
+                <h3>食べこぼし等のシミを放置しない</h3>
+                    <p>時間が経つと落ちにくくなるため、気づいた時点で対応を</p>
+                <h4></h4>
+            </div>
+            </Mobile>
         </Layout>
         )
     }
