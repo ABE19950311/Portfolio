@@ -40,3 +40,5 @@ next-env.d.ts
 .env.test.local
 
 .DS_Store
+
+README.md
